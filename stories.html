@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סיפורי קהילה | הגיל הוא לא הסיפור</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
+    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">קצת עליי</a></li>
+      <li><a href="workshop.html">תוכן הסדנה</a></li>
+      <li><a href="testimonials.html">המלצות</a></li>
+      <li><a href="stories.html" class="active">סיפורי קהילה</a></li>
+      <li><a href="blog.html">בלוג</a></li>
+      <li><a href="register.html">הרשמה</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>סיפורי קהילה</h1>
+    <p>חברי קהילה משתפים בקצרצרי וידאו ובמילים שלהם את הדרך שעשו. כל הסיפורים עוברים אישור לפני פרסום.</p>
+    <a href="submit-story.html" class="btn">שתפו את הסיפור שלכם</a>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid" id="stories-grid">
+      <p class="empty-state">טוען סיפורים...</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>גם לך יש סיפור?</h2>
+  <p>אנחנו רוצים לשמוע אותו. שתפו קצרצר וידאו וכמה מילים על הדרך שעשיתם.</p>
+  <a href="submit-story.html" class="btn">שיתוף סיפור</a>
+</div>
+
+<footer>
+  <p>הגיל הוא לא הסיפור © <span id="year"></span> | כל הזכויות שמורות</p>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/stories.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
