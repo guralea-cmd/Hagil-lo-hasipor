@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תוכן הסדנה | הגיל הוא לא הסיפור</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
+    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">קצת עליי</a></li>
+      <li><a href="workshop.html" class="active">תוכן הסדנה</a></li>
+      <li><a href="testimonials.html">המלצות</a></li>
+      <li><a href="stories.html">סיפורי קהילה</a></li>
+      <li><a href="blog.html">בלוג</a></li>
+      <li><a href="register.html">הרשמה</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section>
+  <div class="container">
+    <h2>מה כוללת הסדנה</h2>
+    <p class="section-intro">תוכנית בת 5 מפגשים, המשלבת תיאוריה, כלים מעשיים ושיח קבוצתי - מסע משותף לגלות מה אפשרי בשלב הזה של החיים.</p>
+
+    <div class="service-detail">
+      <h3>מפגש 1: שינוי נקודת המבט על גיל</h3>
+      <p>נבדוק מאיפה מגיעות התפיסות שלנו על "מה מתאים לגיל שלי", ונתחיל לפרק אותן. תרגיל פתיחה: מיפוי אמונות מגבילות.</p>
+    </div>
+
+    <div class="service-detail">
+      <h3>מפגש 2: מה באמת חשוב לי עכשיו</h3>
+      <p>עבודה על זיהוי ערכים ורצונות אמיתיים - לא מה ש"צריך", אלא מה שבאמת מושך אותך בשלב הזה.</p>
+    </div>
+
+    <div class="service-detail">
+      <h3>מפגש 3: התמודדות עם פחד ושיפוטיות</h3>
+      <p>כלים מעשיים להתמודד עם הקול הפנימי השיפוטי ועם תגובות הסביבה כשמחליטים לשנות כיוון.</p>
+    </div>
+
+    <div class="service-detail">
+      <h3>מפגש 4: בניית תוכנית פעולה</h3>
+      <p>מהתובנות לפעולה - בונים יחד תוכנית קונקרטית וריאלית לצעד הבא, עם לוחות זמנים ויעדים.</p>
+    </div>
+
+    <div class="service-detail">
+      <h3>מפגש 5: יציאה לדרך וקהילה</h3>
+      <p>סיכום התהליך, חיבור לקהילת התומכים, ושיתוף ההתחייבות האישית של כל משתתף/ת לדרך הבאה.</p>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="container">
+    <h2>למי מתאים</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🔄</div>
+        <h3>מעבר קריירה או פרישה</h3>
+        <p>למי שעומד בפני שינוי תעסוקתי או רוצה להתחיל מסלול חדש - בלי קשר לגיל.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💛</div>
+        <h3>חיפוש כיוון מחדש</h3>
+        <p>למי שמרגיש שמשהו צריך להשתנות, אך לא בטוח/ה מה ואיך.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌟</div>
+        <h3>רצון לצמיחה אישית</h3>
+        <p>למי שרוצה להעמיק את ההיכרות עם עצמו/ה ולחיות בצורה מכוונת ומלאה יותר.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>מוכנים להתחיל?</h2>
+  <p>הסדנה פתוחה כרגע להרשמה ללא עלות. מספר המקומות מוגבל.</p>
+  <a href="register.html" class="btn">להרשמה לסדנה</a>
+</div>
+
+<footer>
+  <p>הגיל הוא לא הסיפור © <span id="year"></span> | כל הזכויות שמורות</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

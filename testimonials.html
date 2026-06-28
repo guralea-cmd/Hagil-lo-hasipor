@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>המלצות | הגיל הוא לא הסיפור</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
+    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">קצת עליי</a></li>
+      <li><a href="workshop.html">תוכן הסדנה</a></li>
+      <li><a href="testimonials.html" class="active">המלצות</a></li>
+      <li><a href="stories.html">סיפורי קהילה</a></li>
+      <li><a href="blog.html">בלוג</a></li>
+      <li><a href="register.html">הרשמה</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section>
+  <div class="container">
+    <h2>מה אומרים המשתתפים</h2>
+    <p class="section-intro">המילים הטובות ביותר הן אלה שנאמרות על ידי מי שעבר/ה את הדרך.</p>
+    <div class="grid">
+      <div class="testimonial">
+        <p>"חשבתי שבגיל הזה כבר מאוחר לשנות קריירה. הסדנה נתנה לי את הביטחון לעשות את הצעד."</p>
+        <div class="author">- מיכל, 52</div>
+      </div>
+      <div class="testimonial">
+        <p>"ליווי מקצועי, חם ומדויק. למדתי להקשיב לעצמי ולקבל החלטות מתוך בחירה ולא מתוך פחד."</p>
+        <div class="author">- יוסי, 61</div>
+      </div>
+      <div class="testimonial">
+        <p>"גיליתי שיש לי עוד הרבה מה לתת ולקבל מהחיים. תודה על הדרך המשותפת."</p>
+        <div class="author">- רינת, 45</div>
+      </div>
+      <div class="testimonial">
+        <p>"הקבוצה עצמה הייתה חלק גדול מהשינוי - להרגיש שלא לבד עם הפחדים והשאלות."</p>
+        <div class="author">- דורון, 58</div>
+      </div>
+      <div class="testimonial">
+        <p>"תהליך מדויק שמכבד את הקצב של כל אחד, ובו בזמן דוחף קדימה."</p>
+        <div class="author">- שירה, 49</div>
+      </div>
+      <div class="testimonial">
+        <p>"לקחתי החלטה שדחיתי 10 שנים. תודה שעזרתם לי לעשות את זה."</p>
+        <div class="author">- אבי, 64</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>רוצה להיות הסיפור הבא?</h2>
+  <p>הסדנה פתוחה כרגע להרשמה ללא עלות.</p>
+  <a href="register.html" class="btn">להרשמה לסדנה</a>
+</div>
+
+<footer>
+  <p>הגיל הוא לא הסיפור © <span id="year"></span> | כל הזכויות שמורות</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
