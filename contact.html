@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>יצירת קשר | הגיל הוא לא הסיפור</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
+    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">קצת עליי</a></li>
+      <li><a href="workshop.html">תוכן הסדנה</a></li>
+      <li><a href="testimonials.html">המלצות</a></li>
+      <li><a href="stories.html">סיפורי קהילה</a></li>
+      <li><a href="blog.html">בלוג</a></li>
+      <li><a href="register.html">הרשמה</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section>
+  <div class="container">
+    <h2>יצירת קשר</h2>
+    <p class="section-intro">מלאו את הפרטים ואחזור אליכם בהקדם, או פנו ישירות בטלפון או באימייל.</p>
+
+    <div class="contact-info">
+      <div>
+        <div class="icon">📞</div>
+        <p><strong>טלפון</strong><br>050-0000000</p>
+      </div>
+      <div>
+        <div class="icon">✉️</div>
+        <p><strong>אימייל</strong><br>info@hagil-lo-hasipor.co.il</p>
+      </div>
+      <div>
+        <div class="icon">📍</div>
+        <p><strong>איזור פעילות</strong><br>בזום או פנים אל פנים, ברחבי הארץ</p>
+      </div>
+    </div>
+
+    <form id="contact-form">
+      <div>
+        <label for="name">שם מלא</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="phone">טלפון</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div>
+        <label for="email">אימייל</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label for="topic">באיזה נושא תרצה/י לדבר?</label>
+        <select id="topic" name="topic">
+          <option value="career">מעבר קריירה / פרישה</option>
+          <option value="personal">צמיחה אישית</option>
+          <option value="group">סדנה קבוצתית</option>
+          <option value="other">אחר</option>
+        </select>
+      </div>
+      <div>
+        <label for="message">הודעה</label>
+        <textarea id="message" name="message" rows="5"></textarea>
+      </div>
+      <button type="submit" class="btn">שליחה</button>
+      <p id="form-status"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>הגיל הוא לא הסיפור © <span id="year"></span> | כל הזכויות שמורות</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
