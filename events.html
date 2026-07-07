@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מפגשים ואירועים | הגיל הוא לא הסיפור</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
+    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">קצת עליי</a></li>
+      <li><a href="stories.html">סיפורי קהילה</a></li>
+      <li><a href="events.html" class="active">מפגשים/אירועים</a></li>
+      <li><a href="blog.html">כלים ותובנות</a></li>
+      <li><a href="register.html">הרשמה</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>מפגשים ואירועים</h1>
+    <p>כאן יתפרסמו מועדי המפגשים והאירועים הקרובים. עקבו אחרינו כדי לא לפספס.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="empty-state">בקרוב יעודכנו כאן פרטי המפגשים הקרובים.</p>
+  </div>
+</section>
+
+<footer>
+  <p>הגיל הוא לא הסיפור © <span id="year"></span> | כל הזכויות שמורות</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
