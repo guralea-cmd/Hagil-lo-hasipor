@@ -8,68 +8,27 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
 <header>
-  <nav class="nav">
+  <nav class="nav" aria-label="ניווט ראשי">
     <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
-    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
-    <ul class="nav-links">
+    <button class="menu-toggle" aria-label="פתח תפריט" aria-expanded="false" aria-controls="primary-navigation">&#9776;</button>
+    <ul class="nav-links" id="primary-navigation">
       <li><a href="index.html">בית</a></li>
       <li><a href="about.html">קצת עליי</a></li>
       <li><a href="stories.html">סיפורי קהילה</a></li>
       <li><a href="events.html">מפגשים/אירועים</a></li>
       <li><a href="blog.html">כלים ותובנות</a></li>
-      <li><a href="register.html" class="active">הרשמה</a></li>
+      <li><a href="register.html" class="active" aria-current="page">הרשמה</a></li>
     </ul>
   </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="main-content">
   <div class="container">
-    <h1>הצעד הראשון לפרק הבא שלך</h1>
-    <p>5 מפגשים, קבוצה תומכת, וכלים מעשיים לקחת אחריות על הבחירות הבאות בחיים שלך - בלי קשר לגיל.</p>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="price-card">
-      <span class="badge">לזמן מוגבל</span>
-      <h3 style="margin:0;">סדנת הגיל הוא לא הסיפור</h3>
-      <ul>
-        <li>5 מפגשים קבוצתיים מלאים</li>
-        <li>כלים מעשיים וחומרי עזר</li>
-        <li>קהילה תומכת לאורך כל הדרך</li>
-        <li>גישה לסיפורי הצלחה של חברי קהילה</li>
-      </ul>
-      <a href="#register-section" class="btn">להרשמה עכשיו</a>
-    </div>
-  </div>
-</section>
-
-<section style="background:#fff;">
-  <div class="container">
-    <h2 id="register-section">פרטי הרשמה</h2>
-    <p class="section-intro">מלאו את הפרטים ונחזור אליכם עם כל המידע על המפגש הקרוב.</p>
-    <form id="register-form">
-      <div>
-        <label for="name">שם מלא</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div>
-        <label for="phone">טלפון</label>
-        <input type="tel" id="phone" name="phone" required>
-      </div>
-      <div>
-        <label for="email">אימייל</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div>
-        <label for="message">משהו שתרצה/י שנדע מראש? (לא חובה)</label>
-        <textarea id="message" name="message" rows="4"></textarea>
-      </div>
-      <button type="submit" class="btn">שליחת הרשמה</button>
-      <p id="form-status" class="form-status"></p>
-    </form>
+    <h1>הרשמה</h1>
+    <p>בקרוב יתאפשר להירשם כאן.</p>
   </div>
 </section>
 
@@ -77,11 +36,7 @@
   <p>הגיל הוא לא הסיפור © <span id="year"></span> | כל הזכויות שמורות</p>
 </footer>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js"></script>
 <script src="js/main.js"></script>
-<script src="js/register.js"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

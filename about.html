@@ -8,13 +8,15 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
 <header>
-  <nav class="nav">
+  <nav class="nav" aria-label="ניווט ראשי">
     <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
-    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
-    <ul class="nav-links">
+    <button class="menu-toggle" aria-label="פתח תפריט" aria-expanded="false" aria-controls="primary-navigation">&#9776;</button>
+    <ul class="nav-links" id="primary-navigation">
       <li><a href="index.html">בית</a></li>
-      <li><a href="about.html" class="active">קצת עליי</a></li>
+      <li><a href="about.html" class="active" aria-current="page">קצת עליי</a></li>
       <li><a href="stories.html">סיפורי קהילה</a></li>
       <li><a href="events.html">מפגשים/אירועים</a></li>
       <li><a href="blog.html">כלים ותובנות</a></li>
@@ -23,51 +25,14 @@
   </nav>
 </header>
 
-<section>
-  <div class="container">
-    <h2>קצת עליי</h2>
-    <div class="about-split">
-      <div class="photo">
-        <div class="photo-placeholder">תמונה אישית</div>
-      </div>
-      <div class="text">
-        <p>שמי [שם המאמן/ת], ואני מאמנ/ת אישי/ת מוסמכ/ת עם שנים של ניסיון בעבודה עם אנשים שעומדים על פרשת דרכים - מעבר קריירה, שינוי זוגי, פרישה, או פשוט תחושה שמשהו צריך להשתנות.</p>
-        <p>אני מאמינ/ה שגיל הוא מספר, לא תאריך תפוגה. כל שלב בחיים מביא איתו הזדמנויות חדשות, ותפקידי הוא ללוות אותך למצוא אותן ולפעול מתוכן.</p>
-        <p>התהליך שלי משלב הקשבה עמוקה, כלים מעשיים מעולם האימון, וגישה חמה אך ממוקדת תוצאות. המטרה: שתצא/י מכל שיחה עם תובנה אחת לפחות שתוכל/י לקחת איתך החוצה.</p>
-      </div>
+<section id="main-content">
+  <div class="container" style="text-align:center;">
+    <h1>קצת עליי</h1>
+    <div class="video-wrap">
+      <div class="video-placeholder">כאן יתווסף בקרוב סרטון קצר</div>
     </div>
   </div>
 </section>
-
-<section style="background:#fff;">
-  <div class="container">
-    <h2>הגישה שלי</h2>
-    <p class="section-intro">שלושה עקרונות שמלווים אותי בכל תהליך אימון</p>
-    <div class="grid">
-      <div class="card">
-        <div class="icon">🤝</div>
-        <h3>שותפות, לא הרצאה</h3>
-        <p>את/ה המומחה/ית לחיים שלך. אני כאן כדי לשאול את השאלות הנכונות וללוות אותך לתשובות שלך.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🎯</div>
-        <h3>ממוקד מטרה</h3>
-        <p>כל מפגש מתחיל ומסתיים בנקודה ברורה - לאן הגענו, ולאן בדרך להגיע.</p>
-      </div>
-      <div class="card">
-        <div class="icon">🌟</div>
-        <h3>בלי שיפוטיות</h3>
-        <p>מרחב פתוח, מקבל ובטוח - לא משנה מאיפה את/ה מתחיל/ה.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="cta-band">
-  <h2>רוצה לדבר?</h2>
-  <p>הסדנה פתוחה כרגע להרשמה ללא עלות - זו ההזדמנות שלך לבדוק אם זה מתאים לך, בלי סיכון.</p>
-  <a href="register.html" class="btn">להרשמה לסדנה</a>
-</div>
 
 <footer>
   <p>הגיל הוא לא הסיפור © <span id="year"></span> | כל הזכויות שמורות</p>
