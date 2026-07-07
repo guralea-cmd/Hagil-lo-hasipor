@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
       message: form.message.value.trim(),
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(function () {
-      statusEl.textContent = "נרשמת בהצלחה! ניצור איתך קשר בקרוב לפרטי הסדנה.";
+      statusEl.textContent = "נרשמת בהצלחה! ניצור איתך קשר בקרוב לפרטי הקהילה.";
       statusEl.classList.remove("error");
       form.reset();
     }).catch(function (err) {
