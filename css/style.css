@@ -365,15 +365,42 @@ footer a {
   justify-content: center;
   text-align: center;
   padding: 24px;
+  line-height: 1.4;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.35) 100%);
 }
 
 .hero-overlay-title h1 {
   margin: 0;
+  width: 100%;
   max-width: 780px;
-  font-size: 40px;
   color: #fff;
+}
+
+.hero-overlay-title .line1,
+.hero-overlay-title .line2,
+.hero-overlay-title .line3 {
+  display: block;
+  width: 100%;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-overlay-title .line1 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.hero-overlay-title .line2 {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.hero-overlay-title .line3 {
+  margin-top: 18px;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  opacity: 0.9;
 }
 
 /* Video block aligned to the right, linking through to the About page */
@@ -620,5 +647,17 @@ input[type="file"] {
 
   .hero h1 {
     font-size: 30px;
+  }
+
+  .hero-overlay-title .line1 {
+    font-size: 28px;
+  }
+
+  .hero-overlay-title .line2 {
+    font-size: 17px;
+  }
+
+  .hero-overlay-title .line3 {
+    font-size: 13px;
   }
 }
