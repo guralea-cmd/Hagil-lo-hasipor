@@ -725,4 +725,14 @@ input[type="file"] {
   .hero h1 {
     font-size: 30px;
   }
+
+  .hero-overlay-title .line2 {
+    white-space: normal;
+    font-size: clamp(20px, 7.5vw, 45px);
+    line-height: 1.25;
+  }
+
+  .hero-overlay-title .line2-wrap {
+    max-width: 88vw;
+  }
 }
