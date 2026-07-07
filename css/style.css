@@ -405,6 +405,7 @@ footer a {
   position: relative;
   width: 100%;
   min-height: 500px;
+  overflow-x: hidden;
 }
 
 .hero-image-band img {
@@ -443,6 +444,8 @@ footer a {
 .hero-overlay-title .line3 {
   display: block;
   white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -728,11 +731,11 @@ input[type="file"] {
   .hero-overlay-title .line1,
   .hero-overlay-title .line2 {
     white-space: normal;
-    font-size: clamp(32px, 13vw, 70px);
+    font-size: clamp(26px, 10.5vw, 56px);
     line-height: 1.2;
   }
 
   .hero-overlay-title .line2-wrap {
-    max-width: 88vw;
+    max-width: 92vw;
   }
 }
