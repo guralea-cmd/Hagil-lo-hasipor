@@ -342,6 +342,7 @@ footer a {
 
 /* Full-width hero image band — sits above everything */
 .hero-image-band {
+  position: relative;
   width: 100%;
   max-height: 500px;
   overflow: hidden;
@@ -354,6 +355,45 @@ footer a {
   object-fit: cover;
   object-position: center 30%;
   display: block;
+}
+
+.hero-overlay-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.35) 100%);
+}
+
+.hero-overlay-title h1 {
+  margin: 0;
+  max-width: 780px;
+  font-size: 40px;
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Video block aligned to the right, linking through to the About page */
+.video-side {
+  float: right;
+  max-width: 480px;
+  text-align: center;
+}
+
+.video-side .video-caption-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.container.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 /* Video hero */
