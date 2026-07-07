@@ -446,17 +446,20 @@ footer a {
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-.hero-overlay-title .kicker {
-  width: 100%;
-  margin-bottom: 8px;
+.hero-overlay-title .kicker,
+.hero-overlay-title .line1,
+.hero-overlay-title .line2 {
   font-size: clamp(20px, 8.5vw, 87px);
   font-weight: 700;
 }
 
+.hero-overlay-title .kicker {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
 .hero-overlay-title .line1 {
   width: 100%;
-  font-size: clamp(20px, 8.5vw, 87px);
-  font-weight: 700;
 }
 
 .hero-overlay-title .line2-wrap {
@@ -467,7 +470,6 @@ footer a {
 }
 
 .hero-overlay-title .line2 {
-  font-size: clamp(14px, 4.4vw, 45px);
   font-weight: 500;
 }
 
@@ -726,10 +728,12 @@ input[type="file"] {
     font-size: 30px;
   }
 
+  .hero-overlay-title .kicker,
+  .hero-overlay-title .line1,
   .hero-overlay-title .line2 {
     white-space: normal;
-    font-size: clamp(20px, 7.5vw, 45px);
-    line-height: 1.25;
+    font-size: clamp(32px, 13vw, 70px);
+    line-height: 1.2;
   }
 
   .hero-overlay-title .line2-wrap {
