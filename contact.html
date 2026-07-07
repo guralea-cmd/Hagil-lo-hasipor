@@ -8,11 +8,13 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
 <header>
-  <nav class="nav">
+  <nav class="nav" aria-label="ניווט ראשי">
     <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
-    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
-    <ul class="nav-links">
+    <button class="menu-toggle" aria-label="פתח תפריט" aria-expanded="false" aria-controls="primary-navigation">&#9776;</button>
+    <ul class="nav-links" id="primary-navigation">
       <li><a href="index.html">בית</a></li>
       <li><a href="about.html">קצת עליי</a></li>
       <li><a href="stories.html">סיפורי קהילה</a></li>
@@ -23,22 +25,22 @@
   </nav>
 </header>
 
-<section>
+<section id="main-content">
   <div class="container">
-    <h2>יצירת קשר</h2>
+    <h1>יצירת קשר</h1>
     <p class="section-intro">מלאו את הפרטים ואחזור אליכם בהקדם, או פנו ישירות בטלפון או באימייל.</p>
 
     <div class="contact-info">
       <div>
-        <div class="icon">📞</div>
+        <div class="icon" aria-hidden="true">📞</div>
         <p><strong>טלפון</strong><br>050-0000000</p>
       </div>
       <div>
-        <div class="icon">✉️</div>
+        <div class="icon" aria-hidden="true">✉️</div>
         <p><strong>אימייל</strong><br>info@hagil-lo-hasipor.co.il</p>
       </div>
       <div>
-        <div class="icon">📍</div>
+        <div class="icon" aria-hidden="true">📍</div>
         <p><strong>איזור פעילות</strong><br>בזום או פנים אל פנים, ברחבי הארץ</p>
       </div>
     </div>
@@ -70,7 +72,7 @@
         <textarea id="message" name="message" rows="5"></textarea>
       </div>
       <button type="submit" class="btn">שליחה</button>
-      <p id="form-status"></p>
+      <p id="form-status" aria-live="polite"></p>
     </form>
   </div>
 </section>

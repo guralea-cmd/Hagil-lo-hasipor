@@ -3,6 +3,7 @@
   --color-card: #ffffff;
   --color-primary: #7a5c4e;
   --color-accent: #c98a5b;
+  --color-accent-dark: #a35a34;
   --color-text: #2e2a27;
   --color-muted: #6b6460;
   --color-border: #e6ddd3;
@@ -35,6 +36,45 @@ a {
 img {
   max-width: 100%;
   display: block;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  right: 12px;
+  z-index: 1000;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
 }
 
 .container {
@@ -83,7 +123,7 @@ header {
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 .menu-toggle {
@@ -119,7 +159,7 @@ header {
   display: inline-block;
   padding: 14px 32px;
   border-radius: 30px;
-  background: var(--color-accent);
+  background: var(--color-accent-dark);
   color: #fff;
   font-weight: 600;
   font-size: 16px;
@@ -130,13 +170,13 @@ header {
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(201, 138, 91, 0.35);
+  box-shadow: 0 6px 18px rgba(163, 90, 52, 0.4);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--color-accent);
-  border: 2px solid var(--color-accent);
+  color: var(--color-accent-dark);
+  border: 2px solid var(--color-accent-dark);
 }
 
 /* Sections */
@@ -144,11 +184,19 @@ section {
   padding: 64px 0;
 }
 
+section h1,
 section h2 {
   font-size: 30px;
   text-align: center;
   color: var(--color-primary);
   margin: 0 0 12px;
+}
+
+.article-subheading {
+  text-align: right;
+  font-size: 20px;
+  color: var(--color-primary);
+  margin: 28px 0 8px;
 }
 
 .section-intro {
@@ -203,6 +251,19 @@ section h2 {
 .about-split .photo {
   flex: 1 1 260px;
   text-align: center;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0e6d8;
+  color: var(--color-muted);
+  font-size: 14px;
+  text-align: center;
+  padding: 24px;
 }
 
 .photo-placeholder {
@@ -293,8 +354,7 @@ select {
 input:focus,
 textarea:focus,
 select:focus {
-  outline: none;
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-dark);
 }
 
 .contact-info {
@@ -372,7 +432,7 @@ footer a {
 .hero-overlay-title h1 {
   margin: 0;
   width: 100%;
-  max-width: 780px;
+  max-width: 920px;
   color: #fff;
 }
 
@@ -385,19 +445,19 @@ footer a {
 }
 
 .hero-overlay-title .line1 {
-  font-size: 40px;
+  font-size: 58px;
   font-weight: 700;
 }
 
 .hero-overlay-title .line2 {
-  margin-top: 8px;
-  font-size: 22px;
+  margin-top: 10px;
+  font-size: 30px;
   font-weight: 500;
 }
 
 .hero-overlay-title .line3 {
-  margin-top: 18px;
-  font-size: 15px;
+  margin-top: 22px;
+  font-size: 18px;
   font-weight: 400;
   letter-spacing: 1px;
   opacity: 0.9;
@@ -414,7 +474,7 @@ footer a {
   display: inline-block;
   margin-top: 16px;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 .container.clearfix::after {
@@ -451,7 +511,7 @@ footer a {
 /* Pricing / funnel */
 .price-card {
   background: var(--color-card);
-  border: 2px solid var(--color-accent);
+  border: 2px solid var(--color-accent-dark);
   border-radius: var(--radius);
   padding: 36px;
   text-align: center;
@@ -462,7 +522,7 @@ footer a {
 .price-card .badge {
   display: inline-block;
   background: #fff0e0;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
   font-size: 13px;
   font-weight: 600;
   padding: 6px 16px;
@@ -650,14 +710,14 @@ input[type="file"] {
   }
 
   .hero-overlay-title .line1 {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   .hero-overlay-title .line2 {
-    font-size: 17px;
+    font-size: 21px;
   }
 
   .hero-overlay-title .line3 {
-    font-size: 13px;
+    font-size: 15px;
   }
 }

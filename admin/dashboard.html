@@ -8,28 +8,30 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
 <header>
-  <nav class="nav">
+  <nav class="nav" aria-label="ניווט ניהול">
     <span class="logo">פאנל ניהול</span>
     <button id="logout-btn" class="btn btn-outline btn-sm">התנתקות</button>
   </nav>
 </header>
 
-<section>
+<section id="main-content">
   <div class="container">
-    <h2>סיפורי קהילה לאישור</h2>
+    <h1>סיפורי קהילה לאישור</h1>
     <p class="section-intro">סיפורים שנשלחו על ידי חברי הקהילה. אשר/י לפני פרסום באתר.</p>
     <div style="overflow-x:auto;">
       <table class="admin-table">
         <thead>
           <tr>
-            <th>תאריך</th>
-            <th>שם</th>
-            <th>טקסט</th>
-            <th>וידאו</th>
-            <th>אימייל</th>
-            <th>סטטוס</th>
-            <th>פעולות</th>
+            <th scope="col">תאריך</th>
+            <th scope="col">שם</th>
+            <th scope="col">טקסט</th>
+            <th scope="col">וידאו</th>
+            <th scope="col">אימייל</th>
+            <th scope="col">סטטוס</th>
+            <th scope="col">פעולות</th>
           </tr>
         </thead>
         <tbody id="stories-body">
@@ -47,11 +49,11 @@
       <table class="admin-table">
         <thead>
           <tr>
-            <th>תאריך</th>
-            <th>שם</th>
-            <th>טלפון</th>
-            <th>אימייל</th>
-            <th>הודעה</th>
+            <th scope="col">תאריך</th>
+            <th scope="col">שם</th>
+            <th scope="col">טלפון</th>
+            <th scope="col">אימייל</th>
+            <th scope="col">הודעה</th>
           </tr>
         </thead>
         <tbody id="registrations-body">

@@ -9,23 +9,14 @@
 </head>
 <body>
 
-<div class="hero-image-band">
-  <img src="images/hero-bike.jpg" alt="רוכבי אופניים — הדרך היא הסיפור">
-  <div class="hero-overlay-title">
-    <h1>
-      <span class="line1">הגיל הוא לא הסיפור</span>
-      <span class="line2">הסיפור הוא מה עושים איתו</span>
-      <span class="line3">לאה גורא</span>
-    </h1>
-  </div>
-</div>
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
 
 <header>
-  <nav class="nav">
+  <nav class="nav" aria-label="ניווט ראשי">
     <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
-    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">בית</a></li>
+    <button class="menu-toggle" aria-label="פתח תפריט" aria-expanded="false" aria-controls="primary-navigation">&#9776;</button>
+    <ul class="nav-links" id="primary-navigation">
+      <li><a href="index.html" class="active" aria-current="page">בית</a></li>
       <li><a href="about.html">קצת עליי</a></li>
       <li><a href="stories.html">סיפורי קהילה</a></li>
       <li><a href="events.html">מפגשים/אירועים</a></li>
@@ -35,14 +26,20 @@
   </nav>
 </header>
 
-<section style="background:#fff;">
-  <div class="container clearfix">
-    <div class="video-side">
-      <div class="video-wrap video-wrap--small">
-        <iframe src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID" title="הגיל הוא לא הסיפור - סרטון הצגה" allowfullscreen></iframe>
-      </div>
-      <a href="about.html" class="video-caption-link">רוצה להכיר אותי טוב יותר? קצת עליי ←</a>
-    </div>
+<div class="hero-image-band">
+  <img src="images/hero-bike.jpg" alt="רגליים ונעליים של רצים במרוץ כביש">
+  <div class="hero-overlay-title">
+    <h1>
+      <span class="line1">הגיל הוא לא הסיפור</span>
+      <span class="line2">הסיפור הוא מה עושים איתו</span>
+      <span class="line3">לאה גורא</span>
+    </h1>
+  </div>
+</div>
+
+<section id="main-content" style="background:#fff;">
+  <div class="container" style="text-align:center;">
+    <a href="about.html" class="video-caption-link">רוצה להכיר אותי טוב יותר? קצת עליי ←</a>
   </div>
 </section>
 

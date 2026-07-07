@@ -8,14 +8,16 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
 <header>
-  <nav class="nav">
+  <nav class="nav" aria-label="ניווט ראשי">
     <a href="index.html" class="logo">הגיל הוא לא הסיפור</a>
-    <button class="menu-toggle" aria-label="פתח תפריט">&#9776;</button>
-    <ul class="nav-links">
+    <button class="menu-toggle" aria-label="פתח תפריט" aria-expanded="false" aria-controls="primary-navigation">&#9776;</button>
+    <ul class="nav-links" id="primary-navigation">
       <li><a href="index.html">בית</a></li>
       <li><a href="about.html">קצת עליי</a></li>
-      <li><a href="stories.html" class="active">סיפורי קהילה</a></li>
+      <li><a href="stories.html" class="active" aria-current="page">סיפורי קהילה</a></li>
       <li><a href="events.html">מפגשים/אירועים</a></li>
       <li><a href="blog.html">כלים ותובנות</a></li>
       <li><a href="register.html">הרשמה</a></li>
@@ -23,7 +25,7 @@
   </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="main-content">
   <div class="container">
     <h1>סיפורי קהילה</h1>
     <p>חברי קהילה משתפים בקצרצרי וידאו ובמילים שלהם את הדרך שעשו. כל הסיפורים עוברים אישור לפני פרסום.</p>
