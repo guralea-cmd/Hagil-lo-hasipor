@@ -736,6 +736,9 @@ input[type="file"] {
   }
 
   .hero-overlay-title .line2-wrap {
-    max-width: 92vw;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
   }
 }
