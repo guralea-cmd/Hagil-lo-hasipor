@@ -474,24 +474,26 @@ footer a {
   font-weight: 700;
 }
 
-.hero-overlay-title .hero-line1-wrap {
-  display: inline-block;
-  max-width: 100%;
-}
-
 .hero-overlay-title .hero-line1 {
   display: block;
   text-align: right;
+  margin-top: 6px;
   font-size: clamp(18px, 5.8vw, 44px);
   font-weight: 700;
+}
+
+.hero-overlay-title .hero-line2-wrap {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
 }
 
 .hero-overlay-title .hero-line2 {
   display: block;
   text-align: right;
-  margin-top: 8px;
   font-size: clamp(13px, 2.8vw, 22px);
   font-weight: 500;
+  font-style: italic;
 }
 
 .hero-overlay-title .hero-line3 {
