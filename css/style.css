@@ -400,17 +400,15 @@ footer a {
   font-size: 22px;
 }
 
-/* Full-width hero image band — sits above everything */
+/* Full-width hero image band — narrow strip, sits above everything */
 .hero-image-band {
   position: relative;
   width: 100%;
-  min-height: 500px;
-  overflow-x: hidden;
+  height: 260px;
+  overflow: hidden;
 }
 
 .hero-image-band img {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -419,66 +417,70 @@ footer a {
 }
 
 .hero-overlay-title {
-  position: relative;
-  z-index: 1;
-  min-height: 500px;
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 24px;
-  line-height: 1.4;
+  justify-content: flex-start;
+  padding: 0 24px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.35) 100%);
 }
 
 .hero-overlay-title h1 {
   margin: 0;
-  width: 100%;
   max-width: 100%;
   color: #fff;
-}
-
-.hero-overlay-title .kicker,
-.hero-overlay-title .line1,
-.hero-overlay-title .line2,
-.hero-overlay-title .line3 {
-  display: block;
+  text-align: right;
   white-space: nowrap;
   overflow-wrap: break-word;
   word-break: break-word;
+  font-size: clamp(18px, 5.8vw, 44px);
+  font-weight: 700;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-.hero-overlay-title .kicker,
-.hero-overlay-title .line1,
-.hero-overlay-title .line2 {
-  font-size: clamp(20px, 8.5vw, 87px);
-  font-weight: 700;
+@media (max-width: 500px) {
+  .hero-overlay-title h1 {
+    white-space: normal;
+  }
 }
 
-.hero-overlay-title .kicker {
-  width: 100%;
-  margin-bottom: 8px;
+/* Split block: text + CTA on one side, video placeholder on the other */
+.split-cta-inner {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-.hero-overlay-title .line1 {
-  width: 100%;
+.split-cta-text {
+  flex: 1 1 320px;
 }
 
-.hero-overlay-title .line2-wrap {
-  display: inline-block;
-  margin-top: 16px;
+.split-cta-text h2 {
   text-align: right;
-  max-width: 100%;
+  margin-bottom: 12px;
 }
 
-.hero-overlay-title .line3 {
-  margin-top: 8px;
-  text-align: left;
-  font-size: clamp(11px, 2.6vw, 27px);
-  font-weight: 400;
-  letter-spacing: 1px;
-  opacity: 0.9;
+.split-cta-text p {
+  color: var(--color-muted);
+  margin-bottom: 20px;
+}
+
+.split-cta-video {
+  flex: 1 1 320px;
+}
+
+@media (max-width: 700px) {
+  .split-cta-inner {
+    flex-direction: column;
+  }
+
+  .split-cta-text,
+  .split-cta-video {
+    flex: 1 1 auto;
+    width: 100%;
+  }
 }
 
 /* Video block aligned to the right, linking through to the About page */
@@ -725,20 +727,5 @@ input[type="file"] {
 
   .hero h1 {
     font-size: 30px;
-  }
-
-  .hero-overlay-title .kicker,
-  .hero-overlay-title .line1,
-  .hero-overlay-title .line2 {
-    white-space: normal;
-    font-size: clamp(26px, 10.5vw, 56px);
-    line-height: 1.2;
-  }
-
-  .hero-overlay-title .line2-wrap {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
   }
 }
