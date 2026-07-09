@@ -452,34 +452,52 @@ footer a {
 .hero-overlay-title h1 {
   margin: 0;
   max-width: 100%;
+  text-align: right;
   color: #fff;
 }
 
+.hero-overlay-title .hero-kicker,
 .hero-overlay-title .hero-line1,
 .hero-overlay-title .hero-line2,
 .hero-overlay-title .hero-line3 {
-  display: block;
   max-width: 100%;
-  text-align: right;
   white-space: nowrap;
   overflow-wrap: break-word;
   word-break: break-word;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
+.hero-overlay-title .hero-kicker {
+  display: block;
+  text-align: right;
+  font-size: clamp(18px, 5.8vw, 44px);
+  font-weight: 700;
+}
+
+.hero-overlay-title .hero-line1-wrap {
+  display: inline-block;
+  max-width: 100%;
+}
+
 .hero-overlay-title .hero-line1 {
+  display: block;
+  text-align: right;
   font-size: clamp(18px, 5.8vw, 44px);
   font-weight: 700;
 }
 
 .hero-overlay-title .hero-line2 {
+  display: block;
+  text-align: right;
   margin-top: 8px;
   font-size: clamp(13px, 2.8vw, 22px);
   font-weight: 500;
 }
 
 .hero-overlay-title .hero-line3 {
-  margin-top: 6px;
+  display: block;
+  text-align: left;
+  margin-top: 4px;
   font-size: clamp(11px, 1.8vw, 15px);
   font-weight: 400;
   letter-spacing: 1px;
@@ -487,6 +505,7 @@ footer a {
 }
 
 @media (max-width: 500px) {
+  .hero-overlay-title .hero-kicker,
   .hero-overlay-title .hero-line1,
   .hero-overlay-title .hero-line2,
   .hero-overlay-title .hero-line3 {
