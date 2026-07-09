@@ -491,7 +491,7 @@ footer a {
 .hero-overlay-title .hero-line2 {
   display: block;
   text-align: right;
-  font-size: clamp(13px, 2.8vw, 22px);
+  font-size: clamp(16px, 5vw, 39px);
   font-weight: 500;
   font-style: italic;
 }
