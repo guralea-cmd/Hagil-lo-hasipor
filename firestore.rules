@@ -25,7 +25,7 @@ service cloud.firestore {
                      && request.resource.data.name.size() > 0
                      && request.resource.data.email is string
                      && request.resource.data.story is string;
-      allow read: if request.auth != null;
+      allow read: if resource.data.status == "approved" || request.auth != null;
       allow update, delete: if request.auth != null;
     }
   }
