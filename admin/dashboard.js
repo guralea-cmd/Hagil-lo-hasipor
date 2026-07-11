@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "login.html";
       return;
     }
+    loadSubmissions();
+    cleanupOldSubmissions();
     loadStories();
     loadRegistrations();
   });
@@ -28,6 +30,83 @@ document.addEventListener("DOMContentLoaded", function () {
   function statusLabel(status) {
     var labels = { pending: "ממתין", approved: "מאושר", rejected: "נדחה" };
     return '<span class="status-pill ' + status + '">' + (labels[status] || status) + "</span>";
+  }
+
+  function truncate(str, max) {
+    str = str || "";
+    return str.length > max ? str.slice(0, max) + "…" : str;
+  }
+
+  function loadSubmissions() {
+    var body = document.querySelector("#submissions-body");
+    db.collection("story_submissions").orderBy("createdAt", "desc").get().then(function (snapshot) {
+      if (snapshot.empty) {
+        body.innerHTML = '<tr><td colspan="7">אין טפסים עדיין.</td></tr>';
+        return;
+      }
+      body.innerHTML = "";
+      snapshot.forEach(function (doc) {
+        var s = doc.data();
+        var photos = (s.photoUrls || []).map(function (url) {
+          return '<a href="' + url + '" target="_blank" rel="noopener"><img src="' + url + '" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:4px;margin:2px;"></a>';
+        }).join("");
+        var video = s.videoUrl ? '<video src="' + s.videoUrl + '" controls style="max-width:160px;display:block;margin-top:6px;"></video>' : "";
+        var links = s.links ? '<div style="margin-top:6px;"><a href="' + escapeHtml(s.links) + '" target="_blank" rel="noopener">קישורים</a></div>' : "";
+        var storyText =
+          "<strong>הסיפור:</strong> " + escapeHtml(truncate(s.story, 200)) + "<br>" +
+          "<strong>הרגע המשנה:</strong> " + escapeHtml(truncate(s.turningPoint, 150)) + "<br>" +
+          "<strong>היום:</strong> " + escapeHtml(truncate(s.today, 150)) + "<br>" +
+          "<strong>המסר:</strong> " + escapeHtml(truncate(s.message, 150));
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          "<td>" + formatDate(s.createdAt) + "</td>" +
+          "<td>" + escapeHtml(s.name) + (s.age ? ", " + escapeHtml(s.age) : "") + "<br>" + escapeHtml(s.location) + "</td>" +
+          '<td style="max-width:280px;">' + storyText + "</td>" +
+          "<td>" + photos + video + links + "</td>" +
+          "<td>" + escapeHtml(s.phone) + "<br>" + escapeHtml(s.email) + "</td>" +
+          "<td>" + statusLabel(s.status) + "</td>" +
+          "<td>" +
+          '<button class="btn btn-sm approve-submission-btn" data-id="' + doc.id + '">אשר ופרסם</button> ' +
+          '<button class="btn btn-outline btn-sm reject-submission-btn" data-id="' + doc.id + '">דחה</button>' +
+          "</td>";
+        body.appendChild(tr);
+      });
+
+      body.querySelectorAll(".approve-submission-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          updateSubmissionStatus(btn.dataset.id, "approved");
+        });
+      });
+      body.querySelectorAll(".reject-submission-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          updateSubmissionStatus(btn.dataset.id, "rejected");
+        });
+      });
+    });
+  }
+
+  function updateSubmissionStatus(id, status) {
+    db.collection("story_submissions").doc(id).update({ status: status }).then(loadSubmissions);
+  }
+
+  function cleanupOldSubmissions() {
+    var twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+    db.collection("story_submissions").where("status", "==", "pending").get().then(function (snapshot) {
+      snapshot.forEach(function (doc) {
+        var s = doc.data();
+        if (!s.createdAt || !s.createdAt.toDate) return;
+        if (s.createdAt.toDate() < twoWeeksAgo) {
+          (s.photoUrls || []).forEach(function (url) {
+            storage.refFromURL(url).delete().catch(function () {});
+          });
+          if (s.videoUrl) {
+            storage.refFromURL(s.videoUrl).delete().catch(function () {});
+          }
+          doc.ref.delete();
+        }
+      });
+    });
   }
 
   function loadStories() {

@@ -19,8 +19,33 @@
 
 <section id="main-content">
   <div class="container">
-    <h1>סיפורי קהילה לאישור</h1>
-    <p class="section-intro">סיפורים שנשלחו על ידי חברי הקהילה. אשר/י לפני פרסום באתר.</p>
+    <h1>טפסי הרשמה לאישור</h1>
+    <p class="section-intro">סיפורים שנשלחו מטופס ההרשמה החדש. אישור כאן מפרסם אותם מיד בעמוד "סיפורי קהילה". טפסים שממתינים לאישור יותר משבועיים נמחקים אוטומטית.</p>
+    <div style="overflow-x:auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col">תאריך</th>
+            <th scope="col">פרטים</th>
+            <th scope="col">הסיפור</th>
+            <th scope="col">מדיה</th>
+            <th scope="col">קשר</th>
+            <th scope="col">סטטוס</th>
+            <th scope="col">פעולות</th>
+          </tr>
+        </thead>
+        <tbody id="submissions-body">
+          <tr><td colspan="7">טוען...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="container">
+    <h2>סיפורי קהילה לאישור (טופס ישן)</h2>
+    <p class="section-intro">סיפורים שנשלחו מהטופס הקודם. אשר/י לפני פרסום באתר.</p>
     <div style="overflow-x:auto;">
       <table class="admin-table">
         <thead>
@@ -69,6 +94,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script src="../js/firebase-config.js?v=1"></script>
-<script src="dashboard.js?v=1"></script>
+<script src="dashboard.js?v=2"></script>
 </body>
 </html>
