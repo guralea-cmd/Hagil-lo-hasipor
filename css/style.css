@@ -553,6 +553,26 @@ footer a {
   text-align: right;
 }
 
+.value-points {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.value-points li {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-muted);
+  text-align: right;
+}
+
 .split-cta-video {
   flex: 1 1 320px;
 }
