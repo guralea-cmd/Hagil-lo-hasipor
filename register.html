@@ -28,7 +28,88 @@
 <section class="hero" id="main-content">
   <div class="container">
     <h1>הרשמה</h1>
-    <p>בקרוב יתאפשר להירשם כאן.</p>
+    <p>ספרו לנו קצת עליכם ועל הסיפור שלכם - נשמח להכיר.</p>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="container">
+    <form id="register-form">
+      <div>
+        <label for="name">שם מלא</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="age">גיל</label>
+        <input type="number" id="age" name="age" min="1" max="120" required>
+      </div>
+      <div>
+        <label for="location">עיר / מדינה</label>
+        <input type="text" id="location" name="location">
+        <p class="form-note">לא חובה</p>
+      </div>
+      <div>
+        <label for="phone">טלפון</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div>
+        <label for="email">כתובת דוא"ל</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div>
+        <label for="story">מה הסיפור שלכם?</label>
+        <textarea id="story" name="story" rows="9" maxlength="2000" required></textarea>
+        <p class="form-note"><span id="story-count">0</span>/2000 תווים</p>
+      </div>
+
+      <div>
+        <label for="turningPoint">מה היה הרגע או ההחלטה ששינו את הכיוון שלכם?</label>
+        <textarea id="turningPoint" name="turningPoint" rows="4" maxlength="500" required></textarea>
+        <p class="form-note"><span id="turningPoint-count">0</span>/500 תווים</p>
+      </div>
+
+      <div>
+        <label for="today">מה אתם עושים היום?</label>
+        <textarea id="today" name="today" rows="4" maxlength="500" required></textarea>
+        <p class="form-note"><span id="today-count">0</span>/500 תווים</p>
+      </div>
+
+      <div>
+        <label for="message">מהו המסר החשוב ביותר שהייתם רוצים להעביר לקוראים?</label>
+        <textarea id="message" name="message" rows="4" maxlength="500" required></textarea>
+        <p class="form-note"><span id="message-count">0</span>/500 תווים</p>
+      </div>
+
+      <div>
+        <label for="photos">העלאת תמונות (עד 5 תמונות)</label>
+        <input type="file" id="photos" name="photos" accept="image/*" multiple>
+        <p class="form-note" id="photos-note">אפשר לבחור עד 5 תמונות</p>
+      </div>
+
+      <div>
+        <label for="video">העלאת סרטון</label>
+        <input type="file" id="video" name="video" accept="video/*">
+        <p class="form-note">לא חובה, עד 100MB</p>
+      </div>
+
+      <div>
+        <label for="links">קישור לכתבות, ראיונות, סרטונים או רשתות חברתיות</label>
+        <input type="text" id="links" name="links" placeholder="https://...">
+        <p class="form-note">לא חובה - אם יש כמה קישורים, אפשר להפריד בפסיק</p>
+      </div>
+
+      <div>
+        <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400;">
+          <input type="checkbox" id="consent" name="consent" required style="width:auto; margin-top:4px;">
+          <span>אני מאשר/ת שהמידע שמסרתי נכון, ואני מסכים/ה לפרסום הסיפור, התמונות והסרטונים, אם ייבחרו לפרסום.</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn">שליחת הרשמה</button>
+      <p id="upload-progress" class="form-note"></p>
+      <p id="form-status" class="form-status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -36,7 +117,12 @@
   <p>הגיל הוא לא הסיפור © <span id="year"></span> לאה גורא | כל הזכויות שמורות</p>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="js/firebase-config.js?v=1"></script>
 <script src="js/main.js?v=1"></script>
+<script src="js/register.js?v=2"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
