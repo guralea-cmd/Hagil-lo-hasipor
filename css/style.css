@@ -518,9 +518,13 @@ footer a {
 /* Split block: text + CTA on one side, video placeholder on the other */
 .split-cta-inner {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 40px;
   flex-wrap: wrap;
+}
+
+.split-cta-inner--top {
+  align-items: flex-start;
 }
 
 .split-cta-text {
