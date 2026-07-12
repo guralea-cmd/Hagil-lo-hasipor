@@ -739,6 +739,25 @@ footer a {
   margin-top: 12px;
 }
 
+.story-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.story-gallery img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.story-card--highlight {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
+}
+
 .empty-state {
   text-align: center;
   color: var(--color-muted);
