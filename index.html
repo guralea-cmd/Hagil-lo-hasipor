@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>הגיל הוא לא הסיפור</title>
 <meta name="description" content="הגיל הוא לא הסיפור - את/ה כותב/ת אותו.">
-<link rel="stylesheet" href="css/style.css?v=11">
+<link rel="stylesheet" href="css/style.css?v=12">
 </head>
 <body>
 
@@ -67,42 +67,8 @@
   <div class="container">
     <h2>סיפורים מעוררי השראה</h2>
     <p class="section-intro">כאן תמצאו סיפורים אמיתיים של אנשים שעברו משברים, מחלות, אובדן ואתגרי חיים - ובחרו תמיד לקום, להסתכל קדימה ולאתגר את עצמם בכל גיל ומצב בריאותי, גם אם היו צריכים להתחיל הכול מחדש.</p>
-    <div class="grid grid--heroes">
-      <a href="stories.html" class="story-card">
-        <div class="story-video" aria-hidden="true">🏅</div>
-        <div class="story-body">
-          <h3 class="story-name">מיכל, 52</h3>
-          <p>עברה קריירה חדשה בגיל 52 - ולא הביטה אחורה.</p>
-        </div>
-      </a>
-      <a href="stories.html" class="story-card">
-        <div class="story-video" aria-hidden="true">🏃</div>
-        <div class="story-body">
-          <h3 class="story-name">יוסי, 61</h3>
-          <p>רץ את המרוץ הראשון שלו בחיים - בגיל 61.</p>
-        </div>
-      </a>
-      <a href="stories.html" class="story-card">
-        <div class="story-video" aria-hidden="true">💼</div>
-        <div class="story-body">
-          <h3 class="story-name">רינת, 45</h3>
-          <p>פתחה עסק משלה אחרי עשרים שנה באותה עבודה.</p>
-        </div>
-      </a>
-      <a href="stories.html" class="story-card">
-        <div class="story-video" aria-hidden="true">🎓</div>
-        <div class="story-body">
-          <h3 class="story-name">דורון, 58</h3>
-          <p>חזר ללמוד לתואר שני, שנים אחרי שהפסיק.</p>
-        </div>
-      </a>
-      <a href="stories.html" class="story-card">
-        <div class="story-video" aria-hidden="true">🎨</div>
-        <div class="story-body">
-          <h3 class="story-name">שירה, 49</h3>
-          <p>חזרה לצייר אחרי שלושים שנה, ופתחה תערוכה ראשונה.</p>
-        </div>
-      </a>
+    <div class="grid grid--heroes" id="home-stories-grid">
+      <p class="empty-state">טוען סיפורים...</p>
     </div>
     <p style="text-align:center;margin-top:24px;"><a href="stories.html" class="btn btn-outline">לכל הסיפורים</a></p>
   </div>
@@ -116,7 +82,11 @@
   </div>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=2"></script>
 <script src="js/main.js?v=1"></script>
+<script src="js/home-stories.js?v=1"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

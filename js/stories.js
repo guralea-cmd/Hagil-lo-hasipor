@@ -8,9 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
     return div.innerHTML;
   }
 
-  function cardFromLegacyStory(story) {
+  function cardFromLegacyStory(id, story) {
     var card = document.createElement("div");
     card.className = "story-card";
+    card.id = "story-" + id;
     card.innerHTML =
       '<div class="story-video"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div>' +
       '<div class="story-body">' +
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return card;
   }
 
-  function cardFromSubmission(story) {
+  function cardFromSubmission(id, story) {
     var mediaHtml;
     if (story.videoUrl) {
       mediaHtml = '<video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video>';
@@ -30,13 +31,35 @@ document.addEventListener("DOMContentLoaded", function () {
       mediaHtml = "📖";
     }
     var nameLine = escapeHtml(story.name || "") + (story.age ? ", " + escapeHtml(story.age) : "");
+
+    var extraPhotos = "";
+    var galleryUrls = story.photoUrls || [];
+    if (story.videoUrl) {
+      // video is already the main media, show all photos in the gallery
+    } else {
+      galleryUrls = galleryUrls.slice(1);
+    }
+    if (galleryUrls.length) {
+      extraPhotos = '<div class="story-gallery">' + galleryUrls.map(function (url) {
+        return '<img src="' + url + '" alt="">';
+      }).join("") + '</div>';
+    }
+
+    var linksHtml = story.links ? '<p><a href="' + escapeHtml(story.links) + '" target="_blank" rel="noopener">קישורים נוספים</a></p>' : "";
+
     var card = document.createElement("div");
     card.className = "story-card";
+    card.id = "story-" + id;
     card.innerHTML =
       '<div class="story-video">' + mediaHtml + '</div>' +
       '<div class="story-body">' +
+      '<h3 class="story-name">' + nameLine + '</h3>' +
+      (story.location ? '<p class="form-note">' + escapeHtml(story.location) + '</p>' : '') +
       '<p>' + escapeHtml(story.story || "") + '</p>' +
-      '<div class="story-name">' + nameLine + '</div>' +
+      (story.turningPoint ? '<p><strong>הרגע ששינה הכול:</strong> ' + escapeHtml(story.turningPoint) + '</p>' : '') +
+      (story.today ? '<p><strong>מה קורה היום:</strong> ' + escapeHtml(story.today) + '</p>' : '') +
+      (story.message ? '<p><strong>המסר שלי:</strong> ' + escapeHtml(story.message) + '</p>' : '') +
+      linksHtml + extraPhotos +
       '</div>';
     return card;
   }
@@ -46,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
     db.collection("story_submissions").where("status", "==", "approved").orderBy("createdAt", "desc").get()
   ])
     .then(function (results) {
-      var legacyDocs = results[0].docs.map(function (doc) { return { type: "legacy", data: doc.data() }; });
-      var submissionDocs = results[1].docs.map(function (doc) { return { type: "submission", data: doc.data() }; });
+      var legacyDocs = results[0].docs.map(function (doc) { return { id: doc.id, type: "legacy", data: doc.data() }; });
+      var submissionDocs = results[1].docs.map(function (doc) { return { id: doc.id, type: "submission", data: doc.data() }; });
       var all = legacyDocs.concat(submissionDocs).sort(function (a, b) {
         var aTime = a.data.createdAt && a.data.createdAt.toMillis ? a.data.createdAt.toMillis() : 0;
         var bTime = b.data.createdAt && b.data.createdAt.toMillis ? b.data.createdAt.toMillis() : 0;
@@ -60,9 +83,17 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       grid.innerHTML = "";
       all.forEach(function (item) {
-        var card = item.type === "legacy" ? cardFromLegacyStory(item.data) : cardFromSubmission(item.data);
+        var card = item.type === "legacy" ? cardFromLegacyStory(item.id, item.data) : cardFromSubmission(item.id, item.data);
         grid.appendChild(card);
       });
+
+      if (window.location.hash) {
+        var target = document.querySelector(window.location.hash);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          target.classList.add("story-card--highlight");
+        }
+      }
     })
     .catch(function (err) {
       console.error(err);
