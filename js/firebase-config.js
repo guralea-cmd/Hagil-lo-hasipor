@@ -1,10 +1,10 @@
 var firebaseConfig = {
-  apiKey: "REPLACE_WITH_YOUR_API_KEY",
-  authDomain: "REPLACE_WITH_YOUR_PROJECT.firebaseapp.com",
-  projectId: "REPLACE_WITH_YOUR_PROJECT",
-  storageBucket: "REPLACE_WITH_YOUR_PROJECT.appspot.com",
-  messagingSenderId: "REPLACE_WITH_SENDER_ID",
-  appId: "REPLACE_WITH_APP_ID"
+  apiKey: "AIzaSyDpIyfmtt5rSJ10tkXrqURup6iE4utfTig",
+  authDomain: "hagil-lo-hasipor.firebaseapp.com",
+  projectId: "hagil-lo-hasipor",
+  storageBucket: "hagil-lo-hasipor.firebasestorage.app",
+  messagingSenderId: "617409966023",
+  appId: "1:617409966023:web:5f9785bfbf8059e21df3e2"
 };
 
 firebase.initializeApp(firebaseConfig);
