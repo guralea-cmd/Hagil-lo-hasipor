@@ -1,11 +1,11 @@
 :root {
-  --color-bg: #faf7f2;
+  --color-bg: #fdf8f3;
   --color-card: #ffffff;
-  --color-primary: #7a5c4e;
-  --color-accent: #c98a5b;
-  --color-accent-dark: #a35a34;
-  --color-text: #2e2a27;
-  --color-muted: #6b6460;
+  --color-primary: #b83227;
+  --color-accent: #ffb020;
+  --color-accent-dark: #b8441a;
+  --color-text: #181310;
+  --color-muted: #4a453f;
   --color-border: #e6ddd3;
   --radius: 14px;
   --max-width: 1080px;
@@ -26,6 +26,7 @@ body {
   color: var(--color-text);
   direction: rtl;
   line-height: 1.7;
+  font-size: 17px;
 }
 
 a {
@@ -170,7 +171,7 @@ header {
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(163, 90, 52, 0.4);
+  box-shadow: 0 6px 18px rgba(184, 68, 26, 0.4);
 }
 
 .btn-outline {
@@ -213,10 +214,11 @@ section h2 {
   gap: 24px;
 }
 
-/* Compact variant - fits ~5 cards per row on desktop */
+/* Compact variant - small fixed-size cards, 6-8 per row on desktop, never stretches */
 .grid--heroes {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 140px));
+  justify-content: center;
+  gap: 14px;
 }
 
 .grid--heroes .story-video {
@@ -607,6 +609,63 @@ footer a {
   }
 }
 
+/* Individual community story: video on one side, name + summary on the other */
+.story-row {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--color-border);
+  scroll-margin-top: 90px;
+}
+
+.story-row:last-child {
+  border-bottom: none;
+}
+
+.story-row-media {
+  flex: 1 1 320px;
+}
+
+.story-row-media .video-wrap {
+  background: #000;
+}
+
+.story-row-info {
+  flex: 1 1 320px;
+}
+
+.story-row-info h3 {
+  color: var(--color-primary);
+  margin: 0 0 4px;
+}
+
+.story-row-info .story-location {
+  color: var(--color-muted);
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+
+.story-row-info p {
+  color: var(--color-text);
+}
+
+.story-row--highlight {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 6px;
+  border-radius: var(--radius);
+}
+
+@media (max-width: 700px) {
+  .story-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 24px 0;
+  }
+}
+
 /* Video block aligned to the right, linking through to the About page */
 .video-side {
   float: right;
@@ -737,25 +796,6 @@ footer a {
 .story-card .story-name {
   font-weight: 600;
   margin-top: 12px;
-}
-
-.story-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.story-gallery img {
-  width: 56px;
-  height: 56px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.story-card--highlight {
-  outline: 3px solid var(--color-accent-dark);
-  outline-offset: 2px;
 }
 
 .empty-state {
