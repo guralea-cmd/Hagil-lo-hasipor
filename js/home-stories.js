@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var grid = document.querySelector("#home-stories-grid");
   if (!grid) return;
 
-  var MAX_ITEMS = 5;
+  var MAX_ITEMS = 8;
 
   function escapeHtml(str) {
     var div = document.createElement("div");
@@ -18,11 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return '<img src="' + story.photoUrls[0] + '" alt="" style="width:100%;height:100%;object-fit:cover;">';
     }
     return "📖";
-  }
-
-  function excerptOf(text) {
-    text = text || "";
-    return text.length > 90 ? text.slice(0, 90) + "…" : text;
   }
 
   Promise.all([
@@ -49,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         var name = item.type === "legacy"
           ? escapeHtml(s.name || "")
           : escapeHtml(s.name || "") + (s.age ? ", " + escapeHtml(s.age) : "");
-        var excerpt = item.type === "legacy" ? s.bio : s.story;
 
         var a = document.createElement("a");
         a.href = "stories.html#story-" + item.id;
@@ -58,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
           '<div class="story-video">' + mediaFor(s) + '</div>' +
           '<div class="story-body">' +
           '<h3 class="story-name">' + name + '</h3>' +
-          '<p>' + escapeHtml(excerptOf(excerpt)) + '</p>' +
           '</div>';
         grid.appendChild(a);
       });
