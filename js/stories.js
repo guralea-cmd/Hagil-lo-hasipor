@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
     row.className = "story-row";
     row.id = "story-" + id;
     row.innerHTML =
-      '<div class="story-row-media"><div class="video-wrap"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div></div>' +
       '<div class="story-row-info">' +
       '<h3>' + escapeHtml(story.name || "") + '</h3>' +
       '<p>' + escapeHtml(summarize(story.bio, 400)) + '</p>' +
-      '</div>';
+      '</div>' +
+      '<div class="story-row-media"><div class="video-wrap"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div></div>';
     return row;
   }
 
@@ -41,12 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
     row.className = "story-row";
     row.id = "story-" + id;
     row.innerHTML =
-      '<div class="story-row-media"><div class="video-wrap">' + mediaHtml + '</div></div>' +
       '<div class="story-row-info">' +
       '<h3>' + nameLine + '</h3>' +
       (story.location ? '<p class="story-location">' + escapeHtml(story.location) + '</p>' : '') +
       '<p>' + escapeHtml(summarize(story.story, 400)) + '</p>' +
-      '</div>';
+      '</div>' +
+      '<div class="story-row-media"><div class="video-wrap">' + mediaHtml + '</div></div>';
     return row;
   }
 
