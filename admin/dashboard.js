@@ -67,7 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
           "<td>" + statusLabel(s.status) + "</td>" +
           "<td>" +
           '<button class="btn btn-sm approve-submission-btn" data-id="' + doc.id + '">אשר ופרסם</button> ' +
-          '<button class="btn btn-outline btn-sm reject-submission-btn" data-id="' + doc.id + '">דחה</button>' +
+          '<button class="btn btn-outline btn-sm reject-submission-btn" data-id="' + doc.id + '">דחה</button> ' +
+          (s.status === "approved" ? '<button class="btn btn-outline btn-sm delete-submission-btn" data-id="' + doc.id + '">מחק</button>' : "") +
           "</td>";
         body.appendChild(tr);
       });
@@ -82,11 +83,30 @@ document.addEventListener("DOMContentLoaded", function () {
           updateSubmissionStatus(btn.dataset.id, "rejected");
         });
       });
+      body.querySelectorAll(".delete-submission-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          deleteSubmission(btn.dataset.id);
+        });
+      });
     });
   }
 
   function updateSubmissionStatus(id, status) {
     db.collection("story_submissions").doc(id).update({ status: status }).then(loadSubmissions);
+  }
+
+  function deleteSubmission(id) {
+    if (!confirm("למחוק לצמיתות את הסיפור הזה, כולל התמונות והווידאו שלו? אי אפשר לשחזר את זה.")) return;
+    db.collection("story_submissions").doc(id).get().then(function (doc) {
+      var s = doc.data() || {};
+      (s.photoUrls || []).forEach(function (url) {
+        storage.refFromURL(url).delete().catch(function () {});
+      });
+      if (s.videoUrl) {
+        storage.refFromURL(s.videoUrl).delete().catch(function () {});
+      }
+      return doc.ref.delete();
+    }).then(loadSubmissions);
   }
 
   function cleanupOldSubmissions() {
@@ -129,7 +149,8 @@ document.addEventListener("DOMContentLoaded", function () {
           "<td>" + statusLabel(s.status) + "</td>" +
           '<td>' +
           '<button class="btn btn-sm approve-btn" data-id="' + doc.id + '">אשר</button> ' +
-          '<button class="btn btn-outline btn-sm reject-btn" data-id="' + doc.id + '">דחה</button>' +
+          '<button class="btn btn-outline btn-sm reject-btn" data-id="' + doc.id + '">דחה</button> ' +
+          (s.status === "approved" ? '<button class="btn btn-outline btn-sm delete-story-btn" data-id="' + doc.id + '">מחק</button>' : "") +
           "</td>";
         body.appendChild(tr);
       });
@@ -144,11 +165,27 @@ document.addEventListener("DOMContentLoaded", function () {
           updateStatus(btn.dataset.id, "rejected");
         });
       });
+      body.querySelectorAll(".delete-story-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          deleteStory(btn.dataset.id);
+        });
+      });
     });
   }
 
   function updateStatus(id, status) {
     db.collection("stories").doc(id).update({ status: status }).then(loadStories);
+  }
+
+  function deleteStory(id) {
+    if (!confirm("למחוק לצמיתות את הסיפור הזה, כולל הווידאו שלו? אי אפשר לשחזר את זה.")) return;
+    db.collection("stories").doc(id).get().then(function (doc) {
+      var s = doc.data() || {};
+      if (s.videoUrl) {
+        storage.refFromURL(s.videoUrl).delete().catch(function () {});
+      }
+      return doc.ref.delete();
+    }).then(loadStories);
   }
 
   function loadRegistrations() {
