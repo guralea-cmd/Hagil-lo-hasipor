@@ -214,10 +214,11 @@ section h2 {
   gap: 24px;
 }
 
-/* Blog listing - caps card width so a single post doesn't stretch full width */
+/* Blog listing - single column of horizontal cards */
 .grid--blog {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
-  justify-content: center;
+  grid-template-columns: 1fr;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 /* Compact variant - small fixed-size cards, 6-8 per row on desktop, never stretches */
@@ -778,6 +779,10 @@ footer a {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
 }
 
 .story-card .story-video,
@@ -790,15 +795,84 @@ footer a {
   color: var(--color-muted);
 }
 
+.blog-card .blog-thumb {
+  flex: 0 0 100px;
+  width: 100px;
+  height: 100px;
+  aspect-ratio: 1 / 1;
+  border-radius: calc(var(--radius) - 6px);
+  font-size: 28px;
+}
+
 .story-card .story-body,
 .blog-card .blog-body {
   padding: 20px;
+}
+
+.blog-card .blog-body {
+  padding: 0;
+  flex: 1 1 auto;
 }
 
 .story-card h3,
 .blog-card h3 {
   color: var(--color-primary);
   margin: 0 0 8px;
+}
+
+.blog-card .blog-body h3 {
+  margin-top: 0;
+}
+
+.category-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.category-tag--nutrition {
+  background: #e3f5e6;
+  color: #1f7a3d;
+}
+
+.category-tag--sleep {
+  background: #e3edfa;
+  color: #1c5fa8;
+}
+
+.category-tag--strength {
+  background: #fdecdc;
+  color: #c15c17;
+}
+
+.category-tag--balance {
+  background: #f1e6fb;
+  color: #6b3fa0;
+}
+
+.category-tag--health {
+  background: #fbe0e0;
+  color: #b8261f;
+}
+
+.category-tag--inspiration {
+  background: #e9e9ea;
+  color: #2b2b2b;
+}
+
+@media (max-width: 480px) {
+  .blog-card {
+    flex-direction: column;
+  }
+
+  .blog-card .blog-thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
 }
 
 .story-card .story-name {
