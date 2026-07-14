@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>פאנל ניהול | הגיל הוא לא הסיפור</title>
-<link rel="stylesheet" href="../css/style.css?v=13">
+<link rel="stylesheet" href="../css/style.css?v=14">
 </head>
 <body>
 
@@ -89,11 +89,33 @@
   </div>
 </section>
 
+<section>
+  <div class="container">
+    <h2>נרשמים למפגש</h2>
+    <div style="overflow-x:auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col">תאריך</th>
+            <th scope="col">שם מלא</th>
+            <th scope="col">גיל</th>
+            <th scope="col">טלפון</th>
+            <th scope="col">אימייל</th>
+          </tr>
+        </thead>
+        <tbody id="event-signups-body">
+          <tr><td colspan="5">טוען...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script src="../js/firebase-config.js?v=2"></script>
-<script src="dashboard.js?v=3"></script>
+<script src="dashboard.js?v=4"></script>
 </body>
 </html>

@@ -28,5 +28,13 @@ service cloud.firestore {
       allow read: if resource.data.status == "approved" || request.auth != null;
       allow update, delete: if request.auth != null;
     }
+
+    match /event_signups/{signupId} {
+      allow create: if request.resource.data.firstName is string
+                     && request.resource.data.firstName.size() > 0
+                     && request.resource.data.phone is string
+                     && request.resource.data.email is string;
+      allow read, update, delete: if request.auth != null;
+    }
   }
 }
