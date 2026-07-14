@@ -21,4 +21,49 @@ document.addEventListener("DOMContentLoaded", function () {
       form.reset();
     });
   }
+
+  var modals = document.querySelectorAll(".modal-overlay");
+
+  function openModal(modal) {
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(modal) {
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll("[data-open-modal]").forEach(function (trigger) {
+    trigger.addEventListener("click", function () {
+      var modal = document.getElementById(trigger.getAttribute("data-open-modal"));
+      if (modal) {
+        openModal(modal);
+      }
+    });
+  });
+
+  modals.forEach(function (modal) {
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) {
+        closeModal(modal);
+      }
+    });
+    var closeBtn = modal.querySelector(".modal-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        closeModal(modal);
+      });
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      modals.forEach(function (modal) {
+        if (!modal.hidden) {
+          closeModal(modal);
+        }
+      });
+    }
+  });
 });
