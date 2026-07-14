@@ -587,6 +587,8 @@ footer a {
 
 .split-cta-video {
   flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 700px) {

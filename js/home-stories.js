@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }).slice(0, MAX_ITEMS);
 
       if (!all.length) {
-        grid.innerHTML = '<p class="empty-state">עדיין אין סיפורים מפורסמים - היו הראשונים לשתף!</p>';
+        grid.innerHTML = "";
         return;
       }
 
