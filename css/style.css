@@ -356,6 +356,20 @@ section h2 {
   color: var(--color-primary);
 }
 
+.cta-band--compact {
+  padding: 28px 24px;
+}
+
+.cta-band--compact h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.cta-band--compact p {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
 /* Forms */
 form {
   max-width: 560px;
@@ -831,6 +845,13 @@ footer a {
   padding: 3px 10px;
   border-radius: 20px;
   margin-bottom: 8px;
+}
+
+.blog-card .coming-soon {
+  display: inline-block;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--color-muted);
 }
 
 .category-tag--nutrition {
