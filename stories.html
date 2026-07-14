@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>סיפורי קהילה | הגיל הוא לא הסיפור</title>
-<link rel="stylesheet" href="css/style.css?v=14">
+<link rel="stylesheet" href="css/style.css?v=15">
 </head>
 <body>
 
@@ -29,6 +29,7 @@
   <div class="container">
     <h1>סיפורי קהילה</h1>
     <p>חברי קהילה משתפים בקצרצרי וידאו ובמילים שלהם את הדרך שעשו. כל הסיפורים עוברים אישור לפני פרסום.</p>
+    <p><button type="button" class="story-criteria-trigger" data-open-modal="story-criteria-modal"><strong>מה אנחנו מחפשים בסיפור?</strong></button></p>
     <a href="submit-story.html" class="btn">שתפו את הסיפור שלכם</a>
   </div>
 </section>
@@ -51,10 +52,20 @@
   <p>הגיל הוא לא הסיפור © <span id="year"></span> לאה גורא | כל הזכויות שמורות</p>
 </footer>
 
+<div class="modal-overlay" id="story-criteria-modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="story-criteria-title">
+    <button type="button" class="modal-close" aria-label="סגירה">&times;</button>
+    <h2 id="story-criteria-title">מה אנחנו מחפשים בסיפור?</h2>
+    <p>אנחנו מחפשים סיפור שמשנה את התפיסה של מה אפשרי אחרי גיל 50, נותן ערך לאחרים ומעורר רצון לעשות צעד קדימה.</p>
+    <p>אם אתם מאמינים שהסיפור שלכם יכול לגרום למישהו אחר לחשוב: "אם הוא יכול, אולי גם אני יכול" – נשמח לשמוע מכם.</p>
+    <p>הבחירה אילו סיפורים יתפרסמו באתר היא לפי שיקול דעתה הבלעדי של מערכת האתר.</p>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/firebase-config.js?v=2"></script>
-<script src="js/main.js?v=1"></script>
+<script src="js/main.js?v=2"></script>
 <script src="js/stories.js?v=5"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
