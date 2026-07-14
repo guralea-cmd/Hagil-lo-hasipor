@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מפגשים ואירועים | הגיל הוא לא הסיפור</title>
-<link rel="stylesheet" href="css/style.css?v=13">
+<title>נפגשים | הגיל הוא לא הסיפור</title>
+<link rel="stylesheet" href="css/style.css?v=14">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
       <li><a href="index.html">בית</a></li>
       <li><a href="about.html">קצת עליי</a></li>
       <li><a href="stories.html">סיפורי קהילה</a></li>
-      <li><a href="events.html" class="active" aria-current="page">מפגשים/אירועים</a></li>
+      <li><a href="events.html" class="active" aria-current="page">נפגשים</a></li>
       <li><a href="blog.html">כלים ותובנות</a></li>
       <li><a href="register.html">הרשמה</a></li>
     </ul>
@@ -27,7 +27,7 @@
 
 <section class="hero" id="main-content">
   <div class="container">
-    <h1>מפגשים ואירועים</h1>
+    <h1>נפגשים</h1>
     <p>מפגש קהילה פתוח - לכל מי שרוצה להצטרף, בלי קשר אם הוא כבר חלק מהקהילה או רק שומע עלינו בפעם הראשונה. כאן המקום להכיר, לשתף, להתחזק ביחד ולראות שאף פעם לא מאוחר מידי לעשות שינוי בגוף ובמחשבה. בסופו של יום כל עוד אנחנו לא בר מינן ולא צמח, אנחנו יכולים תמיד להתקדם כי הכול מתחיל בראש.</p>
   </div>
 </section>
@@ -43,11 +43,47 @@
   </div>
 </section>
 
+<section style="background:#fff;">
+  <div class="container">
+    <h2>נרשמים למפגש</h2>
+    <p class="section-intro">השאירו פרטים ונעדכן אתכם בוואטסאפ או במייל כשהתאריך הסופי ייקבע.</p>
+    <form id="event-signup-form">
+      <div>
+        <label for="first-name">שם פרטי</label>
+        <input type="text" id="first-name" name="firstName" required>
+      </div>
+      <div>
+        <label for="last-name">שם משפחה</label>
+        <input type="text" id="last-name" name="lastName" required>
+      </div>
+      <div>
+        <label for="age">גיל</label>
+        <input type="number" id="age" name="age" min="50" required>
+        <p class="form-note">המפגשים מיועדים לגילאי 50 ומעלה</p>
+      </div>
+      <div>
+        <label for="event-phone">טלפון (לוואטסאפ)</label>
+        <input type="tel" id="event-phone" name="phone" required>
+      </div>
+      <div>
+        <label for="event-email">אימייל</label>
+        <input type="email" id="event-email" name="email" required>
+      </div>
+      <button type="submit" class="btn">הרשמה למפגש</button>
+      <p id="event-form-status" class="form-status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
 <footer>
   <p>הגיל הוא לא הסיפור © <span id="year"></span> לאה גורא | כל הזכויות שמורות</p>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=2"></script>
 <script src="js/main.js?v=1"></script>
+<script src="js/events.js?v=1"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
