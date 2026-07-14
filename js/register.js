@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
     update();
   });
 
+  var successModalClose = document.querySelector("#registration-success-close");
+  if (successModalClose) {
+    successModalClose.addEventListener("click", function () {
+      form.reset();
+      document.querySelectorAll(".form-note span").forEach(function (span) { span.textContent = "0"; });
+    });
+  }
+
   var photosInput = document.querySelector("#photos");
   var photosNote = document.querySelector("#photos-note");
   photosInput.addEventListener("change", function () {
@@ -92,10 +100,11 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then(function () {
         progressEl.textContent = "";
-        statusEl.textContent = "תודה! הסיפור שלך נשלח ויפורסם לאחר אישור.";
+        statusEl.textContent = "";
         statusEl.classList.remove("error");
-        form.reset();
-        document.querySelectorAll(".form-note span").forEach(function (span) { span.textContent = "0"; });
+        if (window.openSiteModal) {
+          window.openSiteModal("registration-success-modal");
+        }
       })
       .catch(function (err) {
         console.error(err);

@@ -129,12 +129,22 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="registration-success-modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="registration-success-title">
+    <button type="button" class="modal-close" id="registration-success-close" aria-label="סגירה">&times;</button>
+    <h2 id="registration-success-title">תודה על ההרשמה!</h2>
+    <p>קיבלנו את הסיפור שלכם.</p>
+    <p>אנחנו נעבור עליו בקפידה ונבחן האם הוא מתאים לרוח הקהילה ולקריטריונים שבחרנו.</p>
+    <p>תודה שבחרתם לשתף את הסיפור שלכם ולהיות חלק מקהילת "הגיל הוא לא הסיפור".</p>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script src="js/firebase-config.js?v=2"></script>
-<script src="js/main.js?v=3"></script>
-<script src="js/register.js?v=2"></script>
+<script src="js/main.js?v=4"></script>
+<script src="js/register.js?v=3"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

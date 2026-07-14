@@ -67,6 +67,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  window.openSiteModal = function (id) {
+    var modal = document.getElementById(id);
+    if (modal) {
+      openModal(modal);
+    }
+  };
+
   var aboutHeading = document.querySelector(".split-cta-text h2");
   var aboutVideoWraps = document.querySelectorAll(".split-cta-video .video-wrap");
   if (aboutHeading && aboutVideoWraps.length > 1) {
