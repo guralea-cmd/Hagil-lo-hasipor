@@ -66,4 +66,21 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+  var aboutHeading = document.querySelector(".split-cta-text h2");
+  var aboutVideoWraps = document.querySelectorAll(".split-cta-video .video-wrap");
+  if (aboutHeading && aboutVideoWraps.length > 1) {
+    var secondVideoWrap = aboutVideoWraps[1];
+    var alignSecondVideo = function () {
+      if (window.innerWidth <= 700) {
+        secondVideoWrap.style.marginTop = "24px";
+        return;
+      }
+      secondVideoWrap.style.marginTop = "0px";
+      var delta = aboutHeading.getBoundingClientRect().top - secondVideoWrap.getBoundingClientRect().top;
+      secondVideoWrap.style.marginTop = Math.max(delta, 24) + "px";
+    };
+    alignSecondVideo();
+    window.addEventListener("resize", alignSecondVideo);
+  }
 });

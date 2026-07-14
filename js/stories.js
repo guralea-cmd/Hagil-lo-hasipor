@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (!all.length) {
-        list.innerHTML = '<p class="empty-state">עדיין אין סיפורים מפורסמים - היו הראשונים לשתף!</p>';
+        list.innerHTML = "";
         return;
       }
       list.innerHTML = "";
