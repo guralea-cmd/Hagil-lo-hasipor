@@ -154,7 +154,7 @@ header {
 }
 
 .hero h1 {
-  font-size: 40px;
+  font-size: 30px;
   margin: 0 0 16px;
   color: var(--color-primary);
 }
@@ -1078,10 +1078,6 @@ input[type="file"] {
 
   .nav-links.open {
     display: flex;
-  }
-
-  .hero h1 {
-    font-size: 30px;
   }
 }
 
