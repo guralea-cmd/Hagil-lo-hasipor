@@ -203,21 +203,6 @@ section h2 {
   text-align: center;
   color: var(--color-primary);
   margin: 0 0 12px;
-  position: relative;
-  padding-bottom: 16px;
-}
-
-section h1::after,
-section h2::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 50%;
-  transform: translateX(50%);
-  width: 64px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--color-accent-dark);
 }
 
 .article-subheading {
