@@ -279,7 +279,7 @@ section h2 {
 }
 
 .card p {
-  color: var(--color-muted);
+  color: var(--color-text);
   margin: 0;
 }
 
