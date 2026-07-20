@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!body) return;
     db.collection("workshop_leads").orderBy("createdAt", "desc").get().then(function (snapshot) {
       if (snapshot.empty) {
-        body.innerHTML = '<tr><td colspan="4">אין לידים עדיין.</td></tr>';
+        body.innerHTML = '<tr><td colspan="5">אין לידים עדיין.</td></tr>';
         return;
       }
       body.innerHTML = "";
@@ -228,8 +228,17 @@ document.addEventListener("DOMContentLoaded", function () {
           "<td>" + formatDate(r.createdAt) + "</td>" +
           "<td>" + escapeHtml(r.firstName) + " " + escapeHtml(r.lastName) + "</td>" +
           "<td>" + escapeHtml(r.email) + "</td>" +
-          "<td>" + escapeHtml(r.phone) + "</td>";
+          "<td>" + escapeHtml(r.phone) + "</td>" +
+          '<td><button class="btn btn-outline btn-sm delete-workshop-lead-btn" data-id="' + doc.id + '">מחק</button></td>';
         body.appendChild(tr);
+      });
+      body.querySelectorAll(".delete-workshop-lead-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (!confirm("למחוק ליד זה?")) return;
+          db.collection("workshop_leads").doc(btn.dataset.id).delete().then(function () {
+            loadWorkshopLeads();
+          });
+        });
       });
     });
   }
