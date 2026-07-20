@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     cleanupOldSubmissions();
     loadStories();
     loadRegistrations();
+    loadWorkshopLeads();
     loadEventSignups();
   });
 
@@ -206,6 +207,28 @@ document.addEventListener("DOMContentLoaded", function () {
           "<td>" + escapeHtml(r.phone) + "</td>" +
           "<td>" + escapeHtml(r.email) + "</td>" +
           "<td>" + escapeHtml(r.message) + "</td>";
+        body.appendChild(tr);
+      });
+    });
+  }
+
+  function loadWorkshopLeads() {
+    var body = document.querySelector("#workshop-leads-body");
+    if (!body) return;
+    db.collection("workshop_leads").orderBy("createdAt", "desc").get().then(function (snapshot) {
+      if (snapshot.empty) {
+        body.innerHTML = '<tr><td colspan="4">אין לידים עדיין.</td></tr>';
+        return;
+      }
+      body.innerHTML = "";
+      snapshot.forEach(function (doc) {
+        var r = doc.data();
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          "<td>" + formatDate(r.createdAt) + "</td>" +
+          "<td>" + escapeHtml(r.firstName) + " " + escapeHtml(r.lastName) + "</td>" +
+          "<td>" + escapeHtml(r.email) + "</td>" +
+          "<td>" + escapeHtml(r.phone) + "</td>";
         body.appendChild(tr);
       });
     });
