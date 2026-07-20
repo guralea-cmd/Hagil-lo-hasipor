@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
       .then(function () {
-        statusEl.textContent = "תודה! קיבלתי את הפרטים שלך ואחזור אלייך בקרוב.";
+        statusEl.textContent = "הפרטים נשלחו, תודה.";
         form.reset();
       })
       .catch(function (err) {
