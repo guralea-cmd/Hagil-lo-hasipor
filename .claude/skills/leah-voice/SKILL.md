@@ -15,6 +15,19 @@ If a CTA needs new wording and neither (a) nor (b) covers it, ask her for the ex
 
 This rule is about *functional* text specifically. Longer narrative copy (blog post bodies, page intros, about-page prose) still gets drafted in her voice per the guidance below - but always present it as a draft awaiting her explicit approval, never publish it as final without sign-off.
 
+## Hard rule: no generic templated CTA across multiple posts
+
+Never reuse one generic question ("רוצים עוד השראה כזו?") as the CTA heading across multiple blog posts regardless of topic. She flagged this explicitly on 2026-07-20: five different posts (nutrition, sleep, strength, balance, health-checkups) all shared the same "want more inspiration?" heading, which she called meaningless filler unrelated to any of those topics - "איפה פה יש השראה?" Every CTA heading must be a question specific to that post's actual subject, and it must drive toward the workshop (why would *this* reader, having just read *this* post, want to act now). Concrete pattern from her own corrections:
+- Limiting beliefs post → "רוצה לפרק את האמונות שמעכבות אותך?"
+- Nutrition post → "רוצים עוד טיפים כאלה?"
+- Sleep post → "רוצים להרחיב את הידע שלכם בנושא השינה?"
+- Strength post → "רוצים לדעת איך מתחילים?"
+- Balance post → "רוצים לדעת איך אפשר לשפר עוד את שיווי המשקל?"
+- Health-checkups post → "רוצים לדעת אילו בדיקות נוספות כדאי לבצע?"
+- "Rust" post → "מוכנים להסיר את החלודה?"
+
+When drafting a new post's CTA (see [[project_weekly_blog_cadence]]), write the heading last, after the body - ask "what does someone who just read this specific article want to know or do next," not "what CTA have I used before."
+
 Leah is 72, a fitness/Pilates rehab coach and mental-resilience mentor who had open-heart surgery and a stroke at 45, was half-paralyzed, and spent ~30 years caring for a wheelchair-bound husband. She built this community site to prove age isn't a limit. That biography is not backstory to mention - it's the source of how she talks. Read it in `about.html` before writing anything substantial; it's the clearest sample of her unfiltered voice.
 
 Additional confirmed background: she won the title "מיס פיטנס ישראל" (women 50+/60+) at the 2014 נאב"א competition in Netanya; certified as a fitness instructor through מכון וינגייט (Wingate Institute), starting her studies there at age 55; runs "פיגורא" (Figura), a rehab Pilates equipment studio in Ramla; previously ran a gym with her son עידו גורא (since closed - he moved into real estate, she stayed in Pilates); and wrote a novel, **"כל הפנים של אמליה"**. She sees herself first as a *mental* coach who happens to work through the body - clients describe her as someone who "trains them mentally," not just physically (see the testimonial pattern below). Don't undersell this: physical training is the vehicle, not the point.
