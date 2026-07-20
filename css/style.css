@@ -994,6 +994,11 @@ footer a {
   color: #2b2b2b;
 }
 
+.category-tag--resilience {
+  background: #dcf3ef;
+  color: #14776b;
+}
+
 .story-card .story-name {
   font-weight: 600;
   margin-top: var(--space-3);
