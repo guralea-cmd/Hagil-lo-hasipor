@@ -23,15 +23,40 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   var modals = document.querySelectorAll(".modal-overlay");
+  var lastFocusedElement = null;
+  var focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
   function openModal(modal) {
+    lastFocusedElement = document.activeElement;
     modal.hidden = false;
     document.body.style.overflow = "hidden";
+    var focusable = modal.querySelectorAll(focusableSelector);
+    if (focusable.length) {
+      focusable[0].focus();
+    }
   }
 
   function closeModal(modal) {
     modal.hidden = true;
     document.body.style.overflow = "";
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+      lastFocusedElement = null;
+    }
+  }
+
+  function trapFocus(modal, e) {
+    var focusable = modal.querySelectorAll(focusableSelector);
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   document.querySelectorAll("[data-open-modal]").forEach(function (trigger) {
@@ -55,6 +80,11 @@ document.addEventListener("DOMContentLoaded", function () {
         closeModal(modal);
       });
     }
+    modal.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") {
+        trapFocus(modal, e);
+      }
+    });
   });
 
   document.addEventListener("keydown", function (e) {
