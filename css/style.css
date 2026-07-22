@@ -857,6 +857,15 @@ footer a {
   display: block;
 }
 
+.bullet-list {
+  margin: 0 0 var(--space-4);
+  padding-inline-start: var(--space-5);
+}
+
+.bullet-list li {
+  margin-bottom: var(--space-2);
+}
+
 .price-card ul {
   list-style: none;
   padding: 0;
