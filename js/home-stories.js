@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }).slice(0, MAX_ITEMS);
 
       if (!all.length) {
-        grid.innerHTML = "";
+        grid.innerHTML = '<div class="empty-state"><p>הסיפורים הראשונים בדרך — רוצים להיות ביניהם?</p><a href="register.html" class="btn">שתפו את הסיפור שלכם</a></div>';
         return;
       }
 
