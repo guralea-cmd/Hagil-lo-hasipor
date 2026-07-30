@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (!all.length) {
-        list.innerHTML = "";
+        list.innerHTML = '<div class="empty-state"><p>הסיפורים הראשונים בדרך — רוצים להיות ביניהם?</p><a href="register.html" class="btn">שתפו את הסיפור שלכם</a></div>';
         return;
       }
       list.innerHTML = "";

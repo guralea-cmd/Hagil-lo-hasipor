@@ -1191,6 +1191,11 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.story-criteria-trigger::after {
+  content: " ▾";
+  font-size: 0.8em;
+}
+
 .story-criteria-trigger:hover {
   color: var(--color-accent-dark);
 }
