@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="css/style.css?v=52">
+<link rel="stylesheet" href="css/style.css?v=53">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
     <h1>כלים ותובנות</h1>
     <p class="section-intro" style="margin-bottom:var(--space-3); font-size:var(--text-xs); line-height:1.25;">תכנים, תובנות וכלים מעשיים בנושא שינוי, צמיחה אישית והתמודדות עם תפיסות מגבילות על גיל.</p>
 
-    <div class="grid grid--blog">
+    <div class="grid grid--blog" id="blog-grid">
       <a class="blog-card" href="blog-post-7.html">
         <div class="blog-icon-col">
           <span class="category-tag category-tag--resilience">חוסן נפשי</span>
@@ -106,6 +106,11 @@
         </div>
       </a>
     </div>
+    <div class="pagination" id="blog-pagination" hidden>
+      <button type="button" id="blog-prev" class="btn btn-outline btn-sm">הקודם</button>
+      <span id="blog-page-indicator"></span>
+      <button type="button" id="blog-next" class="btn btn-outline btn-sm">הבא</button>
+    </div>
   </div>
 </section>
 
@@ -132,6 +137,7 @@
 </div>
 
 <script src="js/main.js?v=5"></script>
+<script src="js/blog-pagination.js?v=1"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
