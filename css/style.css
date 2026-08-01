@@ -569,7 +569,6 @@ footer a {
 /* This block intentionally uses fluid clamp() sizing rather than the fixed
    type scale - it has to reflow smoothly across the full viewport-width
    range of the image band, not just jump between breakpoints. */
-.hero-overlay-title .hero-kicker,
 .hero-overlay-title .hero-line1,
 .hero-overlay-title .hero-line2,
 .hero-overlay-title .hero-line3 {
@@ -580,18 +579,10 @@ footer a {
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-.hero-overlay-title .hero-kicker {
-  display: block;
-  text-align: right;
-  font-size: clamp(18px, 5.8vw, 44px);
-  font-weight: 700;
-}
-
 .hero-overlay-title .hero-line1 {
   display: block;
   text-align: right;
-  margin-top: var(--space-2);
-  font-size: clamp(18px, 5.8vw, 44px);
+  font-size: clamp(22px, 7vw, 54px);
   font-weight: 700;
 }
 
@@ -604,7 +595,7 @@ footer a {
 .hero-overlay-title .hero-line2 {
   display: block;
   text-align: right;
-  font-size: clamp(16px, 5vw, 39px);
+  font-size: clamp(19px, 6vw, 46px);
   font-weight: 500;
   font-style: italic;
 }
@@ -613,14 +604,13 @@ footer a {
   display: block;
   text-align: left;
   margin-top: var(--space-1);
-  font-size: clamp(13px, 2.4vw, 19px);
+  font-size: clamp(16px, 3vw, 24px);
   font-weight: 400;
   letter-spacing: 1px;
   opacity: 0.9;
 }
 
 @media (max-width: 500px) {
-  .hero-overlay-title .hero-kicker,
   .hero-overlay-title .hero-line1,
   .hero-overlay-title .hero-line2,
   .hero-overlay-title .hero-line3 {
