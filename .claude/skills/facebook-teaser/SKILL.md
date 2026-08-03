@@ -9,9 +9,13 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 **Exactly one** short teaser per run, pointing back to a page on the site - never the full content itself. The goal is curiosity, not information: readers should have to click through to the site to get the rest of the story, the rest of the article, or the workshop/registration details. Every teaser has exactly four parts: כותרת מושכת, 2-4 lines of curiosity-only body copy, an image (see "Choosing the image"), and a קישור to the specific relevant page. Never draft more than one post in a single run.
 
-## Publishing limitation - read this before doing anything else
+## Publishing - how it actually works now
 
-There is no Facebook/Meta connector available in this Claude Code environment (checked via the MCP connector registry - none found, and no other social-posting connector exists either). This skill can select content, draft the teaser, and hold it for Leah's approval - but it cannot actually click "publish" on Facebook. After she approves a draft, hand her the final text, the image file path, and the link, ready to copy-paste, and say plainly that getting it onto Facebook is a manual step for her (or a future connected integration) - never claim to have posted something that wasn't actually posted.
+As of 2026-08-03, real automated publishing is wired up. `.claude/skills/facebook-teaser/secrets.json` (gitignored - never read its contents into anything that gets committed, logged in a committed file, or echoed more than necessary) holds `pageId` and `pageAccessToken` - a long-lived Facebook Page Access Token for the "הגיל הוא לא הסיפור" Page, with `pages_manage_posts` + `business_management` + `pages_show_list` scope.
+
+**If `secrets.json` is missing or a publish call fails with an auth error** (token revoked/expired - long-lived Page tokens are very long-lived but not eternal), fall back to the old behavior: tell Leah plainly that automated publishing isn't currently working, hand her the final text/image/link ready to copy-paste, and suggest re-running the token setup (Meta app → Graph API Explorer → exchange → `/me/accounts`, the same flow used to originally create `secrets.json`) rather than trying to self-repair. Never claim something was posted when it wasn't.
+
+See "Publishing (after approval)" near the end of this file for the actual publish mechanics.
 
 ## Content rotation and no-repeat rule
 
@@ -103,12 +107,31 @@ Never reuse the same hook or headline pattern across posts regardless of type or
 
 ## Approval gate
 
-Present the drafted teaser to Leah in chat, in Hebrew, in the four-part format above, and explicitly ask for her approval before treating it as ready. She may approve, reject, or ask for edits to specific parts. Do not mark it `אושר` in the log until she has explicitly approved it in that conversation - and remember the publishing limitation above even after approval: getting it onto Facebook is still a manual/external step, not something this skill executes.
+Present the drafted teaser to Leah in chat, in Hebrew, in the four-part format above, and explicitly ask for her approval before treating it as ready. She may approve, reject, or ask for edits to specific parts. Do not attempt to publish, and do not mark anything `אושר` in the log, until she has explicitly approved it in that conversation.
 
 ## If there's no good content available
 
 If it's a given type's turn in the rotation and there is genuinely nothing new to tease (every workshop/community angle already used this cycle, no new blog post since the last one was teased, or no story to feature because Leah hasn't named one) - do not invent content to fill the gap. Say so plainly, and either ask Leah what she'd like instead, or wait for new content (a new approved post, a new story she names) before drafting anything for that slot.
 
-## After approval
+## Publishing (after approval)
 
-Append one row to `.claude/skills/facebook-teaser/posted-log.md`: date, content type, the specific item, a one-line note on the angle/hook used, and status. Also record which image was used (folder + filename, or the Firestore doc ID for a tier-1 story photo) so future runs can rotate images correctly and avoid repeating the same face or picture back-to-back. This is what every future run reads to keep the rotation honest and avoid repeats.
+Only after Leah has explicitly approved a draft in that conversation:
+
+1. **Resolve the image to a public URL.**
+   - A Firestore tier-1 story photo (`photoUrls[0]`) is already a public URL - use it as-is.
+   - A local file under `images/facebook/<category>/`, `images/hero-bike.jpg`, or `images/testimonials/*.jpeg` needs to become `https://guralea.com/<path-relative-to-repo-root>` (that's the live site's real domain - confirmed via `gh api repos/guralea-cmd/Hagil-lo-hasipor/pages`, re-check if this ever seems wrong). **Before using it**, confirm the file is actually committed and pushed - run `git status --short` on that path; if it shows as untracked/modified, the file only exists locally and Facebook's servers can't fetch it yet. In that case, tell Leah this specific image needs to be committed and pushed to the live site first, and stop - do not silently commit/push it yourself, since that's still a live-site change and she's asked to review those.
+
+2. **Build the caption.** Combine the headline and the 2-4 line body into one caption string, then append the real site link (e.g. `blog-post-N.html`, `workshop.html`, `register.html`, or `stories.html#story-{docId}`) as plain text on its own line at the end - Facebook auto-linkifies raw URLs in post captions, so no separate "link" field/preview card is needed for this endpoint.
+
+3. **Publish.** Read `pageId` and `pageAccessToken` from `.claude/skills/facebook-teaser/secrets.json` (never print the token value in chat or write it into any committed file). Call:
+   ```
+   POST https://graph.facebook.com/v21.0/{pageId}/photos
+   Body (form-encoded): url=<public image URL>&caption=<the combined text>&access_token=<pageAccessToken>
+   ```
+   via Bash/curl. Check the response for a `error` key first - if present, do not claim success; report the error message to Leah and fall back to handing her copy-paste-ready content instead. If it returns a post/photo `id`, that's confirmation of a real, live Facebook post.
+
+4. **Confirm to Leah** (Hebrew) that it's live, including a link to the post if the API response allows constructing one (`https://www.facebook.com/{returned-post-id}`).
+
+## After approval and publishing
+
+Append one row to `.claude/skills/facebook-teaser/posted-log.md`: date, content type, the specific item, a one-line note on the angle/hook used, and status (`אושר ופורסם` once actually posted, not just approved). Also record which image was used (folder + filename, the live URL, or the Firestore doc ID for a tier-1 story photo) so future runs can rotate images correctly and avoid repeating the same face or picture back-to-back. This is what every future run reads to keep the rotation honest and avoid repeats.
