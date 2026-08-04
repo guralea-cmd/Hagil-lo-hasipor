@@ -111,7 +111,11 @@ Only after Leah has explicitly approved a draft in that conversation:
    POST https://graph.facebook.com/v21.0/{pageId}/photos
    Body (form-encoded): url=<public image URL>&caption=<the combined text>&access_token=<pageAccessToken>
    ```
-   via Bash/curl. Check the response for a `error` key first - if present, do not claim success; report the error message to Leah and fall back to handing her copy-paste-ready content instead. If it returns a post/photo `id`, that's confirmation of a real, live Facebook post.
+   via Bash/curl.
+
+   **Hebrew encoding - hard rule, confirmed broken 2026-08-05:** never embed the Hebrew caption text directly inside the bash command string (e.g. via `$'...'` or a heredoc passed straight to `curl --data-urlencode "caption=..."`). On this Windows/Git-Bash setup that path silently corrupted every Hebrew character into `?` in the actual published post - it published successfully (HTTP 200, real post ID) with garbled text, which is worse than a visible failure. Instead: write the caption to a UTF-8 file first (the `Write` tool, not a shell heredoc), convert its path with `cygpath -w` to a native Windows path, and pass it to curl as `--data-urlencode "caption@<windows-path>"` (curl reads and url-encodes the file's raw bytes, sidestepping shell/locale mangling entirely). The plain `/c/...` MSYS-style path does NOT work as the `@filename` argument to curl.exe (mingw64 build) - it errors with "error encountered when reading a file" - it must be the `cygpath -w` converted form. After publishing, verify by fetching `GET https://graph.facebook.com/v21.0/{photo-id}?fields=name&access_token=...` and confirming the returned text isn't full of `?` characters (a correct response shows `\u05xx`-escaped JSON, which is normal and fine - that's just how the Graph API serializes non-ASCII text, not a sign of corruption).
+
+   Check the response for a `error` key first - if present, do not claim success; report the error message to Leah and fall back to handing her copy-paste-ready content instead. If it returns a post/photo `id`, that's confirmation of a real, live Facebook post - but confirm the Hebrew rendered correctly (previous paragraph) before telling Leah it's done, since a 200 response alone doesn't guarantee the text was right.
 
 4. **Confirm to Leah** (Hebrew) that it's live, including a link to the post if the API response allows constructing one (`https://www.facebook.com/{returned-post-id}`).
 
