@@ -68,30 +68,13 @@ If `photoUrls` is absent (a submission with only a `videoUrl`, no photos), fall 
 
 ## Choosing the image
 
-There is a fixed, permanent folder structure at `images/facebook/` - one subfolder per content category, documented in `images/facebook/README.md`. Leah adds images to these folders over time; the skill must always re-scan the relevant folder at run time (never cache or assume its contents) and pick automatically, with no manual selection needed from her:
+**Hard rule, as of 2026-08-04: never use images from `images/testimonials/` or any testimonial/review photo of a real person (e.g. the `about.html` review screenshots) in a Facebook post, for any content type, ever.** Leah called this out explicitly after a draft used one of those photos generically - it's not her call to reuse someone else's review photo as generic post filler. This rule does not affect Tier 1 Firestore community-story photos (see below) - those are photos the person themselves submitted specifically for this purpose, a different thing entirely from an `about.html` review screenshot.
 
-| category | folder |
-|---|---|
-| כלים ותובנות → תזונה | `images/facebook/nutrition/` |
-| כלים ותובנות → שינה | `images/facebook/sleep/` |
-| כלים ותובנות → כוח | `images/facebook/strength/` |
-| כלים ותובנות → שיווי משקל | `images/facebook/balance/` |
-| כלים ותובנות → בריאות | `images/facebook/health/` |
-| כלים ותובנות → השראה | `images/facebook/inspiration/` |
-| כלים ותובנות → חוסן נפשי | `images/facebook/resilience/` |
-| סדנה | `images/facebook/workshop/` |
-| הצטרפות לקהילה | `images/facebook/community/` |
-| סיפור קהילה (fallback only, see below) | `images/facebook/stories/` |
+**Sole source folder, as of 2026-08-04: `images/facebook-posts/`.** Leah replaced the old per-category `images/facebook/<category>/` structure with one flat folder that she uploads post-ready photos to directly. Only images from `images/facebook-posts/` may be used for any Facebook post (any content type: כלים ותובנות, סדנה, הצטרפות לקהילה, or the tier-2 community-story fallback). The old `images/facebook/*` category folders and their README are no longer used by this skill - leave the files in place (they're not being deleted, just no longer the source), but do not pick images from them.
 
 **Selection logic per type:**
-- **כלים ותובנות** → the post's own category folder above (match the post's `category-tag--<name>` class to the folder name - they use the same slug). Pick a file from that folder that hasn't been used most-recently per the log; if the folder is empty, fall back to `images/hero-bike.jpg`.
-- **סדנה** → `images/facebook/workshop/`, same rotation logic; fall back to `images/hero-bike.jpg` if empty.
-- **הצטרפות לקהילה** → `images/facebook/community/`, same rotation logic; fall back to `images/hero-bike.jpg` if empty.
-- **סיפור קהילה, tier 1 (preferred)** → the real story's own `photoUrls[0]` from Firestore (see above) - this is the actual person from that actual story, not a stand-in. This always wins over the folder below when an unused approved story exists.
-- **סיפור קהילה, tier 2** → `images/facebook/stories/`, same rotation logic, only used when no unused approved Firestore story is available.
-- **סיפור קהילה, tier 3 (last resort)** → if `images/facebook/stories/` is also empty, one of the `images/testimonials/*.jpeg` screenshots (real Facebook reviews from `about.html`, not story photos - fine as a last-resort generic face, but never attach a specific invented name/story to one of these).
-
-Rotation within any folder: check the log for the last-used filename(s) in that folder and avoid immediate repeats; if a folder has only one file, it's fine to reuse it (there's no alternative), just note that in the log entry.
+- **כלים ותובנות / סדנה / הצטרפות לקהילה / סיפור קהילה tier 2** → re-scan `images/facebook-posts/` fresh at run time (never cache or assume its contents). Pick a file that hasn't been used most-recently per the log (check the log for the last-used filename(s) and avoid immediate repeats; if the folder has only one file, it's fine to reuse it, just note that in the log entry). **If the folder is empty, there is no fallback image** (no more `images/hero-bike.jpg` fallback) - treat this exactly like "no good content available" (see that section below): say so plainly to Leah rather than posting without a proper image, or without her explicit go-ahead to use something else.
+- **סיפור קהילה, tier 1 (preferred)** → unchanged - the real story's own `photoUrls[0]` from Firestore (see above), the actual person from that actual story. This always wins over `images/facebook-posts/` when an unused approved story exists, and is unaffected by the testimonials ban since it isn't a testimonial photo.
 
 ## Writing the teaser
 
@@ -119,7 +102,7 @@ Only after Leah has explicitly approved a draft in that conversation:
 
 1. **Resolve the image to a public URL.**
    - A Firestore tier-1 story photo (`photoUrls[0]`) is already a public URL - use it as-is.
-   - A local file under `images/facebook/<category>/`, `images/hero-bike.jpg`, or `images/testimonials/*.jpeg` needs to become `https://guralea.com/<path-relative-to-repo-root>` (that's the live site's real domain - confirmed via `gh api repos/guralea-cmd/Hagil-lo-hasipor/pages`, re-check if this ever seems wrong). **Before using it**, confirm the file is actually committed and pushed - run `git status --short` on that path; if it shows as untracked/modified, the file only exists locally and Facebook's servers can't fetch it yet. In that case, tell Leah this specific image needs to be committed and pushed to the live site first, and stop - do not silently commit/push it yourself, since that's still a live-site change and she's asked to review those.
+   - A local file under `images/facebook-posts/` (the only allowed local source as of 2026-08-04 - never `images/testimonials/*`, never `images/hero-bike.jpg`) needs to become `https://guralea.com/<path-relative-to-repo-root>` (that's the live site's real domain - confirmed via `gh api repos/guralea-cmd/Hagil-lo-hasipor/pages`, re-check if this ever seems wrong). **Before using it**, confirm the file is actually committed and pushed - run `git status --short` on that path; if it shows as untracked/modified, the file only exists locally and Facebook's servers can't fetch it yet. In that case, tell Leah this specific image needs to be committed and pushed to the live site first, and stop - do not silently commit/push it yourself, since that's still a live-site change and she's asked to review those.
 
 2. **Build the caption.** Combine the headline and the 2-4 line body into one caption string, then append the real site link (e.g. `blog-post-N.html`, `workshop.html`, `register.html`, or `stories.html#story-{docId}`) as plain text on its own line at the end - Facebook auto-linkifies raw URLs in post captions, so no separate "link" field/preview card is needed for this endpoint.
 

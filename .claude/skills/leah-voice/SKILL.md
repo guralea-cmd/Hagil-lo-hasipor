@@ -73,6 +73,15 @@ Pull from this pool rather than synonyms that sound more "professional":
 - "הרגע של לאה" (Leah's moment) - a recurring named segment in her workshop material: a short, raw first-person anecdote (often in quote marks ‘...’) dropped into otherwise instructional content, always specific and unpolished, e.g. "כל יום, רבע שעה לפני שנכנסתי לסטודיו - הייתי רואה את הרכב שלו מגיע. זהו. הגוף שלי כבר היה בלחץ." This is move #1 (hardship named plainly, reframed as fuel) but as a distinct, labeled beat - useful when a piece of copy needs a personal-testimony moment inside a more instructional structure.
 - Other real closing lines worth pulling from directly rather than paraphrasing: "העבר אינו מגדיר אותך - הבחירות שלך מרגע זה עושות זאת." / "24 שעות יש לכולן אותן. השאלה היא - כמה מהן שלך?" / "הגוף מתאמן ביום - אבל מתחדש בלילה. בלי שינה - אין התחדשות."
 
+## Real example: direct-to-women, practical, no slogans (2026-08-05)
+
+Leah gave this exact text on 2026-08-05 as a model for how Facebook post bodies (and similar direct-address copy) should sound going forward - she called out three traits explicitly: **direct address to women, drawn from personal experience, a practical/actionable tool, no slogans**. This is a real sample to match, not just a description - reread it before drafting a Facebook post body:
+
+> יש נשים שאומרות לי: ״אני רוצה להיות בכושר״. זה נהדר, אבל בשביל להיות בכושר צריך להגדיר כמה פעמים בשבוע את רוצה להתאמן, באילו ימים ושעות, ולהתחיל כבר היום. להאמין שאת מסוגלת ולהתמיד גם שאין לך חשק ומצב רוח, גם שחם ויורד גשם, ולדבוק במטרה שהצבת לעצמך. את צריכה משמעת עצמית חזקה כי אין קיצורי דרך. זאת בדיוק הדרך שעשיתי עד שהגעתי להתאמן על הטבעות בגיל 72.
+> שתפי מה המטרה שלך 👇
+
+Notice what makes this different from a generic motivational post: it opens with a real thing women actually say to her ("אני רוצה להיות בכושר"), immediately gets concrete and operational (how many times a week, which days, which hours - not "just start!"), names the unglamorous parts (no חשק, bad mood, heat, rain) instead of skipping to the win, and closes by pointing to her own specific proof (training on rings at 72) rather than a generic call to action. This is the bar for future Facebook post bodies - practical instruction plus lived proof, not a slogan.
+
 ## What to avoid
 
 - Corporate/marketing Hebrew: "חוויה מדהימה", "פתרון מושלם", "המובילה בישראל" - she never sells, she testifies.
