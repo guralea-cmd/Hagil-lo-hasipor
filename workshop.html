@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1002367290734793');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1002367290734793&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>פרטים והרשמה לסדנה | הגיל הוא לא הסיפור</title>
@@ -8,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="css/style.css?v=55">
+<link rel="stylesheet" href="css/style.css?v=56">
 </head>
 <body>
 
@@ -86,15 +103,18 @@
     </ul>
 
     <h2 class="article-subheading">מועד פתיחת הסדנה</h2>
-    <p><strong>מסלול זום</strong></p>
+    <p>הסדנה נפתחת בשתי קבוצות:</p>
+    <p><strong>קבוצה 1 - מסלול זום</strong></p>
     <ul class="bullet-list">
       <li>התאריך: 8.10.2026.</li>
       <li>יום: חמישי.</li>
       <li>שעות: 18:00–19:30.</li>
     </ul>
-    <p><strong>מסלול פרונטלי</strong></p>
+    <p><strong>קבוצה 2 - מסלול פרונטלי, סטודיו ברמלה</strong></p>
     <ul class="bullet-list">
-      <li>התאריך, היום והשעה יפורסמו בהמשך.</li>
+      <li>התאריך: 9.10.2026.</li>
+      <li>יום: שישי.</li>
+      <li>שעות: 10:30–12:00.</li>
     </ul>
   </div>
 </section>
@@ -121,6 +141,14 @@
         <label for="workshop-phone">טלפון</label>
         <input type="tel" id="workshop-phone" name="phone" required>
       </div>
+      <div>
+        <label for="workshop-track">מסלול</label>
+        <select id="workshop-track" name="track" required>
+          <option value="" disabled selected>בחרו מסלול</option>
+          <option value="זום - קבוצה 1 (חמישי, 8.10.2026)">זום - קבוצה 1 (חמישי, 8.10.2026)</option>
+          <option value="פרונטלי - קבוצה 2 (שישי, 9.10.2026, רמלה)">פרונטלי - קבוצה 2 (שישי, 9.10.2026, רמלה)</option>
+        </select>
+      </div>
       <button type="submit" class="btn">השארת פרטים</button>
       <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
     </form>
@@ -136,7 +164,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/firebase-config.js?v=2"></script>
 <script src="js/main.js?v=5"></script>
-<script src="js/workshop-leads.js?v=1"></script>
+<script src="js/workshop-leads.js?v=3"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

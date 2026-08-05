@@ -480,7 +480,8 @@ select:focus {
   margin-bottom: 2px;
 }
 
-#workshop-lead-form input {
+#workshop-lead-form input,
+#workshop-lead-form select {
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-xs);
 }
