@@ -17,11 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
       lastName: form.lastName.value.trim(),
       email: form.email.value.trim(),
       phone: form.phone.value.trim(),
+      track: form.track.value,
       status: "new",
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
       .then(function () {
         statusEl.textContent = "הפרטים נשלחו, תודה.";
+        if (typeof fbq === "function") {
+          fbq("track", "Lead");
+        }
         form.reset();
       })
       .catch(function (err) {
