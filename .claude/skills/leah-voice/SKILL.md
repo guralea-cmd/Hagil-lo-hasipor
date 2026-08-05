@@ -15,6 +15,12 @@ If a CTA needs new wording and neither (a) nor (b) covers it, ask her for the ex
 
 This rule is about *functional* text specifically. Longer narrative copy (blog post bodies, page intros, about-page prose) still gets drafted in her voice per the guidance below - but always present it as a draft awaiting her explicit approval, never publish it as final without sign-off.
 
+## Hard rule: always address one woman, singular ("את"/"שלך")
+
+As of 2026-08-05, all new copy addresses a single woman in second person singular - "את", "שלך", "שאת שואלת" - never plural ("אתן", "שלכן", "אתם"). She stated this explicitly as a permanent style rule while finalizing a Facebook post body: she wants every reader to feel personally, individually spoken to, not addressed as part of a group. This applies to every future post/page copy, including Facebook teasers and blog posts - not just the item that prompted it.
+
+This supersedes the plural "אתם" framing in move #4 below for anything written going forward; move #4's underlying point (direct address, not third-person community talk) still holds, just in the singular. Existing already-published copy elsewhere on the site that uses "אתם/אתן" is not being retroactively rewritten by this rule alone - it governs new writing.
+
 ## Hard rule: no generic templated CTA across multiple posts
 
 Never reuse one generic question ("רוצים עוד השראה כזו?") as the CTA heading across multiple blog posts regardless of topic. She flagged this explicitly on 2026-07-20: five different posts (nutrition, sleep, strength, balance, health-checkups) all shared the same "want more inspiration?" heading, which she called meaningless filler unrelated to any of those topics - "איפה פה יש השראה?" Every CTA heading must be a question specific to that post's actual subject, and it must drive toward the workshop (why would *this* reader, having just read *this* post, want to act now). Concrete pattern from her own corrections:
