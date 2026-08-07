@@ -45,5 +45,14 @@ service cloud.firestore {
                      && request.resource.data.email is string;
       allow read, update, delete: if request.auth != null;
     }
+
+    match /ad_submissions/{submissionId} {
+      allow create: if request.resource.data.status == "pending"
+                     && request.resource.data.advertiserName is string
+                     && request.resource.data.advertiserName.size() > 0
+                     && request.resource.data.email is string
+                     && request.resource.data.bannerUrl is string;
+      allow read, update, delete: if request.auth != null;
+    }
   }
 }
