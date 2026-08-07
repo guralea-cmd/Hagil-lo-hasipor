@@ -52,7 +52,8 @@ service cloud.firestore {
                      && request.resource.data.advertiserName.size() > 0
                      && request.resource.data.email is string
                      && request.resource.data.bannerUrl is string;
-      allow read, update, delete: if request.auth != null;
+      allow read: if resource.data.status == "approved" || request.auth != null;
+      allow update, delete: if request.auth != null;
     }
   }
 }
