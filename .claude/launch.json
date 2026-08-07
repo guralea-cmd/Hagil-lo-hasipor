@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\gural\\AppData\\Local\\Temp\\claude\\C--Users-gural-OneDrive--------GitHub-Hagil-lo-hasipor\\fbfd970f-ec30-4ec6-9b41-ed82047fb03b\\scratchpad\\serve.ps1", "-Port", "3333", "-Root", "C:\\Users\\gural\\OneDrive\\מסמכים\\GitHub\\Hagil-lo-hasipor"],
+      "port": 3333
+    }
+  ]
+}

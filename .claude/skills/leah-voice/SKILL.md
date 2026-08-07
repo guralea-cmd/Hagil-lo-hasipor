@@ -21,6 +21,8 @@ As of 2026-08-05, all new copy addresses a single woman in second person singula
 
 This supersedes the plural "אתם" framing in move #4 below for anything written going forward; move #4's underlying point (direct address, not third-person community talk) still holds, just in the singular. Existing already-published copy elsewhere on the site that uses "אתם/אתן" is not being retroactively rewritten by this rule alone - it governs new writing.
 
+**Mandatory check before presenting any draft, added 2026-08-07 after a plural verb slipped through** ("לפני שמתחילות" instead of singular, in a Facebook teaser body Leah had to catch and fix herself): stating the rule once at the top of this file is not enough - go back over the finished draft line by line, specifically hunting for plural verb endings (־ות/־ים conjugated to the reader, e.g. "מתחילות", "יכולות", "מוזמנות") and plural pronouns/suffixes ("אתן", "שלכן", "לכן") addressed to the reader. Fix every one before showing the draft to Leah - don't rely on her to catch it.
+
 ## Hard rule: no generic templated CTA across multiple posts
 
 Never reuse one generic question ("רוצים עוד השראה כזו?") as the CTA heading across multiple blog posts regardless of topic. She flagged this explicitly on 2026-07-20: five different posts (nutrition, sleep, strength, balance, health-checkups) all shared the same "want more inspiration?" heading, which she called meaningless filler unrelated to any of those topics - "איפה פה יש השראה?" Every CTA heading must be a question specific to that post's actual subject, and it must drive toward the workshop (why would *this* reader, having just read *this* post, want to act now). Concrete pattern from her own corrections:
@@ -87,6 +89,14 @@ Leah gave this exact text on 2026-08-05 as a model for how Facebook post bodies 
 > שתפי מה המטרה שלך 👇
 
 Notice what makes this different from a generic motivational post: it opens with a real thing women actually say to her ("אני רוצה להיות בכושר"), immediately gets concrete and operational (how many times a week, which days, which hours - not "just start!"), names the unglamorous parts (no חשק, bad mood, heat, rain) instead of skipping to the win, and closes by pointing to her own specific proof (training on rings at 72) rather than a generic call to action. This is the bar for future Facebook post bodies - practical instruction plus lived proof, not a slogan.
+
+## Real example: recruiting community stories (2026-08-07)
+
+Leah gave this exact text on 2026-08-07 while editing a Facebook teaser inviting readers to submit their own story to the community (`register.html`) - a second confirmed sample, this time for invitation/recruitment copy rather than instructional copy:
+
+> איזה סיפור מתאים לנו? סיפור שמשנה את התפיסה של מה אפשרי אחרי גיל 50, סיפור שנותן ערך ומעורר בקורא את הרצון להתחיל לזוז מאזור הנוחות. אם עברת רגע כזה - החלטה, משבר, נקודת מפנה - את מוזמנת לספר לנו עליו. אולי דווקא הסיפור שלך הוא זה שמישהי אחרת צריכה לקרוא היום.
+
+What to notice: it opens with her own question, answered in her own terms, rather than restating a form's field labels as prose. "לזוז מאזור הנוחות" (move out of the comfort zone) is concrete physical-verb language, not an abstract "לצמוח" or "להתפתח". The middle sentence is a triad of naming what a turning point can be (החלטה / משבר / נקודת מפנה) rather than one vague noun. It closes on the open-unknown pattern (move #6) - "אולי דווקא הסיפור שלך הוא זה שמישהי אחרת צריכה לקרוא היום" - not a summary, a possibility the reader can't yet see the effect of.
 
 ## What to avoid
 

@@ -88,11 +88,33 @@ Every teaser needs exactly these four parts:
 - **image** - the file path chosen per the rule above
 - **קישור** - the real site URL for that specific page/post
 
+Plus, as of 2026-08-06, hashtags appended at the end (see "Hashtags" section below) - present these alongside the four parts when showing Leah the draft, not as a separate follow-up.
+
 Never reuse the same hook or headline pattern across posts regardless of type or topic - the same rule that governs blog CTA headings applies here: each teaser's headline must be earned by that day's specific content, not a template.
+
+## Hashtags
+
+As of 2026-08-06, every post includes Hebrew hashtags at the end of the caption (after the link), decided and approved by Leah in that conversation:
+
+- **Always fixed, every post, no exceptions:** #הגיל_הוא_לא_הסיפור and #לאה_גורא_72
+- **Rotating pool, pick 3-4 per post based on topical fit with that day's specific content (not the same 3-4 every time):**
+  - #מסירות_חלודה - the "rust" metaphor; fits posts about regression/momentum/starting again
+  - #הרגע_של_לאה_גורא - fits posts with a personal-anecdote beat from Leah
+  - #חוסן_מנטלי - fits posts emphasizing her identity as a mental coach, not just physical training
+  - #כוח_נשי - fits posts speaking to female strength/capability
+  - #מכווצות_את_הגיל - echoes workshop.html's own "לכווץ את הגיל הפיזיולוגי" phrasing; fits workshop/physiological-age posts specifically
+
+Pick whichever 3-4 of the five actually fit that post's specific angle - don't default to the same combination every time. If none fit well, ask Leah rather than forcing an irrelevant one in. This pool was chosen by Leah on 2026-08-06 after an earlier round of proposals ("גיל אינו מגבלה", "נקודת התחלה חדשה", generic "כוח נשי" alone) felt too generic to her - lean toward hashtags tied to her specific vocabulary/facts over abstract empowerment terms if this pool is ever revisited.
 
 ## Approval gate
 
 Present the drafted teaser to Leah in chat, in Hebrew, in the four-part format above, and explicitly ask for her approval before treating it as ready. She may approve, reject, or ask for edits to specific parts. Do not attempt to publish, and do not mark anything `אושר` in the log, until she has explicitly approved it in that conversation.
+
+**Hard rule, as of 2026-08-06: always show her the actual image, not just its file path/filename.** She asked for this explicitly because a filename alone doesn't let her judge whether the picture actually fits the post's content. Send the real image file itself (e.g. via a file-sending tool if available) or otherwise render it visibly in the reply - a Firestore tier-1 photo can be shown via its public URL. A text description or path string is not sufficient on its own; she needs to actually see the picture next to the draft before she can approve it.
+
+**Refined 2026-08-07: send the image, don't also narrate it in text.** Drop the "תמונה: <path>" text line from the four-part presentation once the actual image file is sent alongside it - the picture itself is the answer; a redundant filename/description line is noise she explicitly asked to cut. Still send the real file every time, per the rule above - this only removes the *textual* restatement, not the image itself.
+
+**Hard rule, as of 2026-08-07: visually inspect every candidate image before using or presenting it - actually look at it (e.g. via a file-reading/viewing tool), don't just pick a filename blind.** A screenshot pulled from a phone's video-playback or gallery-app UI (status bar, contact name, video scrubber, timeline thumbnails, trash/heart/share icons visible in frame) is not a usable photo and must never be selected or shown to Leah, even as the only option in that rotation slot - skip it and pick a different file, or say plainly that no good image is available (see "If there's no good content available"). This was triggered 2026-08-07 when `WhatsApp Image 2026-08-05 at 00.32.01.jpeg` (a video-player screenshot) was picked blind, published, and had to be caught by Leah and republished with a real photo (`WhatsApp Image 2026-08-05 at 00.40.05.jpeg`, later swapped again to `...00.40.09.jpeg` per her request for a more visually striking/challenging pose). Note for future runs: at least one other file in this folder, `WhatsApp Image 2026-08-05 at 00.40.22.jpeg`, has the same video-screenshot problem - do not use it either.
 
 ## If there's no good content available
 
@@ -106,7 +128,7 @@ Only after Leah has explicitly approved a draft in that conversation:
    - A Firestore tier-1 story photo (`photoUrls[0]`) is already a public URL - use it as-is.
    - A local file under `images/facebook-posts/` (the only allowed local source as of 2026-08-04 - never `images/testimonials/*`, never `images/hero-bike.jpg`) needs to become `https://guralea.com/<path-relative-to-repo-root>` (that's the live site's real domain - confirmed via `gh api repos/guralea-cmd/Hagil-lo-hasipor/pages`, re-check if this ever seems wrong). **Before using it**, confirm the file is actually committed and pushed - run `git status --short` on that path; if it shows as untracked/modified, the file only exists locally and Facebook's servers can't fetch it yet. In that case, tell Leah this specific image needs to be committed and pushed to the live site first, and stop - do not silently commit/push it yourself, since that's still a live-site change and she's asked to review those.
 
-2. **Build the caption.** Combine the headline and the 2-4 line body into one caption string, then append the real site link (e.g. `blog-post-N.html`, `workshop.html`, `register.html`, or `stories.html#story-{docId}`) as plain text on its own line at the end - Facebook auto-linkifies raw URLs in post captions, so no separate "link" field/preview card is needed for this endpoint.
+2. **Build the caption.** Combine the headline and the 2-4 line body into one caption string, then append the real site link (e.g. `blog-post-N.html`, `workshop.html`, `register.html`, or `stories.html#story-{docId}`) as plain text on its own line, followed by the approved hashtags (see "Hashtags" section) as the final line - Facebook auto-linkifies raw URLs in post captions, so no separate "link" field/preview card is needed for this endpoint.
 
 3. **Publish.** Read `pageId` and `pageAccessToken` from `.claude/skills/facebook-teaser/secrets.json` (never print the token value in chat or write it into any committed file).
 
@@ -118,6 +140,8 @@ Only after Leah has explicitly approved a draft in that conversation:
    -F "source=@<windows-path-to-image-file>"      (here "@" is correct and required - this field IS the binary image upload)
    ```
    Both the caption file and the image file need their paths converted with `cygpath -w` first (same MSYS-path caveat as below - curl.exe mingw64 build won't read `/c/...`-style paths for `@`/`<` file arguments, only native Windows paths).
+
+   **Hebrew-path gotcha, confirmed 2026-08-06:** even with a native Windows path, this repo's own path contains a Hebrew folder name (`...\OneDrive\מסמכים\GitHub\Hagil-lo-hasipor\...`), and curl's `@`/`<` file-reading failed against it with exit code 26 (`CURLE_READ_ERROR`) - it could open ASCII-only paths but not this one. Workaround: copy the image (and/or caption file) to a scratchpad path with no non-ASCII characters before passing it to curl's `@`/`<` arguments, then upload from there.
 
    **Hebrew encoding - hard rule, confirmed broken 2026-08-05:** never embed the Hebrew caption text directly inside the bash command string (e.g. via `$'...'` or a heredoc passed straight to a curl caption argument). On this Windows/Git-Bash setup that path silently corrupted every Hebrew character into `?` in the actual published post - it published successfully (HTTP 200, real post ID) with garbled text, which is worse than a visible failure. Instead: always write the caption to a UTF-8 file first (the `Write` tool, not a shell heredoc), convert its path with `cygpath -w`, and pass it to curl as a file reference (`caption=<path` per above) so curl reads the raw UTF-8 bytes directly, sidestepping shell/locale mangling entirely. After publishing, verify by fetching `GET https://graph.facebook.com/v21.0/{photo-id}?fields=name&access_token=...` and confirming the returned text isn't full of `?` characters (a correct response shows `\u05xx`-escaped JSON, which is normal and fine - that's just how the Graph API serializes non-ASCII text, not a sign of corruption).
 
