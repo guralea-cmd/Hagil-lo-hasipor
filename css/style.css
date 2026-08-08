@@ -818,6 +818,13 @@ footer a {
   object-fit: contain;
 }
 
+/* Portrait video variant - matches the clip's own aspect ratio instead of
+   forcing it into a 16:9 box, so there's no dead black margin around it */
+.video-wrap--portrait {
+  aspect-ratio: 576 / 1164;
+  max-width: 300px;
+}
+
 /* Smaller video variant */
 .video-wrap--small {
   max-width: 480px;
