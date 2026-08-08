@@ -1273,7 +1273,7 @@ input[type="file"] {
 
 .marquee-strip__track {
   display: inline-block;
-  padding-inline-start: 100%;
+  padding-left: 100%;
   animation: marquee-scroll 28s linear infinite;
   font-size: var(--text-sm);
   font-weight: 600;
@@ -1292,7 +1292,7 @@ input[type="file"] {
 @media (prefers-reduced-motion: reduce) {
   .marquee-strip__track {
     animation: none;
-    padding-inline-start: var(--space-4);
+    padding-left: var(--space-4);
   }
 }
 
