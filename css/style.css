@@ -815,6 +815,7 @@ footer a {
   height: 100%;
   border: none;
   display: block;
+  object-fit: contain;
 }
 
 /* Smaller video variant */
