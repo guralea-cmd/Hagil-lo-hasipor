@@ -972,6 +972,13 @@ footer a {
   aspect-ratio: 1 / 1;
   border-radius: var(--radius);
   font-size: 38px;
+  overflow: hidden;
+}
+
+.blog-card .blog-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .story-card .story-body,
