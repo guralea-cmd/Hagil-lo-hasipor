@@ -5,6 +5,10 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
+## Hard rule: always verify the actual current date before saying "today"
+
+Confirmed 2026-08-09, after a real mix-up: run `date` (or equivalent) and check the *actual* calendar date/time before describing anything as "today's post," "this morning," or similar - never infer it from when the current conversation started. Long sessions can span midnight; a post published late one evening can get mis-described hours later as having happened "this morning" once the date has quietly rolled over, and Leah has no way to catch that from her side - it reads as a fabricated or confused claim even when the underlying post is completely real. Before claiming a post/change is "from today," check the clock, not memory.
+
 ## What this produces
 
 **Exactly one** short teaser per run, pointing back to a page on the site - never the full content itself. The goal is curiosity, not information: readers should have to click through to the site to get the rest of the story, the rest of the article, or the workshop/registration details. Every teaser has exactly four parts: כותרת מושכת, 2-4 lines of curiosity-only body copy, an image (see "Choosing the image"), and a קישור to the specific relevant page. Never draft more than one post in a single run.

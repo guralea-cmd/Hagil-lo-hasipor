@@ -5,6 +5,10 @@ description: Updates the scrolling marquee-strip on the homepage (index.html) wi
 
 # Daily marquee-strip content
 
+## Hard rule: always verify the actual current date before saying "today"
+
+Confirmed 2026-08-09: run `date` (or equivalent) and check the *actual* calendar date/time before describing anything as "today's" - never infer it from when the current conversation started. Long sessions can span midnight; describing something as "this morning" once the date has quietly rolled over reads as confused or fabricated even when the underlying fact is real. Check the clock, not memory. (Same rule as `facebook-teaser`.)
+
 ## What this produces
 
 **Exactly one** short line for today, replacing the rotating message + link spans in the homepage banner strip (`index.html`, `.marquee-strip__track`). This mirrors the `facebook-teaser` skill's rotation logic and approval gate, but for the homepage banner instead of a Facebook post - no image, no hashtags, just a single short line of text plus a link, since it has to fit on one line next to the tagline.
