@@ -818,10 +818,10 @@ footer a {
   object-fit: contain;
 }
 
-/* Portrait video variant - matches the clip's own aspect ratio instead of
-   forcing it into a 16:9 box, so there's no dead black margin around it */
+/* Portrait video variant - aspect-ratio is set per instance via an inline
+   style (each clip's own ratio), instead of forcing a 16:9 box, so there's
+   no dead black margin around it */
 .video-wrap--portrait {
-  aspect-ratio: 576 / 1164;
   max-width: 300px;
 }
 
