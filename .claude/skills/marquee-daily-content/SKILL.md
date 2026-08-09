@@ -52,6 +52,8 @@ Never reuse the same phrasing/hook pattern across cycles for the same content ty
 
 If a type's turn comes up and there's genuinely nothing new (blog: no unused post exists and none newly added; workshop/register/stories: every recent angle already logged and nothing new to draw on) - do not invent content to fill the gap. Say so plainly to Leah and ask what she'd like, rather than forcing a repeat or generic line.
 
+**Confirmed 2026-08-09: Leah doesn't see the scheduled task's notification/draft in her regular chat** - the automated 07:41 run happens in a separate session she doesn't check. Rather than debug the notification delivery (outside this repo's control), she asked to just run this skill manually in her regular conversation each morning instead. If a morning goes by and she hasn't seen a draft, she'll ask directly (e.g. "תריצי את הפס הנע") - run it then. The scheduled task can keep running in the background as a backup, but don't assume she's seen its output.
+
 ## Approval gate
 
 Present today's draft to Leah in chat, in Hebrew, before touching any file:
