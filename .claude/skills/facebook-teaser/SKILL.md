@@ -5,6 +5,18 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
+## The three content automations, at a glance (read this first)
+
+This site runs three separate scheduled content skills. Confirmed 2026-08-09 after a real mix-up between them - check this table before drafting or presenting anything, so the wrong format never gets used for the wrong output:
+
+| Skill | Schedule | Output format | Where it publishes |
+|---|---|---|---|
+| **facebook-teaser** (this file) | daily, ~07:32 | כותרת + 2-4 lines body + **image** + קישור + hashtags | Facebook Page |
+| **marquee-daily-content** | daily, ~07:41 | **text + link only, no image, no heading** | `index.html` banner strip |
+| **weekly-blog-article-draft** | weekly, Sunday ~09:16 | full article per category (title, body, CTA) **+ its listing thumbnail image** | new `blog-post-N.html` files + `blog.html` listing |
+
+All three: draft only, present to Leah in Hebrew, publish only after her explicit approval in that conversation. Scheduled runs sometimes stall in their own separate session and never reach her (confirmed 2026-08-09) - if she says she never saw a draft, don't assume it was shown elsewhere; just run the skill fresh in the current conversation instead of guessing.
+
 ## Hard rule: always verify the actual current date before saying "today"
 
 Confirmed 2026-08-09, after a real mix-up: run `date` (or equivalent) and check the *actual* calendar date/time before describing anything as "today's post," "this morning," or similar - never infer it from when the current conversation started. Long sessions can span midnight; a post published late one evening can get mis-described hours later as having happened "this morning" once the date has quietly rolled over, and Leah has no way to catch that from her side - it reads as a fabricated or confused claim even when the underlying post is completely real. Before claiming a post/change is "from today," check the clock, not memory.
