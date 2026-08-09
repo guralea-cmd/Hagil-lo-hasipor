@@ -7,14 +7,16 @@ description: Updates the scrolling marquee-strip on the homepage (index.html) wi
 
 ## What this produces
 
-**Exactly one** short line for today, replacing the rotating message + link spans in the homepage marquee (`index.html`, `.marquee-strip__track`). This mirrors the `facebook-teaser` skill's rotation logic and approval gate, but for the homepage marquee instead of a Facebook post - no image, no hashtags, just a single short line of text plus a link, since it has to fit on one scrolling line.
+**Exactly one** short line for today, replacing the rotating message + link spans in the homepage banner strip (`index.html`, `.marquee-strip__track`). This mirrors the `facebook-teaser` skill's rotation logic and approval gate, but for the homepage banner instead of a Facebook post - no image, no hashtags, just a single short line of text plus a link, since it has to fit on one line next to the tagline.
 
-The marquee currently has three repeated spans per loop:
+**Confirmed 2026-08-09: this is now a static bar, not a scrolling ticker.** Leah called horizontally-scrolling marquee text a dated ("30 years old") web pattern, so the strip was rewritten to a static flex row (tagline • message • link, separated by a dot), no animation, no duplicated spans. Don't reintroduce scrolling/animation/duplicate spans if asked to touch this again - three plain `<span>`s, once each.
+
+The strip has exactly three spans:
 1. The fixed site tagline - **never change this one**: `הגיל הוא לא הסיפור - הסיפור הוא מה עושים איתו`
 2. A rotating message line - this is what changes daily
 3. A link span (visible link text + href) - this also changes daily, paired with the message
 
-Each day, spans 2 and 3 (both duplicated twice in the HTML for the seamless scroll loop - update all four occurrences, i.e. both copies) get replaced with that day's content. Span 1 (the tagline) stays exactly as-is, always.
+Each day, spans 2 and 3 get replaced with that day's content. Span 1 (the tagline) stays exactly as-is, always.
 
 ## Content rotation and no-repeat rule
 
@@ -62,7 +64,7 @@ Explicitly ask for her approval. She may approve, reject, or ask for edits. Do n
 
 Only after Leah has explicitly approved:
 
-1. Edit `index.html`'s `.marquee-strip__track` block - replace the second and third `<span>` in **both** duplicated copies (four spans total: message, link, message, link) with the approved text, keeping the exact same HTML structure (the link span wraps an `<a href="...">`, matching the existing pattern for the workshop link).
+1. Edit `index.html`'s `.marquee-strip__track` block - replace the second and third `<span>` (message, link - only one of each, no duplicates) with the approved text, keeping the exact same HTML structure (the link span wraps an `<a href="...">`, matching the existing pattern for the workshop link).
 2. Do **not** touch the cache-busting `?v=` query param on `css/style.css` - this is an HTML content change, not a CSS change, so no version bump is needed (bump it only if `css/style.css` itself is edited).
 3. Commit and push to `main` (this is a live-site content change, already covered by Leah's approval of the specific text in step 1 of this gate - no separate push confirmation needed beyond that approval, since editing-and-publishing this line is exactly what she asked this skill to do daily).
 4. Confirm to Leah (Hebrew) that it's live.

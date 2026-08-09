@@ -32,3 +32,13 @@ Leah asked (2026-08-07) whether the site has an FAQ for the workshop - it doesn'
 6. יש מגבלות בריאותיות ספציפיות שכן משפיעות, מעבר לניסוח הכללי "בכל גיל ומצב בריאותי"?
 
 Once she answers, build a real FAQ section/page in her voice (invoke `leah-voice` first, per this repo's standing rule) - link it from `workshop.html` at minimum.
+
+## 3. Site modernization pass (started 2026-08-09) - Leah said the design "belongs to websites from 30 years ago"
+
+Three concrete changes agreed on, tracked here so none get dropped mid-pass:
+
+1. **Remove blanket bold body text** - `.split-cta-text p`, `.value-points li`, and `.section-intro` in `css/style.css` all forced `font-weight: 700` on ordinary paragraph/list text everywhere those classes are used (about.html, index.html, register.html, workshop.html, etc.), which drowned out the real `<strong>` emphasis inside those same paragraphs. **Done 2026-08-09** - all three changed to `font-weight: 400`. Bump the CSS cache-bust version and push after any further edits in this pass. If more forced-bold body-text rules turn up elsewhere (check `grep -n "font-weight: 700" css/style.css` against each selector's actual usage), fix those too - only headings, `strong`/`b`, buttons, tags, and the `.intro-highlight` callout box should stay bold.
+
+2. **Replace the scrolling marquee strip** on the homepage (`.marquee-strip`, currently driven by the `marquee-daily-content` scheduled skill) with something static - Leah specifically called out horizontally-scrolling ticker text as a dated pattern. Not yet done as of this writing - needs a decision on the replacement (a static banner? Rotate the daily content some other way?) before implementing, and likely means retiring or repurposing the `marquee-daily-content` scheduled task/skill once the strip itself is gone.
+
+3. **Replace emoji thumbnails on `blog.html`** (`🖋️` etc. used as `.blog-thumb` placeholders) with real photos, and increase the blog card heading size - Leah called the emoji "childish" and the headings "too small, doesn't look professional." Not yet done - needs real images sourced/chosen per post (check `images/facebook-posts/` or ask Leah for photos) and a `css/style.css` change to `.blog-card h3` (or whatever the current selector is) for heading size.
