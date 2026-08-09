@@ -966,9 +966,9 @@ footer a {
 }
 
 .blog-card .blog-thumb {
-  flex: 0 0 88px;
-  width: 88px;
-  height: 88px;
+  flex: 0 0 140px;
+  width: 140px;
+  height: 140px;
   aspect-ratio: 1 / 1;
   border-radius: var(--radius);
   font-size: 38px;
