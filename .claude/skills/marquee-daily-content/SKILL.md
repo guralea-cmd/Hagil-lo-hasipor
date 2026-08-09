@@ -59,7 +59,8 @@ If a type's turn comes up and there's genuinely nothing new (blog: no unused pos
 Present today's draft to Leah in chat, in Hebrew, before touching any file:
 - **הטקסט:** the message line
 - **הקישור:** the link text + destination page
-- **תמונה:** send an actual relevant image file alongside the text (via a file-sending tool), matching that day's content type/topic. This does NOT get embedded in the live marquee itself (the strip is text-only, no image slot in its HTML) - it's just context so Leah can see something concrete while approving, the same expectation she has from the `facebook-teaser` flow. Confirmed 2026-08-09 after she repeatedly asked "where's the image" - always include one, every day, regardless of content type.
+
+**No image, ever.** Confirmed 2026-08-09, after a confused back-and-forth: the marquee strip is text-only (no image slot in its HTML), and Leah confirmed explicitly she does NOT want an image attached to this approval flow - that expectation belongs to `facebook-teaser` (headline+image+text) and the weekly blog-article skill, not this one. Don't send a file here.
 
 Explicitly ask for her approval. She may approve, reject, or ask for edits. Do not edit `index.html` or push anything until she has explicitly approved that day's exact text in that conversation.
 
