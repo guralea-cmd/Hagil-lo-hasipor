@@ -279,11 +279,11 @@ section h2 {
   font-size: var(--text-xl);
 }
 
-.grid--heroes .story-body {
-  padding: var(--space-3);
+.grid--heroes .story-card .story-body {
+  padding: var(--space-2) var(--space-3);
 }
 
-.grid--heroes .story-name {
+.grid--heroes .story-card .story-name {
   margin-top: 0;
   font-size: var(--text-sm);
 }
