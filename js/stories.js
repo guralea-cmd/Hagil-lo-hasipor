@@ -27,15 +27,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function rowFromSubmission(id, story) {
-    var mediaHtml;
+    var photos = story.photoUrls || [];
+    var primaryHtml;
     if (story.videoUrl) {
-      mediaHtml = '<video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video>';
-    } else if (story.photoUrls && story.photoUrls.length) {
-      mediaHtml = '<img src="' + story.photoUrls[0] + '" alt="" style="width:100%;height:100%;object-fit:cover;">';
+      primaryHtml = '<video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video>';
+    } else if (photos.length) {
+      primaryHtml = '<img src="' + photos[0] + '" alt="" style="width:100%;height:100%;object-fit:cover;">';
     } else {
-      mediaHtml = '<div class="video-placeholder">📖</div>';
+      primaryHtml = '<div class="video-placeholder">📖</div>';
     }
+    var extraPhotos = story.videoUrl ? photos : photos.slice(1);
+    var thumbsHtml = extraPhotos.length
+      ? '<div class="story-row-thumbs">' + extraPhotos.map(function (url) {
+          return '<a href="' + url + '" target="_blank" rel="noopener"><img src="' + url + '" alt=""></a>';
+        }).join("") + '</div>'
+      : '';
     var nameLine = escapeHtml(story.name || "") + (story.age ? ", " + escapeHtml(story.age) : "");
+
+    var textBlocks = [
+      { label: "הסיפור", value: story.story },
+      { label: "הרגע המשנה", value: story.turningPoint },
+      { label: "היום", value: story.today },
+      { label: "המסר", value: story.message }
+    ].filter(function (block) { return block.value; })
+      .map(function (block) {
+        return '<p><strong>' + block.label + ':</strong> ' + escapeHtml(block.value) + '</p>';
+      }).join("");
 
     var row = document.createElement("div");
     row.className = "story-row";
@@ -44,9 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
       '<div class="story-row-info">' +
       '<h3>' + nameLine + '</h3>' +
       (story.location ? '<p class="story-location">' + escapeHtml(story.location) + '</p>' : '') +
-      '<p>' + escapeHtml(summarize(story.story, 400)) + '</p>' +
+      textBlocks +
       '</div>' +
-      '<div class="story-row-media"><div class="video-wrap">' + mediaHtml + '</div></div>';
+      '<div class="story-row-media"><div class="video-wrap">' + primaryHtml + '</div>' + thumbsHtml + '</div>';
     return row;
   }
 
