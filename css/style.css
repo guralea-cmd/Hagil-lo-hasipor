@@ -820,6 +820,7 @@ footer a {
 
 /* Video hero */
 .video-wrap {
+  position: relative;
   max-width: 720px;
   margin: var(--space-6) auto 0;
   border-radius: var(--radius);
@@ -944,6 +945,7 @@ footer a {
 
 .story-card .story-video,
 .blog-card .blog-thumb {
+  position: relative;
   aspect-ratio: 16 / 9;
   background: #f0e6d8;
   display: flex;
