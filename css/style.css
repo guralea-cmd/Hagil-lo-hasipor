@@ -269,7 +269,13 @@ section h2 {
   gap: var(--space-3);
 }
 
+.grid--heroes .story-card {
+  flex-direction: column;
+  padding: 0;
+}
+
 .grid--heroes .story-video {
+  width: 100%;
   font-size: var(--text-xl);
 }
 
