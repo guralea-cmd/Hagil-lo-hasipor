@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function mediaFor(story) {
     if (story.photoUrls && story.photoUrls.length) {
-      return '<img src="' + story.photoUrls[0] + '" alt="" style="width:100%;height:100%;object-fit:cover;">';
+      return '<img src="' + story.photoUrls[0] + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">';
     }
     if (story.videoUrl) {
-      return '<video src="' + story.videoUrl + '" preload="metadata" muted style="width:100%;height:100%;object-fit:cover;"></video>';
+      return '<video src="' + story.videoUrl + '" preload="metadata" muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>';
     }
     return "📖";
   }

@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (story.videoUrl) {
       primaryHtml = '<video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video>';
     } else if (photos.length) {
-      primaryHtml = '<img src="' + photos[0] + '" alt="" style="width:100%;height:100%;object-fit:cover;">';
+      primaryHtml = '<img src="' + photos[0] + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">';
     } else {
       primaryHtml = '<div class="video-placeholder">📖</div>';
     }
