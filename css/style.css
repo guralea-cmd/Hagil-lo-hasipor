@@ -280,11 +280,11 @@ section h2 {
 }
 
 .grid--heroes .story-card .story-body {
-  padding: var(--space-1) var(--space-3) var(--space-2);
+  padding: 0 var(--space-3) var(--space-2);
 }
 
 .grid--heroes .story-card .story-name {
-  margin-top: 0;
+  margin: 0;
   font-size: var(--text-sm);
 }
 
