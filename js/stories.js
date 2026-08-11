@@ -89,9 +89,10 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
       list.innerHTML = "";
-      all.forEach(function (item) {
+      var rows = all.map(function (item) {
         var row = item.type === "legacy" ? rowFromLegacyStory(item.id, item.data) : rowFromSubmission(item.id, item.data);
         list.appendChild(row);
+        return row;
       });
 
       if (typeof gtag === "function" && typeof IntersectionObserver !== "undefined") {
@@ -107,15 +108,56 @@ document.addEventListener("DOMContentLoaded", function () {
             observer.unobserve(row);
           });
         }, { threshold: 0.5 });
-        list.querySelectorAll(".story-row").forEach(function (row) { observer.observe(row); });
+        rows.forEach(function (row) { observer.observe(row); });
       }
+
+      // One story per "page" (no long scroll), with numbered page buttons -
+      // matches Leah's request 2026-08-11 for a dignified, non-scrolling
+      // per-story presentation instead of one long list.
+      var pagination = document.querySelector("#stories-pagination");
+      var totalPages = rows.length;
+      var currentPage = 1;
 
       if (window.location.hash) {
         var target = document.querySelector(window.location.hash);
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth", block: "center" });
-          target.classList.add("story-row--highlight");
+        var hashIndex = target ? rows.indexOf(target) : -1;
+        if (hashIndex > -1) currentPage = hashIndex + 1;
+      }
+
+      function renderPage() {
+        rows.forEach(function (row, i) {
+          row.style.display = (i === currentPage - 1) ? "" : "none";
+          row.classList.toggle("story-row--highlight", i === currentPage - 1);
+        });
+        if (!pagination) return;
+        pagination.innerHTML = "";
+        if (totalPages <= 1) {
+          pagination.hidden = true;
+          return;
         }
+        for (var p = 1; p <= totalPages; p++) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn btn-outline btn-sm";
+          btn.textContent = String(p);
+          btn.setAttribute("aria-current", p === currentPage ? "page" : "false");
+          btn.disabled = p === currentPage;
+          btn.addEventListener("click", (function (pageNum) {
+            return function () {
+              currentPage = pageNum;
+              renderPage();
+              history.replaceState(null, "", "#" + rows[pageNum - 1].id);
+              list.scrollIntoView({ behavior: "smooth", block: "start" });
+            };
+          })(p));
+          pagination.appendChild(btn);
+        }
+        pagination.hidden = false;
+      }
+
+      renderPage();
+      if (window.location.hash) {
+        list.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     })
     .catch(function (err) {
