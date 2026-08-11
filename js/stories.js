@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var row = document.createElement("div");
     row.className = "story-row";
     row.id = "story-" + id;
+    row.dataset.storyName = story.name || "";
     row.innerHTML =
       '<div class="story-row-info">' +
       '<h3>' + escapeHtml(story.name || "") + '</h3>' +
@@ -59,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var row = document.createElement("div");
     row.className = "story-row";
     row.id = "story-" + id;
+    row.dataset.storyName = story.name || "";
     row.innerHTML =
       '<div class="story-row-info">' +
       '<h3>' + nameLine + '</h3>' +
@@ -91,6 +93,22 @@ document.addEventListener("DOMContentLoaded", function () {
         var row = item.type === "legacy" ? rowFromLegacyStory(item.id, item.data) : rowFromSubmission(item.id, item.data);
         list.appendChild(row);
       });
+
+      if (typeof gtag === "function" && typeof IntersectionObserver !== "undefined") {
+        var seen = {};
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var row = entry.target;
+            var storyId = row.id.replace(/^story-/, "");
+            if (seen[storyId]) return;
+            seen[storyId] = true;
+            gtag("event", "story_view", { story_id: storyId, story_name: row.dataset.storyName || "" });
+            observer.unobserve(row);
+          });
+        }, { threshold: 0.5 });
+        list.querySelectorAll(".story-row").forEach(function (row) { observer.observe(row); });
+      }
 
       if (window.location.hash) {
         var target = document.querySelector(window.location.hash);

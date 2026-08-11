@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
   var form = document.querySelector("#register-form");
   if (!form) return;
 
+  form.addEventListener("input", function () {
+    if (typeof gtag === "function") gtag("event", "form_start", { form_name: "story_submission" });
+  }, { once: true });
+
   var statusEl = document.querySelector("#form-status");
   var progressEl = document.querySelector("#upload-progress");
 
@@ -102,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
         progressEl.textContent = "";
         statusEl.textContent = "";
         statusEl.classList.remove("error");
+        if (typeof gtag === "function") gtag("event", "story_submitted");
         if (window.openSiteModal) {
           window.openSiteModal("registration-success-modal");
         }
