@@ -11,8 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function mediaFor(story) {
-    if (story.photoUrls && story.photoUrls.length) {
-      return '<img src="' + story.photoUrls[0] + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;">';
+    var photos = (story.photoUrls || []).filter(function (url) {
+      return !/\.hei[cf](\?|$)/i.test(url);
+    });
+    if (photos.length) {
+      return '<img src="' + photos[0] + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;">';
     }
     if (story.videoUrl) {
       return '<video src="' + story.videoUrl + '" preload="metadata" muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;"></video>';
