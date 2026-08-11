@@ -265,11 +265,19 @@ section h2 {
 /* Enlarged cards (2026-08-11, Leah: images too small to make out) - the פי 5
    version ("insanely big", one per row) overshot; corrected back down so 3
    fit comfortably in one row on desktop while staying much bigger than the
-   original 120-140px. */
+   original 120-140px. Phone screens are too narrow for 3 big cards in a row,
+   so mobile gets a fixed 2 columns instead (see media query below). */
 .grid--heroes {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   justify-content: center;
   gap: var(--space-5);
+}
+
+@media (max-width: 700px) {
+  .grid--heroes {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
 }
 
 .grid--heroes .story-card {
