@@ -262,11 +262,13 @@ section h2 {
   gap: 0;
 }
 
-/* Compact variant - small fixed-size cards, 6-8 per row on desktop, never stretches */
+/* Fixed-size cards, enlarged ~5x (2026-08-11, Leah: images were too small to
+   make out, "צריך לחפש משקפת", asked for פי 5) - only ~8 items max, so
+   there's room to give each one real presence instead of a dense grid. */
 .grid--heroes {
-  grid-template-columns: repeat(auto-fill, minmax(120px, 140px));
+  grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
   justify-content: center;
-  gap: var(--space-3);
+  gap: var(--space-5);
 }
 
 .grid--heroes .story-card {
