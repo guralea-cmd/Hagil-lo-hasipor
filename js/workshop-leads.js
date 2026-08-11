@@ -4,6 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var statusEl = document.querySelector("#workshop-lead-status");
 
+  form.addEventListener("input", function () {
+    if (typeof gtag === "function") gtag("event", "form_start", { form_name: "workshop_lead" });
+  }, { once: true });
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -26,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (typeof fbq === "function") {
           fbq("track", "Lead");
         }
+        if (typeof gtag === "function") gtag("event", "workshop_lead_submitted");
         form.reset();
       })
       .catch(function (err) {
