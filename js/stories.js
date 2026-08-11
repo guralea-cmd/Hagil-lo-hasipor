@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function rowFromSubmission(id, story) {
-    var photos = story.photoUrls || [];
+    var photos = (story.photoUrls || []).filter(function (url) {
+      return !/\.hei[cf](\?|$)/i.test(url);
+    });
     var primaryHtml;
     if (story.videoUrl) {
       primaryHtml = '<video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video>';
