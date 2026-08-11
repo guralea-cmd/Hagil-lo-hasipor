@@ -262,11 +262,12 @@ section h2 {
   gap: 0;
 }
 
-/* Fixed-size cards, enlarged ~5x (2026-08-11, Leah: images were too small to
-   make out, "צריך לחפש משקפת", asked for פי 5) - only ~8 items max, so
-   there's room to give each one real presence instead of a dense grid. */
+/* Enlarged cards (2026-08-11, Leah: images too small to make out) - the פי 5
+   version ("insanely big", one per row) overshot; corrected back down so 3
+   fit comfortably in one row on desktop while staying much bigger than the
+   original 120-140px. */
 .grid--heroes {
-  grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   justify-content: center;
   gap: var(--space-5);
 }
@@ -736,8 +737,9 @@ footer a {
   gap: var(--space-7);
   flex-wrap: wrap;
   padding: var(--space-7);
-  margin-bottom: var(--space-7);
-  border: 1px solid var(--color-border);
+  margin: 0 6px var(--space-9);
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 6px;
   border-radius: var(--radius);
   scroll-margin-top: 90px;
 }
