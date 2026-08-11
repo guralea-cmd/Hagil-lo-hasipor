@@ -5,6 +5,10 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
+## PAUSED as of 2026-08-11 - do not draft or publish until Leah says otherwise
+
+Leah paused all Facebook/Instagram publishing (2026-08-11): "את הפייסבוק אני כרגע מורידה ממך עד להודעה חדשה, את מטפלת רק באתר" - she wants to wait until real traffic is happening on the site before continuing social posting. The scheduled task `facebook-daily-teaser` is disabled (not deleted). Any already-scheduled Metricool posts for this period were also canceled (the pre-scheduled Avi Turjeman Tier-1 post for 2026-08-12 was deleted). **Do not draft, schedule, or publish anything to Facebook/Instagram/Metricool until Leah explicitly re-enables this** - if asked to run this skill in the meantime, tell her it's paused per her own instruction and ask if she wants to resume. Site-only work (marquee, blog articles, adding new approved stories to `stories.html`) continues as normal and is unaffected by this pause.
+
 ## The three content automations, at a glance (read this first)
 
 This site runs three separate scheduled content skills. Confirmed 2026-08-09 after a real mix-up between them - check this table before drafting or presenting anything, so the wrong format never gets used for the wrong output:

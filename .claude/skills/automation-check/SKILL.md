@@ -9,6 +9,10 @@ description: Standing audit skill that checks every scheduled content automation
 
 Confirmed 2026-08-09 (`facebook-teaser`, `marquee-daily-content` skill files): scheduled task runs happen in their own separate background session and sometimes stall before ever reaching Leah for approval. A recent `lastRunAt` timestamp on the scheduled task only proves the task *fired* - it does not prove a draft was shown to her, approved, or actually published. Leah asked (2026-08-09) for a standing check across every skill she runs, so gaps like this get caught instead of silently dropped.
 
+## Paused tasks, as of 2026-08-11
+
+Tasks **1 (`facebook-daily-teaser`)** and **5 (`metricool-publish-check`)** are currently disabled - Leah paused all Facebook/Instagram publishing until real site traffic develops (see the note at the top of `facebook-teaser/SKILL.md`). A disabled task showing no recent `lastRunAt` is expected, not a gap - don't flag it as stalled or re-run it. Tasks 2 (`marquee-daily-content`) and 3 (`weekly-blog-article-draft`) are unaffected and should still be audited normally.
+
 ## How to check
 
 1. Call `list_scheduled_tasks` to get the live list - don't work from a hardcoded list, since tasks get added/removed/rescheduled over time. Confirmed 2026-08-09: each automation has a fixed reference number so Leah can say "משימה 1" etc. without ambiguity (see the same numbered table in `facebook-teaser`/`marquee-daily-content`/`weekly-blog-article-draft`'s own SKILL.md files) - numbers are stable, never reused/reassigned:
