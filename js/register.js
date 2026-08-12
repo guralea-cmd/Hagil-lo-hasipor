@@ -2,6 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
   var form = document.querySelector("#register-form");
   if (!form) return;
 
+  var ageSelect = document.querySelector("#age");
+  if (ageSelect) {
+    for (var age = 18; age <= 100; age++) {
+      var option = document.createElement("option");
+      option.value = age;
+      option.textContent = age;
+      ageSelect.appendChild(option);
+    }
+  }
+
   form.addEventListener("input", function () {
     if (typeof gtag === "function") gtag("event", "form_start", { form_name: "story_submission" });
   }, { once: true });
