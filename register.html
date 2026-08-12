@@ -71,7 +71,9 @@ gtag('config', 'G-MEG8NMMGTD');
       </div>
       <div>
         <label for="age">גיל</label>
-        <input type="number" id="age" name="age" min="1" max="120" required>
+        <select id="age" name="age" required>
+          <option value="" disabled selected>בחרי גיל</option>
+        </select>
       </div>
       <div>
         <label for="location">עיר / מדינה</label>
@@ -174,7 +176,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script src="js/firebase-config.js?v=2"></script>
 <script src="js/main.js?v=5"></script>
-<script src="js/register.js?v=4"></script>
+<script src="js/register.js?v=5"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
