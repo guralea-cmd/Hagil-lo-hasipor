@@ -50,3 +50,19 @@ Three concrete changes agreed on, tracked here so none get dropped mid-pass:
 ## 7. GA4 Explore dashboard - Part D (funnel explorations) not built yet
 
 See `project_ga4_dashboard_build_paused` in Claude's memory for full detail. Parts A/B/C are done and confirmed working (2026-08-12/13): Realtime shows `form_start`, `page_view`, and `session_start` firing correctly on `register.html`. Only Part D remains - two funnel explorations were planned (register.html: `page_view → form_start → story_submitted`; workshop.html: `page_view → form_start → workshop_lead_submitted`), but only the first one was opened and named ("משפך הרשמת סיפור") before the session moved on to something else - the actual funnel steps were never added to either. Pick this up before considering the GA4 dashboard build finished.
+
+## 8. More workshop FAQ candidates - proposed 2026-08-14, not yet decided
+
+After the 9-question FAQ went live (see item 2), Claude proposed 6 more candidate questions that Leah hasn't answered or decided to skip yet - don't assume these were rejected, just not yet addressed:
+1. איך עושים את בדיקת הגיל הפיזיולוגי במסלול הזום? (real gap: the intro says a physiological-age test happens at the start of the workshop, unclear how that works remotely over Zoom)
+2. מה קורה אם צריך לבטל/לפרוש באמצע הסדנה? (cancellation/refund policy)
+3. כמה משתתפות יש בקבוצה?
+4. איך משלמים ומתי?
+5. הסטודיו ברמלה נגיש (חניה, גישה לנכים)?
+6. אפשר להצטרף באמצע, אחרי שהסדנה כבר התחילה?
+
+Don't fabricate answers to these - real business facts, ask her.
+
+## 9. Meta paid ads campaign - infrastructure ready, waiting on Leah to launch
+
+Confirmed 2026-08-14: no additional tracking implementation needed to start the already-agreed Meta ads campaign (see `facebook-ads-plan` skill for the settled plan) - the Meta Pixel is live sitewide and `js/workshop-leads.js` already fires `fbq("track", "Lead")` on every workshop-lead form submission, so Facebook Ads Manager will count conversions correctly out of the box. Leah agreed to tell Claude when she actually starts running the campaign, mainly so GA4/the funnels and the admin dashboard's leads table can be watched together once real ad traffic starts - not because anything technical is blocking her from starting today.
