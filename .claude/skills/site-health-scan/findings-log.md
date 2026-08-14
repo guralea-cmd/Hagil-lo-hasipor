@@ -5,3 +5,5 @@
 | תאריך ושעה | עמוד/בדיקה | מה נמצא | פעולה |
 |---|---|---|---|
 | 2026-08-13/14 (רטרואקטיבי) | register.html - העלאת תמונה | ניסיון ראשון נכשל (storage/unauthorized), ניסיון שני (דקות אחר כך) הצליח - כנראה פלוק חד-פעמי, לא אומת כתקלה חוזרת | לא תוקן דבר, תשתית אושרה כתקינה |
+| 2026-08-14 (הרצה ידנית ראשונה) | index.html, stories.html - שגיאת קונסולה | `firebase.storage is not a function` - נטען firebase-config.js בלי firebase-storage-compat.js, נשחזר פעמיים | תוקן ופורסם (commit 5a80753), אותו תבנית הגנה כמו firebase.auth() |
+| 2026-08-14 (אותה הרצה) | index.html, stories.html - שגיאת קונסולה | `permission-denied` מ-Firestore - כנראה js/banner-display.js שמנסה לקרוא ad_submissions לפני שחוקי Firestore המעודכנים הודבקו בקונסולה (פריט פתוח מוכר, לא חדש) | לא תוקן - זו לא קטגוריה בטוחה לתיקון אוטומטי (חוקי Firestore), וכבר מתועד ברשימת המשימות הפתוחות |
