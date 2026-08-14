@@ -19,25 +19,11 @@ Both are blocked on her meeting the lawyer - nothing to build yet, just don't le
 
 **New minor item found during verification:** `js/banner-display.js`'s actual query (filter + orderBy) needs a Firestore composite index that doesn't exist yet - shows as `failed-precondition: The query requires an index` in console. Not urgent and not currently blocking anything (there are zero approved banners yet, so nothing is being hidden by it). Firebase's own error includes a direct "create index" link - simplest fix is just to trigger the real query once with an approved banner present and click that link, or build the composite index manually in Firestore Database → Indexes.
 
-## 2. Workshop FAQ ("שאלות נפוצות") - waiting on Leah's real answers
+## 2. Workshop FAQ ("שאלות נפוצות") - DONE 2026-08-14
 
-Leah asked (2026-08-07) whether the site has an FAQ for the workshop - it doesn't. A draft question list was proposed, split into what's already answerable from existing `workshop.html` content vs. what genuinely needs her input (don't invent answers to these - they're real business facts, not narrative copy):
+Built and live in `workshop.html` (9 questions - 5 from Leah's real answers, 4 drawn from existing page content). One deliberately excluded: price - Leah decided not to publish it; the workshop-lead form itself is the "contact us" path for that.
 
-**Already answerable from `workshop.html` (no need to ask her again):**
-- למי מיועדת הסדנה
-- מה קורה אם מפספסים מפגש (יש הקלטות)
-- ההבדל בין שני המסלולים (זום 8.10 / פרונטלי ברמלה 9.10)
-- מה קורה אחרי שהסדנה נגמרת (קהילת הבוגרים)
-
-**Still needs Leah's real answer - do not fabricate:**
-1. האם צריך ניסיון קודם באימונים/פילאטיס?
-2. כמה עולה הסדנה? (אין מחיר בשום מקום באתר כרגע)
-3. יש הגבלת גיל על הסדנה עצמה, מעבר להגדרת הקהילה הכללית כ-50+?
-4. הסדנה מיועדת לנשים בלבד, או גם לגברים?
-5. מה צריך כדי להשתתף במסלול הזום (ציוד, מקום)?
-6. יש מגבלות בריאותיות ספציפיות שכן משפיעות, מעבר לניסוח הכללי "בכל גיל ומצב בריאותי"?
-
-Once she answers, build a real FAQ section/page in her voice (invoke `leah-voice` first, per this repo's standing rule) - link it from `workshop.html` at minimum.
+Note for future FAQ-style edits: price question was intentionally left out - don't add "כמה עולה הסדנה?" back in without her explicitly asking for it.
 
 ## 3. Site modernization pass (started 2026-08-09) - Leah said the design "belongs to websites from 30 years ago"
 
