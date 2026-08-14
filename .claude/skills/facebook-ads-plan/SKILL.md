@@ -5,6 +5,8 @@ description: The locked, agreed Meta Ads (Facebook/Instagram) advertising plan f
 
 # Facebook/Instagram Ads plan - locked 2026-08-07
 
+**Published reference page (2026-08-14):** https://claude.ai/code/artifact/d7a849c9-12ff-4f11-8fb6-76ac984137a9 - a standalone visual summary of this plan Leah can open directly without digging through chat. If this document's content changes, republish that same file path/URL from a session that has it (see Artifact tool notes) rather than leaving the page stale.
+
 This plan was finalized with Leah on 2026-08-07 after an earlier draft (built in a separate session) wrongly split budget between "local" and "national" targeting. That was rejected outright - **the answer is not "how much to spend nationally vs. locally," it's that the entire ad budget stays local, always.** Do not revisit that debate; the correction below is the standing plan.
 
 **Hard rule: never respond to marketing/ads questions with "I don't know" or "I haven't heard of this" once a plan like this exists.** Leah pushed back hard on hedging ("את מבינה בפרסום? את יודעת לעשות תוכנית פרסום או שאת ממציאה שטויות") - she wants confident, concrete, decisive answers grounded in this document, not vague menus of options.
