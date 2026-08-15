@@ -59,11 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     var videoFile = form.video.files[0];
-    if (videoFile && videoFile.size > 100 * 1024 * 1024) {
-      statusEl.textContent = "קובץ הווידאו גדול מ-100MB. נסה/י קובץ קטן יותר.";
-      statusEl.classList.add("error");
-      return;
-    }
 
     var submitBtn = form.querySelector("button[type=submit]");
     submitBtn.disabled = true;
