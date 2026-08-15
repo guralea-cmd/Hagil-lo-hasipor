@@ -2,16 +2,14 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     match /stories/{storyId}/{fileName} {
-      allow create: if request.resource.size < 100 * 1024 * 1024
-                     && request.resource.contentType.matches('video/.*');
+      allow create: if request.resource.contentType.matches('video/.*');
       allow read: if true;
       allow update, delete: if request.auth != null;
     }
 
     match /story_submissions/{submissionId}/{fileName} {
-      allow create: if request.resource.size < 100 * 1024 * 1024
-                     && (request.resource.contentType.matches('image/.*')
-                         || request.resource.contentType.matches('video/.*'));
+      allow create: if request.resource.contentType.matches('image/.*')
+                     || request.resource.contentType.matches('video/.*');
       allow read: if true;
       allow update, delete: if request.auth != null;
     }
