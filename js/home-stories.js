@@ -47,16 +47,20 @@ document.addEventListener("DOMContentLoaded", function () {
         var name = item.type === "legacy"
           ? escapeHtml(s.name || "")
           : escapeHtml(s.name || "") + (s.age ? ", " + escapeHtml(s.age) : "");
+        var storyHref = "stories.html#story-" + item.id;
+        var shareHref = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(location.origin + "/" + storyHref);
 
-        var a = document.createElement("a");
-        a.href = "stories.html#story-" + item.id;
-        a.className = "story-card";
-        a.innerHTML =
+        var card = document.createElement("div");
+        card.className = "story-card";
+        card.innerHTML =
+          '<a href="' + storyHref + '" style="display:contents;">' +
           '<div class="story-video">' + mediaFor(s) + '</div>' +
           '<div class="story-body">' +
           '<h3 class="story-name">' + name + '</h3>' +
-          '</div>';
-        grid.appendChild(a);
+          '</div>' +
+          '</a>' +
+          '<p style="margin:0; padding:0 var(--space-3) var(--space-2);"><a class="btn btn-outline btn-sm" href="' + shareHref + '" target="_blank" rel="noopener">שתפו בפייסבוק</a></p>';
+        grid.appendChild(card);
       });
     })
     .catch(function (err) {
