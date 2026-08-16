@@ -13,6 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
     return text.length > max ? text.slice(0, max) + "…" : text;
   }
 
+  function shareButtonHtml(id) {
+    var storyUrl = location.origin + location.pathname + "#story-" + id;
+    var shareHref = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(storyUrl);
+    return '<p><a class="btn btn-outline btn-sm" href="' + shareHref + '" target="_blank" rel="noopener">שתפו בפייסבוק</a></p>';
+  }
+
   function rowFromLegacyStory(id, story) {
     var row = document.createElement("div");
     row.className = "story-row";
@@ -22,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       '<div class="story-row-info">' +
       '<h3>' + escapeHtml(story.name || "") + '</h3>' +
       '<p>' + escapeHtml(summarize(story.bio, 400)) + '</p>' +
+      shareButtonHtml(id) +
       '</div>' +
       '<div class="story-row-media"><div class="video-wrap"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div></div>';
     return row;
@@ -66,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
       '<h3>' + nameLine + '</h3>' +
       (story.location ? '<p class="story-location">' + escapeHtml(story.location) + '</p>' : '') +
       textBlocks +
+      shareButtonHtml(id) +
       '</div>' +
       '<div class="story-row-media"><div class="video-wrap">' + primaryHtml + '</div>' + thumbsHtml + '</div>';
     return row;
