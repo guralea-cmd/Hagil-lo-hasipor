@@ -47,9 +47,9 @@ Three concrete changes agreed on, tracked here so none get dropped mid-pass:
 
 5. **Layout rule, confirmed 2026-08-09: text+video pairs must be genuine wide two-column splits, never one column carrying a heading+paragraphs+video stacked on top of each other.** Leah explicitly wants pages "לרוחב, לא לאורך" (wide, not tall) - when a section has both narrative text and a video, put the text in its own `.split-cta-text` column and the video alone in its own `.split-cta-video` column, same pairing `about.html` already uses correctly (natural DOM order: text first = right side in RTL, video second = left side - don't fight this with `order` unless she asks for the opposite). This was gotten wrong once on `index.html`'s homepage vision section (heading+3 paragraphs+video were all crammed into `.split-cta-video`, making that one column much taller than its sibling and dragging the whole page down) before being split into its own proper two-column row - check any future text+video section against this pattern before shipping it.
 
-## 7. GA4 Explore dashboard - Part D funnel 2 of 2 (workshop.html) not built yet
+## 7. GA4 Explore dashboard - DONE 2026-08-16
 
-See `project_ga4_dashboard_build_paused` in Claude's memory for full detail. Parts A/B/C are done and confirmed working. Part D funnel 1 (register.html: `page_view → form_start → story_submitted`, named "משפך הרשמת סיפור") is done, confirmed by Leah 2026-08-16. Funnel 2 (workshop.html: `page_view → form_start → workshop_lead_submitted`) is still an open task - confirmed 2026-08-16 it has not been built yet. No code changes needed (the events already fire correctly) - this is purely a manual GA4 Explore UI step: duplicate the funnel 1 tab and edit 3 things (step 1 page-path filter → "workshop.html", step 3 event → `workshop_lead_submitted`). Pick this up before considering the GA4 dashboard build finished.
+All parts (A/B/C/D) done and confirmed by Leah. Part D's two funnels both live inside one Explore report, "משפך הרשמת סיפור", as two tabs: right tab = register.html funnel, left tab = workshop.html funnel. See `project_ga4_dashboard_build_paused` in Claude's memory for full detail. Nothing pending - don't treat this as an open item anymore.
 
 ## 8. More workshop FAQ candidates - proposed 2026-08-14, not yet decided
 
