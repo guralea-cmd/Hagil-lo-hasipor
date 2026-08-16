@@ -51,17 +51,11 @@ Three concrete changes agreed on, tracked here so none get dropped mid-pass:
 
 All parts (A/B/C/D) done and confirmed by Leah. Part D's two funnels both live inside one Explore report, "משפך הרשמת סיפור", as two tabs: right tab = register.html funnel, left tab = workshop.html funnel. See `project_ga4_dashboard_build_paused` in Claude's memory for full detail. Nothing pending - don't treat this as an open item anymore.
 
-## 8. More workshop FAQ candidates - proposed 2026-08-14, not yet decided
+## 8. More workshop FAQ candidates - DONE 2026-08-16 (5 of 6; 1 explicitly rejected)
 
-After the 9-question FAQ went live (see item 2), Claude proposed 6 more candidate questions that Leah hasn't answered or decided to skip yet - don't assume these were rejected, just not yet addressed:
-1. איך עושים את בדיקת הגיל הפיזיולוגי במסלול הזום? (real gap: the intro says a physiological-age test happens at the start of the workshop, unclear how that works remotely over Zoom)
-2. מה קורה אם צריך לבטל/לפרוש באמצע הסדנה? (cancellation/refund policy)
-3. כמה משתתפות יש בקבוצה?
-4. איך משלמים ומתי?
-5. הסטודיו ברמלה נגיש (חניה, גישה לנכים)?
-6. אפשר להצטרף באמצע, אחרי שהסדנה כבר התחילה?
+5 of the 6 candidate questions proposed 2026-08-14 are now answered by Leah and live in `workshop.html`'s FAQ section: physiological-age test method, group size (max 15), payment timing (at registration, by phone), mid-workshop joining (yes, same price, gets all recordings), and cancellation policy (full refund >2 weeks before; 25% fee within 2 weeks; no refund after start, possible-not-guaranteed spot in the next group).
 
-Don't fabricate answers to these - real business facts, ask her.
+**The 6th (studio wheelchair accessibility) was explicitly rejected by Leah 2026-08-16 - do not propose it again.** The Ramla studio has ~2 entry steps and isn't wheelchair accessible; she was visibly annoyed the question was raised at all, since the workshop is movement-based (standing, sitting, floor work) and isn't something a wheelchair user could participate in regardless of entry access. Don't re-raise this as a FAQ gap or accessibility item in future passes.
 
 ## 9. Meta paid ads campaign - infrastructure ready, waiting on Leah to launch
 
