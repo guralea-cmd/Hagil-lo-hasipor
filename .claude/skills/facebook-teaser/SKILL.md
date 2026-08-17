@@ -138,6 +138,16 @@ Plus, as of 2026-08-06, hashtags appended at the end (see "Hashtags" section bel
 
 Never reuse the same hook or headline pattern across posts regardless of type or topic - the same rule that governs blog CTA headings applies here: each teaser's headline must be earned by that day's specific content, not a template.
 
+## Standing CTA-link rule (added 2026-08-17, part of the GEO/SEO project)
+
+Every post must end in a short call-to-action with a link to the relevant guralea.com page, on its own line, right before the hashtags. Which page depends on the post's content type:
+- **כלים ותובנות (article)** → link to that article's own page (already the existing behavior).
+- **סדנה (workshop topic)** → `https://guralea.com/workshop.html` (already the existing behavior).
+- **סיפור קהילה / הצטרפות לקהילה (personal/community story)** → `https://guralea.com/register.html` (already the existing behavior for הצטרפות לקהילה; also applies to a סיפור קהילה post if the post itself is framed as an invitation to share a story rather than to read one - most tier-1/tier-2 story posts still link to `stories.html`, use judgment).
+- **A post built around a general question** (not tied to one specific article/workshop/story) → `https://guralea.com/faq.html` - this is a new option, not a fifth rotation type; if a natural fit for this comes up, draft it and ask Leah whether she wants "general question" posts added as their own rotation slot, don't add one unilaterally.
+
+This formalizes what already existed per-destination (the workshop/register/stories fixed lead-in lines above) into one general rule, and adds `faq.html` as a new possible link target now that the FAQ page exists. The existing fixed lead-in phrases (`לפרטים נוספים ולהרשמה לסדנה:`, the register.html closing line, `לכתבה המלאה לחצו על הלינק👇`) still apply exactly as documented above - this rule doesn't replace them, it's the umbrella policy that explains why they're there and extends the same pattern to faq.html once there's a post that needs it. Remember this skill is still **paused as of 2026-08-11** - documenting this rule now doesn't reactivate posting; see the note at the top of this file.
+
 ## Hashtags
 
 As of 2026-08-06, every post includes Hebrew hashtags at the end of the caption (after the link), decided and approved by Leah in that conversation:
