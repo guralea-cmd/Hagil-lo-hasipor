@@ -1,2 +1,5 @@
 # Facebook API credentials for the facebook-teaser skill - never commit these to this public repo
 .claude/skills/facebook-teaser/secrets.json
+
+# Metricool API credentials - never commit these to this public repo
+.claude/skills/facebook-teaser/metricool-secrets.json

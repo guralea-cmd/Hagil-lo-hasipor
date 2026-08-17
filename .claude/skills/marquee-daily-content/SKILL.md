@@ -9,11 +9,14 @@ description: Updates the scrolling marquee-strip on the homepage (index.html) wi
 
 This site runs three separate scheduled content skills. Confirmed 2026-08-09 after a real mix-up between them - check this table before drafting or presenting anything, so the wrong format never gets used for the wrong output:
 
-| Skill | Schedule | Output format | Where it publishes |
-|---|---|---|---|
-| **facebook-teaser** | daily, ~07:32 | כותרת + 2-4 lines body + image + קישור + hashtags | Facebook Page |
-| **marquee-daily-content** (this file) | daily, ~07:41 | **text + link only, no image, no heading** | `index.html` banner strip |
-| **weekly-blog-article-draft** | weekly, Sunday ~09:16 | full article per category (title, body, CTA) + its listing thumbnail image | new `blog-post-N.html` files + `blog.html` listing |
+**Confirmed 2026-08-09: each automation has a fixed number, so Leah and Claude can refer to "משימה 2" etc. instead of guessing/describing - keep these numbers stable, never renumber even if one is later removed.**
+
+| # | Skill | Schedule | Output format | Where it publishes |
+|---|---|---|---|---|
+| 1 | **facebook-teaser** | daily, ~07:32 | כותרת + 2-4 lines body + image + קישור + hashtags | Facebook Page |
+| 2 | **marquee-daily-content** (this file) | daily, ~07:41 | **text + link only, no image, no heading** | `index.html` banner strip |
+| 3 | **weekly-blog-article-draft** | weekly, Sunday ~09:16 | full article per category (title, body, CTA) + its listing thumbnail image | new `blog-post-N.html` files + `blog.html` listing |
+| 4 | **automation-check** | on-demand (not scheduled) | audit report of tasks 1-3, redrafts immediately if one is unconfirmed/stalled | chat only - never publishes |
 
 All three: draft only, present to Leah in Hebrew, publish only after her explicit approval in that conversation. Scheduled runs sometimes stall in their own separate session and never reach her (confirmed 2026-08-09) - if she says she never saw a draft, don't assume it was shown elsewhere; just run the skill fresh in the current conversation instead of guessing.
 
@@ -33,6 +36,10 @@ The strip has exactly three spans:
 3. A link span (visible link text + href) - this also changes daily, paired with the message
 
 Each day, spans 2 and 3 get replaced with that day's content. Span 1 (the tagline) stays exactly as-is, always.
+
+## Temporary freeze, 2026-08-10: rotation paused for one week
+
+Leah explicitly asked to freeze the marquee on the current סדנה line ("רוצה לדעת מה הגיל האמיתי של הגוף שלך? בואי לבדוק בסדנה - 8.10 בזום, 9.10 ברמלה.") for about one week (until roughly 2026-08-17) while she personally drives story submissions through WhatsApp outreach - she doesn't want the strip pointing at "סיפורי קהילה" while that page still has no real content behind it. **Before drafting a new line for this slot, check `posted-log.md`'s freeze note and confirm with Leah the freeze is actually over** rather than assuming a week has passed and resuming rotation automatically.
 
 ## Content rotation and no-repeat rule
 
