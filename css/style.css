@@ -231,6 +231,13 @@ section h2 {
   margin: 0 0 var(--space-3);
 }
 
+.faq-page h2 {
+  text-align: right;
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  margin: var(--space-6) 0 var(--space-2);
+}
+
 .article-subheading {
   text-align: right;
   font-size: var(--text-lg);
