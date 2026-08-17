@@ -1139,6 +1139,12 @@ input[type="file"] {
   margin-top: -8px;
 }
 
+.byline {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin: -8px 0 var(--space-3);
+}
+
 .form-status {
   text-align: center;
   font-weight: 600;
