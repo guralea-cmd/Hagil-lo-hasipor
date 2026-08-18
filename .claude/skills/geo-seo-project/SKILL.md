@@ -99,6 +99,6 @@ https://guralea.com/blog-post-17.html
 - [x] sitemap.xml + robots.txt created (39 URLs + admin Disallow).
 - [x] Part 4 - facebook-teaser CTA-link rule documented, one example post drafted above.
 - [x] Final `[לאה: להשלים]` list compiled (above).
-- [ ] Leah's final review/approval → commit everything together → push
+- [x] Leah's final review/approval → committed and pushed 2026-08-17 (commit e4e9622, plus a follow-up FAQ-heading-size fix in 58a36fe). Live on the site.
 
-Nothing has been committed or pushed. All changes are local-only, waiting for Leah to review everything at once per her 2026-08-17 instruction.
+Everything in this project is live. This status section was left stale after the push - don't read the older draft above as still-pending.
