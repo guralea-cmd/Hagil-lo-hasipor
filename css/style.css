@@ -132,8 +132,8 @@ header {
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 28px;
+  justify-content: flex-start;
+  gap: 24px;
   padding: var(--space-4) var(--space-5);
   max-width: var(--max-width);
   margin: 0 auto;
@@ -1271,6 +1271,10 @@ input[type="file"] {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .nav {
+    justify-content: space-between;
+  }
+
   .menu-toggle {
     display: block;
   }
