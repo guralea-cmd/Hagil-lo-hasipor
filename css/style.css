@@ -163,6 +163,10 @@ header {
   color: var(--color-accent-dark);
 }
 
+.nav-links a[href="pilates.html"] {
+  white-space: nowrap;
+}
+
 .menu-toggle {
   display: none;
   background: none;
