@@ -146,25 +146,47 @@ header {
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  align-items: center;
+  gap: 0;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.nav-links li {
+  position: relative;
+  padding-inline: 20px;
+}
+
+.nav-links li:first-child {
+  padding-inline-start: 0;
+}
+
+.nav-links li:last-child {
+  padding-inline-end: 0;
+}
+
+.nav-links li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 18px;
+  background: var(--color-border);
+}
+
 .nav-links a {
   color: var(--color-text);
   font-weight: 500;
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--color-accent-dark);
-}
-
-.nav-links a[href="pilates.html"] {
-  white-space: nowrap;
 }
 
 .menu-toggle {
@@ -1264,6 +1286,14 @@ input[type="file"] {
 
   .nav-links.open {
     display: flex;
+  }
+
+  .nav-links li {
+    padding-inline: 0;
+  }
+
+  .nav-links li:not(:last-child)::after {
+    content: none;
   }
 }
 
