@@ -9,7 +9,18 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 Leah paused all Facebook/Instagram publishing (2026-08-11): "את הפייסבוק אני כרגע מורידה ממך עד להודעה חדשה, את מטפלת רק באתר" - she wants to wait until real traffic is happening on the site before continuing social posting. The scheduled task `facebook-daily-teaser` is disabled (not deleted). Any already-scheduled Metricool posts for this period were also canceled (the pre-scheduled Avi Turjeman Tier-1 post for 2026-08-12 was deleted). **Do not draft, schedule, or publish anything to Facebook/Instagram/Metricool until Leah explicitly re-enables this** - if asked to run this skill in the meantime, tell her it's paused per her own instruction and ask if she wants to resume. Site-only work (marquee, blog articles, adding new approved stories to `stories.html`) continues as normal and is unaffected by this pause.
 
-**2026-08-23, while still discussing resuming:** Leah is now planning a relaunch tied to a new incentive (a BuyMe gift voucher for approved community-story tellers, see [[story-reward-vouchers]]) and a branded photo-frame template for posts (built 2026-08-23, see that skill's design notes) - but has NOT yet said to actually resume. She also decided that once it does resume, it should go to the Figura Ramla studio brand only, not the "הגיל הוא לא הסיפور" page (see the "Update 2026-08-23" note further down in this file). Still paused - this is prep, not a green light.
+**2026-08-23, while still discussing resuming:** Leah is now planning a relaunch tied to a new incentive (a BuyMe gift voucher for approved community-story tellers, see [[story-reward-vouchers]]) and a branded photo-frame template for posts (built 2026-08-23, see that skill's design notes) - but has NOT yet said to actually resume. She also decided that once it does resume, it should go to the Figura Ramla studio brand only, not the "הגיל הוא לא הסיפור" page (see the "Update 2026-08-23" note further down in this file). Still paused - this is prep, not a green light.
+
+**TODO for 2026-08-24 (tomorrow) - waiting on Leah to actually do it herself, not a Claude task:** she wants to unpublish/deactivate the "הגיל הוא לא הסיפור" Facebook Page itself (not delete - reversible), since it has no real audience. Steps: Page → Settings → Privacy → Facebook Page visibility → Edit → "Deactivate Page" (older UI: "Unpublish"). Remind her if she hasn't mentioned it by then.
+
+## Caption-writing rules for this post's text (added 2026-08-23)
+
+Leah reviewed a draft caption and gave standing rules for every future post's text, not just that one:
+
+1. **Never open with generic "סיפור חדש..."** - always describe it vividly. Her own example phrasing to use as the pattern: **"סיפור השראה חדש שישאיר אתכם בלי מילים"** (a new inspiring story that'll leave you speechless) - adapt the specific descriptive punch per story, but keep this register (vivid, not flat/administrative).
+2. **Add an invitation for readers with their own story** - reuse the site's existing exact CTA button text **"שתפו את הסיפור שלכם"** (from `stories.html`/`index.html`, don't paraphrase it) as a second line, e.g. "יש גם לכם סיפור השראה? שתפו את הסיפור שלכם 👇" linking to `register.html`.
+3. **No generic templated closing line** - same rule as blog-post CTAs (see the `leah-voice` skill's "no generic templated CTA across multiple posts"), now extended to these captions too: retire "מוזמנים להכיר ולהתרשם" as a default - every post needs a closing line specific to that story/moment, written to actually drive a click, not filler.
+4. Every caption must be written **to move the reader to act** (click through), not just to inform.
 
 ## The three content automations, at a glance (read this first)
 
