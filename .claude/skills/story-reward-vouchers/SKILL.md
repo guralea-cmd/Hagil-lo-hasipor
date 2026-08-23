@@ -44,11 +44,18 @@ Confirmed against Meta's own developer docs (`developers.facebook.com/documentat
 
 Sources: [Meta for Developers - About the WhatsApp Business Platform](https://developers.facebook.com/documentation/business-messaging/whatsapp/about-the-platform), [WhatsApp API Prerequisites (Wati)](https://www.wati.io/en/blog/whatsapp-api-prerequisites/), [WhatsApp Business API 2026 Guide (Message Central)](https://www.messagecentral.com/blog/whatsapp-business-api-complete-guide)
 
-## Next steps (waiting on Leah)
+## Decided so far (2026-08-23)
 
-Before building anything:
-1. Does she want the simple manual/phone-based approach above, or does she want something automated on the site?
-2. Preview of available gifts beforehand - yes or no?
-3. Does the BuyMe purchase (the 15,000₪ / ~100 vouchers) already exist, or is generating individual voucher codes part of what needs figuring out?
+- **Delivery mechanism: full WhatsApp Business API automation**, not manual sending and not through BuyMe's own site - Leah ruled out manual (100-150 recipients is "a saga" for her) and doesn't want to use BuyMe's own dispatch.
+- **Dedicated business phone number supplied and stored** in `.claude/skills/story-reward-vouchers/secrets.json` (gitignored, never commit - this repo is public). Number is unregistered anywhere else, reserved for this WhatsApp-only, no calls.
 
-Don't propose a specific technical build until at least question 1 is answered.
+## Next step - PAUSED, waiting on Leah to resume (2026-08-23)
+
+She asked to pause here and come back when she has time - **don't proceed on your own, wait for her to say go.**
+
+When she resumes, the next action is: verify the number with Meta (one-time SMS/voice OTP) and add the WhatsApp product to the existing Meta developer app ("Hagil Lo Hasipur", App ID `1635110611525724`) rather than creating a new app from scratch.
+
+Still open/undecided, revisit when picking this back up:
+1. Preview of available BuyMe gifts beforehand - yes or no? (not yet decided)
+2. Does the BuyMe purchase (15,000₪ / ~100 vouchers) already exist, or does generating individual voucher codes still need figuring out?
+3. Exact Hebrew wording for the WhatsApp message template (needed before Meta template approval can even be submitted).
