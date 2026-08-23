@@ -259,3 +259,7 @@ Append one row to `.claude/skills/facebook-teaser/posted-log.md`: date, content 
 ## TODO 2026-08-25: connect the "לאה גורא" Facebook page as a third Metricool brand
 
 Leah is adding this page to Metricool manually herself (2026-08-24), but asked Claude to follow up tomorrow on making it a proper third brand in the rotation (alongside `hagil_lo_hasipor` and `figura_ramla` in `metricool-secrets.json`). She recalled there was previously some issue with this page not being a "business" account (as opposed to a personal profile) - **no record of this being resolved exists anywhere in this repo's skills as of 2026-08-24; treat it as unconfirmed/unresolved, don't assume it's fixed.** When picking this up: check whether the page connected successfully in Metricool's dashboard, ask Leah whether the business-account issue came up again, and only then add its `blogId` to `metricool-secrets.json`.
+
+## TODO 2026-08-25: look into also auto-sharing each post to Stories
+
+Leah asked (2026-08-24) whether the Metricool post also shares automatically to Instagram/Facebook Stories - currently it does not (the publish call uses `"type": "POST"`, feed-only, no story component). She wants this looked into for tomorrow: check Metricool's API docs for a Stories-specific post type/field, and what it would take to add it (either automatically alongside every feed post, or as an option) - don't implement until she decides she wants it, this is research + a proposal, not a build-now item.
