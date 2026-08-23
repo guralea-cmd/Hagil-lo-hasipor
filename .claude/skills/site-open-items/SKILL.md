@@ -13,6 +13,8 @@ Leah said (2026-08-13) she needs to meet with a lawyer, and raised two things to
 
 Both are blocked on her meeting the lawyer - nothing to build yet, just don't let these drop.
 
+**Update 2026-08-23:** Leah called the lawyer about the תקנון specifically - expects it to take about a week to close. Still nothing to build until the actual content arrives; just check back around 2026-08-30 if she hasn't followed up by then. The accessibility legal-compliance check (item 2 above) wasn't mentioned in this call - status unchanged, still just waiting.
+
 ## 1. Firestore rules - DONE 2026-08-14
 
 `firestore.rules` (including the `ad_submissions` rule for the "פרסמו איתנו" banner form at `advertise.html`) was pasted into the Firebase console and published on 2026-08-14, confirmed working by a live query test (no more permission-denied). Note for future reference: there is still no `firebase.json`/Firebase CLI wired up for real deployment from this repo (a CLI login flow was attempted and hit a hard technical wall - each `firebase login` invocation runs as a separate process with no shared state, so the two-step "get code, redeem code" flow can never complete this way; don't retry that approach) - any future rules changes still need the same manual console paste.
