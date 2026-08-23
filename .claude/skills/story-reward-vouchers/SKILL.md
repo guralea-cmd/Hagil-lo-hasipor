@@ -23,6 +23,27 @@ The site has no login/account system - `story_submissions` docs aren't tied to a
 
 The simpler path: every story submission already collects a phone number (see `register.html`'s form fields). When Leah approves a story in the admin flow, she (or a scheduled skill, later) sends the BuyMe voucher **directly to that phone number** (WhatsApp/SMS) as a personal thank-you - no new site feature needed, works immediately, and keeps her in full control of timing and eligibility. A public/automated on-site claim flow could be a later upgrade once volume justifies the engineering, but isn't needed to start.
 
+## Direction as of 2026-08-23 (leaning, not locked)
+
+Leah rejected the manual/per-person approach once she thought about scale - if ~100-150 people end up getting a voucher, sending each one by hand (even a one-click "message prepared, you press send") is "a whole saga" for her. She also doesn't want to rely on BuyMe's own site/dashboard to do the sending. This points toward **full automation (WhatsApp Business API, no manual step per recipient)** as the only realistic option at that volume - the semi-automated "Claude drafts it, Leah clicks send" idea doesn't scale for her. Not yet formally locked as the decision, but it's the direction she's leaning after hearing the tradeoff.
+
+If this gets built: same shape as the existing Facebook Graph API / Metricool setups (business account verification, message template pre-approval through Meta, credentials stored the same gitignored-secrets-file way as `.claude/skills/facebook-teaser/secrets.json`) - a real one-time setup investment, not a quick add.
+
+## WhatsApp Business API - what setup actually requires (researched 2026-08-23)
+
+Confirmed against Meta's own developer docs (`developers.facebook.com/documentation/business-messaging/whatsapp`) plus current third-party setup guides - not guessed:
+
+1. **A dedicated business phone number.** Must be able to receive an SMS/voice OTP for verification, and must NOT currently be active on the regular WhatsApp or WhatsApp Business consumer app (delete it from there first if it is). Can be a new number or a landline. **This is Leah's decision/action - she needs to pick or get a number.**
+2. **Meta business verification.** Upload official business documents (Israeli business registration/tax ID, proof of address) through Meta Business Manager. Takes roughly 2-10 business days. Without this, sending is capped at 250 conversations/24h - fine to start, but worth doing properly given the 100-150 recipient scale here.
+3. **A WhatsApp Business Account (WABA)** created inside a Meta Business Portfolio - can likely reuse the same Meta developer app already set up for Facebook publishing (**"Hagil Lo Hasipur", App ID `1635110611525724`**, see [[project_facebook_teaser_no_connector]]) by adding the WhatsApp product to it, rather than starting from zero.
+4. **Message template pre-approval.** The actual voucher message text needs to be submitted to Meta and approved before it can be sent (category: likely "Utility," since it's a post-approval reward notice, not marketing). Approval is separate from business verification and needs the final Hebrew wording decided first.
+5. **Recipient opt-in.** Meta requires people receive template messages only after opting in with clear disclosure of the business name/intent - the story-submission form's existing consent checkbox (register.html) likely needs a line covering this specifically; needs review once the flow is designed.
+6. **API credentials once approved:** an OAuth access token, the WABA ID, and a phone number ID - same secrets-file pattern as `metricool-secrets.json`/`secrets.json` (gitignored).
+
+**Realistic timeline: 1-2 weeks**, mostly waiting on Meta's verification and template approval, not build time.
+
+Sources: [Meta for Developers - About the WhatsApp Business Platform](https://developers.facebook.com/documentation/business-messaging/whatsapp/about-the-platform), [WhatsApp API Prerequisites (Wati)](https://www.wati.io/en/blog/whatsapp-api-prerequisites/), [WhatsApp Business API 2026 Guide (Message Central)](https://www.messagecentral.com/blog/whatsapp-business-api-complete-guide)
+
 ## Next steps (waiting on Leah)
 
 Before building anything:
