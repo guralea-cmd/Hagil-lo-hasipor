@@ -255,3 +255,7 @@ Only after Leah has explicitly approved a draft in that conversation:
 ## After approval and publishing
 
 Append one row to `.claude/skills/facebook-teaser/posted-log.md`: date, content type, the specific item, a one-line note on the angle/hook used, and status (`אושר ופורסם` once actually posted, not just approved - note per-destination status if any of the 4 didn't fully succeed). Also record which image was used (folder + filename, the live URL, or the Firestore doc ID for a tier-1 story photo) so future runs can rotate images correctly and avoid repeating the same face or picture back-to-back. This is what every future run reads to keep the rotation honest and avoid repeats.
+
+## TODO 2026-08-25: connect the "לאה גורא" Facebook page as a third Metricool brand
+
+Leah is adding this page to Metricool manually herself (2026-08-24), but asked Claude to follow up tomorrow on making it a proper third brand in the rotation (alongside `hagil_lo_hasipor` and `figura_ramla` in `metricool-secrets.json`). She recalled there was previously some issue with this page not being a "business" account (as opposed to a personal profile) - **no record of this being resolved exists anywhere in this repo's skills as of 2026-08-24; treat it as unconfirmed/unresolved, don't assume it's fixed.** When picking this up: check whether the page connected successfully in Metricool's dashboard, ask Leah whether the business-account issue came up again, and only then add its `blogId` to `metricool-secrets.json`.
