@@ -263,3 +263,7 @@ Leah is adding this page to Metricool manually herself (2026-08-24), but asked C
 ## TODO 2026-08-25: look into also auto-sharing each post to Stories
 
 Leah asked (2026-08-24) whether the Metricool post also shares automatically to Instagram/Facebook Stories - currently it does not (the publish call uses `"type": "POST"`, feed-only, no story component). She wants this looked into for tomorrow: check Metricool's API docs for a Stories-specific post type/field, and what it would take to add it (either automatically alongside every feed post, or as an option) - don't implement until she decides she wants it, this is research + a proposal, not a build-now item.
+
+## LOCKED, 2026-08-24 - stop re-confirming this: hagil_lo_hasipor stays fully excluded
+
+Leah confirmed this repeatedly on 2026-08-24, increasingly frustrated at having to repeat it: **both the "הגיל הוא לא הסיפור" Facebook page AND the `lea_gura` Instagram account (same brand/blogId `6694827` in `metricool-secrets.json`) are excluded from every post, no exceptions, until she explicitly says otherwise.** This is not a per-post question, not something to double-check with her again, and not something to second-guess based on follower counts or any other reasoning - it's a closed decision. Only `figura_ramla` (blogId `6684336`) is active. Do not ask her to reconfirm this again.
