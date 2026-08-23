@@ -5,7 +5,31 @@ description: Building out pilates.html - the Ramla Pilates-equipment studio page
 
 # Pilates page project
 
-## Status: placeholder page live, full content not yet built
+## Status: DONE - published and live 2026-08-23
+
+`pilates.html` is live on guralea.com with real content and a 15-photo studio gallery (reformer room + chairs room), replacing the placeholder. Leah rewrote the bio/intro text herself (used verbatim, see commit `fe2ebaf`) and picked every gallery photo by number from candidate grids Claude built and published as Artifacts. Final photo set was chosen across several rounds (commits `fe2ebaf`, `f3a1c68`) - nothing pending here anymore. If more photos are wanted later, more candidates can be pulled from the same source folder (see raw material section below) - most of it is still unused.
+
+**Process note for next time a photo-selection task like this comes up:** numbering-based selection over chat went badly here - Leah's messages got garbled (missing separators like "1316" for "13" "16"), Claude asked a clarifying question mid-flow which she experienced as incompetence, and there were several rounds of add/remove before it stabilized. What worked: fresh, small numbered batches (10 at a time) with clear "new numbering, unrelated to before" framing, full-res copies published as self-contained Artifacts (data-URI images, no server needed), and just acting on her numbers immediately without asking her to confirm interpretation.
+
+**What's in the draft:**
+- Intro paragraph reusing her own established lines from `about.html` (open-heart surgery/stroke at 45, half-paralyzed, rebuilt through listening to her body - not paraphrased, pulled from the already-approved bio) plus a new sentence: studio opened 2014 at רחוב החבצלת 8, רמלה.
+- Existing specialties paragraph from the old placeholder, kept as-is (bone density, disc herniation, kyphosis/scoliosis, sub-acute conditions, hip/knee replacement, fibromyalgia, arthritis).
+- Phone number (already existed in placeholder).
+- New "הסטודיו" (`<h2>`) section: a 7-photo grid using the site's existing `.grid` + `.testimonial-shot` CSS classes (same pattern as the about-page testimonial screenshots) - no new CSS needed.
+
+**7 photos chosen, copied into `images/pilates/`** (source: `C:\Users\gural\OneDrive\Desktop\סירטונים,תמונות עדויות לקוח ועוד  לאה גורא פילאטיס מכשירים\`):
+- `studio-chairs-empty.jpg`, `studio-chairs-group.jpg`, `studio-chairs-training.jpg` - from the wooden-Pilates-chair room (Dec 2024 batch)
+- `studio-reformer-room.jpg`, `studio-reformer-action.jpg`, `studio-reformer-empty.jpg`, `studio-reformer-stretch.jpg` - from the reformer room (May 2025 batch)
+
+**Both rooms confirmed by Leah (2026-08-19) to be her actual current studio** (not a former/different location) - she was direct that calling it "old" was wrong, it's "ותיק" (veteran/established), open since 2014. The *only* thing excluded was specific shots showing an old "פיגורא" (Figura) wall mural/banner still hanging in the chair room - those exact photos were skipped, everything else from both rooms is fair game. See [[geo-seo-project]] and the naming note below this section for why "Figura" can't appear on the live site.
+
+**PDF source (`פיגורא פילאטיס - טופס הרשמה.pdf`) turned out to have no usable marketing content** - it's a legal membership/registration form for the old "Figura Club" company (different legal entity, old pricing table, old cancellation policy). None of that was used. The only fact pulled from it: the street address, already in the LocalBusiness schema.
+
+**A rendered visual draft (real photos embedded) was sent to Leah as a file** via the temp scratchpad (not committed anywhere permanent) so she could review the actual look before commit - if resuming this in a new session and that file's gone, regenerate it from the current `pilates.html` + `images/pilates/*.jpg` rather than assuming she still has the old one.
+
+## Original placeholder status (superseded by the above, kept for history)
+
+Originally: placeholder page live, full content not yet built.
 
 `pilates.html` was created 2026-08-18 as a placeholder (title, short intro paragraph, phone number, LocalBusiness schema) and added to the main nav on all 40 public pages ("לאה גורא פילאטיס" / "מכשירים ברמלה", between "קצת עליי" and "סיפורי קהילה"). The body still has a `[לאה: להשלים]` marker where the real content goes.
 
