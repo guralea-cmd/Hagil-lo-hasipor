@@ -72,6 +72,12 @@ This means **two separate `POST /v2/scheduler/posts` calls per approved teaser**
 
 See "Publishing (after approval)" near the end of this file for the actual publish mechanics.
 
+## Cadence for relaunch (2026-08-24)
+
+When resuming after the pause, **community-story posts go out once a week, not daily** - the approved-story pool is small (4 stories as of 2026-08-24), and Leah wants to stretch it rather than exhaust it in days. Increase to multiple times a week only once there are "הרבה סיפורים" (many stories) in the approved pool - re-check story count each time before considering a frequency bump, don't assume.
+
+**Avi Turjeman (`Q0K9W9wyU88HlsemRhDc`) is next in the story rotation after whichever story is used for the 2026-08-24 relaunch post** - not scheduled for "tomorrow" specifically, just next-in-line whenever the following weekly slot comes up. (His 2026-08-12 scheduled post status is still unconfirmed either way - see the note in `posted-log.md` - resolve that uncertainty before using him, in case it turns out he already went out.)
+
 ## Content rotation and no-repeat rule
 
 Read `.claude/skills/facebook-teaser/posted-log.md` first - it tracks every teaser ever drafted (date, content type, the specific item, status).
