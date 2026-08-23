@@ -3,3 +3,6 @@
 
 # Metricool API credentials - never commit these to this public repo
 .claude/skills/facebook-teaser/metricool-secrets.json
+
+# WhatsApp Business number/credentials for story-reward-vouchers - never commit, this repo is public
+.claude/skills/story-reward-vouchers/secrets.json
