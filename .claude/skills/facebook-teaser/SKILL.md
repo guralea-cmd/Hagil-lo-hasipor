@@ -267,3 +267,15 @@ Leah asked (2026-08-24) whether the Metricool post also shares automatically to 
 ## LOCKED, 2026-08-24 - stop re-confirming this: hagil_lo_hasipor stays fully excluded
 
 Leah confirmed this repeatedly on 2026-08-24, increasingly frustrated at having to repeat it: **both the "הגיל הוא לא הסיפור" Facebook page AND the `lea_gura` Instagram account (same brand/blogId `6694827` in `metricool-secrets.json`) are excluded from every post, no exceptions, until she explicitly says otherwise.** This is not a per-post question, not something to double-check with her again, and not something to second-guess based on follower counts or any other reasoning - it's a closed decision. Only `figura_ramla` (blogId `6684336`) is active. Do not ask her to reconfirm this again.
+
+## Confirmed 2026-08-24: the full 5-account picture (Leah clarified after confusion)
+
+There are 5 distinct social accounts in play, not the 4 assumed earlier - a personal "לאה גורא" pair exists separately from both the frozen page and the studio brand:
+
+1. **Facebook "הגיל הוא לא הסיפור"** - frozen/excluded (see the LOCKED note above).
+2. **Facebook "לאה גורא פילאטיס מכשירים"** (studio, brand `figura_ramla`) - active, already publishing.
+3. **Instagram "לאה גורא פילאטיס"** (studio, `lea_gura_pilates`, same `figura_ramla` brand) - active, already publishing.
+4. **Facebook "לאה גורא"** (personal, separate from both of the above) - NOT in `metricool-secrets.json` yet. Leah is connecting it manually herself.
+5. **Instagram "לאה גורא"** (personal, separate) - also NOT in `metricool-secrets.json` yet, also being connected manually by her.
+
+Note this is distinct from the existing `hagil_lo_hasipor` brand's `lea_gura` Instagram entry in the secrets file - don't confuse the two. Once Leah has connected #4/#5 in Metricool's dashboard, the next step is adding their `blogId` as a third brand entry in `metricool-secrets.json` (see the TODO note above about checking the "not a business account" issue first).
