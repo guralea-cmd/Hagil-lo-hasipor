@@ -279,3 +279,18 @@ There are 5 distinct social accounts in play, not the 4 assumed earlier - a pers
 5. **Instagram "לאה גורא"** (personal, separate) - also NOT in `metricool-secrets.json` yet, also being connected manually by her.
 
 Note this is distinct from the existing `hagil_lo_hasipor` brand's `lea_gura` Instagram entry in the secrets file - don't confuse the two. Once Leah has connected #4/#5 in Metricool's dashboard, the next step is adding their `blogId` as a third brand entry in `metricool-secrets.json` (see the TODO note above about checking the "not a business account" issue first).
+
+## Standing branded image template (built 2026-08-24)
+
+**`.claude/skills/facebook-teaser/post-frame-template.html`** is the fixed, reusable design for every story post's image going forward - built once, reused every time, not redesigned per post. It has two placeholders to fill per post: `{{PHOTO_BASE64}}` (the story photo, base64-encoded JPEG) and `{{NAME}}, {{AGE}}` (e.g. "אמנון גאון, 76"). Layout: red top band with the site logo/wordmark, the photo in a gold-bordered frame, an amber "נבחרת ההשראה" pill + name/age below it, red bottom band with "guralea.com" - matches the site's actual brand colors (`css/style.css` `:root` tokens) and font (Assistant).
+
+**How to generate the final flat image from this template (confirmed working 2026-08-24):**
+1. Base64-encode the chosen story photo, substitute both placeholders into a copy of the template (a scratchpad working copy, not the template file itself).
+2. Render it to a real PNG using headless Edge (Chrome/Chromium works the same way) - this repo's environment has Edge but not Puppeteer/Playwright, and the in-app Browser pane's `file://` navigation unreliably fails on large embedded-base64 local files, so use the command line directly:
+   ```
+   "/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless --disable-gpu --screenshot="<output.png path>" --window-size=1080,1350 "file:///<the filled-in HTML file's Windows path with forward slashes>"
+   ```
+   Verify the output is exactly 1080x1350 (`ffmpeg -i output.png` shows the resolution) before using it.
+3. Copy the PNG into the repo under `images/facebook-posts-branded/story-{docId}-relaunch.png` (or similar), commit and push, then confirm it's actually live (`curl -o /dev/null -w "%{http_code}" https://guralea.com/images/facebook-posts-branded/...` returns 200 - GitHub Pages takes a minute to redeploy) before using its URL in step 3a of "Publishing (after approval)" below.
+
+**Caption text must always name the person explicitly** (full name + age, ideally + location) - this was missed once on 2026-08-24 (caption talked about "he/his story" without ever naming who), had to be caught and corrected after the wrong version had already gone live. Cross-check the caption mentions the person's name before publishing, every time.
