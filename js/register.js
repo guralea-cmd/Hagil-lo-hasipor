@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         progressEl.textContent = "";
         statusEl.textContent = "";
         statusEl.classList.remove("error");
-        if (typeof gtag === "function") gtag("event", "story_submitted");
+        if (typeof gtag === "function") gtag("event", "story_submitted", { form_name: "story_submission" });
         if (window.openSiteModal) {
           window.openSiteModal("registration-success-modal");
         }

@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (typeof fbq === "function") {
           fbq("track", "Lead");
         }
-        if (typeof gtag === "function") gtag("event", "workshop_lead_submitted");
+        if (typeof gtag === "function") gtag("event", "workshop_lead_submitted", { form_name: "workshop_lead" });
         form.reset();
       })
       .catch(function (err) {
