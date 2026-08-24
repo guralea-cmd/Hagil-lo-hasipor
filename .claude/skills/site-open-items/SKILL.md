@@ -64,3 +64,7 @@ Confirmed 2026-08-14: no additional tracking implementation needed to start the 
 - **Accountant's answer on BuyMe/voucher logistics** was expected 2026-08-24 (see `story-reward-vouchers` skill) - check whether she's mentioned the answer; if not, ask.
 - **"הגיל הוא לא הסיפור" Facebook Page hide/deactivate** - she said she'd do this herself 2026-08-24 (steps logged in `facebook-teaser` skill's TODO note). Check whether it's done; the note there still says "tomorrow" relative to 2026-08-23, i.e. this was meant for today (2026-08-24).
 - **Relaunch post (Amnon Gaon, figura_ramla brand)** - approved by Leah 2026-08-24, still needs the actual Metricool publish executed (image needed to be rendered as a real flat file and uploaded to the repo first - was in progress when this was logged). Check `posted-log.md` for whether it went out before assuming it's still pending.
+
+## 11. GA4 traffic check - blocked on connecting the Claude in Chrome extension
+
+Confirmed 2026-08-24 (checked via `list_connected_browsers` - returned empty): no Chrome browser is connected to this account yet. Claude cannot check real GA4 site-traffic numbers directly until Leah installs and connects the **Claude in Chrome** browser extension. Once connected, Claude can open the GA4 dashboard in that browser and read real numbers instead of guessing. Ask her whether she's installed/connected it yet whenever traffic stats come up - don't assume it's still blocked without checking `list_connected_browsers` fresh each time, since this can change.
