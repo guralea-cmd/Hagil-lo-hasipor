@@ -46,6 +46,14 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    match /pilates_leads/{leadId} {
+      allow create: if request.resource.data.name is string
+                     && request.resource.data.name.size() > 0
+                     && request.resource.data.phone is string
+                     && request.resource.data.phone.size() > 0;
+      allow read, update, delete: if request.auth != null;
+    }
+
     match /ad_submissions/{submissionId} {
       allow create: if request.resource.data.status == "pending"
                      && request.resource.data.advertiserName is string

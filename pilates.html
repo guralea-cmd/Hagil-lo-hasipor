@@ -160,6 +160,22 @@ gtag('config', 'G-MEG8NMMGTD');
       </div>
     </div>
   </div>
+
+  <div class="container" style="max-width:380px;">
+    <h2 style="text-align:right;">רוצים לשמוע פרטים על הסטודיו?</h2>
+    <form id="pilates-lead-form">
+      <div>
+        <label for="pilates-name">שם מלא</label>
+        <input type="text" id="pilates-name" name="name" required>
+      </div>
+      <div>
+        <label for="pilates-phone">טלפון</label>
+        <input type="tel" id="pilates-phone" name="phone" required>
+      </div>
+      <button type="submit" class="btn">השארת פרטים</button>
+      <p id="pilates-lead-status" class="form-status" aria-live="polite"></p>
+    </form>
+  </div>
 </section>
 
 <footer>
@@ -171,7 +187,11 @@ gtag('config', 'G-MEG8NMMGTD');
   <p><a href="https://www.instagram.com/lea_gura_pilates/" target="_blank" rel="noopener">עקבו אחרינו באינסטגרם - הסטודיו</a></p>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=4"></script>
 <script src="js/main.js?v=5"></script>
+<script src="js/pilates-leads.js?v=1"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var form = document.querySelector("#workshop-lead-form");
+  var form = document.querySelector("#pilates-lead-form");
   if (!form) return;
 
   function getUtmParams() {
@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  var statusEl = document.querySelector("#workshop-lead-status");
+  var statusEl = document.querySelector("#pilates-lead-status");
 
   form.addEventListener("input", function () {
-    if (typeof gtag === "function") gtag("event", "form_start", { form_name: "workshop_lead" });
+    if (typeof gtag === "function") gtag("event", "form_start", { form_name: "pilates_lead" });
   }, { once: true });
 
   form.addEventListener("submit", function (e) {
@@ -26,12 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
     statusEl.classList.remove("error");
 
     var utm = getUtmParams();
-    db.collection("workshop_leads").add({
-      firstName: form.firstName.value.trim(),
-      lastName: form.lastName.value.trim(),
-      email: form.email.value.trim(),
+    db.collection("pilates_leads").add({
+      name: form.name.value.trim(),
       phone: form.phone.value.trim(),
-      track: form.track.value,
       utmSource: utm.utmSource,
       utmMedium: utm.utmMedium,
       utmCampaign: utm.utmCampaign,
@@ -43,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (typeof fbq === "function") {
           fbq("track", "Lead");
         }
-        if (typeof gtag === "function") gtag("event", "workshop_lead_submitted", { form_name: "workshop_lead" });
+        if (typeof gtag === "function") gtag("event", "pilates_lead_submitted", { form_name: "pilates_lead" });
         form.reset();
       })
       .catch(function (err) {
