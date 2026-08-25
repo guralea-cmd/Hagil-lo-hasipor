@@ -256,9 +256,9 @@ Only after Leah has explicitly approved a draft in that conversation:
 
 Append one row to `.claude/skills/facebook-teaser/posted-log.md`: date, content type, the specific item, a one-line note on the angle/hook used, and status (`אושר ופורסם` once actually posted, not just approved - note per-destination status if any of the 4 didn't fully succeed). Also record which image was used (folder + filename, the live URL, or the Firestore doc ID for a tier-1 story photo) so future runs can rotate images correctly and avoid repeating the same face or picture back-to-back. This is what every future run reads to keep the rotation honest and avoid repeats.
 
-## TODO 2026-08-25: connect the "לאה גורא" Facebook page as a third Metricool brand
+## DROPPED, 2026-08-24: personal "לאה גורא" Facebook+Instagram as a third Metricool brand
 
-Leah is adding this page to Metricool manually herself (2026-08-24), but asked Claude to follow up tomorrow on making it a proper third brand in the rotation (alongside `hagil_lo_hasipor` and `figura_ramla` in `metricool-secrets.json`). She recalled there was previously some issue with this page not being a "business" account (as opposed to a personal profile) - **no record of this being resolved exists anywhere in this repo's skills as of 2026-08-24; treat it as unconfirmed/unresolved, don't assume it's fixed.** When picking this up: check whether the page connected successfully in Metricool's dashboard, ask Leah whether the business-account issue came up again, and only then add its `blogId` to `metricool-secrets.json`.
+Investigated and closed the same day it came up. Confirmed via Metricool's own docs: Instagram only supports professional (business/creator) accounts, not personal - fixable in-app if she ever wants to revisit. **Facebook only supports connecting Pages, never personal profiles/timelines, with no workaround** - if the "לאה גורא" Facebook account is a genuine personal profile (not a Page), it can never be connected to Metricool or any third-party tool, full stop. Leah confirmed (2026-08-24) these aren't business pages and said to drop this - this was already discussed before, not a new open question. **Don't re-raise this task.** If she wants a "לאה גורא" presence in the rotation in future, the real path would be creating a new dedicated Facebook Page (distinct from her personal profile) - that's a new idea, not a continuation of this one, and shouldn't be proposed unprompted.
 
 ## LOCKED, 2026-08-24: every community-story post also goes to Stories (Facebook + Instagram)
 
@@ -281,10 +281,10 @@ There are 5 distinct social accounts in play, not the 4 assumed earlier - a pers
 1. **Facebook "הגיל הוא לא הסיפור"** - frozen/excluded (see the LOCKED note above).
 2. **Facebook "לאה גורא פילאטיס מכשירים"** (studio, brand `figura_ramla`) - active, already publishing.
 3. **Instagram "לאה גורא פילאטיס"** (studio, `lea_gura_pilates`, same `figura_ramla` brand) - active, already publishing.
-4. **Facebook "לאה גורא"** (personal, separate from both of the above) - NOT in `metricool-secrets.json` yet. Leah is connecting it manually herself.
-5. **Instagram "לאה גורא"** (personal, separate) - also NOT in `metricool-secrets.json` yet, also being connected manually by her.
+4. **Facebook "לאה גורא"** (personal) - confirmed not a business page; per the "DROPPED" note above, this can never be connected to Metricool as-is. Not going into `metricool-secrets.json`.
+5. **Instagram "לאה גורא"** (personal) - same as #4.
 
-Note this is distinct from the existing `hagil_lo_hasipor` brand's `lea_gura` Instagram entry in the secrets file - don't confuse the two. Once Leah has connected #4/#5 in Metricool's dashboard, the next step is adding their `blogId` as a third brand entry in `metricool-secrets.json` (see the TODO note above about checking the "not a business account" issue first).
+Note this is distinct from the existing `hagil_lo_hasipor` brand's `lea_gura` Instagram entry in the secrets file - don't confuse the two. #4/#5 are closed, not pending - see the "DROPPED" note above.
 
 ## Standing branded image template (built 2026-08-24)
 
