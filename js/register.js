@@ -2,6 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
   var form = document.querySelector("#register-form");
   if (!form) return;
 
+  function getUtmParams() {
+    var params = new URLSearchParams(window.location.search);
+    return {
+      utmSource: params.get("utm_source") || null,
+      utmMedium: params.get("utm_medium") || null,
+      utmCampaign: params.get("utm_campaign") || null
+    };
+  }
+
   var ageSelect = document.querySelector("#age");
   if (ageSelect) {
     for (var age = 18; age <= 100; age++) {
@@ -90,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var photoUrls = results[0];
         var videoUrl = results[1];
         progressEl.textContent = "שומר את הפרטים...";
+        var utm = getUtmParams();
         return db.collection("story_submissions").doc(submissionId).set({
           name: form.name.value.trim(),
           age: form.age.value.trim(),
@@ -103,6 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
           links: form.links.value.trim(),
           photoUrls: photoUrls,
           videoUrl: videoUrl,
+          utmSource: utm.utmSource,
+          utmMedium: utm.utmMedium,
+          utmCampaign: utm.utmCampaign,
           status: "pending",
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });

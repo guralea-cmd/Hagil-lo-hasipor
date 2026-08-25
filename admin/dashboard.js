@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadStories();
     loadRegistrations();
     loadWorkshopLeads();
+    loadPilatesLeads();
     loadEventSignups();
   });
 
@@ -39,6 +40,12 @@ document.addEventListener("DOMContentLoaded", function () {
     return str.length > max ? str.slice(0, max) + "…" : str;
   }
 
+  function formatSource(r) {
+    if (r.utmCampaign) return escapeHtml(r.utmCampaign);
+    if (r.utmSource) return escapeHtml(r.utmSource);
+    return "ישיר";
+  }
+
   function loadSubmissions() {
     var body = document.querySelector("#submissions-body");
     db.collection("story_submissions").orderBy("createdAt", "desc").get().then(function (snapshot) {
@@ -66,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
           '<td style="max-width:280px;">' + storyText + "</td>" +
           "<td>" + photos + video + links + "</td>" +
           "<td>" + escapeHtml(s.phone) + "<br>" + escapeHtml(s.email) + "</td>" +
+          "<td>" + formatSource(s) + "</td>" +
           "<td>" + statusLabel(s.status) + "</td>" +
           "<td>" +
           '<button class="btn btn-sm approve-submission-btn" data-id="' + doc.id + '">אשר ופרסם</button> ' +
@@ -229,6 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "<td>" + escapeHtml(r.firstName) + " " + escapeHtml(r.lastName) + "</td>" +
           "<td>" + escapeHtml(r.email) + "</td>" +
           "<td>" + escapeHtml(r.phone) + "</td>" +
+          "<td>" + formatSource(r) + "</td>" +
           '<td><button class="btn btn-outline btn-sm delete-workshop-lead-btn" data-id="' + doc.id + '">מחק</button></td>';
         body.appendChild(tr);
       });
@@ -237,6 +246,37 @@ document.addEventListener("DOMContentLoaded", function () {
           if (!confirm("למחוק ליד זה?")) return;
           db.collection("workshop_leads").doc(btn.dataset.id).delete().then(function () {
             loadWorkshopLeads();
+          });
+        });
+      });
+    });
+  }
+
+  function loadPilatesLeads() {
+    var body = document.querySelector("#pilates-leads-body");
+    if (!body) return;
+    db.collection("pilates_leads").orderBy("createdAt", "desc").get().then(function (snapshot) {
+      if (snapshot.empty) {
+        body.innerHTML = '<tr><td colspan="5">אין נרשמים עדיין.</td></tr>';
+        return;
+      }
+      body.innerHTML = "";
+      snapshot.forEach(function (doc) {
+        var r = doc.data();
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          "<td>" + formatDate(r.createdAt) + "</td>" +
+          "<td>" + escapeHtml(r.name) + "</td>" +
+          "<td>" + escapeHtml(r.phone) + "</td>" +
+          "<td>" + formatSource(r) + "</td>" +
+          '<td><button class="btn btn-outline btn-sm delete-pilates-lead-btn" data-id="' + doc.id + '">מחק</button></td>';
+        body.appendChild(tr);
+      });
+      body.querySelectorAll(".delete-pilates-lead-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (!confirm("למחוק ליד זה?")) return;
+          db.collection("pilates_leads").doc(btn.dataset.id).delete().then(function () {
+            loadPilatesLeads();
           });
         });
       });

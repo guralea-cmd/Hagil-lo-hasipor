@@ -2,6 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
   var form = document.querySelector("#workshop-lead-form");
   if (!form) return;
 
+  function getUtmParams() {
+    var params = new URLSearchParams(window.location.search);
+    return {
+      utmSource: params.get("utm_source") || null,
+      utmMedium: params.get("utm_medium") || null,
+      utmCampaign: params.get("utm_campaign") || null
+    };
+  }
+
   var statusEl = document.querySelector("#workshop-lead-status");
 
   form.addEventListener("input", function () {
@@ -16,12 +25,16 @@ document.addEventListener("DOMContentLoaded", function () {
     statusEl.textContent = "שולח...";
     statusEl.classList.remove("error");
 
+    var utm = getUtmParams();
     db.collection("workshop_leads").add({
       firstName: form.firstName.value.trim(),
       lastName: form.lastName.value.trim(),
       email: form.email.value.trim(),
       phone: form.phone.value.trim(),
       track: form.track.value,
+      utmSource: utm.utmSource,
+      utmMedium: utm.utmMedium,
+      utmCampaign: utm.utmCampaign,
       status: "new",
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
