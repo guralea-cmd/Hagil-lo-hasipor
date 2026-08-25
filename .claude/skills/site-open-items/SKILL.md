@@ -5,6 +5,18 @@ description: Standing list of open, not-yet-done tasks for the Hagil-lo-hasipor 
 
 # Open items - check before assuming site work is fully done
 
+## -1. Strategic shift, 2026-08-24: workshop postponed to after the holidays, priority moves to the site itself
+
+Leah messaged (2026-08-24, 2:35-2:36) with a direct strategic call: **postpone the workshop to after the חגים (the autumn Jewish holidays)** - exact new date not yet given, **she will supply it separately**. Until she does, don't invent or assume a specific new date.
+
+Her reasoning, in her own words (paraphrased from her voice message): the workshop is "something local and small" (Zoom or in-person), but the **site itself** is what she wants to prioritize right now - people arriving at the site (out of curiosity or any of a thousand reasons) will discover the workshop is there anyway, see there are details, and she'll follow up with them. She wants to invest in growing/running the site first because she believes it creates a loop (visits → registrations → new people discovering her → more stories shared) and that the site is what will eventually bring exposure and revenue - "won't happen tomorrow or the day after, but the wheels need to start turning."
+
+**Practical implications - don't action these until she gives the actual new date:**
+- `workshop.html`'s two Event dates (Zoom Thu 2026-10-08, in-person Fri 2026-10-09) are now stale and will need updating - both the visible text and the `Event` JSON-LD schema (see [[geo-seo-project]] part 2).
+- `facebook-ads-plan`'s Campaign 1 ad copy references these same two dates - will need updating too once the real date lands, before that campaign actually launches (see open item elsewhere on Meta Ads not yet started - this makes the postponement good timing, no wasted ad spend on stale dates).
+- The marquee/blog CTA lines that reference "8.10/9.10" specifically (see `marquee-daily-content` posted-log, 2026-08-09/10/22 entries) will need a fresh angle once dates change, not the old specific-date phrasing.
+- **Standing priority shift for content work going forward:** she wants effort directed at growing/improving the site itself (content, stories, traffic) over pushing workshop registration urgency, until she says otherwise.
+
 ## 0. Legal/compliance items raised 2026-08-13 - waiting on Leah meeting a lawyer
 
 Leah said (2026-08-13) she needs to meet with a lawyer, and raised two things to close after that meeting:
@@ -65,6 +77,10 @@ Confirmed 2026-08-14: no additional tracking implementation needed to start the 
 - **"הגיל הוא לא הסיפור" Facebook Page hide/deactivate** - she said she'd do this herself 2026-08-24 (steps logged in `facebook-teaser` skill's TODO note). Check whether it's done; the note there still says "tomorrow" relative to 2026-08-23, i.e. this was meant for today (2026-08-24).
 - **Relaunch post (Amnon Gaon, figura_ramla brand) - DONE 2026-08-24.** Published to Facebook + Instagram (studio brand only). First attempt was missing his name (Leah caught it, deleted it herself from both platforms); corrected version with name/age/location published successfully. See `posted-log.md` for the real links.
 
-## 11. GA4 traffic check - blocked on connecting the Claude in Chrome extension
+## 11. GA4 traffic check - DONE 2026-08-24
 
-Confirmed 2026-08-24 (checked via `list_connected_browsers` - returned empty): no Chrome browser is connected to this account yet. Claude cannot check real GA4 site-traffic numbers directly until Leah installs and connects the **Claude in Chrome** browser extension. **This is an install-and-authorize action only Leah can perform on her own device/browser - Claude has no ability to install browser extensions remotely, this was a real capability gap, not something Claude chose to skip.** Steps for her: open Chrome → find "Claude in Chrome" in the Chrome Web Store (or via claude.ai) → install → connect/log in with her Claude account. Once connected, Claude can open the GA4 dashboard in that browser and read real numbers instead of guessing. Ask her whether she's installed/connected it yet whenever traffic stats come up - don't assume it's still blocked without checking `list_connected_browsers` fresh each time, since this can change.
+Leah connected the Claude in Chrome extension 2026-08-24. Built `ga4-weekly-report` skill + Sunday 8am scheduled task (pulls a real 7-day GA4 report: general numbers, traffic sources, top pages, per-story views, register-vs-workshop form activity) - can also be run on-demand ("תריצי את הדוח"). Same session also fixed a real tracking gap (`story_submitted`/`workshop_lead_submitted` events were missing the `form_name` param). See `project_ga4_weekly_report_skill` in Claude's memory. Not an open item anymore.
+
+## 12. Second story (Shai Tuvul) relaunch + Stories on every community-story post - scheduled 2026-08-24
+
+Shai Tuvul's post (same format as Amnon's 2026-08-24 relaunch, figura_ramla brand only) is queued as a one-time scheduled task firing Sunday 2026-08-30 07:30. Leah also locked in a new standing rule same day: every future סיפור קהילה post also publishes to Instagram + Facebook Stories (image-only, no clickable link - platform restriction on both) - documented in `facebook-teaser` SKILL.md. See `project_second_story_sunday_publish` in Claude's memory.
