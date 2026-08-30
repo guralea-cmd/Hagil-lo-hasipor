@@ -3,6 +3,7 @@
 <head>
 <!-- Meta Pixel Code -->
 <script>
+var _skipTracking = location.search.indexOf('_scan=1') > -1;
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -11,8 +12,10 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
+if (!_skipTracking) {
 fbq('init', '1002367290734793');
 fbq('track', 'PageView');
+}
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1002367290734793&ev=PageView&noscript=1"
@@ -24,7 +27,9 @@ src="https://www.facebook.com/tr?id=1002367290734793&ev=PageView&noscript=1"
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
+if (location.search.indexOf('_scan=1') === -1) {
 gtag('config', 'G-MEG8NMMGTD');
+}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

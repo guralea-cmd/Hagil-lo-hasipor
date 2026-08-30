@@ -15,7 +15,7 @@ Confirmed 2026-08-13/14: ad-hoc debugging during a live conversation is slow and
 
 For each of these pages: `index.html`, `register.html`, `stories.html`, `workshop.html`, `blog.html`, `about.html`, `events.html`, `advertise.html`:
 
-1. Navigate to the live page (`https://guralea.com/<page>`).
+1. Navigate to the live page **with the tracking-exclusion param**: `https://guralea.com/<page>?_scan=1`. Every page's Google Analytics and Meta Pixel init calls check for `_scan=1` in the query string and skip firing when present (added 2026-08-30, after this scan's own repeated checks were found inflating index.html's pageview/user numbers in GA4). Always include it - never navigate to these pages without it during a scan run.
 2. Read console messages, `onlyErrors: true`. Any uncaught error is a finding.
 3. Read page text / interactive elements - confirm the page actually rendered real content (not a blank body, not a stuck "טוען..." loading state, not an empty grid where content is expected).
 4. For `register.html` specifically: also run a real (not simulated) tiny test write through the live `storage` and `db` client SDKs to confirm the actual write path still works end-to-end - not just that the rules text looks right. Use a throwaway path like `story_submissions/_healthscan_<timestamp>/test.png`, a tiny real blob, real `contentType`. This exact test caught a real transient failure once (2026-08-13) that a rules-text read-through would have missed - don't skip it or replace it with a rules review.
