@@ -19,6 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return '<p><a class="btn btn-outline btn-sm" href="' + shareHref + '" target="_blank" rel="noopener">שתפו בפייסבוק</a></p>';
   }
 
+  function workshopCtaHtml() {
+    return '<div class="story-row-cta">' +
+      '<p>רוצה לדעת איך להתחיל כבר היום לעשות שינוי? לחצו על הרשמה לסדנה ונחזור אליכם עם כל הפרטים.</p>' +
+      '<a class="btn btn-sm" href="workshop.html">הרשמה לסדנה</a>' +
+      '</div>';
+  }
+
   function rowFromLegacyStory(id, story) {
     var row = document.createElement("div");
     row.className = "story-row";
@@ -29,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
       '<h3>' + escapeHtml(story.name || "") + '</h3>' +
       '<p>' + escapeHtml(summarize(story.bio, 400)) + '</p>' +
       shareButtonHtml(id) +
+      workshopCtaHtml() +
       '</div>' +
       '<div class="story-row-media"><div class="video-wrap"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div></div>';
     return row;
@@ -74,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
       (story.location ? '<p class="story-location">' + escapeHtml(story.location) + '</p>' : '') +
       textBlocks +
       shareButtonHtml(id) +
+      workshopCtaHtml() +
       '</div>' +
       '<div class="story-row-media"><div class="video-wrap">' + primaryHtml + '</div>' + thumbsHtml + '</div>';
     return row;
