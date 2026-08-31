@@ -26,19 +26,68 @@ document.addEventListener("DOMContentLoaded", function () {
       '</div>';
   }
 
+  function shareYourStoryCtaHtml() {
+    return '<div class="story-row-cta story-row-cta--outline">' +
+      '<p>גם לך יש סיפור? ספרו לנו</p>' +
+      '<a class="btn btn-outline btn-sm" href="register.html">שתפו את הסיפור שלכם</a>' +
+      '</div>';
+  }
+
+  function hookLine(text, max) {
+    text = (text || "").trim();
+    if (!text) return "";
+    if (text.length <= max) return text;
+    var cut = text.slice(0, max);
+    var lastSpace = cut.lastIndexOf(" ");
+    if (lastSpace > max * 0.6) cut = cut.slice(0, lastSpace);
+    return cut + "…";
+  }
+
+  // Hand-picked "from -> to" summary lines for the current approved stories -
+  // their own paragraph fields (story/turningPoint/today) are full prose, not
+  // short phrases, so this can't be derived automatically. New stories fall
+  // back to showing just the age until someone adds an entry here by hand.
+  var STORY_SUMMARIES = {
+    "3rwLZMW9hFppFhgALAgk": { from: "100 קילו, מעשן, אחרי התקף לב", to: "מרתוניסט וטריאתלט" },
+    "hjKPq4o7IpOlDYsomjDc": { from: "שוטר", to: "מאמן פיתוח גוף" },
+    "pbISy7l7kfwfbJMhphPc": { from: "עבד כל החיים בלי הפסקה", to: "צלם שמתעד גולשים ומטייל בעולם" },
+    "Q0K9W9wyU88HlsemRhDc": { from: "כדורסלן", to: "איש ברזל וטפסן מדרגות" }
+  };
+
+  function summaryBadgeHtml(id, age) {
+    var s = STORY_SUMMARIES[id];
+    if (s) {
+      return '<p class="story-summary">מ: ' + escapeHtml(s.from) + ' ← ל: ' + escapeHtml(s.to) +
+        (age ? '. בגיל: ' + escapeHtml(age) : '') + '</p>';
+    }
+    if (age) {
+      return '<p class="story-summary">בגיל: ' + escapeHtml(age) + '</p>';
+    }
+    return '';
+  }
+
+  function headerHtml(id, name, age, location, hookSource) {
+    return '<div class="story-row-header">' +
+      '<h3>' + escapeHtml(name || "") + (age ? ', ' + escapeHtml(age) : '') + '</h3>' +
+      (location ? '<p class="story-location">' + escapeHtml(location) + '</p>' : '') +
+      (hookSource ? '<p class="story-hook">' + escapeHtml(hookLine(hookSource, 110)) + '</p>' : '') +
+      '</div>';
+  }
+
   function rowFromLegacyStory(id, story) {
     var row = document.createElement("div");
     row.className = "story-row";
     row.id = "story-" + id;
     row.dataset.storyName = story.name || "";
     row.innerHTML =
+      headerHtml(id, story.name, null, null, story.bio) +
+      '<div class="story-row-media"><div class="video-wrap"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div></div>' +
       '<div class="story-row-info">' +
-      '<h3>' + escapeHtml(story.name || "") + '</h3>' +
       '<p>' + escapeHtml(summarize(story.bio, 400)) + '</p>' +
       shareButtonHtml(id) +
+      shareYourStoryCtaHtml() +
       workshopCtaHtml() +
-      '</div>' +
-      '<div class="story-row-media"><div class="video-wrap"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div></div>';
+      '</div>';
     return row;
   }
 
@@ -60,8 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
           return '<a href="' + url + '" target="_blank" rel="noopener"><img src="' + url + '" alt=""></a>';
         }).join("") + '</div>'
       : '';
-    var nameLine = escapeHtml(story.name || "") + (story.age ? ", " + escapeHtml(story.age) : "");
-
     var textBlocks = [
       { label: "הסיפור", value: story.story },
       { label: "הרגע המשנה", value: story.turningPoint },
@@ -69,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { label: "המסר", value: story.message }
     ].filter(function (block) { return block.value; })
       .map(function (block) {
-        return '<p><strong>' + block.label + ':</strong> ' + escapeHtml(block.value) + '</p>';
+        return '<h4>' + block.label + '</h4><p>' + escapeHtml(block.value) + '</p>';
       }).join("");
 
     var row = document.createElement("div");
@@ -77,14 +124,15 @@ document.addEventListener("DOMContentLoaded", function () {
     row.id = "story-" + id;
     row.dataset.storyName = story.name || "";
     row.innerHTML =
+      headerHtml(id, story.name, story.age, story.location, story.story) +
+      '<div class="story-row-media"><div class="video-wrap">' + primaryHtml + '</div>' + thumbsHtml + '</div>' +
       '<div class="story-row-info">' +
-      '<h3>' + nameLine + '</h3>' +
-      (story.location ? '<p class="story-location">' + escapeHtml(story.location) + '</p>' : '') +
+      summaryBadgeHtml(id, story.age) +
       textBlocks +
       shareButtonHtml(id) +
+      shareYourStoryCtaHtml() +
       workshopCtaHtml() +
-      '</div>' +
-      '<div class="story-row-media"><div class="video-wrap">' + primaryHtml + '</div>' + thumbsHtml + '</div>';
+      '</div>';
     return row;
   }
 
