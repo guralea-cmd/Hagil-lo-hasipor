@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadWorkshopLeads();
     loadPilatesLeads();
     loadEventSignups();
+    loadPendingStoryEdits();
   });
 
   document.querySelector("#logout-btn").addEventListener("click", function () {
@@ -103,6 +104,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateSubmissionStatus(id, status) {
     db.collection("story_submissions").doc(id).update({ status: status }).then(loadSubmissions);
+  }
+
+  function loadPendingStoryEdits() {
+    var container = document.querySelector("#pending-story-edits");
+    if (!container) return;
+    var pending = (typeof PENDING_STORY_EDITS !== "undefined") ? PENDING_STORY_EDITS : [];
+    if (!pending.length) {
+      container.innerHTML = "<p>אין עריכות ממתינות כרגע.</p>";
+      return;
+    }
+    container.innerHTML = "";
+    pending.forEach(function (item, index) {
+      var box = document.createElement("div");
+      box.style.cssText = "border:1px solid #ddd; border-radius:8px; padding:12px; margin-bottom:10px;";
+      box.innerHTML =
+        "<strong>" + escapeHtml(item.name) + "</strong> (" + escapeHtml(item.collection) + " / " + escapeHtml(item.id) + ")<br>" +
+        '<span style="color:#555;">' + escapeHtml(item.edited.hookLine || "") + "</span><br>" +
+        '<button class="btn btn-sm apply-story-edit-btn" data-index="' + index + '">החלת עריכה</button> ' +
+        '<span class="apply-status" style="margin-inline-start:8px;"></span>';
+      container.appendChild(box);
+    });
+    container.querySelectorAll(".apply-story-edit-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var item = pending[Number(btn.dataset.index)];
+        var statusEl = btn.nextElementSibling;
+        btn.disabled = true;
+        statusEl.textContent = "מעדכן...";
+        db.collection(item.collection).doc(item.id).update({ edited: item.edited })
+          .then(function () {
+            statusEl.textContent = "עודכן בהצלחה ✓";
+            statusEl.style.color = "green";
+          })
+          .catch(function (err) {
+            statusEl.textContent = "שגיאה: " + err.message;
+            statusEl.style.color = "red";
+            btn.disabled = false;
+          });
+      });
+    });
   }
 
   function deleteSubmission(id) {
