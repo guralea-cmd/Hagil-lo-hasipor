@@ -51,6 +51,16 @@ Checked and explicitly excluded this round (real names, didn't fit): רן קרא
 
 **Good next leads for batch 3:** masters swimming federation results/records pages (may list age + a notable "started late" bio); Israeli powerlifting federation competition results for 50+ categories; direct outreach angle (not searchable) - Ofer Aderet (Haaretz journalist who covered Naomi Ronen) may know her exact starting age if a batch 3 session wants to try contacting the reporter's other published pieces for a follow-up mention.
 
+## Batch 3 - done 2026-08-31, 1 more verified row added (14 total in `database.xlsx`)
+
+New this round: **פיני שכטר** (אתלטיקה - קפיצה משולשת) - resumed the sport at 50 after decades away (teenage background, then years in office work), now 78 and world vice-champion for his age category (75-79). Source read and confirmed directly (ynet).
+
+**Checked and explicitly excluded this round:** יצחק בן שחר (started competitive tennis at 30, not 50 - real person, real inspiring story, wrong age threshold); Alon Rivkind, Israeli freediving record holder (46 years old, article only says the discipline's records tend to peak "around age 50" - not a person who started at 50).
+
+**Searches that came up empty in batch 3:** masters swimming federation records with a named "started at 50" swimmer; Israeli powerlifting federation 50+ category results; boxing started after 50; windsurfing started after 50; competitive tennis started at 55/60; surfing started at 50 (female); long-distance/round-the-world cycling started specifically at 50 (found round-the-world cyclists but none matching the age-50-start criterion); recreational flying/gliding started after 50 (found airline pilots who trained in their 50s at El Al, but that's a career/certification change, not sports - out of current sports-only scope anyway); scuba diving started after 50.
+
+**Good next leads for batch 4:** the masters-swimming and powerlifting federation leads from batch 2 are still untried via a direct site crawl (only general web search was attempted so far, not browsing the federations' own results/records pages directly); Israeli veterans' basketball/volleyball leagues (not yet searched); direct outreach to sports journalists who cover "50+ transformation" pieces (e.g. whoever wrote the ynet/mako "בגיל X" series these rows keep coming from) for other subjects in the same series not yet individually searched.
+
 ## Workflow
 
 1. Research real candidates (web search across the sources above), verify each link actually loads and is genuinely about that person before including them.
