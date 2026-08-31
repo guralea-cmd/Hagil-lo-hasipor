@@ -874,6 +874,12 @@ footer a {
   margin-top: 0;
 }
 
+.story-closing {
+  font-weight: 700;
+  font-style: italic;
+  color: var(--color-primary);
+}
+
 .story-row--highlight {
   outline: 3px solid var(--color-accent-dark);
   outline-offset: 6px;

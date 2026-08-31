@@ -43,22 +43,14 @@ document.addEventListener("DOMContentLoaded", function () {
     return cut + "…";
   }
 
-  // Hand-picked "from -> to" summary lines for the current approved stories -
-  // their own paragraph fields (story/turningPoint/today) are full prose, not
-  // short phrases, so this can't be derived automatically. New stories fall
-  // back to showing just the age until someone adds an entry here by hand.
-  var STORY_SUMMARIES = {
-    "3rwLZMW9hFppFhgALAgk": { from: "100 קילו, מעשן, אחרי התקף לב", to: "מרתוניסט וטריאתלט" },
-    "hjKPq4o7IpOlDYsomjDc": { from: "שוטר", to: "מאמן פיתוח גוף" },
-    "pbISy7l7kfwfbJMhphPc": { from: "עבד כל החיים בלי הפסקה", to: "צלם שמתעד גולשים ומטייל בעולם" },
-    "Q0K9W9wyU88HlsemRhDc": { from: "כדורסלן", to: "איש ברזל וטפסן מדרגות" }
-  };
-
-  function summaryBadgeHtml(id, age) {
-    var s = STORY_SUMMARIES[id];
-    if (s) {
-      return '<p class="story-summary">מ: ' + escapeHtml(s.from) + ' ← ל: ' + escapeHtml(s.to) +
-        (age ? '. בגיל: ' + escapeHtml(age) : '') + '</p>';
+  // Editorial pass (hook line, מ/ל summary, structured sections) lives on the
+  // Firestore doc itself under an `edited` field - see the
+  // community-story-editing skill for the process. Stories without it fall
+  // back to the raw story/turningPoint/today/message fields as submitted.
+  function summaryBadgeHtml(edited, age) {
+    if (edited && edited.summaryFrom && edited.summaryTo) {
+      return '<p class="story-summary">מ: ' + escapeHtml(edited.summaryFrom) + ' ← ל: ' + escapeHtml(edited.summaryTo) +
+        (age ? ' | בגיל: ' + escapeHtml(age) : '') + '</p>';
     }
     if (age) {
       return '<p class="story-summary">בגיל: ' + escapeHtml(age) + '</p>';
@@ -66,11 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
     return '';
   }
 
-  function headerHtml(id, name, age, location, hookSource) {
+  function headerHtml(name, age, location, hookText) {
     return '<div class="story-row-header">' +
       '<h3>' + escapeHtml(name || "") + (age ? ', ' + escapeHtml(age) : '') + '</h3>' +
       (location ? '<p class="story-location">' + escapeHtml(location) + '</p>' : '') +
-      (hookSource ? '<p class="story-hook">' + escapeHtml(hookLine(hookSource, 110)) + '</p>' : '') +
+      (hookText ? '<p class="story-hook">' + escapeHtml(hookText) + '</p>' : '') +
       '</div>';
   }
 
@@ -80,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     row.id = "story-" + id;
     row.dataset.storyName = story.name || "";
     row.innerHTML =
-      headerHtml(id, story.name, null, null, story.bio) +
+      headerHtml(story.name, null, null, hookLine(story.bio, 110)) +
       '<div class="story-row-media"><div class="video-wrap"><video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video></div></div>' +
       '<div class="story-row-info">' +
       '<p>' + escapeHtml(summarize(story.bio, 400)) + '</p>' +
@@ -109,25 +101,35 @@ document.addEventListener("DOMContentLoaded", function () {
           return '<a href="' + url + '" target="_blank" rel="noopener"><img src="' + url + '" alt=""></a>';
         }).join("") + '</div>'
       : '';
-    var textBlocks = [
-      { label: "הסיפור", value: story.story },
-      { label: "הרגע המשנה", value: story.turningPoint },
-      { label: "היום", value: story.today },
-      { label: "המסר", value: story.message }
-    ].filter(function (block) { return block.value; })
-      .map(function (block) {
-        return '<h4>' + block.label + '</h4><p>' + escapeHtml(block.value) + '</p>';
-      }).join("");
+    var edited = story.edited || null;
+    var hookText = edited && edited.hookLine ? edited.hookLine : hookLine(story.story, 110);
+
+    var textBlocks;
+    if (edited && edited.sections && edited.sections.length) {
+      textBlocks = edited.sections.map(function (block) {
+        return '<h4>' + escapeHtml(block.heading) + '</h4><p>' + escapeHtml(block.body) + '</p>';
+      }).join("") + (edited.closingLine ? '<p class="story-closing">' + escapeHtml(edited.closingLine) + '</p>' : '');
+    } else {
+      textBlocks = [
+        { label: "הסיפור", value: story.story },
+        { label: "הרגע המשנה", value: story.turningPoint },
+        { label: "היום", value: story.today },
+        { label: "המסר", value: story.message }
+      ].filter(function (block) { return block.value; })
+        .map(function (block) {
+          return '<h4>' + block.label + '</h4><p>' + escapeHtml(block.value) + '</p>';
+        }).join("");
+    }
 
     var row = document.createElement("div");
     row.className = "story-row";
     row.id = "story-" + id;
     row.dataset.storyName = story.name || "";
     row.innerHTML =
-      headerHtml(id, story.name, story.age, story.location, story.story) +
+      headerHtml(story.name, story.age, story.location, hookText) +
       '<div class="story-row-media"><div class="video-wrap">' + primaryHtml + '</div>' + thumbsHtml + '</div>' +
       '<div class="story-row-info">' +
-      summaryBadgeHtml(id, story.age) +
+      summaryBadgeHtml(edited, story.age) +
       textBlocks +
       shareButtonHtml(id) +
       shareYourStoryCtaHtml() +
