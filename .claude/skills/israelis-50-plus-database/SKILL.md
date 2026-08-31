@@ -61,6 +61,18 @@ New this round: **פיני שכטר** (אתלטיקה - קפיצה משולשת)
 
 **Good next leads for batch 4:** the masters-swimming and powerlifting federation leads from batch 2 are still untried via a direct site crawl (only general web search was attempted so far, not browsing the federations' own results/records pages directly); Israeli veterans' basketball/volleyball leagues (not yet searched); direct outreach to sports journalists who cover "50+ transformation" pieces (e.g. whoever wrote the ynet/mako "בגיל X" series these rows keep coming from) for other subjects in the same series not yet individually searched.
 
+## Publication-year column added 2026-08-31, sheet split by year
+
+Leah asked to add a "שנת פרסום הכתבה" column and split the workbook into two sheets: **"כתבות חדשות (2022+)"** and **"כתבות ישנות (לפני 2022)"** - years verified by directly fetching each article's byline where possible. One row (אילן ברוש, mako) could only get a year from a search-engine summary, not a direct fetch (mako blocks both `WebFetch` and Claude in Chrome navigation) - marked as lower-confidence, flagged to Leah. **Any new row added from here on needs a verified year added at the same time**, in whichever sheet its year belongs to.
+
+## Batch 4 - done 2026-08-31, 1 more verified row added (15 total, split across 2 sheets)
+
+New this round: **אסתר הלוי** (רכיבה על אופניים) - learned to ride a bicycle for the first time starting around age 75 (her parents never allowed it as a child), still taking regular lessons approaching 80. Added to the "old" sheet (article published 2020).
+
+**Searches that came up empty in batch 4:** judo started at 50; veteran basketball player returning to the court at 55; women's cycling started at 50 (found only a rider who started an off-road motorcycle at 44 - too young - and Esther Levy at 75, included); ice hockey or skateboarding started at 50.
+
+**Good next leads for batch 5:** still the same federation-crawl and veterans-league leads from batch 3/4 notes above, not yet tried as a direct site browse rather than web search.
+
 ## Workflow
 
 1. Research real candidates (web search across the sources above), verify each link actually loads and is genuinely about that person before including them.
