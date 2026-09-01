@@ -296,9 +296,18 @@ There are 5 distinct social accounts in play, not the 4 assumed earlier - a pers
 
 Note this is distinct from the existing `hagil_lo_hasipor` brand's `lea_gura` Instagram entry in the secrets file - don't confuse the two. #4/#5 are closed, not pending - see the "DROPPED" note above.
 
-## Standing branded image template (built 2026-08-24)
+## Standing branded image template - LOCKED 2026-09-01, do not redesign
 
-**`.claude/skills/facebook-teaser/post-frame-template.html`** is the fixed, reusable design for every story post's image going forward - built once, reused every time, not redesigned per post. It has two placeholders to fill per post: `{{PHOTO_BASE64}}` (the story photo, base64-encoded JPEG) and `{{NAME}}, {{AGE}}` (e.g. "אמנון גאון, 76"). Layout: red top band with the site logo/wordmark, the photo in a gold-bordered frame, an amber "נבחרת ההשראה" pill + name/age below it, red bottom band with "guralea.com" - matches the site's actual brand colors (`css/style.css` `:root` tokens) and font (Assistant).
+**`.claude/skills/facebook-teaser/post-frame-template.html`** is the fixed, reusable design for every story post's image going forward - built once, reused every time. Leah went through many rounds correcting this exact layout on 2026-09-01 (see git history for the iterations) and gave explicit final approval + an explicit standing instruction to keep this structure for every future image - **do not change the layout, band heights, or font-size relationships without her asking for a specific change.** If a future session is tempted to "improve" the design, don't - ask her first, the same as any other public-facing change.
+
+**Locked structure (all pixel values final, 1080×1350 canvas):**
+- **Top red band, 165px tall.** The wordmark "הגיל הוא לא הסיפור" is centered independently (single line, 52px, white, bold) - it does NOT share a flex group with the logo. The circular logo badge (110px circle, "ה", 84px letter) is positioned separately, absolutely pinned to the right edge (`right: 36px`) - **the logo is the only element that goes right; the wordmark stays centered.** This was corrected multiple times - an RTL `flex-end` bug once flipped the logo to the left, and grouping the logo+wordmark together was also explicitly rejected - keep them as two independent positioned elements, not a flex pair.
+- **Photo**, gold-bordered frame, large (830px content area is not exact - read the actual CSS `.photo-area` for current numbers, this note is about structure not to be hand-copied).
+- **Quote line** (the person's own words, one line, `white-space: nowrap`, size varies per quote length via `{{QUOTE_SIZE}}` - pick a size that keeps it on one line, verify by rendering before sending).
+- **Amber name/age/location pill**: `{{NAME}}, {{AGE}} · {{LOCATION}}`.
+- **Bottom red band, same 165px height as the top band** (explicitly required - the two bands must always be equal height/width to each other) with "לסיפור המלא באתר guralea.com/stories.html", **same 52px font-size as the top wordmark** (also explicitly required - both white-text bands must match in size).
+
+**Placeholders to fill per post:** `{{PHOTO_BASE64}}`, `{{NAME}}`, `{{AGE}}`, `{{LOCATION}}`, `{{QUOTE}}`, `{{QUOTE_SIZE}}` (all instances via `replaceAll`).
 
 **How to generate the final flat image from this template (confirmed working 2026-08-24):**
 1. Base64-encode the chosen story photo, substitute both placeholders into a copy of the template (a scratchpad working copy, not the template file itself).
