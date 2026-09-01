@@ -848,15 +848,16 @@ footer a {
 }
 
 .story-summary {
-  display: inline-block;
-  font-size: var(--text-sm);
-  font-weight: 600;
+  display: block;
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
   color: var(--color-primary);
   background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  border-right: 4px solid var(--color-accent-dark);
   border-radius: var(--radius-sm, 6px);
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-3) var(--space-4);
   margin: 0 0 var(--space-4);
+  line-height: 1.5;
 }
 
 .story-row-info p {
