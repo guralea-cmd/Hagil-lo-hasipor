@@ -73,6 +73,8 @@ New this round: **אסתר הלוי** (רכיבה על אופניים) - learned
 
 **Good next leads for batch 5:** still the same federation-crawl and veterans-league leads from batch 3/4 notes above, not yet tried as a direct site browse rather than web search.
 
+**Batch 5 attempt, 2026-08-31/09-01: no new verified rows.** Searched: Tel Aviv Marathon 60+ runner personal story (marathon didn't run in 2024, ran Feb 2025, no specific person found); rowing started at 55-60 (only found rowing clubs/orgs, no named person); volleyball started at 55 (nothing); yoga teacher started at 50 (nothing specific); veteran soccer player who started (not returned-to, actually started) later in life (only found lifelong players aging in place, e.g. חייק - not a fit, he never stopped). General "calcalist/haaretz 2024/2025 person changed after 50" queries returned no specific matches either - broad queries without a sport/angle aren't productive; narrower sport-specific angles have been working better. Interrupted mid-round to prioritize the Facebook page relaunch task - resume batch 5 leads next session.
+
 ## Workflow
 
 1. Research real candidates (web search across the sources above), verify each link actually loads and is genuinely about that person before including them.
