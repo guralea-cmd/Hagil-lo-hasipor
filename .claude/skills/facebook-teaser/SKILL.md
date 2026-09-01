@@ -5,7 +5,7 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
-## PAUSED as of 2026-08-11 - do not draft or publish until Leah says otherwise
+## PAUSED as of 2026-08-11 - LIFTED 2026-08-24 (figura_ramla), fully lifted 2026-09-01 (all 4 destinations, see "REVERSED 2026-09-01" further down) - this section is history, not current state
 
 Leah paused all Facebook/Instagram publishing (2026-08-11): "את הפייסבוק אני כרגע מורידה ממך עד להודעה חדשה, את מטפלת רק באתר" - she wants to wait until real traffic is happening on the site before continuing social posting. The scheduled task `facebook-daily-teaser` is disabled (not deleted). Any already-scheduled Metricool posts for this period were also canceled (the pre-scheduled Avi Turjeman Tier-1 post for 2026-08-12 was deleted). **Do not draft, schedule, or publish anything to Facebook/Instagram/Metricool until Leah explicitly re-enables this** - if asked to run this skill in the meantime, tell her it's paused per her own instruction and ask if she wants to resume. Site-only work (marquee, blog articles, adding new approved stories to `stories.html`) continues as normal and is unaffected by this pause.
 
@@ -62,11 +62,11 @@ Confirmed 2026-08-09, after a real mix-up: run `date` (or equivalent) and check 
 3. Facebook page "לאה גורא פילאטיס מכשירים ברמלה" (brand `figura_ramla`, blogId `6684336`)
 4. Instagram `lea_gura_pilates` (same brand/blogId `6684336`)
 
-**Update 2026-08-23, still true when publishing resumes: destinations 1-2 (the `hagil_lo_hasipor` brand / "הגיל הוא לא הסיפור" page) are ON HOLD - do not post there.** Leah's reasoning: that page has no real audience yet ("חוץ ממני וממך אף אחד לא נכנס ולא מכיר"), and she'd rather not spend effort building it right now - may revisit in the future, but treat it as closed unless she says otherwise. **Only destinations 3-4 (`figura_ramla` / the studio page + its Instagram) are active** once the publishing pause itself is lifted. Update the actual publish step below (currently still described as "2 calls, one per brand") to a single call to `figura_ramla` only when this is implemented.
+**Update 2026-08-23, ON HOLD - LIFTED 2026-09-01, see the "REVERSED" section below.** ~~destinations 1-2 (the `hagil_lo_hasipor` brand / "הגיל הוא לא הסיפור" page) are ON HOLD - do not post there~~. All 4 destinations are active again as of 2026-09-01.
 
 **YouTube is explicitly out of scope for now** (Leah, 2026-08-10) - deferred until there's real video content to post; don't add it to `providers` until she asks.
 
-This means **two separate `POST /v2/scheduler/posts` calls per approved teaser**, one per `blogId` in `brands`, each with `providers: [{"network":"facebook"},{"network":"instagram"}]` - a single call cannot span two blogIds. Same caption and same image go to both brands (confirmed acceptable to Leah 2026-08-10 - she wants the "הגיל הוא לא הסיפור" content, including its own hashtags and its own workshop.html link, cross-posted as-is to the Figura Ramla brand too, not a separate adapted version). If this ever needs to change (e.g. a Figura-Ramla-specific caption), ask her first - don't assume. **Superseded by the 2026-08-23 update above: as of now this should be one call, `figura_ramla` only, until the `hagil_lo_hasipor` hold is lifted.**
+This means **two separate `POST /v2/scheduler/posts` calls per approved teaser**, one per `blogId` in `brands`, each with `providers: [{"network":"facebook"},{"network":"instagram"}]` - a single call cannot span two blogIds. Same caption and same image go to both brands (confirmed acceptable to Leah 2026-08-10 - she wants the "הגיל הוא לא הסיפור" content, including its own hashtags and its own workshop.html link, cross-posted as-is to the Figura Ramla brand too, not a separate adapted version). If this ever needs to change (e.g. a Figura-Ramla-specific caption), ask her first - don't assume. (The 2026-08-23 "one call, figura_ramla only" supersession was itself superseded 2026-09-01 - back to two calls, both brands, see the "REVERSED" section further down.)
 
 **If `metricool-secrets.json` is missing or a publish call fails with an auth error**, fall back to the old direct-Facebook method (Facebook page "הגיל הוא לא הסיפור" only - the fallback does not cover the other 3 destinations): `.claude/skills/facebook-teaser/secrets.json` (gitignored) holds `pageId` and `pageAccessToken`, wired up 2026-08-03 - see "Fallback: direct Facebook Graph API" below. If both fail, tell Leah plainly that automated publishing isn't currently working and hand her the final text/image/link ready to copy-paste. Never claim something was posted when it wasn't, and never claim all 4 destinations succeeded when only checking one.
 
@@ -95,7 +95,7 @@ Within a type, never pick an item already logged as `ממתין לאישור` or
 
 **סדנה (workshop)** - source is `workshop.html`. Pick one concrete angle each time (who it's for, what she gets, the physiological-age testing at the start, the 7-week/7-session structure, the WhatsApp support) rather than a generic "join the workshop" pitch - vary the angle from whatever was used last cycle per the log. Link to `workshop.html`.
 
-As of 2026-08-05, the Zoom track has a confirmed opening date: **יום חמישי, 8.10.2026, 18:00-19:30** (see `workshop.html`, "מועד פתיחת הסדנה"). Posts may now name the concrete date/day/time as part of the hook (e.g. urgency, "the next cohort starts on X") instead of only vague evergreen angles - but always re-read `workshop.html` fresh before drafting, since the date could change or a cohort could fill up/close, and don't invent a headline that implies scarcity ("מקומות אחרונים" etc.) unless she's said so explicitly. The in-person track's date is still TBD ("יפורסמו בהמשך") - don't state a date/day/time for that track.
+**Update 2026-08-26: the original 8.10/9.10 dates below are stale - the workshop was postponed and the real dates are now Zoom 26.11.2026, in-person 27.11.2026** (see `site-open-items` SKILL.md, item -1). As of 2026-08-05, the Zoom track had a confirmed opening date, and posts could name the concrete date/day/time as part of the hook (e.g. urgency, "the next cohort starts on X") instead of only vague evergreen angles - **always re-read `workshop.html` fresh before drafting** (this rule is why the date living here going stale doesn't matter for a real draft, but don't let this text mislead a quick skim either), since the date could change again or a cohort could fill up/close, and don't invent a headline that implies scarcity ("מקומות אחרונים" etc.) unless she's said so explicitly.
 
 **הצטרפות לקהילה (community signup)** - source is `register.html` and the site's own community framing. Vary the angle each cycle (what the community is, what happens when someone shares their story, the "אם הוא יכול, אולי גם אני יכול" idea already used in the site's real story-criteria text). Link to `register.html`.
 
@@ -270,9 +270,19 @@ Leah decided (2026-08-24): **from now on, every סיפור קהילה post is al
 
 **Practical takeaway:** both platforms can technically get a Story version of the branded image. Neither can carry a working link in the Story itself (Instagram: platform restriction; Facebook: Stories generally don't support link stickers for Pages without extra verification either) - so the Story exists to drive visibility/reach, not clicks; the feed post + its link remains the actual click-through path. Confirm actual publish success per-platform each time (don't assume it worked) and log the Story outcome in `posted-log.md` alongside the feed post's outcome - if one platform's Story fails while the other succeeds, that's fine to publish partially, just say so plainly to Leah rather than treating it as an all-or-nothing failure.
 
-## LOCKED, 2026-08-24 - stop re-confirming this: hagil_lo_hasipor stays fully excluded
+## REVERSED 2026-09-01: hagil_lo_hasipor is back - the 2026-08-24 exclusion below is over
+
+Leah decided (2026-09-01) to relaunch the "הגיל הוא לא הסיפור" Facebook page - she's personally inviting her Facebook friends to follow it, so it needs to look alive when they arrive. **Both `hagil_lo_hasipor` destinations (Facebook page + `lea_gura` Instagram, blogId `6694827`) are active again, alongside `figura_ramla` - every approved post goes to all 4 destinations, same as the original 2026-08-10 design.** The "two separate calls, one per blogId" publish mechanics (see "Publishing - how it actually works now" above) apply again as originally written - ignore the 2026-08-23/24 single-call `figura_ramla`-only supersession, it no longer applies.
+
+**The community-story weekly cadence (see "Cadence for relaunch" above) now also goes to hagil_lo_hasipor** - this includes the already-scheduled `second-story-shai-tuvul-relaunch` task for 2026-09-02, updated same day to publish to all 4 destinations instead of `figura_ramla` only.
+
+**Still needs Leah herself, not a Claude task:** the Facebook Page itself was deactivated/unpublished around 2026-08-24 (see the "TODO for 2026-08-24" note above - Page → Settings → Privacy → Facebook Page visibility). Before any post can actually reach it, she needs to reverse that: **Page → Settings → Privacy → Facebook Page visibility → Edit → "Publish Page" / reactivate.** Remind her if this hasn't happened yet when a post is ready to go.
+
+<details><summary>Superseded 2026-08-24 note (kept for history, no longer in effect)</summary>
 
 Leah confirmed this repeatedly on 2026-08-24, increasingly frustrated at having to repeat it: **both the "הגיל הוא לא הסיפור" Facebook page AND the `lea_gura` Instagram account (same brand/blogId `6694827` in `metricool-secrets.json`) are excluded from every post, no exceptions, until she explicitly says otherwise.** This is not a per-post question, not something to double-check with her again, and not something to second-guess based on follower counts or any other reasoning - it's a closed decision. Only `figura_ramla` (blogId `6684336`) is active. Do not ask her to reconfirm this again.
+
+</details>
 
 ## Confirmed 2026-08-24: the full 5-account picture (Leah clarified after confusion)
 
