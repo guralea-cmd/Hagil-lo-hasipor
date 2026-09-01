@@ -15,33 +15,42 @@
   }
   .top-band {
     background: #b83227;
-    height: 190px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+    height: 210px;
+    position: relative;
+  }
+  .wordmark {
+    position: absolute; top: 0; left: 0; right: 0; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 64px; font-weight: 800; white-space: nowrap; text-align: center;
   }
   .logo-badge {
-    width: 88px; height: 88px; border-radius: 50%;
-    background: #b83227; border: 4px solid #ffb020;
+    position: absolute; top: 50%; right: 36px; transform: translateY(-50%);
+    width: 110px; height: 110px; border-radius: 50%;
+    background: #b83227; border: 5px solid #ffb020;
     display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 52px; font-weight: 800;
+    color: #fff; font-size: 84px; font-weight: 800;
   }
-  .wordmark { color: #fff; font-size: 46px; font-weight: 800; line-height: 1.15; text-align: right; }
   .photo-area {
-    position: absolute; top: 240px; left: 60px; right: 60px; height: 780px;
+    position: absolute; top: 230px; left: 40px; right: 40px; height: 800px;
     border-radius: 18px; overflow: hidden; border: 10px solid #ffb020;
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   }
   .photo-area img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
-  .caption-area { position: absolute; top: 1050px; left: 60px; right: 60px; text-align: center; }
-  .caption-tag {
-    display: inline-block; background: #ffb020; color: #181310; font-weight: 700;
-    font-size: 26px; padding: 8px 22px; border-radius: 999px; margin-bottom: 22px;
+  .quote-area {
+    position: absolute; top: 1050px; left: 15px; right: 15px; text-align: center;
   }
-  .caption-main { color: #181310; font-size: 42px; font-weight: 800; line-height: 1.3; }
+  .quote-text {
+    color: #181310; font-weight: 800;
+    font-size: {{QUOTE_SIZE}}px;
+    white-space: nowrap;
+  }
+  .name-pill { position: absolute; top: 1150px; left: 0; right: 0; text-align: center; }
+  .name-pill span {
+    display: inline-block; background: #ffb020; color: #181310; font-weight: 700;
+    font-size: 36px; padding: 11px 32px; border-radius: 999px;
+  }
   .bottom-band {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 130px;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
     background: #b83227; display: flex; align-items: center; justify-content: center;
   }
   .bottom-band span { color: #fff; font-size: 34px; font-weight: 700; }
@@ -49,16 +58,18 @@
 </head>
 <body>
   <div class="top-band">
-    <div class="wordmark">הגיל הוא<br>לא הסיפור</div>
+    <div class="wordmark">הגיל הוא לא הסיפור</div>
     <div class="logo-badge">ה</div>
   </div>
   <div class="photo-area">
     <img src="data:image/jpeg;base64,{{PHOTO_BASE64}}">
   </div>
-  <div class="caption-area">
-    <div class="caption-tag">נבחרת ההשראה</div>
-    <div class="caption-main">{{NAME}}, {{AGE}}</div>
+  <div class="quote-area">
+    <div class="quote-text">"{{QUOTE}}"</div>
   </div>
-  <div class="bottom-band"><span>guralea.com</span></div>
+  <div class="name-pill">
+    <span>{{NAME}}, {{AGE}} · {{LOCATION}}</span>
+  </div>
+  <div class="bottom-band"><span>לסיפור המלא באתר guralea.com/stories.html</span></div>
 </body>
 </html>
