@@ -5,13 +5,21 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
+## STANDING RULE, added 2026-09-01: every סיפור קהילה post ends with a WhatsApp voice-message invite
+
+Leah's explicit instruction: people are reluctant to write their story in the register.html form, so every community-story post (any post about a specific person's story - the daily rotation's "סיפור קהילה" type, relaunch posts, everything) must end with this exact line, after the hashtags:
+
+`גם לכם יש סיפור? שלחו לנו הודעה קולית בוואטסאפ (הודעות בלבד, לא שיחות): 050-699-1723`
+
+The dedicated story WhatsApp number is **0506991723** (wa.me link: `https://wa.me/972506991723`) - confirmed by Leah 2026-09-01, not stored anywhere else in the repo before this. **Important context, handle with care:** this was her late husband's phone number (he passed away roughly a year and a half before this note); she now uses it only for this purpose, keeps the ringer/calls side muted, and never takes phone calls on it - but she DOES read and reply in writing to WhatsApp messages sent there. **This is why the caption/site text must say "messages only, not calls, we reply in writing to everyone"** - not "no response" (that earlier framing from 2026-09-01 was corrected same-day - she does respond, just never by phone and always in text). This is a permanent addition to the standard caption format, not a one-time thing for Shai's post - apply it to every future community-story post caption without being asked again.
+
 ## PAUSED as of 2026-08-11 - LIFTED 2026-08-24 (figura_ramla), fully lifted 2026-09-01 (all 4 destinations, see "REVERSED 2026-09-01" further down) - this section is history, not current state
 
 Leah paused all Facebook/Instagram publishing (2026-08-11): "את הפייסבוק אני כרגע מורידה ממך עד להודעה חדשה, את מטפלת רק באתר" - she wants to wait until real traffic is happening on the site before continuing social posting. The scheduled task `facebook-daily-teaser` is disabled (not deleted). Any already-scheduled Metricool posts for this period were also canceled (the pre-scheduled Avi Turjeman Tier-1 post for 2026-08-12 was deleted). **Do not draft, schedule, or publish anything to Facebook/Instagram/Metricool until Leah explicitly re-enables this** - if asked to run this skill in the meantime, tell her it's paused per her own instruction and ask if she wants to resume. Site-only work (marquee, blog articles, adding new approved stories to `stories.html`) continues as normal and is unaffected by this pause.
 
-**2026-08-23, while still discussing resuming:** Leah is now planning a relaunch tied to a new incentive (a BuyMe gift voucher for approved community-story tellers, see [[story-reward-vouchers]]) and a branded photo-frame template for posts (built 2026-08-23, see that skill's design notes) - but has NOT yet said to actually resume. She also decided that once it does resume, it should go to the Figura Ramla studio brand only, not the "הגיל הוא לא הסיפור" page (see the "Update 2026-08-23" note further down in this file). Still paused - this is prep, not a green light.
+**2026-08-23, while still discussing resuming:** Leah was planning a relaunch tied to a branded photo-frame template for posts (built 2026-08-23, see that skill's design notes) - but had NOT yet said to actually resume. She also decided that once it does resume, it should go to the Figura Ramla studio brand only, not the "הגיל הוא לא הסיפור" page (see the "Update 2026-08-23" note further down in this file). Still paused at the time - this is prep, not a green light.
 
-**TODO for 2026-08-24 (tomorrow) - waiting on Leah to actually do it herself, not a Claude task:** she wants to unpublish/deactivate the "הגיל הוא לא הסיפור" Facebook Page itself (not delete - reversible), since it has no real audience. Steps: Page → Settings → Privacy → Facebook Page visibility → Edit → "Deactivate Page" (older UI: "Unpublish"). Remind her if she hasn't mentioned it by then.
+**Superseded 2026-09-01: never carried out / moot.** She originally wanted to deactivate the Page on 2026-08-24 for lack of audience, but confirmed 2026-09-01 the Page was never actually deactivated (checked directly, status clean). Also moot now since she's relaunching this page (see "REVERSED 2026-09-01" section below) - don't propose deactivating it again.
 
 ## Caption-writing rules for this post's text (added 2026-08-23)
 
@@ -276,7 +284,7 @@ Leah decided (2026-09-01) to relaunch the "הגיל הוא לא הסיפור" Fa
 
 **The community-story weekly cadence (see "Cadence for relaunch" above) now also goes to hagil_lo_hasipor** - this includes the already-scheduled `second-story-shai-tuvul-relaunch` task for 2026-09-02, updated same day to publish to all 4 destinations instead of `figura_ramla` only.
 
-**Still needs Leah herself, not a Claude task:** the Facebook Page itself was deactivated/unpublished around 2026-08-24 (see the "TODO for 2026-08-24" note above - Page → Settings → Privacy → Facebook Page visibility). Before any post can actually reach it, she needs to reverse that: **Page → Settings → Privacy → Facebook Page visibility → Edit → "Publish Page" / reactivate.** Remind her if this hasn't happened yet when a post is ready to go.
+**Confirmed 2026-09-01: the Page was never actually deactivated** (Leah checked directly - status clean, no restrictions, not unpublished). The 2026-08-24 TODO above was apparently never carried out, or was reversed without a note here - either way, **the Page-visibility step is not needed, don't bring it up again.**
 
 <details><summary>Superseded 2026-08-24 note (kept for history, no longer in effect)</summary>
 

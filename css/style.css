@@ -1488,3 +1488,77 @@ input[type="file"] {
   font-size: var(--text-sm);
   background: var(--color-card);
 }
+
+/* WhatsApp story button - global floating button + inline CTA blocks, added 2026-09-01 */
+.wa-float-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.wa-float-btn:hover {
+  transform: scale(1.08);
+}
+
+.wa-float-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: #fff;
+}
+
+.wa-story-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  background: #eafaf1;
+  border: 1px solid #25d366;
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+  margin: var(--space-5) auto;
+  max-width: 640px;
+  text-align: right;
+}
+
+.wa-story-cta p {
+  flex: 1 1 240px;
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  padding: 10px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.wa-btn:hover {
+  background: #1ebe57;
+}
+
+.wa-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  flex-shrink: 0;
+}
