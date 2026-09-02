@@ -5,6 +5,16 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
+## Relaunch sequence for the 4 community stories (Leah's plan, set 2026-09-02)
+
+The 4 approved community-story members get relaunched one at a time (branded image + caption, new corner-badge design), not all at once:
+1. **אמנון גאון** - already relaunched 2026-08-24 (figura_ramla only, old pre-badge design) - he was first, done, do not redo.
+2. **שי טובול** - already relaunched 2026-09-02 morning (5 destinations, old pre-badge design - his image file has since been updated with the new badge for future reuse, but his post itself is not being redone).
+3. **אליעזר רוה** - next: **Wednesday 2026-09-09**. Branded image already built and approved by Leah 2026-09-02 (`render-final-eliezer.png` equivalent, quote "אל תשקוד על שמריך") - use that design as-is via `post-frame-template.html`, don't rebuild from scratch. Still needs her explicit approval on the day before actually publishing/scheduling (the standing approval-gate rule applies as always - having approved the *image* on 2026-09-02 is not approval to *publish* it on 2026-09-09 without checking in again).
+4. **אבי תורג'מן** - after Eliezer (no fixed date given yet - ask Leah for timing when Eliezer's turn comes up, or check back with her). Branded image already built and approved 2026-09-02 (quote "הכול בראש. הכול אפשרי").
+
+Destinations for both (per the "REVERSED 2026-09-01" standing default): all 5 - Facebook+Instagram+TikTok for `hagil_lo_hasipor`, Facebook+Instagram for `figura_ramla`. Caption format: same structure as Shai's (facts-only hook, the "אם הסיפור שלו/שלה..." line, link, slogan, hashtags, then the WhatsApp closing line with the number) - write fresh per-person facts, don't reuse Shai's caption text.
+
 ## STANDING RULE, added 2026-09-02: every published image carries the logo AND a WhatsApp badge, no exceptions
 
 Leah's explicit instruction: **every image that goes out for publication - story, teaser, workshop, any post, any channel - must include two fixed elements, both baked into `post-frame-template.html` itself now (already implemented, don't rebuild from scratch):**
