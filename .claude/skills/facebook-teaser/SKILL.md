@@ -5,6 +5,22 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
+## STANDING RULE, added 2026-09-02: every published image carries the logo AND a WhatsApp badge, no exceptions
+
+Leah's explicit instruction: **every image that goes out for publication - story, teaser, workshop, any post, any channel - must include two fixed elements, both baked into `post-frame-template.html` itself now (already implemented, don't rebuild from scratch):**
+1. The round red logo badge ("ה"), top-right corner - unchanged, already existed.
+2. A round green WhatsApp badge + the number, bottom-left corner (the mirror-opposite corner) - **same exact size (110px), same exact inset/positioning treatment as the logo** (she was explicit about this: "אותה נקודת ייחוס: כמו הלוגו, בפינה הנגדית, באותו גודל" - same reference point, like the logo, opposite corner, same size). The circle is the outermost element (flush to that corner, mirroring how the logo sits flush to its corner); the phone number `050-699-1723` sits to its right (toward the center of the card), never to its left.
+
+**An image without both elements does not get published or scheduled - this is a hard gate, not a style preference.** The current `post-frame-template.html` already has this built in (`.wa-badge` block, positioned `bottom:82.5px; left:36px` to exactly mirror `.logo-badge`'s `top:50%; right:36px`) - use the template as-is, don't touch this positioning per-post. If a quote is long enough to need 2 lines or a different `{{QUOTE_SIZE}}}`, that only affects `.quote-text` - never resize or reposition the corner badges to make room.
+
+**Getting the two corner elements to coexist with the bottom-band CTA text took several rounds of real trial and error (2026-09-02)** - the bottom-band CTA text zone is `left:470px; right:20px` at `font-size:26px`, sized specifically so it doesn't collide with the WhatsApp badge. If the CTA text content itself ever changes to something longer/shorter, re-measure (PowerShell `System.Drawing.Graphics.MeasureString` with "Segoe UI" bold is a good stand-in for the "Assistant" web font) rather than guessing pixel values by eye - guessing produced 4 failed overlapping iterations before landing on the real fix.
+
+**This is retroactive for the sitting-image files but NOT retroactive for already-published posts:** rebuild the committed image files for all 4 story people (Shai, Amnon, Eliezer, Avi) with the new badge, but Shai's post already went out 2026-09-02 morning under the old design - do not re-publish or re-schedule his post because of this design change. The new design applies to his *file* (for future reuse) and to every post from here on, not a republish of what already went out.
+
+## STANDING RULE, added 2026-09-02: always generate a separate image file for TikTok - never reuse the same file as other networks
+
+Leah's explicit instruction, generalizing the PNG/JPEG fix below into a permanent process rule: **whenever preparing images for a post that includes TikTok, always create the TikTok image as its own distinct file, deliberately generated separately from whatever image is used for Facebook/Instagram** - never assume one file can serve every network. This isn't only about the PNG-vs-JPEG format gotcha (see below) - treat "the TikTok image" and "the other-networks image" as two separate outputs from the branded-image process by default, even if today they'd happen to look identical, so a future format/spec difference doesn't silently break TikTok again.
+
 ## STANDING RULE, added 2026-09-02: TikTok images must be JPEG or WEBP, never PNG
 
 Confirmed via a real failure (Shai Tuvol relaunch, 2026-09-02): Metricool's TikTok publish rejects PNG images with `The content format of the Tiktok photo is incorrect. The 'image/png' type is not allowed, use 'image/jpeg' or 'image/webp' instead.` The site's branded post images are all PNG (`images/facebook-posts-branded/*.png`). Before submitting any post that includes `tiktok` in `providers`, convert the branded image to JPEG first (PowerShell + `System.Drawing`, or equivalent) and use that JPEG's URL in the `media` array for the TikTok-including submission - don't reuse the PNG URL. Facebook/Instagram accept the PNG fine, so if the same post also targets those, either submit two separate calls (one with the PNG for FB/IG, one with the JPEG for TikTok) or just use the JPEG for all three since it works everywhere.
