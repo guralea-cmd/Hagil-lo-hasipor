@@ -26,6 +26,14 @@ Since the browser path was blocked for these, Leah set up a real Google Cloud se
 
 **How the script works (no npm install needed):** Node.js is available on this machine (v24, no Python installed). A plain Node script signs its own JWT with `crypto.createSign('RSA-SHA256')` using the service account's `private_key` (no `googleapis` package required), exchanges it for an access token at `https://oauth2.googleapis.com/token` (grant type `urn:ietf:params:oauth:grant-type:jwt-bearer`, scopes `https://www.googleapis.com/auth/drive` + `.../auth/spreadsheets`), then calls the Drive v3 / Sheets v4 REST APIs directly with that bearer token. Write such a script fresh into the scratchpad directory each time (it's small, no need to keep a permanent copy in the repo) rather than reusing a stale one - the token expires hourly anyway and file IDs differ per task.
 
+## Hard rule: never delete or move files/emails without explicit approval, every time
+
+**Standing instruction from Leah, 2026-09-03.** This covers Gmail (archiving/deleting/labeling emails), Google Drive (moving/deleting/organizing files), and local files on her computer (Desktop, Downloads, Documents) alike - any organization/cleanup work (see the "סדר" project, 2026-09-03) is proposal-only until she explicitly signs off, item by item or batch by batch as she approves it. Producing a written organization proposal (suggested Gmail labels, Drive folders, local folders, what to archive/delete) is fine and expected - actually moving, deleting, labeling, or archiving anything is not, until she says yes.
+
+**Why:** Leah asked for a full read-only scan and proposal for organizing her Gmail/Drive/computer, and was explicit that this must never become an excuse to actually touch anything without her sign-off first - mirrors the site's standing "nothing goes out without approval" pattern used elsewhere (email sends, marquee/blog publishing).
+
+**How to apply:** Scanning, reading, and reporting is unrestricted. Any action that changes or removes something (delete, move, archive, relabel, rename) requires a specific, explicit "yes" from Leah for that specific item or batch - not a general one-time approval of the whole proposal.
+
 ## Hard rule: no email sent to anyone but Leah without her explicit approval, every time
 
 **Standing instruction from Leah, 2026-09-02.** No email may be sent from `guralea@gmail.com` to any recipient other than herself unless she has explicitly approved that specific send in the conversation - not a blanket one-time approval covering future sends, an approval per email.
