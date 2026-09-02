@@ -5,6 +5,10 @@ description: Creates one short Facebook teaser post per day for the "הגיל ה
 
 # Daily Facebook teaser
 
+## STANDING RULE, added 2026-09-02: TikTok images must be JPEG or WEBP, never PNG
+
+Confirmed via a real failure (Shai Tuvol relaunch, 2026-09-02): Metricool's TikTok publish rejects PNG images with `The content format of the Tiktok photo is incorrect. The 'image/png' type is not allowed, use 'image/jpeg' or 'image/webp' instead.` The site's branded post images are all PNG (`images/facebook-posts-branded/*.png`). Before submitting any post that includes `tiktok` in `providers`, convert the branded image to JPEG first (PowerShell + `System.Drawing`, or equivalent) and use that JPEG's URL in the `media` array for the TikTok-including submission - don't reuse the PNG URL. Facebook/Instagram accept the PNG fine, so if the same post also targets those, either submit two separate calls (one with the PNG for FB/IG, one with the JPEG for TikTok) or just use the JPEG for all three since it works everywhere.
+
 ## STANDING RULE, added 2026-09-01: every סיפור קהילה post ends with a WhatsApp voice-message invite
 
 Leah's explicit instruction: people are reluctant to write their story in the register.html form, so every community-story post (any post about a specific person's story - the daily rotation's "סיפור קהילה" type, relaunch posts, everything) must end with this exact line, after the hashtags:
