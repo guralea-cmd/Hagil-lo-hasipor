@@ -30,12 +30,13 @@ Confirmed 2026-08-09: run `date` (or equivalent) and check the *actual* calendar
 
 **Confirmed 2026-08-09: this is now a static bar, not a scrolling ticker.** Leah called horizontally-scrolling marquee text a dated ("30 years old") web pattern, so the strip was rewritten to a static flex row (tagline • message • link, separated by a dot), no animation, no duplicated spans. Don't reintroduce scrolling/animation/duplicate spans if asked to touch this again - three plain `<span>`s, once each.
 
-The strip has exactly three spans:
-1. The fixed site tagline - **never change this one**: `הגיל הוא לא הסיפור - הסיפור הוא מה עושים איתו`
-2. A rotating message line - this is what changes daily
-3. A link span (visible link text + href) - this also changes daily, paired with the message
+**Update 2026-09-04: the strip now has exactly two spans, not three.** Leah removed the fixed tagline span (`הגיל הוא לא הסיפור - הסיפור הוא מה עושים איתו`) because it made the strip too long - it was eating the space the actual daily message needs. Don't reintroduce it.
 
-Each day, spans 2 and 3 get replaced with that day's content. Span 1 (the tagline) stays exactly as-is, always.
+The strip now has:
+1. The rotating message line - this is what changes daily (for a blog-type entry, this is the post's own real title, used as-is)
+2. A link span (visible link text + href) - this also changes daily, paired with the message
+
+Each day, both spans get replaced with that day's content. The CSS separator (`:not(:last-child)::after`) already handles two spans fine, no style changes needed.
 
 ## Temporary freeze, 2026-08-10: rotation paused for one week
 
@@ -55,7 +56,7 @@ For each type, the **message** (the rotating line) is short narrative copy in Le
 
 **סדנה (workshop)** - source `workshop.html`. Message: a short line naming a concrete angle (the Zoom date, the physiological-age test, the 7-session structure) - vary the angle from last cycle's workshop entry in the log. Link text: `פרטים והרשמה לסדנה` (exact nav wording). Href: `workshop.html`.
 
-**Confirmed 2026-08-09: prefer action-driving phrasing over a neutral date announcement.** The original evergreen line ("הסדנה הבאה: 8.10.2026 בזום | 9.10.2026 בסטודיו ברמלה") just informs - Leah asked to replace it with something that drives to action instead (a direct question, an invitation, a nudge), same instinct as `leah-voice`'s blunt-question pattern. The line that landed after a few rounds: **"רוצה לדעת מה הגיל האמיתי של הגוף שלך? בואי לבדוק בסדנה - 8.10 בזום, 9.10 ברמלה."** - reusing the "רוצה לדעת מה הגיל האמיתי של הגוף שלך?" opener already approved once before for a Facebook post (see `facebook-teaser`'s posted-log, 2026-08-06 entry) rather than inventing a new hook from scratch. When a phrasing has already been approved elsewhere on a closely related topic, offering it as an option is often faster than a fully new draft - but still get her explicit approval each time, don't assume it transfers automatically.
+**Confirmed 2026-08-09: prefer action-driving phrasing over a neutral date announcement.** A neutral evergreen line that just states the dates isn't what Leah wants - she asked for something that drives to action instead (a direct question, an invitation, a nudge), same instinct as `leah-voice`'s blunt-question pattern. The line that landed after a few rounds (dates shown here are illustrative of the *pattern* only): "רוצה לדעת מה הגיל האמיתי של הגוף שלך? בואי לבדוק בסדנה - [תאריך זום], [תאריך פרונטלי]." - reusing the "רוצה לדעת מה הגיל האמיתי של הגוף שלך?" opener already approved once before for a Facebook post (see `facebook-teaser`'s posted-log, 2026-08-06 entry) rather than inventing a new hook from scratch. **Update 2026-08-26: the workshop was postponed - current real dates are Zoom 26.11.2026, in-person 27.11.2026 (see `site-open-items` item -1). Always pull the live dates from `workshop.html` when reusing this pattern, never hardcode a date here.** When a phrasing has already been approved elsewhere on a closely related topic, offering it as an option is often faster than a fully new draft - but still get her explicit approval each time, don't assume it transfers automatically.
 
 **Grammar gotcha, confirmed 2026-08-09:** a first-draft opener "בת כמה הגוף שלך באמת?" was rejected - "בת" (feminine) doesn't grammatically agree with "הגוף" (a masculine noun, takes "בן"), even though the line addresses a woman; the noun's own grammatical gender governs the "בן/בת" construction, not the reader's gender. When phrasing anything as "בן/בת כמה is X" (or similar constructions bound to a noun's grammatical gender), check the noun's actual gender rather than defaulting to match the reader.
 
