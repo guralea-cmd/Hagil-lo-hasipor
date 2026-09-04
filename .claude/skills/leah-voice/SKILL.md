@@ -5,6 +5,10 @@ description: Writes Hebrew website copy (blog posts, page text, form labels, CTA
 
 # Writing in Leah's voice
 
+## Read first: kol-shel-leah.md
+
+Before drafting anything substantial, read `.claude/skills/leah-voice/kol-shel-leah.md` (same directory as this file) - a voice analysis built 2026-09-02 from 17 real source documents she wrote/dictated (workshop scripts, a finished video script, personal-mentor ChatGPT transcripts), not from this skill file or the site. It covers concrete openers, closers, sentence-rhythm patterns (and the real gap between her polished scripts vs. raw spoken dictation), vocabulary she actually uses (including "גיל פיזיולוגי" and the "לקלף שכבות עד הגרעין" metaphor, not previously captured here), and confirms the existing address-style rule from a fresh source. Treat it as the more detailed, source-grounded companion to the guidance below - use both together.
+
 ## Hard rule: never freelance functional/CTA copy
 
 For short functional or chrome text - CTA lines, button labels, link text, form labels, nav items, anything that sits next to a link or drives an action - do not compose your own wording, even in her voice. Use only:
@@ -48,7 +52,7 @@ When drafting a new post's CTA (see [[project_weekly_blog_cadence]]), write the 
 
 Leah is 72, a fitness/Pilates rehab coach and mental-resilience mentor who had open-heart surgery and a stroke at 45, was half-paralyzed, and spent ~30 years caring for a wheelchair-bound husband. She built this community site to prove age isn't a limit. That biography is not backstory to mention - it's the source of how she talks. Read it in `about.html` before writing anything substantial; it's the clearest sample of her unfiltered voice.
 
-Additional confirmed background: she won the title "מיס פיטנס ישראל" (women 50+/60+) at the 2014 נאב"א competition in Netanya; certified as a fitness instructor through מכון וינגייט (Wingate Institute), starting her studies there at age 55; runs "פיגורא" (Figura), a rehab Pilates equipment studio in Ramla; previously ran a gym with her son עידו גורא (since closed - he moved into real estate, she stayed in Pilates); and wrote a novel, **"כל הפנים של אמליה"**. She sees herself first as a *mental* coach who happens to work through the body - clients describe her as someone who "trains them mentally," not just physically (see the testimonial pattern below). Don't undersell this: physical training is the vehicle, not the point.
+Additional confirmed background: she won the title "מיס פיטנס ישראל" (women 50+/60+) at the 2014 נאב"א competition in Netanya; certified as a fitness instructor through מכון וינגייט (Wingate Institute), starting her studies there at age 55; runs "פיגורא" (Figura), a rehab Pilates equipment studio in Ramla; previously ran a gym with her son עידו גורא (since closed - he moved into real estate, she stayed in Pilates); trains on the gymnastic rings, does calisthenics (קליסטניקס), and surfs/paddles SUP (גולשת וחותרת על סאפ) - confirmed by her directly 2026-09-03, use these as concrete personal-credibility details the way "training on rings at 72" is already used elsewhere; and wrote a novel, **"כל הפנים של אמליה"**. She sees herself first as a *mental* coach who happens to work through the body - clients describe her as someone who "trains them mentally," not just physically (see the testimonial pattern below). Don't undersell this: physical training is the vehicle, not the point.
 
 Her copy earns trust by being blunt about hardship and refusing to dress it up, then pivoting straight to agency - never through inspirational-poster language.
 
