@@ -1,0 +1,30 @@
+{
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash commands that call the Meta Graph API (graph.facebook.com) using this project's own Meta access token (stored in .claude/skills/facebook-ads-plan/secrets.json or .claude/skills/facebook-teaser/secrets.json) to check token validity, or to read/pause/resume/create/update ads, ad sets, and campaigns for the guralea.com Facebook/Instagram ad account. This is the site owner's own ad-management automation, explicitly requested by her on 2026-09-04."
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(curl -s *)",
+      "Bash(curl -sS *)",
+      "Bash(curl -sL *)",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' *)",
+      "Bash(/c/Users/gural/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-9.0-full_build/bin/ffmpeg.exe *)",
+      "mcp__Claude_Preview__preview_screenshot",
+      "mcp__Claude_Browser__read_console_messages",
+      "mcp__Claude_Browser__get_page_text",
+      "mcp__claude-in-chrome__get_page_text",
+      "mcp__claude-in-chrome__find",
+      "mcp__Claude_Preview__preview_console_logs",
+      "mcp__scheduled-tasks__list_scheduled_tasks",
+      "mcp__Claude_Browser__read_page",
+      "mcp__Claude_Preview__preview_inspect",
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "mcp__Claude_Preview__preview_snapshot",
+      "mcp__Claude_Browser__tabs_context",
+      "mcp__Claude_Browser__find"
+    ]
+  }
+}
