@@ -90,11 +90,12 @@ document.addEventListener("DOMContentLoaded", function () {
     var photos = (story.photoUrls || []).filter(function (url) {
       return !/\.hei[cf](\?|$)/i.test(url);
     });
-    var primaryHtml;
+    var primaryHtml, primaryIsPhoto = false;
     if (story.videoUrl) {
       primaryHtml = '<video src="' + story.videoUrl + '" controls preload="metadata" style="width:100%;height:100%;"></video>';
     } else if (photos.length) {
-      primaryHtml = '<img src="' + photos[0] + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;">';
+      primaryIsPhoto = true;
+      primaryHtml = '<img src="' + photos[0] + '" alt="" style="display:block;width:100%;height:auto;">';
     } else {
       primaryHtml = '<div class="video-placeholder">📖</div>';
     }
@@ -130,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
     row.dataset.storyName = story.name || "";
     row.innerHTML =
       headerHtml(story.name, story.age, story.location, hookText) +
-      '<div class="story-row-media"><div class="video-wrap">' + primaryHtml + '</div>' + thumbsHtml + '</div>' +
+      '<div class="story-row-media"><div class="' + (primaryIsPhoto ? 'photo-wrap' : 'video-wrap') + '">' + primaryHtml + '</div>' + thumbsHtml + '</div>' +
       '<div class="story-row-info">' +
       summaryBadgeHtml(edited, story.age) +
       textBlocks +
