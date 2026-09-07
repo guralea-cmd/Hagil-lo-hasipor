@@ -13,7 +13,9 @@ Confirmed 2026-08-13/14: ad-hoc debugging during a live conversation is slow and
 
 ## What to check each run
 
-For each of these pages: `index.html`, `register.html`, `stories.html`, `workshop.html`, `blog.html`, `about.html`, `events.html`, `advertise.html`:
+For each of these pages: `index.html`, `register.html`, `stories.html`, `blog.html`, `about.html`, `events.html`, `advertise.html`:
+
+**Removed 2026-09-07: the workshop was taken off the site entirely (Leah's decision) - `workshop.html` now just redirects to `index.html`. Don't scan it as a page and don't test-write to `workshop_leads` anymore - that form no longer exists.**
 
 1. Navigate to the live page **with the tracking-exclusion param**: `https://guralea.com/<page>?_scan=1`. Every page's Google Analytics and Meta Pixel init calls check for `_scan=1` in the query string and skip firing when present (added 2026-08-30, after this scan's own repeated checks were found inflating index.html's pageview/user numbers in GA4). Always include it - never navigate to these pages without it during a scan run.
 2. Read console messages, `onlyErrors: true`. Any uncaught error is a finding.
@@ -22,7 +24,6 @@ For each of these pages: `index.html`, `register.html`, `stories.html`, `worksho
 5. For `stories.html`: confirm the approved-stories Firestore query returns data (not empty/error) and that image URLs from `photoUrls` actually resolve (HTTP 200) for at least the first story.
 6. **Form write-path check, added 2026-09-06 after a real bug was found this way** (`ad_submissions` Storage path had no rule at all - see findings log 2026-09-06 - the Firestore side had been fixed 2026-08-14 but nobody had ever tested the Storage side, so every real banner-ad submission had been silently failing). For each of these forms, run a REAL write through the live client SDK on that form's own page (not a simulated/mocked check) - this proves the exact path a real visitor's click would take, including Storage rules, Firestore rules, and required fields together:
    - `register.html` (`story_submissions`) - already covered by step 4 above.
-   - `workshop.html` - `db.collection("workshop_leads").add({firstName, lastName, phone, email, track, status:"new", createdAt})`.
    - `pilates.html` - `db.collection("pilates_leads").add({name, phone, status:"new", createdAt})`.
    - `contact.html` - `db.collection("contact_submissions").add({name, phone, email, topic, message, status:"new", createdAt})`.
    - `advertise.html` - upload a real tiny file to Storage first (`storage.ref("ad_submissions/" + id + "/test.svg").put(blob)`, e.g. fetch `/images/favicon.svg` same-origin and re-upload it as the test blob), THEN `db.collection("ad_submissions").doc(id).set({advertiserName, contactName, phone, email, page, size, duration, link:"", notes:"", bannerUrl, status:"pending", createdAt})`. Both legs must succeed - a Storage-only failure won't show up if you only test the Firestore write.
