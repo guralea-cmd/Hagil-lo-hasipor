@@ -119,7 +119,7 @@ Leah gave final approval on the creative (headline "שלוש שנים. ועדי�
 
 Once the new token is in place: retry `leadgen_forms` creation (body already drafted, see `leadform_body.json` pattern - 3 questions: FULL_NAME, PHONE, CUSTOM "מתי נוח שאחזור אלייך?" with בוקר/צהריים/ערב options, privacy_policy pointing to `https://guralea.com/privacy.html`), then campaign → ad set → ad creative → ad, all created PAUSED first for a final check before going ACTIVE.
 
-**Also unresolved, worth deciding when we resume:** the ad set's geo-targeting (Ramla + 5km radius, explicitly NOT Lod) needs either the studio's exact lat/long (not found via Meta's own address-geocoding search or a general web search) or a Ramla-city-center-based radius - the latter risks the radius touching Lod since the two cities are close together, which would violate Leah's explicit "not Lod" instruction. Flag this specifically before finalizing the ad set, don't just pick a radius silently.
+**Geo-targeting - RESOLVED 2026-09-09.** Leah confirmed: center point is the studio's real address, רחוב החבצלת 8, רמלה, radius 5km. This address is for ad-account targeting only (custom_location lat/long in the ad set) - it must never appear in any visible ad/post text, same as the existing landmark-phrase rule. Still need to actually geocode the address to lat/long before building the ad set (Meta's own `adgeolocation` address search returned empty for it 2026-09-08 - try again or use an external geocoder).
 
 **Per Leah's explicit instruction 2026-09-08: don't work on the permission fix live right now - this whole item is queued for the 08:08 daily report to walk her through tomorrow morning**, one screen at a time (see `daily-open-items-report` SKILL.md, which now carries this same guide).
 
