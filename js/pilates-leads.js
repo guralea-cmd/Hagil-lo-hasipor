@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     db.collection("pilates_leads").add({
       name: form.name.value.trim(),
       phone: form.phone.value.trim(),
+      callbackTime: form.callbackTime.value,
       utmSource: utm.utmSource,
       utmMedium: utm.utmMedium,
       utmCampaign: utm.utmCampaign,
