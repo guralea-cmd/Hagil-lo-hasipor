@@ -1,9 +1,23 @@
 ---
 name: facebook-ads-plan
-description: The locked, agreed Meta Ads (Facebook/Instagram) advertising plan for "הגיל הוא לא הסיפור" - one campaign (workshop lead generation, driving traffic to the site), real budget, real geo-targeting. Use whenever asked about ad campaigns, Ads Manager setup, marketing budget, lead generation for the workshop, or promoting the Facebook page. This is settled - do not treat it as an open question, re-debate the geographic strategy, or claim unfamiliarity with it.
+description: "FROZEN 2026-09-08 - this plan targeted workshop lead generation, and the workshop was removed from the site entirely on 2026-09-07. Do not propose or execute this campaign as-is. The currently active paid Meta campaign is `pilates-ads-campaign` (Pilates studio lead gen) - use that skill instead for any ad-campaign work. This file is kept only for its geo-targeting/token-handling lessons and in case the workshop returns."
 ---
 
-# Facebook/Instagram Ads plan - locked 2026-08-07
+# Facebook/Instagram Ads plan - locked 2026-08-07, FROZEN 2026-09-08
+
+## Frozen - read this before anything else below
+
+**This entire plan (Campaign 1: לידים לסדנה) is built around driving traffic to `workshop.html` and capturing leads through its form.** On 2026-09-07 the workshop was removed from the site entirely - `workshop.html` now redirects to `index.html`, its lead form is gone (see `project_workshop_removed_from_site` in memory). That makes every ad creative and CTA below non-functional as written: they'd send paid traffic to a page that immediately bounces to the homepage.
+
+**Do not set up, resume, or reference this campaign as an active plan.** If asked about ad campaigns or Ads Manager setup, the live one is **`pilates-ads-campaign`** (Pilates studio lead gen, Ramla-only, awaiting Leah's final approval as of 2026-09-08) - use that skill instead.
+
+The content below is kept only because:
+1. It documents real, hard-won operational lessons (System User tokens vs. short-lived Explorer tokens, geo-targeting-by-city-list vs. radius, Campaign-2-dropped decision) that still apply to any future Meta ads work, workshop-related or not.
+2. If Leah ever revives the workshop, this is the starting point to adapt rather than rebuild from scratch - but it would need a fresh review with her first (new dates, current site state, whether the same geo/budget still make sense), not a blind resurrection.
+
+Do not silently un-freeze this on your own judgment - only if Leah explicitly says the workshop itself is coming back.
+
+---
 
 **Published reference page (2026-08-14):** https://claude.ai/code/artifact/d7a849c9-12ff-4f11-8fb6-76ac984137a9 - a standalone visual summary of this plan Leah can open directly without digging through chat. If this document's content changes, republish that same file path/URL from a session that has it (see Artifact tool notes) rather than leaving the page stale.
 
@@ -57,3 +71,11 @@ Leah asked to check today's campaign performance (people reached today/total, sp
 - **The existing Page Access Token** (`.claude/skills/facebook-teaser/secrets.json`) - only has `pages_show_list`, `business_management`, `pages_read_engagement`, `pages_manage_posts` scopes. Confirmed via `/owned_ad_accounts` that it lacks `ads_read`/`ads_management`, so it cannot query campaign insights even though `business_management` does resolve a linked business ID (`141699730270272`).
 
 **Next step, agreed with Leah for 2026-09-04:** walk her through the same one-time Graph API Explorer flow used to create the original Page token on 2026-08-03, this time requesting `ads_read` scope too (or a dedicated token) so campaign insights become queryable. Once that exists, add campaign metrics as a standing section in the daily 08:08 open-items report (see `project_daily_open_items_report` in memory). **This is still open - don't let it drop silently, pick it up proactively next session rather than waiting for Leah to re-ask.**
+
+## Hard rule, confirmed 2026-09-04: use a System User token, never a raw Graph API Explorer user token
+
+On 2026-09-04, a raw Graph API Explorer user token (with `ads_management`/`ads_read`) was created to swap an ad's creative (pause Amnon's ad, launch Avi's). That token is short-lived (~1-2 hours) and **expired mid-task**, forcing Leah to redo the whole Explorer flow a second time and burning a large chunk of a session on pure credential logistics. She called this out sharply ("לוגיסטיקה מטומטמת") and was right to.
+
+**Going forward, for any Meta/Facebook ads-management credential work (not just organic posting - this covers `ads_management`/`ads_read` specifically):** default straight to a **System User token in Business Manager** (business.facebook.com → Business Settings → Users → System Users → Add → assign the ad account/Page/app as assets → Generate New Token with the needed scopes). This token does not expire on its own and survives across sessions - it is the only credential type suited to "future automated swaps" or any multi-step task that might span more than an hour. Do not default to the quick Explorer-token-plus-manual-exchange path (used historically for the `facebook-teaser` Page token) for anything involving ad account management - that path is for quick one-off Page-token needs only, and even then, prefer System User if the task might recur.
+
+**The broader lesson, not just about tokens:** before starting a multi-step credential/setup flow, think through what the *durable* end-state needs to look like (will this be used once or repeatedly? does it need to survive this session?) and go straight there, instead of solving only the immediate step and discovering the gap later at Leah's expense. When a flow will need her to click through several screens, batch instructions into consolidated multi-step chunks (as many steps as can be safely batched before something might diverge from expectation) rather than one micro-step at a time waiting for confirmation after each one.
