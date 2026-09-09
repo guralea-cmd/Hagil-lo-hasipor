@@ -1,5 +1,0 @@
-{
-  "lastEmailedDocId": "whivn9RmmWz7lE8m9M46",
-  "lastEmailedCreatedAt": "2026-09-09T12:30:53.168Z",
-  "note": "Tracks the most recent pilates_leads doc that has already triggered an email, so the polling task never double-sends. Updated automatically by the pilates-lead-email-check scheduled task."
-}

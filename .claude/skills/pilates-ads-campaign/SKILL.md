@@ -19,9 +19,9 @@ STATUS: NOT YET APPROVED FOR FINAL PUBLISH. Leah asked (2026-09-08) to save ever
 
 Leah caught (2026-09-09) that the lead form was buried below 15 studio photos - anyone landing from an ad/post never saw it. Fixed: the form now sits directly under the H1, wrapped in a `<div id="form">`, and every scheduled post's link (all networks, including TikTok) points to `https://guralea.com/pilates.html#form` instead of the bare page URL. Any future post/ad for this campaign must use the `#form` link, not the bare `pilates.html` URL.
 
-## STANDING RULE, added 2026-09-09: email guralea@gmail.com on every new lead
+## REVERSED same day, 2026-09-09: no intraday lead checking
 
-Scheduled task `pilates-lead-email-check` (every 5 minutes) checks `pilates_leads` for anything new since the last check and emails Leah (subject "ליד חדש — פילאטיס", body: name/phone/callbackTime) via Gmail through Claude in Chrome. **This is polling, not a true instant push** - Leah asked for "immediate," and the honest answer is that a real instant push needs a Firebase Cloud Function triggered on document creation, which isn't deployable right now (the Firebase CLI's interactive login is blocked in this environment - see `site-open-items` item 1 - and Cloud Functions also requires the project to be on a paid Blaze billing plan, not yet set up). 5 minutes was picked as a practical middle ground; tighten it if she asks. State/dedup tracking lives in `lead-email-state.json` in this folder (gitignored-safe, no secrets - just a doc id/timestamp). `daily-open-items-report` checks that file's `lastError` field for send failures.
+A same-day email-per-lead automation (`pilates-lead-email-check`, polling every 5 minutes) was built and then explicitly cancelled by Leah a few minutes later - she decided she doesn't want intraday checks at all. Leads surface only in the regular 08:08 `daily-open-items-report`, same as before. **Don't rebuild this without her asking again.**
 
 ## Lead form - built and live
 
