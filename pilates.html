@@ -106,7 +106,35 @@ gtag('config', 'G-MEG8NMMGTD');
 <section id="main-content">
   <div class="container" style="max-width:700px;">
     <h1 style="text-align:right;">לאה גורא – פילאטיס מכשירים ברמלה</h1>
+  </div>
 
+  <div class="container" style="max-width:380px;" id="form">
+    <h2 style="text-align:right;">השאירי טלפון ואני חוזרת אלייך לתיאום אימון היכרות</h2>
+    <p>הסטודיו ברמלה, מקביל לקמפוס השפלה.</p>
+    <form id="pilates-lead-form">
+      <div>
+        <label for="pilates-name">שם מלא</label>
+        <input type="text" id="pilates-name" name="name" required>
+      </div>
+      <div>
+        <label for="pilates-phone">טלפון</label>
+        <input type="tel" id="pilates-phone" name="phone" required>
+      </div>
+      <div>
+        <label for="pilates-callback-time">מתי נוח שאחזור אלייך?</label>
+        <select id="pilates-callback-time" name="callbackTime" required>
+          <option value="" disabled selected>בחרו זמן</option>
+          <option value="בוקר">בוקר</option>
+          <option value="צהריים">צהריים</option>
+          <option value="ערב">ערב</option>
+        </select>
+      </div>
+      <button type="submit" class="btn">שלחי</button>
+      <p id="pilates-lead-status" class="form-status" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div class="container" style="max-width:700px;">
     <p>בגיל 45 עברתי ניתוח לב פתוח ואירוע מוחי, והייתי משותקת בחצי גוף. חזרתי הביתה בלי שום תוכנית שיקום - רק מתוך הקשבה לגוף. יש אנשים שבעבורם זה סוף הסיפור ואצלי אפשר לומר שזאת היא רק ההתחלה. יצאתי להליכות הצטרפתי והתמכרתי לתוכנית בוקר של גלעד ינקלוביץ הגוף בתנועה. הבחירה שלי בשנת 2009 בגיל 55 בלימודי אימון כושר בווינגייט נבעה מהצורך לחבר בין הפרקטיקה של האימון לבין המדע שמאחוריו. חיפשתי הבנה עמוקה של האנטומיה, הפיזיולוגיה ותורת התנועה, במטרה לפצח את האופן שבו הגוף פועל ומגיב למאמץ. הידע הזה איפשר לי לתכנן תוכניות אימון מותאמות אישית, למנוע פציעות ולהביא את הגוף שלי להתקדמות שיא מתוך הבנה מקצועית מלאה. ועם הידע הזה לא רק שהתאמנתי במקצועיות אלא גם מצאתי את עצמי מאמנת עשרות מתאמנים בחדרי הכושר. והתשוקה להכיר ולחוות אימונים מסוג אחר הפגישה אותי בשנת 2014 עם פילאטיס מכשירים בקמפוס שיאים שבאוניברסיטת תל אביב ועם פילאטיס באורינטציה שיקומית ומיד פתחתי את הסטודיו ברחוב החבצלת 8 ברמלה -</p>
 
     <p>סטודיו לפילאטיס מכשירים ברמלה. המטפל בשיקום הגוף, עיצוב וחיזוק. התמחות: צפיפות עצם, פריצות דיסק ובלט, עקמת, סב אקוטיים, החלפת ירך וברך, פיברומיאלגיה ודלקות פרקים.</p>
@@ -165,31 +193,6 @@ gtag('config', 'G-MEG8NMMGTD');
     </div>
   </div>
 
-  <div class="container" style="max-width:380px;">
-    <h2 style="text-align:right;">השאירי טלפון ואני חוזרת אלייך לתיאום אימון היכרות</h2>
-    <p>הסטודיו ברמלה, מקביל לקמפוס השפלה.</p>
-    <form id="pilates-lead-form">
-      <div>
-        <label for="pilates-name">שם מלא</label>
-        <input type="text" id="pilates-name" name="name" required>
-      </div>
-      <div>
-        <label for="pilates-phone">טלפון</label>
-        <input type="tel" id="pilates-phone" name="phone" required>
-      </div>
-      <div>
-        <label for="pilates-callback-time">מתי נוח שאחזור אלייך?</label>
-        <select id="pilates-callback-time" name="callbackTime" required>
-          <option value="" disabled selected>בחרו זמן</option>
-          <option value="בוקר">בוקר</option>
-          <option value="צהריים">צהריים</option>
-          <option value="ערב">ערב</option>
-        </select>
-      </div>
-      <button type="submit" class="btn">השארת פרטים</button>
-      <p id="pilates-lead-status" class="form-status" aria-live="polite"></p>
-    </form>
-  </div>
 </section>
 
 <footer>
