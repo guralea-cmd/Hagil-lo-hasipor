@@ -108,7 +108,21 @@ Leah shared real Drive folders with the service account (`hagil-sheets-bot@hagil
 
 To re-access: mint a Drive-scoped token from the existing service account key (`.claude/skills/google-account-access/service-account-key.json`, scope `https://www.googleapis.com/auth/drive.readonly`) the same way `google-account-access` skill's Sheets flow works - JWT signed with the key, exchanged at the OAuth token endpoint. Tokens expire hourly, mint a fresh one each session.
 
-## Ad launch attempt, 2026-09-08 - BLOCKED on System User permissions
+## Ad launch - LEAD FORM + AD BUILT 2026-09-10/11, PAUSED, awaiting final approval
+
+New System User token generated 2026-09-10 added `pages_manage_ads` (confirmed via `debug_token`) but **not** `leads_retrieval` - Leah investigated herself and found the real cause: `leads_retrieval` isn't a checkbox that was missed, it only appears once the app has a "Leads" use case added at developers.facebook.com (app "Hagil Lo Hasipur", id `1635110611525724`) - that's an App Dashboard action, separate from the Business Settings System User token screen. Not yet done as of 2026-09-11 - see the numbered steps given to Leah in chat (App Dashboard → Use cases → add Leads/Marketing API use case → re-generate the System User token with `leads_retrieval` checked once it's available). Until then, leads can only be viewed manually in Ads Manager or via the Lead Ads Testing Tool, not read back automatically for the daily report.
+
+**Everything else needed to launch was built 2026-09-11, all PAUSED, nothing spending or live:**
+- **Geocoding** - Meta's own `adgeolocation` address search still returns empty for the exact address (confirmed again). Used Ramla's city-center coordinate from OpenStreetMap Nominatim instead (`31.9279988, 34.8623473`) with a 5km radius - close enough for radius targeting math; the exact address never appears in ad text regardless (existing rule).
+- **Lead Gen Form** - `939573169208375` on page `2267713623553786`, live (status ACTIVE). 3 questions: FULL_NAME, PHONE, CUSTOM "מתי נוח שאחזור אלייך?" (בוקר/צהריים/ערב), privacy policy linked to `privacy.html`. Needed an extra `thank_you_page` field (VIEW_WEBSITE button → `pilates.html`) that wasn't in the original drafted body - Meta's API now requires it.
+- **Campaign** `120248979722020543` ("לידים לפילאטיס - אאידה"), objective OUTCOME_LEADS, PAUSED.
+- **Ad set** `120248979725370543` - Ramla 5km, age 45-60, women, ₪80/day, optimization LEAD_GENERATION, `destination_type: ON_AD` (required for a lead-form creative), advantage_audience explicitly disabled (precise targeting, not Meta's automatic expansion). PAUSED.
+- **Ad creative** `1737814120636139` - Aida's video (`1738774987408894`) + the approved headline/CTA + the ad copy (Aida's quote, small-groups line, location line, fixed CTA) + the lead form attached via `call_to_action.value.lead_gen_form_id`.
+- **Ad** `120248979737840543`, PAUSED. Verified visually via Meta's own ad preview API (not just the API response) - correct Hebrew, correct video, correct headline/CTA button, page name right.
+
+**Still needed before going ACTIVE:** Leah's final look at the ad preview and an explicit go-ahead on the ₪80/day budget commitment (same standing pattern as every other ad-account change).
+
+## Ad launch attempt, 2026-09-08 - BLOCKED on System User permissions (historical - see above for current status)
 
 Leah gave final approval on the creative (headline "שלוש שנים. ועדיין כאן.", CTA button LEARN_MORE/"למידע נוסף" - CONTACT_US is not a valid CTA for on-Facebook Lead Gen ads, verified against Meta's own docs) and said explicitly to launch it live. Attempted via the Graph API using the System User token in `facebook-ads-plan/secrets.json`:
 
