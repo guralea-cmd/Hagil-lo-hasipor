@@ -1,21 +1,19 @@
 ---
 name: facebook-ads-plan
-description: "FROZEN 2026-09-08 - this plan targeted workshop lead generation, and the workshop was removed from the site entirely on 2026-09-07. Do not propose or execute this campaign as-is. The currently active paid Meta campaign is `pilates-ads-campaign` (Pilates studio lead gen) - use that skill instead for any ad-campaign work. This file is kept only for its geo-targeting/token-handling lessons and in case the workshop returns."
+description: "UN-FROZEN 2026-09-10 - the workshop was restored to the site the same day, and Leah set a concrete timeline: prep starts 2026-09-25, everything approved before 2026-10-01, campaign launches 2026-10-01. Runs alongside the separate active `pilates-ads-campaign` (Pilates studio lead gen) - the two are independent campaigns for different offers, not a replacement of one by the other. Needs a fresh review before 9/25 (new dates, current site state, whether the same geo/budget/creative still make sense) - this plan is the starting point, not a blind resurrection."
 ---
 
-# Facebook/Instagram Ads plan - locked 2026-08-07, FROZEN 2026-09-08
+# Facebook/Instagram Ads plan - locked 2026-08-07, frozen 2026-09-08, UN-FROZEN 2026-09-10
 
-## Frozen - read this before anything else below
+## Current status - read this before anything else below
 
-**This entire plan (Campaign 1: לידים לסדנה) is built around driving traffic to `workshop.html` and capturing leads through its form.** On 2026-09-07 the workshop was removed from the site entirely - `workshop.html` now redirects to `index.html`, its lead form is gone (see `project_workshop_removed_from_site` in memory). That makes every ad creative and CTA below non-functional as written: they'd send paid traffic to a page that immediately bounces to the homepage.
+**Timeline set by Leah 2026-09-10 (also saved in `standing-work-rules` SKILL.md, rule 12):** prep work (ad creative, images, texts, videos) starts 2026-09-25, everything must be ready and approved by Leah before 2026-10-01, and the paid campaign itself launches exactly 2026-10-01. The `daily-open-items-report` scheduled task reminds her of this starting the morning of 9/25.
 
-**Do not set up, resume, or reference this campaign as an active plan.** If asked about ad campaigns or Ads Manager setup, the live one is **`pilates-ads-campaign`** (Pilates studio lead gen, Ramla-only, awaiting Leah's final approval as of 2026-09-08) - use that skill instead.
+**This plan (Campaign 1: לידים לסדנה) drives traffic to `workshop.html` and its lead form - both are live again as of 2026-09-10** (the 2026-09-07 removal was reversed the same day this plan was un-frozen; see `project_workshop_removed_from_site` in memory, now stale). The content below was written before the removal, so before starting real prep on 9/25: re-verify the workshop's current real dates on the live `workshop.html` (they may have shifted since 2026-08-25's "Zoom 26.11, in-person 27.11"), re-check the current site state (pilates.html, nav, branding all changed since August), and confirm the geo/budget/audience below still reflects what Leah wants before spending anything.
 
-The content below is kept only because:
-1. It documents real, hard-won operational lessons (System User tokens vs. short-lived Explorer tokens, geo-targeting-by-city-list vs. radius, Campaign-2-dropped decision) that still apply to any future Meta ads work, workshop-related or not.
-2. If Leah ever revives the workshop, this is the starting point to adapt rather than rebuild from scratch - but it would need a fresh review with her first (new dates, current site state, whether the same geo/budget still make sense), not a blind resurrection.
+**This runs alongside `pilates-ads-campaign`, not instead of it** - that's a separate, already-active paid campaign for Pilates studio lead-gen (different offer, different audience). Don't merge or confuse the two when both are running.
 
-Do not silently un-freeze this on your own judgment - only if Leah explicitly says the workshop itself is coming back.
+The content below documents real, hard-won operational lessons (System User tokens vs. short-lived Explorer tokens, geo-targeting-by-city-list vs. radius, Campaign-2-dropped decision) that still apply - read it as the starting point for 9/25's prep, not a blind resurrection to launch as-is.
 
 ---
 
