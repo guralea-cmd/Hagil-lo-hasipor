@@ -120,7 +120,9 @@ To re-access: mint a Drive-scoped token from the existing service account key (`
 - **Ad creative** `1737814120636139` - Aida's video (`1738774987408894`) + the approved headline/CTA + the ad copy (Aida's quote, small-groups line, location line, fixed CTA) + the lead form attached via `call_to_action.value.lead_gen_form_id`.
 - **Ad** `120248979737840543`, PAUSED. Verified visually via Meta's own ad preview API (not just the API response) - correct Hebrew, correct video, correct headline/CTA button, page name right.
 
-**Still needed before going ACTIVE:** Leah's final look at the ad preview and an explicit go-ahead on the ₪80/day budget commitment (same standing pattern as every other ad-account change).
+**LIVE, 2026-09-11.** Leah's final decision: **₪50/day** (changed from the original ₪80/day draft), **no end date, no lifetime cap - runs continuously.** Campaign, ad set, and ad all confirmed `effective_status: ACTIVE` after activation. The daily-open-items-report now reports exactly 3 things every morning per her spec: yesterday's spend, yesterday's leads (name+phone), and month-to-date totals (spend + lead count) - see that task's SKILL.md for the exact fields/endpoints.
+
+**Geo-targeting - RESOLVED 2026-09-11 with the real street.** Every attempt using "**ה**חבצלת" (with the definite article) matched the wrong city every time (Be'er Ya'akov, Petah Tikva, Tel Aviv, Yavne all have streets by that name too) - OSM's actual data for this street in Ramla is indexed under "**חבצלת**" without the "ה" prefix. That query correctly resolves to "חבצלת, גני דן, ג'ואריש, **רמלה**" (`31.9260702, 34.8527516`) - גני דן is one of the neighborhoods this campaign was always meant to cover. **The ad set's targeting was updated to this coordinate** (previously used Ramla's town center as a stand-in while this was unresolved) - confirmed via a fresh Graph API read showing the corrected `custom_locations` and a Meta-recognized `primary_city_id`.
 
 ## Ad launch attempt, 2026-09-08 - BLOCKED on System User permissions (historical - see above for current status)
 
