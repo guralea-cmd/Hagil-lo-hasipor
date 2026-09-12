@@ -7,6 +7,10 @@ STATUS: NOT YET APPROVED FOR FINAL PUBLISH. Leah asked (2026-09-08) to save ever
 
 # Pilates studio ad campaign (Ramla)
 
+## Photos for every post - read `media-library/README.md` first (set 2026-09-12)
+
+All post/Story/TikTok images come from Leah's own library `מסמכים\מאגר-מדיה-לאה\facebook-page-photos` (536 numbered branded photos), never stock. The README holds the number map, a topic index, the exact selection-page format Leah approved, the save/verify steps, and the TikTok 1080x1920 format (`make-tiktok.ps1`). Week 2 (days 8-14) picks are final and saved in `images/pilates/week2/`.
+
 ## Goal and audience - locked facts, don't re-litigate
 
 - **Target:** 12-14 new trainees/month.
