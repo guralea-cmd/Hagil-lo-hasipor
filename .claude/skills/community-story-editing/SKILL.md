@@ -49,6 +49,10 @@ edited: {
 }
 ```
 
+## Batch 1 (the 4 stories below) - WRITTEN to Firestore, verified 2026-09-12
+
+Checked directly in the Firebase console on 2026-09-12: `story_submissions/3rwLZMW9hFppFhgALAgk` has the full `edited` field (the script below writes all 4 docs in one `Promise.all`). Nothing left to run. The notes below are kept only as a record of how the auth blocker was handled.
+
 ## Known blocker, hit 2026-08-31: writing to Firestore needs an authenticated session
 
 `firestore.rules` requires `request.auth != null` to `update` an existing `stories`/`story_submissions` doc (only `create` on a new pending submission is open to the public). This session could not complete the actual Firestore write for the first 4 approved edits (below) because:
