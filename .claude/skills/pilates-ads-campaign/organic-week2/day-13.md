@@ -10,7 +10,7 @@
 https://guralea.com/pilates.html#form
 
 ## צהריים 12:30
-**תמונה:** `images/pilates/studio-chairs-pair.jpg`
+**תמונה:** `images/pilates/studio-chairs-balls-red.jpg`
 **טקסט:**
 יש לנו שני חדרי אימון - רפורמרים למעלה, כיסאות WONDA למטה. באיזה חדר מתאמנים תלוי ברמה שלך ובמה שרוצים להתקדם אליו. בכל קבוצה מספר קטן של מתאמנות, כדי שאני אתן לכל אחת תשומת לב אמיתית.
 
@@ -18,7 +18,7 @@ https://guralea.com/pilates.html#form
 https://guralea.com/pilates.html#form
 
 ## ערב 19:30
-**תמונה:** `images/facebook-posts/WhatsApp Image 2026-08-05 at 00.32.03.jpeg`
+**תמונה:** `images/pilates/studio-chairs-closeup.jpg`
 **טקסט:**
 "סוף סוף מישהי שמה לב אם אני עושה את זה נכון" - זה המשפט שאני שומעת הכי הרבה מנשים שעברו אליי מחוג גדול. תשומת לב אישית זה לא פינוק - זה מה שמונע פציעה ומבטיח שהאימון באמת עובד בשבילך.
 

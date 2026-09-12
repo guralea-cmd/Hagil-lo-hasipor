@@ -18,7 +18,7 @@ https://guralea.com/pilates.html#form
 https://guralea.com/pilates.html#form
 
 ## ערב 19:30
-**תמונה:** `images/facebook-posts/WhatsApp Image 2026-08-05 at 00.32.03 (2).jpeg`
+**תמונה:** `images/pilates/studio-reformer-solo1.jpg`
 **טקסט:**
 "אני כבר לא סומכת על הרגליים שלי" - משפט שאני שומעת מנשים שהתחילו להימנע מללכת לבד ברחוב או לרדת מדרגות בלי מעקה. זה בדיוק ההפך ממה שצריך לקרות - ככל שמתאמנים על זה יותר, הביטחון חוזר.
 

@@ -10,7 +10,7 @@
 https://guralea.com/pilates.html#form
 
 ## צהריים 12:30
-**תמונה:** `images/pilates/studio-chairs-pair.jpg`
+**תמונה:** `images/pilates/studio-chairs-row-plank.jpg`
 **טקסט:**
 עם בקע דיסק, לא כל תרגיל מותר - כפיפות בטן קלאסיות, כיפוף עמוק קדימה, וסיבובים עם עומס מחמירים את זה. תרגילי ליבה בעמדה נייטרלית מייצבים את עמוד השדרה ומפחיתים לחץ על הדיסק. זו העבודה שאני עושה עם נשים עם בקע, בליווי צמוד לכל תנועה.
 
@@ -18,7 +18,7 @@ https://guralea.com/pilates.html#form
 https://guralea.com/pilates.html#form
 
 ## ערב 19:30
-**תמונה:** `images/facebook-posts/WhatsApp Image 2026-08-05 at 00.32.03.jpeg`
+**תמונה:** `images/pilates/studio-reformer-action.jpg`
 **טקסט:**
 "אני מפחדת לזוז כי אני לא יודעת מה מותר ומה אסור" - זה החשש הכי נפוץ אצל נשים עם בקע דיסק שמגיעות אליי. בגלל זה כל תרגיל אצלי מותאם אישית, ואני יודעת בדיוק מתי לעצור ומתי להתקדם.
 

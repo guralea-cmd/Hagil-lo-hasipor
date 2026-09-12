@@ -10,7 +10,7 @@
 https://guralea.com/pilates.html#form
 
 ## צהריים 12:30
-**תמונה:** `images/pilates/studio-chairs-pair.jpg`
+**תמונה:** `images/pilates/studio-chairs-plank-group.jpg`
 **טקסט:**
 בשבועות הראשונים אחרי ניתוח מתמקדים בטווח תנועה, ומהחודש-חודש וחצי עוברים לבניית כוח בהדרגה - אבל זה חייב להיות מבוקר, לא "לחזור לשגרה" בבת אחת. ברפורמר אני עובדת על חיזוק השרירים סביב המפרק החדש בעומס הדרגתי ומדויק, כדי שהרגל תחזיק את עצמה בביטחון.
 
@@ -18,7 +18,7 @@ https://guralea.com/pilates.html#form
 https://guralea.com/pilates.html#form
 
 ## ערב 19:30
-**תמונה:** `images/facebook-posts/WhatsApp Image 2026-08-05 at 00.32.03 (1).jpeg`
+**תמונה:** `images/pilates/studio-chairs-action-front.jpg`
 **טקסט:**
 "עברתי ניתוח, אבל אף אחד לא הדריך אותי איך לחזור לכוח ולביטחון" - זו התלונה שאני שומעת הכי הרבה אחרי החלפת מפרק. זה לא חוסר יכולת שלך - זה פשוט דורש ליווי צמוד ומדויק, בקצב הנכון.
 

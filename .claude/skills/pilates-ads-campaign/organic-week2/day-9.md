@@ -18,7 +18,7 @@ https://guralea.com/pilates.html#form
 https://guralea.com/pilates.html#form
 
 ## ערב 19:30
-**תמונה:** `images/facebook-posts/WhatsApp Image 2026-08-05 at 00.32.03 (2).jpeg`
+**תמונה:** `images/pilates/studio-reformer-stretch2.jpg`
 **טקסט:**
 "אני פוחדת לזוז כי כל תנועה כואבת" - זה מה שרוב הנשים עם כאב כרוני מספרות לי בפגישה הראשונה. הפתרון הוא לא לוותר על תנועה - הפתרון הוא תנועה מהסוג הנכון, בקצב שלך, עם מישהי שיודעת בדיוק איך לגרום לך להרגיש הרבה יותר טוב.
 
