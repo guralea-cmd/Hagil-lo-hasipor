@@ -121,15 +121,6 @@ gtag('config', 'G-MEG8NMMGTD');
         <label for="pilates-phone">טלפון</label>
         <input type="tel" id="pilates-phone" name="phone" required>
       </div>
-      <div>
-        <label for="pilates-callback-time">מתי נוח שאחזור אלייך?</label>
-        <select id="pilates-callback-time" name="callbackTime" required>
-          <option value="" disabled selected>בחרו זמן</option>
-          <option value="בוקר">בוקר</option>
-          <option value="צהריים">צהריים</option>
-          <option value="ערב">ערב</option>
-        </select>
-      </div>
       <button type="submit" class="btn">שלחי</button>
       <p id="pilates-lead-status" class="form-status" aria-live="polite"></p>
     </form>
@@ -224,7 +215,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/firebase-config.js?v=4"></script>
 <script src="js/main.js?v=8"></script>
-<script src="js/pilates-leads.js?v=2"></script>
+<script src="js/pilates-leads.js?v=3"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
