@@ -125,3 +125,7 @@ Leah asked (night of 2026-08-30/31, after a GA4 session that found near-zero ave
 ## 14. Workshop - REMOVED 2026-09-07, RESTORED 2026-09-10 - no longer an open item
 
 The workshop was removed from the site entirely on 2026-09-07 (commit `4fef847`), then Leah reversed that decision on 2026-09-10 and asked for the full restoration: the page, every nav/footer/blog-CTA link to it, the registration form (`workshop_leads`), its `daily-open-items-report` connection, and the marquee rotation slot - done via a `git revert` of `4fef847` plus manual restoration of the marquee-daily-content skill's workshop section (which had been separately edited out in a follow-up commit `df5e35f`). The "how to build a running routine" workshop-curriculum item (raised 2026-09-05, dropped 2026-09-08) is open again too if Leah wants it revisited - don't assume it's still moot.
+
+## 15. טופס "פרסמו איתנו" (advertise.html) - שבור, ומועבר לסוף הרשימה - 2026-09-12
+
+החלטת לאה, במילים שלה: **"הטופס של 'פרסמו איתנו' שבור והוא נשאר שבור - אנחנו מאוד רחוקים מפרסום באתר, אין מפרסמים ואף אחד לא ממלא אותו."** הבאג (חוקי Storage ל-`ad_submissions`, שגיאת `storage/unauthorized`) נשאר פתוח בכוונה, בעדיפות אחרונה. **לא להעלות אותו יותר בדוח היומי ולא כממצא בסריקת הבריאות** - הסריקה יכולה להמשיך לבדוק ולתעד ביומן, אבל בלי להודיע ללאה. לפתוח מחדש רק אם היא מעלה את זה בעצמה.
