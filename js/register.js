@@ -100,24 +100,50 @@ document.addEventListener("DOMContentLoaded", function () {
         var videoUrl = results[1];
         progressEl.textContent = "שומר את הפרטים...";
         var utm = getUtmParams();
-        return db.collection("story_submissions").doc(submissionId).set({
+        var createdAt = firebase.firestore.FieldValue.serverTimestamp();
+        // Approved story_submissions docs are publicly readable, so the submitter's
+        // contact details go to the private story_contacts/{same id} doc instead
+        // (admin-only, see firestore.rules). Both are written in one batch.
+        var submissionRef = db.collection("story_submissions").doc(submissionId);
+        var publicData = {
           name: form.name.value.trim(),
           age: form.age.value.trim(),
           location: form.location.value.trim(),
-          phone: form.phone.value.trim(),
-          email: form.email.value.trim(),
           story: form.story.value.trim(),
           turningPoint: form.turningPoint.value.trim(),
           today: form.today.value.trim(),
           message: form.message.value.trim(),
-          links: form.links.value.trim(),
           photoUrls: photoUrls,
           videoUrl: videoUrl,
           utmSource: utm.utmSource,
           utmMedium: utm.utmMedium,
           utmCampaign: utm.utmCampaign,
           status: "pending",
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          createdAt: createdAt
+        };
+        var contactData = {
+          phone: form.phone.value.trim(),
+          email: form.email.value.trim(),
+          links: form.links.value.trim(),
+          createdAt: createdAt
+        };
+        var batch = db.batch();
+        batch.set(submissionRef, publicData);
+        batch.set(db.collection("story_contacts").doc(submissionId), contactData);
+        return batch.commit().catch(function (err) {
+          if (!err || err.code !== "permission-denied") throw err;
+          // Transitional: until the new firestore.rules are published, story_contacts
+          // has no rule and the batch is refused - save the submission the old way
+          // (one doc) so no real story is lost. Once the new rules are live this
+          // single write is refused too, so it can never put contact details on a
+          // public doc again. The admin "העברת פרטי קשר" button cleans up docs
+          // saved this way. Safe to delete this fallback after the rules are live.
+          console.warn("story_contacts batch refused, using single-doc save", err.message);
+          return submissionRef.set(Object.assign({}, publicData, {
+            phone: contactData.phone,
+            email: contactData.email,
+            links: contactData.links
+          }));
         });
       })
       .then(function () {

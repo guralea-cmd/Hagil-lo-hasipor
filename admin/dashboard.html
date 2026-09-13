@@ -9,6 +9,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="../css/style.css?v=74">
+<style>
+  /* Contact-form submissions (contact_submissions). Kept here rather than in
+     style.css so the shared stylesheet - and its ?v on every page - stays untouched. */
+  .contact-table th, .contact-table td { padding-left: var(--space-3); padding-right: var(--space-3); }
+  .contact-table .contact-msg { white-space: pre-wrap; overflow-wrap: anywhere; min-width: 200px; max-width: 420px; }
+  .contact-table .contact-email { overflow-wrap: anywhere; }
+  .contact-table .contact-date,
+  .contact-table .contact-phone { white-space: nowrap; }
+  .contact-table a { color: var(--color-accent-dark); }
+  .contact-table tr.contact-new td { background: #fff6e6; }
+  .contact-table tr.contact-new td:first-child { box-shadow: inset -4px 0 0 var(--color-accent); }
+  .contact-table tr.contact-handled td { color: var(--color-muted); }
+  .contact-actions .contact-error { display: block; margin-top: var(--space-1); color: #b5392f; font-size: var(--text-2xs); }
+
+  /* Phone: each message becomes its own card instead of a wide table row */
+  @media (max-width: 760px) {
+    .contact-table, .contact-table tbody, .contact-table tr, .contact-table td { display: block; width: 100%; }
+    .contact-table thead { display: none; }
+    .contact-table { background: transparent; border-radius: 0; overflow: visible; }
+    .contact-table tr { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius); margin-bottom: var(--space-3); padding: var(--space-2) 0; overflow: hidden; }
+    .contact-table td { border-bottom: none; padding: var(--space-1) var(--space-4); font-size: var(--text-base); }
+    .contact-table td[data-label]::before { content: attr(data-label) ": "; font-weight: 600; color: var(--color-primary); }
+    .contact-table td.contact-msg { min-width: 0; max-width: none; }
+    .contact-table td.contact-msg::before { display: block; }
+    .contact-table td:empty { display: none; }
+    .contact-table tr.contact-new { background: #fff6e6; border-color: var(--color-accent); box-shadow: inset -6px 0 0 var(--color-accent); }
+    .contact-table tr.contact-new td { background: transparent; }
+    .contact-table tr.contact-new td:first-child { box-shadow: none; }
+    .contact-actions .btn { width: 100%; margin-top: var(--space-2); padding: var(--space-3); font-size: var(--text-sm); }
+  }
+</style>
 </head>
 <body>
 
@@ -26,6 +57,40 @@
     <h2>עריכה עיתונאית לסיפורים - ממתינה להחלה</h2>
     <p class="section-intro">סיפורים שאושרו על ידך בצ'אט. לחיצה על "החלת עריכה" כותבת את הגרסה הערוכה לסיפור באתר - זו הפעולה שבפועל מפרסמת אותה.</p>
     <div id="pending-story-edits"><p>טוען...</p></div>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="container">
+    <h2>הסתרת פרטי קשר מהציבור</h2>
+    <p class="section-intro">פעולה חד-פעמית, רק אחרי פרסום חוקי האבטחה החדשים ב-Firebase: הטלפון, האימייל והקישורים של מי ששלחו סיפור או בקשת פרסום עוברים לאזור מוגן שנראה רק בפאנל הזה. שאר הפרטים לא משתנים. אפשר ללחוץ שוב בלי נזק.</p>
+    <button type="button" id="migrate-contacts-btn" class="btn btn-sm">העברת פרטי קשר</button>
+    <span id="migrate-contacts-status" style="margin-inline-start:8px;" aria-live="polite"></span>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="container">
+    <h2>פניות מטופס יצירת קשר</h2>
+    <div style="overflow-x:auto;">
+      <table class="admin-table contact-table">
+        <thead>
+          <tr>
+            <th scope="col">תאריך</th>
+            <th scope="col">שם</th>
+            <th scope="col">טלפון</th>
+            <th scope="col">אימייל</th>
+            <th scope="col">נושא</th>
+            <th scope="col">הודעה</th>
+            <th scope="col">סטטוס</th>
+            <th scope="col">פעולות</th>
+          </tr>
+        </thead>
+        <tbody id="contact-submissions-body">
+          <tr><td colspan="8">טוען...</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -175,6 +240,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script src="../js/firebase-config.js?v=4"></script>
 <script src="../js/story-edits-pending.js?v=1"></script>
-<script src="dashboard.js?v=7"></script>
+<script src="contact-migration.js?v=1"></script>
+<script src="dashboard.js?v=9"></script>
 </body>
 </html>
