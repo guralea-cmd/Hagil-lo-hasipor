@@ -10,8 +10,13 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    // Legacy story collection (no site form creates these any more).
+    // Approved docs are publicly readable, and rules can't hide single fields,
+    // so contact details are never allowed on the doc itself - they live in
+    // story_contacts/{storyId}.
     match /stories/{storyId} {
       allow create: if request.resource.data.status == "pending"
+                     && request.resource.data.keys().hasOnly(["name", "bio", "videoUrl", "videoPath", "status", "createdAt"])
                      && request.resource.data.name is string
                      && request.resource.data.name.size() > 0
                      && request.resource.data.videoUrl is string;
@@ -19,14 +24,33 @@ service cloud.firestore {
       allow update, delete: if request.auth != null;
     }
 
+    // Public part of a story submission. Approved docs are readable by anyone,
+    // so phone / email / links are NOT allowed here - they go to
+    // story_contacts/{submissionId}, written in the same batch (js/register.js).
     match /story_submissions/{submissionId} {
       allow create: if request.resource.data.status == "pending"
+                     && request.resource.data.keys().hasOnly(["name", "age", "location", "story", "turningPoint", "today", "message", "photoUrls", "videoUrl", "utmSource", "utmMedium", "utmCampaign", "status", "createdAt"])
                      && request.resource.data.name is string
                      && request.resource.data.name.size() > 0
-                     && request.resource.data.email is string
-                     && request.resource.data.story is string;
+                     && request.resource.data.story is string
+                     && existsAfter(/databases/$(database)/documents/story_contacts/$(submissionId));
       allow read: if resource.data.status == "approved" || request.auth != null;
       allow update, delete: if request.auth != null;
+    }
+
+    // Private contact details of story_submissions/{submissionId} (same id).
+    // Never publicly readable. The public may only create one together with a
+    // brand-new pending submission in the same batch.
+    match /story_contacts/{submissionId} {
+      allow create: if request.auth != null
+                    || (request.resource.data.keys().hasOnly(["phone", "email", "links", "createdAt"])
+                        && request.resource.data.phone is string
+                        && request.resource.data.email is string
+                        && (!("links" in request.resource.data) || request.resource.data.links is string)
+                        && !exists(/databases/$(database)/documents/story_submissions/$(submissionId))
+                        && existsAfter(/databases/$(database)/documents/story_submissions/$(submissionId))
+                        && getAfter(/databases/$(database)/documents/story_submissions/$(submissionId)).data.status == "pending");
+      allow read, update, delete: if request.auth != null;
     }
 
     match /event_signups/{signupId} {
@@ -61,14 +85,30 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    // Public part of a banner-ad request. Approved docs are readable by anyone
+    // (js/banner-display.js), so contactName / phone / email / notes are NOT
+    // allowed here - they go to ad_contacts/{submissionId} in the same batch
+    // (js/advertise.js).
     match /ad_submissions/{submissionId} {
       allow create: if request.resource.data.status == "pending"
+                     && request.resource.data.keys().hasOnly(["advertiserName", "page", "size", "duration", "link", "bannerUrl", "status", "createdAt"])
                      && request.resource.data.advertiserName is string
                      && request.resource.data.advertiserName.size() > 0
-                     && request.resource.data.email is string
-                     && request.resource.data.bannerUrl is string;
+                     && request.resource.data.bannerUrl is string
+                     && existsAfter(/databases/$(database)/documents/ad_contacts/$(submissionId));
       allow read: if resource.data.status == "approved" || request.auth != null;
       allow update, delete: if request.auth != null;
+    }
+
+    // Private contact details of ad_submissions/{submissionId} (same id).
+    match /ad_contacts/{submissionId} {
+      allow create: if request.auth != null
+                    || (request.resource.data.keys().hasOnly(["contactName", "phone", "email", "notes", "createdAt"])
+                        && request.resource.data.email is string
+                        && !exists(/databases/$(database)/documents/ad_submissions/$(submissionId))
+                        && existsAfter(/databases/$(database)/documents/ad_submissions/$(submissionId))
+                        && getAfter(/databases/$(database)/documents/ad_submissions/$(submissionId)).data.status == "pending");
+      allow read, update, delete: if request.auth != null;
     }
   }
 }
