@@ -1568,3 +1568,95 @@ input[type="file"] {
   fill: #fff;
   flex-shrink: 0;
 }
+
+/* Header top strip + footer social icons (2026-09-13) */
+/* The main nav row is already full at desktop widths (and collapses behind the
+   menu toggle on mobile), so the studio-site button and the social icons live
+   in their own slim strip at the top of the sticky header - visible at every
+   width without opening the menu. */
+.site-topbar {
+  background: #2e2a27;
+  color: #f0d9bc;
+}
+
+.site-topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--space-5);
+}
+
+.site-topbar__studio {
+  display: inline-block;
+  padding: 3px var(--space-4);
+  border-radius: 30px;
+  background: var(--color-accent);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.site-topbar__studio:hover {
+  background: #ffc54d;
+}
+
+.site-topbar__social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.site-topbar__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #f0d9bc;
+  transition: color 0.15s, background 0.15s;
+}
+
+.site-topbar__icon:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.site-topbar__icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.site-topbar a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+footer .social-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  margin-inline-end: 6px;
+}
+
+/* index.html footer row: let the links wrap instead of overflowing on phones */
+.social-links {
+  flex-wrap: wrap;
+}
+
+/* pilates.html - link to the full studio site, right after the lead form */
+.studio-site-cta {
+  text-align: center;
+}
+
+.studio-site-cta .btn {
+  font-size: var(--text-base);
+}
