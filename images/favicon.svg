@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <circle cx="32" cy="32" r="32" fill="#b83227"/>
-  <text x="35" y="28" text-anchor="middle" dominant-baseline="central" font-family="Arial, Segoe UI, sans-serif" font-size="36" font-weight="700" fill="#ffffff">ה</text>
+  <!-- Hebrew letter he, drawn as a path (same Arial Bold glyph the text version showed on Windows) so it is exactly centered on every device, independent of installed fonts. Ink bbox center = (32,32). -->
+  <path transform="translate(20.8994 41.4307) scale(0.036)" fill="#ffffff" d="M553.2,0L416.5,0 416.5,-244.1C416.5,-307.6 400.8,-351.5 369.4,-375.7 338,-400 290.7,-412.1 227.5,-412.1 180.3,-412.1 128.9,-408 73.2,-399.9L63.5,-509.8C116.5,-519.2 179.2,-523.9 251.5,-523.9 329.9,-523.9 390.6,-512.6 433.6,-490 476.6,-467.4 507.2,-439 525.6,-405 544,-371 553.2,-324.1 553.2,-264.2z M206.5,-269L206.5,0 69.3,0 69.3,-269z"/>
 </svg>
