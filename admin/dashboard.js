@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "login.html";
       return;
     }
+    loadContactSubmissions();
     loadSubmissions();
     cleanupOldSubmissions();
     loadStories();
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadPilatesLeads();
     loadEventSignups();
     loadPendingStoryEdits();
+    setupContactMigration();
   });
 
   document.querySelector("#logout-btn").addEventListener("click", function () {
@@ -47,9 +49,36 @@ document.addEventListener("DOMContentLoaded", function () {
     return "ישיר";
   }
 
+  // Since 2026-09-13 contact details live in private, admin-only collections
+  // (story_contacts / ad_contacts, same doc id as the public doc - see
+  // firestore.rules). Docs saved before the move may still hold them on the public
+  // doc, so fall back to those. If the private collection can't be read yet (new
+  // rules not published), the table still loads with the old fields.
+  function loadContactMap(collectionName) {
+    return db.collection(collectionName).get().then(function (snapshot) {
+      var map = {};
+      snapshot.forEach(function (doc) { map[doc.id] = doc.data(); });
+      return map;
+    }).catch(function (err) {
+      console.warn("Could not read " + collectionName, err && err.message);
+      return {};
+    });
+  }
+
+  function contactField(contacts, id, data, field) {
+    var c = contacts[id];
+    if (c && c[field] != null && c[field] !== "") return c[field];
+    return data[field];
+  }
+
   function loadSubmissions() {
     var body = document.querySelector("#submissions-body");
-    db.collection("story_submissions").orderBy("createdAt", "desc").get().then(function (snapshot) {
+    Promise.all([
+      db.collection("story_submissions").orderBy("createdAt", "desc").get(),
+      loadContactMap("story_contacts")
+    ]).then(function (results) {
+      var snapshot = results[0];
+      var contacts = results[1];
       if (snapshot.empty) {
         body.innerHTML = '<tr><td colspan="7">אין טפסים עדיין.</td></tr>';
         return;
@@ -61,7 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
           return '<a href="' + url + '" target="_blank" rel="noopener"><img src="' + url + '" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:4px;margin:2px;"></a>';
         }).join("");
         var video = s.videoUrl ? '<video src="' + s.videoUrl + '" controls style="max-width:160px;display:block;margin-top:6px;"></video>' : "";
-        var links = s.links ? '<div style="margin-top:6px;"><a href="' + escapeHtml(s.links) + '" target="_blank" rel="noopener">קישורים</a></div>' : "";
+        var linksValue = contactField(contacts, doc.id, s, "links");
+        var links = linksValue ? '<div style="margin-top:6px;"><a href="' + escapeHtml(linksValue) + '" target="_blank" rel="noopener">קישורים</a></div>' : "";
         var storyText =
           "<strong>הסיפור:</strong> " + escapeHtml(truncate(s.story, 200)) + "<br>" +
           "<strong>הרגע המשנה:</strong> " + escapeHtml(truncate(s.turningPoint, 150)) + "<br>" +
@@ -73,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "<td>" + escapeHtml(s.name) + (s.age ? ", " + escapeHtml(s.age) : "") + "<br>" + escapeHtml(s.location) + "</td>" +
           '<td style="max-width:280px;">' + storyText + "</td>" +
           "<td>" + photos + video + links + "</td>" +
-          "<td>" + escapeHtml(s.phone) + "<br>" + escapeHtml(s.email) + "</td>" +
+          "<td>" + escapeHtml(contactField(contacts, doc.id, s, "phone")) + "<br>" + escapeHtml(contactField(contacts, doc.id, s, "email")) + "</td>" +
           "<td>" + formatSource(s) + "</td>" +
           "<td>" + statusLabel(s.status) + "</td>" +
           "<td>" +
@@ -155,7 +185,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (s.videoUrl) {
         storage.refFromURL(s.videoUrl).delete().catch(function () {});
       }
-      return doc.ref.delete();
+      return Promise.all([
+        doc.ref.delete(),
+        db.collection("story_contacts").doc(id).delete().catch(function () {})
+      ]);
     }).then(loadSubmissions);
   }
 
@@ -174,6 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
             storage.refFromURL(s.videoUrl).delete().catch(function () {});
           }
           doc.ref.delete();
+          db.collection("story_contacts").doc(doc.id).delete().catch(function () {});
         }
       });
     });
@@ -181,7 +215,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function loadStories() {
     var body = document.querySelector("#stories-body");
-    db.collection("stories").orderBy("createdAt", "desc").get().then(function (snapshot) {
+    Promise.all([
+      db.collection("stories").orderBy("createdAt", "desc").get(),
+      loadContactMap("story_contacts")
+    ]).then(function (results) {
+      var snapshot = results[0];
+      var contacts = results[1];
       if (snapshot.empty) {
         body.innerHTML = '<tr><td colspan="7">אין סיפורים עדיין.</td></tr>';
         return;
@@ -195,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "<td>" + escapeHtml(s.name) + "</td>" +
           "<td>" + escapeHtml(s.bio) + "</td>" +
           '<td><video src="' + s.videoUrl + '" controls style="max-width:160px;"></video></td>' +
-          "<td>" + escapeHtml(s.email) + "</td>" +
+          "<td>" + escapeHtml(contactField(contacts, doc.id, s, "email")) + "</td>" +
           "<td>" + statusLabel(s.status) + "</td>" +
           '<td>' +
           '<button class="btn btn-sm approve-btn" data-id="' + doc.id + '">אשר</button> ' +
@@ -234,7 +273,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (s.videoUrl) {
         storage.refFromURL(s.videoUrl).delete().catch(function () {});
       }
-      return doc.ref.delete();
+      return Promise.all([
+        doc.ref.delete(),
+        db.collection("story_contacts").doc(id).delete().catch(function () {})
+      ]);
     }).then(loadStories);
   }
 
@@ -320,6 +362,179 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         });
       });
+    });
+  }
+
+  // Topic values come from the <select id="topic"> on contact.html - labels are that page's exact option text.
+  var CONTACT_TOPIC_LABELS = {
+    career: "מעבר קריירה / פרישה",
+    personal: "צמיחה אישית",
+    group: "קהילה",
+    other: "אחר"
+  };
+
+  function formatDateTimeIsrael(ts) {
+    if (!ts || !ts.toDate) return "-";
+    return ts.toDate().toLocaleString("he-IL", {
+      timeZone: "Asia/Jerusalem",
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  // Old site-health-scan test writes - never show them next to real messages.
+  function isScanTestRecord(id, r) {
+    return id.indexOf("_healthscan") === 0 || String(r.name || "").trim().indexOf("בדיקה") === 0;
+  }
+
+  // contact_submissions is publicly writable, so rows are built with textContent / DOM
+  // properties only (never innerHTML) to keep submitted text from injecting markup.
+  function contactCell(label, className) {
+    var td = document.createElement("td");
+    if (label) td.setAttribute("data-label", label);
+    if (className) td.className = className;
+    return td;
+  }
+
+  function loadContactSubmissions() {
+    var body = document.querySelector("#contact-submissions-body");
+    if (!body) return;
+    db.collection("contact_submissions").orderBy("createdAt", "desc").get().then(function (snapshot) {
+      var rows = [];
+      snapshot.forEach(function (doc) {
+        var r = doc.data();
+        if (!isScanTestRecord(doc.id, r)) rows.push({ id: doc.id, data: r });
+      });
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="8">אין פניות עדיין.</td></tr>';
+        return;
+      }
+      body.innerHTML = "";
+      rows.forEach(function (row) {
+        var r = row.data;
+        var isNew = r.status !== "handled";
+        var tr = document.createElement("tr");
+        tr.className = isNew ? "contact-new" : "contact-handled";
+
+        var dateTd = contactCell("תאריך", "contact-date");
+        dateTd.textContent = formatDateTimeIsrael(r.createdAt);
+        tr.appendChild(dateTd);
+
+        var nameTd = contactCell("שם");
+        nameTd.textContent = r.name || "-";
+        tr.appendChild(nameTd);
+
+        var phoneTd = contactCell("טלפון", "contact-phone");
+        var phoneDigits = String(r.phone || "").replace(/[^\d+]/g, "");
+        if (phoneDigits) {
+          var phoneLink = document.createElement("a");
+          phoneLink.href = "tel:" + phoneDigits;
+          phoneLink.dir = "ltr";
+          phoneLink.textContent = r.phone;
+          phoneTd.appendChild(phoneLink);
+        } else {
+          phoneTd.textContent = r.phone || "-";
+        }
+        tr.appendChild(phoneTd);
+
+        var emailTd = contactCell("אימייל", "contact-email");
+        var email = String(r.email || "").trim();
+        if (/^[^\s@"<>]+@[^\s@"<>]+$/.test(email)) {
+          var emailLink = document.createElement("a");
+          emailLink.href = "mailto:" + email;
+          emailLink.dir = "ltr";
+          emailLink.textContent = email;
+          emailTd.appendChild(emailLink);
+        } else {
+          emailTd.textContent = email || "-";
+        }
+        tr.appendChild(emailTd);
+
+        var topicTd = contactCell("נושא");
+        topicTd.textContent = CONTACT_TOPIC_LABELS[r.topic] || r.topic || "-";
+        tr.appendChild(topicTd);
+
+        var msgTd = contactCell("הודעה", "contact-msg");
+        msgTd.textContent = r.message || "-";
+        tr.appendChild(msgTd);
+
+        var statusTd = contactCell("סטטוס");
+        var pill = document.createElement("span");
+        pill.className = "status-pill " + (isNew ? "pending" : "approved");
+        pill.textContent = isNew ? "חדש" : "טופל";
+        statusTd.appendChild(pill);
+        tr.appendChild(statusTd);
+
+        var actionsTd = contactCell("", "contact-actions");
+        if (isNew) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn btn-sm";
+          btn.textContent = "סמן כטופל";
+          btn.addEventListener("click", function () {
+            markContactHandled(row.id, btn);
+          });
+          actionsTd.appendChild(btn);
+        }
+        tr.appendChild(actionsTd);
+
+        body.appendChild(tr);
+      });
+    }).catch(function (err) {
+      body.innerHTML = '<tr><td colspan="8"></td></tr>';
+      body.querySelector("td").textContent = "שגיאה: " + err.message;
+    });
+  }
+
+  function markContactHandled(id, btn) {
+    var originalText = btn.textContent;
+    var old = btn.parentNode.querySelector(".contact-error");
+    if (old) old.remove();
+    btn.disabled = true;
+    btn.textContent = "מעדכן...";
+    db.collection("contact_submissions").doc(id).update({ status: "handled" })
+      .then(loadContactSubmissions)
+      .catch(function (err) {
+        btn.disabled = false;
+        btn.textContent = originalText;
+        var errEl = document.createElement("span");
+        errEl.className = "contact-error";
+        errEl.textContent = "שגיאה: " + err.message;
+        btn.parentNode.appendChild(errEl);
+      });
+  }
+
+  // One-time button: moves phone / email (and other contact fields) out of the
+  // publicly readable story and ad docs - logic in admin/contact-migration.js.
+  function setupContactMigration() {
+    var btn = document.querySelector("#migrate-contacts-btn");
+    var statusEl = document.querySelector("#migrate-contacts-status");
+    if (!btn || !statusEl || btn.dataset.ready) return;
+    btn.dataset.ready = "1";
+    btn.addEventListener("click", function () {
+      if (!auth.currentUser || typeof migrateContactFields !== "function") return;
+      btn.disabled = true;
+      statusEl.style.color = "";
+      statusEl.textContent = "מעדכן...";
+      migrateContactFields(db, function () { return firebase.firestore.FieldValue.delete(); })
+        .then(function (result) {
+          statusEl.textContent = result.migrated
+            ? "עודכן בהצלחה ✓ - הועברו פרטי קשר מ-" + result.migrated + " טפסים"
+            : "עודכן בהצלחה ✓ - אין פרטי קשר להעברה";
+          statusEl.style.color = "green";
+          btn.disabled = false;
+          loadSubmissions();
+          loadStories();
+        })
+        .catch(function (err) {
+          statusEl.textContent = "שגיאה: " + err.message +
+            (err.migrated ? " (הועברו " + err.migrated + " טפסים לפני השגיאה)" : "");
+          statusEl.style.color = "red";
+          btn.disabled = false;
+        });
     });
   }
 
