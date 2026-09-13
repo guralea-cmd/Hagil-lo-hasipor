@@ -78,6 +78,15 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    // "בת כמה את באמת?" lead form (bat-kama.html, js/bat-kama.js) - name + phone, plus the test result.
+    match /age_test_leads/{leadId} {
+      allow create: if request.resource.data.name is string
+                     && request.resource.data.name.size() > 0
+                     && request.resource.data.phone is string
+                     && request.resource.data.phone.size() > 0;
+      allow read, update, delete: if request.auth != null;
+    }
+
     match /contact_submissions/{submissionId} {
       allow create: if request.resource.data.name is string
                      && request.resource.data.name.size() > 0
