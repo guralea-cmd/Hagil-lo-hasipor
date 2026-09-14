@@ -387,7 +387,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Old site-health-scan test writes - never show them next to real messages.
   function isScanTestRecord(id, r) {
-    return id.indexOf("_healthscan") === 0 || String(r.name || "").trim().indexOf("בדיקה") === 0;
+    // "בדיק" catches both "בדיקה מערכת" and "בדיקת מערכת" (the 1.9 record slipped through on "בדיקה").
+    var email = String(r.email || "").toLowerCase();
+    return id.indexOf("_healthscan") === 0 ||
+      String(r.name || "").trim().indexOf("בדיק") === 0 ||
+      /@(example\.com|test\.local)$/.test(email);
   }
 
   // contact_submissions is publicly writable, so rows are built with textContent / DOM
