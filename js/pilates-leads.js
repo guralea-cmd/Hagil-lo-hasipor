@@ -35,7 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
       status: "new",
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
-      .then(function () {
+      .then(function (docRef) {
+        // Copy to the leads sheet (tab פייסבוק, מקור "אתר") - fire-and-forget, see js/leads-sheet.js.
+        if (window.sendLeadToSheet) {
+          window.sendLeadToSheet({ form: "pilates", id: docRef && docRef.id, name: form.name.value.trim(), phone: form.phone.value.trim() });
+        }
         statusEl.textContent = "הפרטים נשלחו, תודה.";
         if (typeof fbq === "function") {
           fbq("track", "Lead");

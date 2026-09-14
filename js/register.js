@@ -147,6 +147,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       })
       .then(function () {
+        // Copy to the leads sheet (tab סיפורים) - fire-and-forget, see js/leads-sheet.js.
+        if (window.sendLeadToSheet) {
+          window.sendLeadToSheet({ form: "story", id: submissionId, name: form.name.value.trim(), phone: form.phone.value.trim() });
+        }
         progressEl.textContent = "";
         statusEl.textContent = "";
         statusEl.classList.remove("error");

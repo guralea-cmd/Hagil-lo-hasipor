@@ -898,7 +898,11 @@
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         result: result
       })
-        .then(function () {
+        .then(function (docRef) {
+          // Copy to the leads sheet (tab בת כמה את באמת) - fire-and-forget, see js/leads-sheet.js.
+          if (window.sendLeadToSheet) {
+            window.sendLeadToSheet({ form: "bat-kama", id: docRef && docRef.id, name: name, phone: phone });
+          }
           statusEl.textContent = "הפרטים הגיעו. אני אחזור אלייך.";
           track("bat_kama_lead_submitted", { age_bucket: BatKamaScore.ageBucket(computeAll().result), method: result.method });
           form.reset();
