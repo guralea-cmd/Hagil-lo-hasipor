@@ -78,12 +78,41 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
-    // "בת כמה את באמת?" lead form (bat-kama.html, js/bat-kama.js) - name + phone, plus the test result.
+    // "בת כמה את באמת?" leads (bat-kama-next.html). 16.9.2026: only the fields the page writes,
+    // each with a size limit, so nobody can flood the collection with arbitrary data.
+    function optStr(d, k, max) {
+      return !(k in d) || d[k] == null || (d[k] is string && d[k].size() <= max);
+    }
     match /age_test_leads/{leadId} {
-      allow create: if request.resource.data.name is string
+      allow create: if request.resource.data.keys().hasOnly([
+                         'name', 'phone', 'source', 'interest', 'site', 'page',
+                         'utmSource', 'utmMedium', 'utmCampaign', 'utmContent', 'utmTerm',
+                         'adId', 'adsetId', 'campaignId', 'fbclid',
+                         'status', 'createdAt', 'result'])
+                     && request.resource.data.name is string
                      && request.resource.data.name.size() > 0
+                     && request.resource.data.name.size() <= 80
                      && request.resource.data.phone is string
-                     && request.resource.data.phone.size() > 0;
+                     && request.resource.data.phone.size() > 0
+                     && request.resource.data.phone.size() <= 30
+                     && request.resource.data.get('source', 'bat-kama-next') in ['bat-kama', 'bat-kama-next']
+                     && request.resource.data.get('status', 'new') == 'new'
+                     && request.resource.data.get('createdAt', request.time) == request.time
+                     && optStr(request.resource.data, 'interest', 40)
+                     && optStr(request.resource.data, 'site', 40)
+                     && optStr(request.resource.data, 'page', 100)
+                     && optStr(request.resource.data, 'utmSource', 200)
+                     && optStr(request.resource.data, 'utmMedium', 200)
+                     && optStr(request.resource.data, 'utmCampaign', 200)
+                     && optStr(request.resource.data, 'utmContent', 200)
+                     && optStr(request.resource.data, 'utmTerm', 200)
+                     && optStr(request.resource.data, 'adId', 40)
+                     && optStr(request.resource.data, 'adsetId', 40)
+                     && optStr(request.resource.data, 'campaignId', 40)
+                     && optStr(request.resource.data, 'fbclid', 300)
+                     && (!('result' in request.resource.data)
+                         || request.resource.data.result == null
+                         || (request.resource.data.result is map && request.resource.data.result.size() <= 40));
       allow read, update, delete: if request.auth != null;
     }
 
