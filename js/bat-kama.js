@@ -357,21 +357,19 @@
   // .claude/skills/bat-kama-at-beemet/research-2026-09.md (Leah, 14.9.2026).
   // Sentence 7 (Fiatarone) is static HTML in the app column of bat-kama-next.html (Leah 16.9.2026).
   var FACTS = {
-    1: { text: "את המבחנים שבדף הזה בדקו על 13,423 מבוגרים בטייוואן, במשך 7 שנים. מי שהגיעו לתוצאות הגבוהות - הסיכון שלהם לתמותה היה נמוך יותר. והקשר הכי חזק נמצא כששילבו את כל המבחנים יחד.",
-      src: "Wu MC et al., JAMA Network Open 2026", url: "https://doi.org/10.1001/jamanetworkopen.2026.28227" },
-    2: { text: "הקצב שבו את הולכת מספר על הגיל של הגוף. במחקר שעקב אחרי יותר מ-34 אלף בני 65 ומעלה, כל תוספת קטנה במהירות ההליכה נקשרה לחיים ארוכים יותר.",
-      src: "Studenski et al., JAMA 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21205966/" },
-    3: { text: "מה שחשוב זה מה השריר שלך יודע לעשות, לא כמה הוא גדול. במחקר על 2,292 בני 70 עד 79, כוח שרירי הירך נקשר לאריכות ימים.",
-      src: "Newman et al., J Gerontol A 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16456196/" },
-    4: { text: "עשר שניות על רגל אחת. מבחן פשוט, ובמחקר על 1,702 אנשים בני 51 עד 75 הוא נקשר לשרידות טובה יותר.",
-      src: "Araújo et al., Br J Sports Med 2022", url: "https://pubmed.ncbi.nlm.nih.gov/35728834/" },
+    // Leah 16.9.2026: no mortality / longevity - "אריכות ימים זה לא תמיד ביחד עם בריאות".
+    // Facts 1-4 and 6 now speak about function and quality of life; 2, 3, 4, 6 carry no study claim.
+    1: { text: "המבחנים האלה בודקים את מה שצריך כדי לחיות עצמאית: לקום, ללכת, להרים, להתכופף. החוקרות בדקו 2,140 בני 60 עד 94, וקבעו לכל מבחן את התוצאה שמאפשרת להמשיך לתפקד לבד, גם בגיל מבוגר מאוד.",
+      src: "Rikli & Jones, The Gerontologist 2013", url: "https://pubmed.ncbi.nlm.nih.gov/22613940/" },
+    2: { text: "הקצב שבו את הולכת מספר הרבה על הגוף שלך. הליכה בטוחה ומהירה היא חופש: לצאת, לחצות כביש, להגיע לבד לאן שרוצים." },
+    3: { text: "מה שחשוב זה מה השריר שלך יודע לעשות, לא כמה הוא גדול. רגליים חזקות הן מה שמרים אותך מהכיסא, מהמיטה ומהרצפה." },
+    4: { text: "עשר שניות על רגל אחת. מבחן פשוט שמראה לך כמה את יציבה. ויציבות היא ביטחון ללכת, לטייל ולרקוד." },
     5: { text: "שיווי משקל מאמנים כמו שריר. סקירה של 108 ניסויים מצאה שתרגילי שיווי משקל ותפקוד מורידים את מספר הנפילות בכ-24%.",
       src: "Sherrington et al., Cochrane 2019", url: "https://pubmed.ncbi.nlm.nih.gov/30703272/" },
-    6: { text: "בגמישות המטרה היא לצאת מהנוקשות. במחקר על יותר מ-13,000 בני 65 ומעלה, מה שנקשר לסיכון היה רק נוקשות קיצונית.",
-      src: "Wu MC et al., JAMA Network Open 2026", url: "https://pubmed.ncbi.nlm.nih.gov/42574013/" },
+    6: { text: "בגמישות המטרה היא לצאת מהנוקשות. גמישות זה להגיע בקלות לנעליים, לגב ולמדף העליון." },
     8: { text: "חלבון עובד יחד עם אימון. במחקר על 2,066 בני 70 עד 79, מי שאכלו הכי הרבה חלבון איבדו כ-40% פחות שריר.",
       src: "Houston et al., AJCN 2008; Liao et al., AJCN 2017", url: "https://pubmed.ncbi.nlm.nih.gov/18175749/" },
-    9: { text: "בסקירה של 5,789 מבוגרים, מי שאכלו בסגנון ים-תיכוני היו בסיכון נמוך בכמחצית להגיע לשבריריות.",
+    9: { text: "בסקירה של 5,789 מבוגרים, מי שאכלו בסגנון ים-תיכוני נשארו חזקים יותר: חולשה ושבריריות הופיעו אצלם בערך בחצי מהמקרים.",
       src: "Kojima et al., JAGS 2018", url: "https://pubmed.ncbi.nlm.nih.gov/29322507/" },
     10: { text: "30 יום הם ההתחלה. הבדיקה ביום 30 מראה לך איפה את עומדת, והשינוי הגדול נבנה ב-12 השבועות שאחרי.",
       src: "Liu & Latham, Cochrane 2009; Lesinski et al., Sports Med 2015", url: "https://pubmed.ncbi.nlm.nih.gov/26325622/" }
@@ -522,7 +520,7 @@
     return key === BALANCE.key ? BALANCE : null;
   }
 
-  var BALANCE_LABELS = { good: "טוב", medium: "בינוני", work: "דורש עבודה" };
+  var BALANCE_LABELS = { good: "טוב", medium: "בינוני", work: "יש לאן לעלות" }; // Leah 16.9.2026
 
   var NUTRITION = [
     { key: "protein", q: "יש חלבון בכל ארוחה שלך? (ביצים, מוצרי חלב, עוף, דג, בשר, קטניות)",
@@ -874,7 +872,8 @@
     var f = FACTS[n];
     if (!f) return "";
     return '<div class="bk-fact"><p>' + esc(f.text) + '</p>' +
-      '<p class="bk-src"><a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.src) + '</a></p></div>';
+      (f.url ? '<p class="bk-src"><a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.src) + '</a></p>' : "") +
+      '</div>';
   }
 
   function navHtml(nextLabel) {
@@ -1267,7 +1266,8 @@
     if (!cmp) return "";
     var yrs = cmp.years === 1 ? "בשנה אחת" : "ב-" + cmp.years + " שנים";
     if (cmp.kind === "younger") return "צעירה " + (cmp.atLeast ? "לפחות " : "") + yrs + " מהגיל בתעודת הזהות. יפה. ואפשר עוד.";
-    if (cmp.kind === "older") return "מבוגרת " + yrs + " מהגיל בתעודת הזהות. זה לא גזר דין — זה נקודת התחלה. ואת זה אני יודעת לשנות.";
+    // Leah 16.9.2026: "יש לך חמש שנים להחזיר... ואני יכולה לעזור לך להחזיר אותם"
+    if (cmp.kind === "older") return "יש לך " + (cmp.years === 1 ? "שנה אחת" : cmp.years + " שנים") + " להחזיר, ואני יכולה לעזור לך להחזיר אותן.";
     return "בדיוק הגיל שבתעודת הזהות";
   }
 
