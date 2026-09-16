@@ -619,7 +619,8 @@
   // v2 = the screen order of 16.9.2026. v1 saves (balance 7, step 6) are migrated once.
   var SAVE_KEY = "batKama.progress.v2";
   var OLD_SAVE_KEY = "batKama.progress.v1";
-  var SAVE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+  // 7 days (was 24h) since "שמרי את המבחן בוואטסאפ" (17.9.2026) - "later" is often not the same day
+  var SAVE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
   var V1_TO_V2_STEP = { 6: 7, 7: 6 };
   var pendingResume = null; // saved progress waiting for "להמשיך" / "להתחיל מחדש"
 
@@ -876,8 +877,17 @@
       '</div>';
   }
 
+  // "לא יכולה להמשיך עכשיו?" on every screen (Leah 17.9.2026: "שתמיד תהיה להם נקודת יציאה").
+  // Same WhatsApp link as the intro box (#bk-later in bat-kama.html).
+  function laterHtml() {
+    var src = $("#bk-later");
+    if (!src) return "";
+    return '<a class="bk-later" target="_blank" rel="noopener" href="' + esc(src.getAttribute("href")) + '">' +
+      '<strong>לא יכולה להמשיך עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך. מה שכבר עשית נשמר בטלפון הזה לשבוע.</a>';
+  }
+
   function navHtml(nextLabel) {
-    return '<div class="bk-nav">' +
+    return laterHtml() + '<div class="bk-nav">' +
       '<button type="button" class="btn bk-btn-lg bk-next" disabled>' + (nextLabel || "הבא") + '</button>' +
       '<button type="button" class="bk-btn-ghost bk-skip">לא יכולה לבצע</button>' +
       '<p class="bk-nav-note">' + esc(TXT.pain) + '</p>' +
@@ -976,7 +986,7 @@
         }).join("") + '</fieldset>';
     }).join("");
     el.innerHTML = pageNoHtml(STEP_NUTRITION) + '<p class="bk-progress">שאלון תזונה קצר</p>' +
-      '<h2>שאלון תזונה קצר</h2>' + factHtml(9) + qs +
+      '<h2>שאלון תזונה קצר</h2>' + factHtml(9) + qs + laterHtml() +
       '<div class="bk-nav"><button type="button" class="btn bk-btn-lg bk-next">הבא</button>' +
       '<button type="button" class="bk-link bk-back">חזרה</button></div>';
     el.querySelectorAll('input[type="radio"]').forEach(function (r) {
@@ -1554,13 +1564,13 @@
     var withBtn = $("#bk-with");
     var aloneBtn = $("#bk-alone");
     // "לא יכולה לבצע את המבחן עכשיו?" (Leah 17.9.2026): opens her WhatsApp to save the link for later
-    var later = $("#bk-later");
-    if (later) {
-      later.addEventListener("click", function () {
-        track("bat_kama_save_later", { method: "whatsapp" });
-        pixel("trackCustom", "BatKamaSaveLater");
-      });
-    }
+    // one listener for every "save for later" box, including the ones drawn on the test screens
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest(".bk-later");
+      if (!a) return;
+      track("bat_kama_save_later", { method: "whatsapp", step: state.step });
+      pixel("trackCustom", "BatKamaSaveLater");
+    });
     if (withBtn) {
       withBtn.addEventListener("click", function () {
         state.alone = false;
