@@ -3,10 +3,19 @@
  * Part 1 (BatKamaScore) is pure scoring - no DOM - and is exported for Node tests.
  * Part 2 is the page UI and only runs in a browser.
  *
- * Debug / screenshots: bat-kama.html?step=N&demo=1
- *   step: 0 intro, 1-6 tests, 7 balance, 8 nutrition, 9 result, 10 form
- *   demo=1 fills a mixed sample (table method), demo=2 an all-62 sample (formula method).
- *   Demo mode sends no GA4 events and never writes to Firestore.
+ * Screen order (Leah 16.9.2026 - balance before the 2-minute step):
+ *   0 intro, 1 chair stand, 2 arm curl, 3 sit-and-reach, 4 back scratch, 5 up-and-go,
+ *   6 balance bonus, 7 2-minute step, 8 nutrition, 9 result.
+ *   "אני לבד" skips 3, 4, 5 and 6 in both directions.
+ *   Leah 16.9.2026: the result screen has one button, "מה עושים עם התוצאה?", which opens
+ *   bat-kama-next.html (the two products). The old screen 10 (lead form) moved there; a
+ *   compact copy of the result is kept in localStorage (RESULT_KEY) so that page can attach it.
+ *
+ * Debug / screenshots: bat-kama.html?step=N&demo=K   (N = screen number above)
+ *   demo=1 a mixed sample, demo=2 an all-strong sample (formula), demo=3 only two age
+ *   tests (no overall age), demo=4 below the whole table, demo=5 older than the ID age.
+ *   Any demo= or step= parameter (valid or not) disables GA4 and the Meta Pixel, like _scan=1.
+ *   Demo mode never reads or writes saved progress and never writes to Firestore.
  */
 (function (global) {
   "use strict";
@@ -16,11 +25,20 @@
    * Norms: Jones & Rikli 2002, table 2 (women), "normal range" = middle 50%.
    * Rule (norms-table.md, rule A): youngest age group whose lower bound of the
    * normal range the result meets. Group midpoints 62..92.
-   * Leah's decision 13.9.2026: Latorre-Rojas 2019 formula only when all 6 tests
-   * were done and all 6 map to 62.
+   * Leah's decision 14.9.2026 (research-2026-09.md): the physiological age uses
+   * only chair stand, arm curl, 2-minute step and up-and-go (AGE_KEYS). The flexibility
+   * tests are optional and shown separately as "תקין / נוקשה" (flexibilityStatus),
+   * never in the age - not in the table and not in the formula (see latorreRojasFFA).
+   * Leah 16.9.2026: an overall age needs at least 3 of the 4 age tests (MIN_AGE_TESTS).
    * ================================================================ */
   var GROUP_AGES = [62, 67, 72, 77, 82, 87, 92];
   var TEST_KEYS = ["chairStand", "armCurl", "step", "sitReach", "backScratch", "upAndGo"];
+  var AGE_KEYS = ["chairStand", "armCurl", "step", "upAndGo"];
+  var FLEX_KEYS = ["sitReach", "backScratch"];
+  var MIN_AGE_TESTS = 3;
+  var TABLE_START_AGE = 60;   // Rikli & Jones tables start at 60
+  var TABLE_END_AGE = 94;     // ... and end at 94
+  var FLOOR_REGION_MAX = 67;  // results this low can't be compared to an ID age under 60
 
   var NORMS = {
     chairStand:  { better: "higher", lower: [12, 11, 10, 10, 9, 8, 4], youngestTop: 17 },
@@ -33,13 +51,54 @@
     upAndGo:     { better: "lower", slow: [6.0, 6.4, 7.1, 7.4, 8.7, 9.6, 11.5], youngestFast: 4.4 }
   };
 
+  // Plausibility (audit 16.9.2026): anything outside these ranges is treated as not recorded.
+  // counts: whole numbers; up-and-go under 2.0 s and balance under 1.0 s are double taps.
+  var PLAUSIBLE = {
+    chairStand: { min: 0, max: 60, int: true },
+    armCurl:    { min: 0, max: 60, int: true },
+    step:       { min: 0, max: 250, int: true },
+    upAndGo:    { min: 2.0, max: 60 },
+    balance:    { min: 1.0, max: 45 }
+  };
+  // A stop tap this soon after the start tap is ignored (the timer keeps running).
+  var MIN_STOP_MS = { stopwatch: 500, countdown: 800 };
+
+  // Latorre-Rojas 2019, Table 1 - the study's own sample means for the two flexibility
+  // tests (459 women, mean age 70.3): chair sit-and-reach 0.7 cm, back scratch -0.1 cm.
+  // Since 16.9.2026 the formula ALWAYS uses these two means, whether or not she did the
+  // flexibility tests - so her own flexibility never changes her age.
+  var FLEX_SAMPLE_MEAN = { sitReach: 0.7, backScratch: -0.1 };
+
   var NUTRITION_KEYS = ["protein", "calcium", "vitaminD", "fluids", "fruitVeg"];
+  var MOVE_KEYS = ["chairStand", "balance", "upAndGo", "step", "armCurl", "sitReach", "backScratch"];
   // Tie-break order for movement areas (fall-related areas first)
-  var MOVE_ORDER = ["chairStand", "balance", "upAndGo", "step", "armCurl", "sitReach", "backScratch"];
+  var MOVE_ORDER = MOVE_KEYS;
+  // Internal ranking only. Every age test older than 62 has severity >= 67, so balance and
+  // stiff flexibility always rank below a weak age test (audit 16.9.2026).
+  var SEV = { balanceWork: 66, flexStiff: 65, balanceMedium: 64 };
 
   function isNum(v) { return typeof v === "number" && isFinite(v); }
   function cmToHalfInch(cm) { return Math.round((cm / 2.54) * 2) / 2; }
   function roundTenth(x) { return Math.round(x * 10) / 10; }
+
+  function plausible(key, v) {
+    if (!isNum(v)) return false;
+    var p = PLAUSIBLE[key];
+    if (!p) return true;
+    if (p.int && Math.floor(v) !== v) return false;
+    return v >= p.min && v <= p.max;
+  }
+
+  function stopAccepted(kind, elapsedMs) {
+    return isNum(elapsedMs) && elapsedMs >= (MIN_STOP_MS[kind] || 0);
+  }
+
+  // Best plausible attempt: "min" (up-and-go) or "max" (balance); null when none.
+  function bestOf(key, attempts, best) {
+    var vals = (attempts || []).filter(function (v) { return plausible(key, v); });
+    if (!vals.length) return null;
+    return best === "min" ? Math.min.apply(null, vals) : Math.max.apply(null, vals);
+  }
 
   function ageForTest(key, value) {
     if (!isNum(value)) return null;
@@ -67,6 +126,15 @@
       - 0.177 * r.sitReach - 0.101 * r.backScratch + 8.835 * r.upAndGo;
   }
 
+  // The formula as the page uses it: the two flexibility terms are always the study's
+  // sample means (FLEX_SAMPLE_MEAN), never her own values.
+  function latorreRojasFFA(r) {
+    return latorreRojas({
+      chairStand: r.chairStand, armCurl: r.armCurl, step: r.step, upAndGo: r.upAndGo,
+      sitReach: FLEX_SAMPLE_MEAN.sitReach, backScratch: FLEX_SAMPLE_MEAN.backScratch
+    });
+  }
+
   function qualifierText(q) {
     if (q === "younger") return " או צעירה יותר";
     if (q === "older") return " או מבוגרת יותר";
@@ -74,6 +142,7 @@
   }
 
   // raw: { chairStand, armCurl, step, sitReach (cm), backScratch (cm), upAndGo (s) } - null = not done
+  // Only AGE_KEYS count; implausible values count as not done.
   function score(raw) {
     raw = raw || {};
     var perTest = {};
@@ -81,8 +150,8 @@
     var sum = 0;
     var anyYounger = false;
     var anyOlder = false;
-    TEST_KEYS.forEach(function (k) {
-      var a = ageForTest(k, raw[k]);
+    AGE_KEYS.forEach(function (k) {
+      var a = plausible(k, raw[k]) ? ageForTest(k, raw[k]) : null;
       perTest[k] = a;
       if (a) {
         done.push(k);
@@ -93,35 +162,47 @@
     });
 
     var res = {
-      perTest: perTest, testsDone: done.length, method: "none", mean: null, ffa: null,
-      ageNumber: null, qualifier: null, ageText: "", strongest: [], weakest: []
+      perTest: perTest, testsDone: done.length, testsTotal: AGE_KEYS.length, method: "none", mean: null,
+      ageNumber: null, qualifier: null, ageText: "", ffa: null, strongest: [], weakest: [],
+      lessThanThree: done.length < MIN_AGE_TESTS, belowTable: false
     };
-    if (!done.length) return res;
-
-    res.mean = sum / done.length;
-    var all62 = done.length === 6 && done.every(function (k) { return perTest[k].age === 62; });
-    if (all62) {
-      res.method = "formula";
-      res.ffa = latorreRojas(raw);
-      if (res.ffa >= 62) { res.ageNumber = 62; res.qualifier = "younger"; }
-      else if (res.ffa < 50) { res.ageNumber = 50; res.qualifier = "younger"; }
-      else { res.ageNumber = Math.round(res.ffa); }
-    } else {
-      res.method = "table";
-      res.ageNumber = Math.round(res.mean);
-      // both caps at once cancel each other out - no qualifier (flagged for Leah)
-      if (anyYounger && !anyOlder) res.qualifier = "younger";
-      if (anyOlder && !anyYounger) res.qualifier = "older";
-    }
-    res.ageText = res.ageNumber + qualifierText(res.qualifier);
 
     var ages = done.map(function (k) { return perTest[k].age; });
-    var min = Math.min.apply(null, ages);
-    var max = Math.max.apply(null, ages);
-    if (min !== max) {
-      res.strongest = done.filter(function (k) { return perTest[k].age === min; });
-      res.weakest = done.filter(function (k) { return perTest[k].age === max; });
+    if (ages.length) {
+      var min = Math.min.apply(null, ages);
+      var max = Math.max.apply(null, ages);
+      if (min !== max) {
+        res.strongest = done.filter(function (k) { return perTest[k].age === min; });
+        res.weakest = done.filter(function (k) { return perTest[k].age === max; });
+      }
     }
+    if (!done.length) return res;
+    // Leah 16.9.2026: fewer than 3 of the 4 age tests -> per-test results only, no overall age
+    if (res.lessThanThree) { res.method = "too_few"; return res; }
+
+    res.mean = sum / done.length;
+    res.method = "table";
+    res.ageNumber = Math.round(res.mean);
+    function allAt(age) { return done.every(function (k) { return perTest[k].age === age; }); }
+    // A qualifier only when every test is in the same end group and at least one is truly
+    // beyond the table. Mixed results (a capped test next to weaker ones) get the plain number.
+    if (allAt(62) && anyYounger) res.qualifier = "younger";
+    if (allAt(92) && anyOlder) res.qualifier = "older";
+
+    // All 4 age tests in the youngest group (60-64): Leah 15.9.2026 - the exact number
+    // from the formula when it is under 62, floored at "50 או צעירה יותר".
+    if (done.length === AGE_KEYS.length && allAt(62)) {
+      res.ffa = roundTenth(latorreRojasFFA(raw));
+      var ffaAge = Math.round(res.ffa);
+      if (ffaAge < 62) {
+        res.method = "formula";
+        res.ageNumber = ffaAge < 50 ? 50 : ffaAge;
+        res.qualifier = ffaAge < 50 ? "younger" : null;
+      }
+    }
+    // Below the whole table: the headline is "יש מאיפה להתחיל, ואני כאן." (Leah 15.9.2026)
+    res.belowTable = res.ageNumber === 92 && res.qualifier === "older";
+    res.ageText = res.ageNumber + qualifierText(res.qualifier);
     return res;
   }
 
@@ -129,20 +210,62 @@
     return t ? t.age + qualifierText(t.cap) : "";
   }
 
+  // Below the table (92 + "older"): Leah 15.9.2026 - never "92 או מבוגרת יותר" on screen.
+  function isBelowTable(t) {
+    return !!t && t.age === 92 && t.cap === "older";
+  }
+
+  function testDisplayText(t) {
+    if (!t) return "";
+    return isBelowTable(t) ? "יש מאיפה להתחיל" : testAgeText(t);
+  }
+
+  function hasBelowTable(result) {
+    if (!result || !result.perTest) return false;
+    return AGE_KEYS.some(function (k) { return isBelowTable(result.perTest[k]); });
+  }
+
+  // "young" (ID age under 60), "old" (over 94) or null
+  function idAgeOutsideTable(idAge) {
+    if (!isNum(idAge)) return null;
+    if (idAge < TABLE_START_AGE) return "young";
+    if (idAge > TABLE_END_AGE) return "old";
+    return null;
+  }
+
   function compareToIdAge(result, idAge) {
     if (!isNum(idAge) || !result || !isNum(result.ageNumber)) return null;
+    if (result.lessThanThree || result.belowTable) return null;
     var diff = idAge - result.ageNumber;
     if (result.qualifier === "younger" && diff <= 0) return null; // "62 or younger" vs 55: unknown
     if (result.qualifier === "older" && diff >= 0) return null;
+    // The table can't go below 62: a woman under 60 near the floor is not "older" than her ID age.
+    if (diff < 0 && idAge < TABLE_START_AGE && result.ageNumber <= FLOOR_REGION_MAX) return null;
     if (diff > 0) return { kind: "younger", years: diff, atLeast: result.qualifier === "younger" };
     if (diff < 0) return { kind: "older", years: -diff, atLeast: result.qualifier === "older" };
     return { kind: "same", years: 0, atLeast: false };
   }
 
+  // Flexibility, not part of the age. Compared to the lower bound of the Rikli & Jones
+  // normal range for the woman's own age group (from her ID age):
+  // <65 (also under 60) -> 60-64, 65-69, 70-74, 75-79, 80-84, 85-89, 90+ -> 90-94.
+  // Returns "ok" | "stiff", or null when not done OR when there is no ID age
+  // (no age group to judge by - the page then shows the measured value only).
+  function flexAgeIndex(idAge) {
+    if (!isNum(idAge) || idAge < 65) return 0;
+    return Math.min(GROUP_AGES.length - 1, Math.floor((idAge - 60) / 5));
+  }
+
+  function flexibilityStatus(key, cmValue, idAge) {
+    var n = NORMS[key];
+    if (!n || !n.inches || !isNum(cmValue) || !isNum(idAge)) return null;
+    return cmToHalfInch(cmValue) >= n.lower[flexAgeIndex(idAge)] ? "ok" : "stiff";
+  }
+
   // Springer 2007 (via Heyward 2019) women eyes open: 60-69 = 30.4 s, 80-99 = 10.6 s.
   // Proposed mapping: good >= 30, medium 10-29.9, needs work < 10.
   function balanceRating(seconds) {
-    if (!isNum(seconds)) return null;
+    if (!plausible("balance", seconds)) return null;
     var s = roundTenth(seconds);
     if (s >= 30) return "good";
     if (s >= 10) return "medium";
@@ -156,22 +279,27 @@
     return lo + "-" + (lo + 4) + (result.qualifier ? "_" + result.qualifier : "");
   }
 
-  // Exactly 3 area keys: up to 2 weakest movement areas, then the most important
-  // nutrition gap, then fill (more movement gaps, more nutrition gaps, fixed order).
-  // balance: { rating, skipped }; nutrition: { key: "ok" | "gap" }; skipped: { testKey: true }
-  function pickRecommendations(result, balance, nutrition, skipped) {
+  // Up to 3 area keys, only from what was actually measured:
+  // up to 2 weakest movement areas, then the most important nutrition gap, then the rest.
+  // No generic fill - fewer than 3 (or none) is fine.
+  // balance: { rating, skipped }; nutrition: { key: "ok" | "gap" }
+  // skipped: kept for the call signature - a test skipped with "לא יכולה לבצע" is never a recommendation.
+  // flexibility: { sitReach, backScratch: "ok" | "stiff" | null } - only "stiff" is a candidate.
+  // onlyKeys (optional): movement keys she could do (alone mode) - nothing else is recommended.
+  function pickRecommendations(result, balance, nutrition, skipped, flexibility, onlyKeys) {
+    function allowed(k) { return !onlyKeys || onlyKeys.indexOf(k) > -1; }
     var cands = [];
-    TEST_KEYS.forEach(function (k) {
+    AGE_KEYS.forEach(function (k) {
       var t = result && result.perTest ? result.perTest[k] : null;
-      if (t && t.age > 62) cands.push({ key: k, sev: t.age });
-      else if (!t && skipped && skipped[k]) cands.push({ key: k, sev: 95 });
+      if (t && t.age > 62 && allowed(k)) cands.push({ key: k, sev: t.age });
     });
-    if (balance) {
-      // internal ranking only (Springer group midpoints), never shown as an age
-      if (balance.skipped) cands.push({ key: "balance", sev: 95 });
-      else if (balance.rating === "work") cands.push({ key: "balance", sev: 89.5 });
-      else if (balance.rating === "medium") cands.push({ key: "balance", sev: 74.5 });
+    if (balance && !balance.skipped && allowed("balance")) {
+      if (balance.rating === "work") cands.push({ key: "balance", sev: SEV.balanceWork });
+      else if (balance.rating === "medium") cands.push({ key: "balance", sev: SEV.balanceMedium });
     }
+    FLEX_KEYS.forEach(function (k) {
+      if (flexibility && flexibility[k] === "stiff" && allowed(k)) cands.push({ key: k, sev: SEV.flexStiff });
+    });
     cands.sort(function (a, b) {
       return (b.sev - a.sev) || (MOVE_ORDER.indexOf(a.key) - MOVE_ORDER.indexOf(b.key));
     });
@@ -183,14 +311,18 @@
     if (gaps.length) add(gaps[0]);
     cands.slice(2).forEach(function (c) { add(c.key); });
     gaps.slice(1).forEach(add);
-    MOVE_ORDER.forEach(add);
     return picks;
   }
 
   var BatKamaScore = {
-    GROUP_AGES: GROUP_AGES, TEST_KEYS: TEST_KEYS, NORMS: NORMS, NUTRITION_KEYS: NUTRITION_KEYS,
+    GROUP_AGES: GROUP_AGES, TEST_KEYS: TEST_KEYS, AGE_KEYS: AGE_KEYS, FLEX_KEYS: FLEX_KEYS,
+    NORMS: NORMS, NUTRITION_KEYS: NUTRITION_KEYS, FLEX_SAMPLE_MEAN: FLEX_SAMPLE_MEAN,
+    MIN_AGE_TESTS: MIN_AGE_TESTS, PLAUSIBLE: PLAUSIBLE, MIN_STOP_MS: MIN_STOP_MS, SEV: SEV,
     cmToHalfInch: cmToHalfInch, ageForTest: ageForTest, latorreRojas: latorreRojas,
-    score: score, testAgeText: testAgeText, compareToIdAge: compareToIdAge,
+    latorreRojasFFA: latorreRojasFFA, plausible: plausible, stopAccepted: stopAccepted, bestOf: bestOf,
+    score: score, testAgeText: testAgeText, testDisplayText: testDisplayText,
+    isBelowTable: isBelowTable, hasBelowTable: hasBelowTable, compareToIdAge: compareToIdAge,
+    idAgeOutsideTable: idAgeOutsideTable, flexibilityStatus: flexibilityStatus,
     balanceRating: balanceRating, ageBucket: ageBucket, pickRecommendations: pickRecommendations
   };
 
@@ -221,16 +353,82 @@
   };
   var LEAH_PENDING = "התוצאה של לאה: יתעדכן אחרי הצילום";
 
+  // "10 משפטים לדף בקול של לאה" - exact text and source from
+  // .claude/skills/bat-kama-at-beemet/research-2026-09.md (Leah, 14.9.2026).
+  // Sentence 7 (Fiatarone) is static HTML in the app column of bat-kama-next.html (Leah 16.9.2026).
+  var FACTS = {
+    1: { text: "את המבחנים שבדף הזה בדקו על 13,423 מבוגרים בטייוואן, במשך 7 שנים. מי שהגיעו לתוצאות הגבוהות - הסיכון שלהם לתמותה היה נמוך יותר. והקשר הכי חזק נמצא כששילבו את כל המבחנים יחד.",
+      src: "Wu MC et al., JAMA Network Open 2026", url: "https://doi.org/10.1001/jamanetworkopen.2026.28227" },
+    2: { text: "הקצב שבו את הולכת מספר על הגיל של הגוף. במחקר שעקב אחרי יותר מ-34 אלף בני 65 ומעלה, כל תוספת קטנה במהירות ההליכה נקשרה לחיים ארוכים יותר.",
+      src: "Studenski et al., JAMA 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21205966/" },
+    3: { text: "מה שחשוב זה מה השריר שלך יודע לעשות, לא כמה הוא גדול. במחקר על 2,292 בני 70 עד 79, כוח שרירי הירך נקשר לאריכות ימים.",
+      src: "Newman et al., J Gerontol A 2006", url: "https://pubmed.ncbi.nlm.nih.gov/16456196/" },
+    4: { text: "עשר שניות על רגל אחת. מבחן פשוט, ובמחקר על 1,702 אנשים בני 51 עד 75 הוא נקשר לשרידות טובה יותר.",
+      src: "Araújo et al., Br J Sports Med 2022", url: "https://pubmed.ncbi.nlm.nih.gov/35728834/" },
+    5: { text: "שיווי משקל מאמנים כמו שריר. סקירה של 108 ניסויים מצאה שתרגילי שיווי משקל ותפקוד מורידים את מספר הנפילות בכ-24%.",
+      src: "Sherrington et al., Cochrane 2019", url: "https://pubmed.ncbi.nlm.nih.gov/30703272/" },
+    6: { text: "בגמישות המטרה היא לצאת מהנוקשות. במחקר על יותר מ-13,000 בני 65 ומעלה, מה שנקשר לסיכון היה רק נוקשות קיצונית.",
+      src: "Wu MC et al., JAMA Network Open 2026", url: "https://pubmed.ncbi.nlm.nih.gov/42574013/" },
+    8: { text: "חלבון עובד יחד עם אימון. במחקר על 2,066 בני 70 עד 79, מי שאכלו הכי הרבה חלבון איבדו כ-40% פחות שריר.",
+      src: "Houston et al., AJCN 2008; Liao et al., AJCN 2017", url: "https://pubmed.ncbi.nlm.nih.gov/18175749/" },
+    9: { text: "בסקירה של 5,789 מבוגרים, מי שאכלו בסגנון ים-תיכוני היו בסיכון נמוך בכמחצית להגיע לשבריריות.",
+      src: "Kojima et al., JAGS 2018", url: "https://pubmed.ncbi.nlm.nih.gov/29322507/" },
+    10: { text: "30 יום הם ההתחלה. הבדיקה ביום 30 מראה לך איפה את עומדת, והשינוי הגדול נבנה ב-12 השבועות שאחרי.",
+      src: "Liu & Latham, Cochrane 2009; Lesinski et al., Sports Med 2015", url: "https://pubmed.ncbi.nlm.nih.gov/26325622/" }
+  };
+  var FLEX_LABELS = { ok: "תקין", stiff: "נוקשה" };
+
+  // Edge-case texts, Leah 15.9.2026 (drafts-conditions-cases-2026-09-15.md).
+  var TXT = {
+    alone: "לבד את יכולה לעשות עכשיו שלושה מבחנים: קימה מכיסא, כפיפת מרפק וצעידה במקום. קום-לך-שב, הגמישות ושיווי המשקל — רק עם מישהו לידך. הגיל יחושב מ-3 המבחנים, ותמיד אפשר להשלים.",
+    pain: "כואב? עוצרים. אף מבחן לא עושים דרך כאב. הגיל יחושב מהמבחנים שתעשי.",
+    redo: "משהו לא יצא כמו שצריך — ידיים לא על החזה, משקולת אחרת? לחצי \"לעשות שוב\".",
+    redoBtn: "לעשות שוב",
+    belowTable: "יש מאיפה להתחיל, ואני כאן.",
+    idAgeYoung: "הטבלאות במחקר מתחילות בגיל 60. התוצאה תראה לך איפה את עומדת מול בנות 60 — טוב לדעת את זה כבר עכשיו.",
+    idAgeOld: "הטבלאות במחקר מגיעות עד גיל 94. התוצאה תראה איפה את מול בנות 90–94. וכל מבחן שעשית — שלך.",
+    // Leah 16.9.2026 decision (min 3 of 4).
+    // טיוטה 16.9 - ממתין לאישור לאה (1: פחות מ-3 מבחנים)
+    minTests: "כדי לתת גיל אחד צריך לפחות 3 מבחנים. בינתיים — הנה איפה את עומדת בכל מבחן שעשית.",
+    // טיוטה 16.9 - ממתין לאישור לאה (2: עוצרים מיד - בפתיחה ובכל מבחן עם שעון)
+    stopNow: "עוצרים מיד — לא בסוף — אם יש כאב, לחץ בחזה, סחרחורת, או שאת לא מצליחה לנשום. המבחן לא שווה את זה, ואין מה להוכיח לאף אחד.",
+    // טיוטה 16.9 - ממתין לאישור לאה (5: מתחת להשוואה, רק כשהתוצאה מבוגרת מהגיל בתעודת הזהות)
+    olderDoctor: "אם המספר יצא גבוה בהרבה מהגיל שלך, זה לא אבחנה ואני לא רופאה. תיקחי את הדף הזה לרופא/ה שלך ותשאלי מה נכון להתחיל איתו. ואז נתחיל.",
+    // טיוטה 16.9 - ממתין לאישור לאה (7: מצב לבד, כשהגיל מחושב מ-3 המבחנים שעשתה לבד)
+    aloneComputed: "הגיל מחושב מ-3 המבחנים שעשית לבד. כשיהיה מי שיהיה לידך — נשלים את השאר, והמספר יהיה מדויק יותר.",
+    // Leah 16.9.2026: "דף התוצאה: כפתור אחד — 'מה עושים עם התוצאה?'"
+    nextBtn: "מה עושים עם התוצאה?",
+    methodTable: "חישוב לפי טבלאות Rikli & Jones",
+    methodFormula: "חישוב לפי Latorre-Rojas 2019",
+    resultHeading: "הגיל הפיזיולוגי שלך",
+    start: "התחלה",
+    stop: "עצירה"
+  };
+
+  // "אני לבד" (Leah 15.9.2026): only these three tests can be done alone.
+  // Screens 3 (כפיפה בישיבה), 4 (אצבע-אצבע), 5 (קום-לך-שב) and 6 (שיווי משקל) are skipped
+  // entirely - forward and backward - and count as not done, not as skipped by pain.
+  var ALONE_TESTS = ["chairStand", "armCurl", "step"];
+  var ALONE_SKIP_STEPS = [3, 4, 5, 6];
+
+  // טיוטה 16.9 - ממתין לאישור לאה (4). Replaces the start of the "לחצי התחלה..." step on the
+  // three countdown tests (chair stand, arm curl, 2-minute step) - the only timers that count 3-2-1.
+  // The stopwatch tests (up-and-go, balance) start at once, so this line is not on them.
+  var COUNTDOWN_LINE = "לחצי התחלה. השעון סופר 3, 2, 1 ואז מצפצף — מתחילים בצפצוף, לא לפני.";
+
   var TESTS = [
     {
       key: "chairStand", name: "קימה מכיסא 30 שניות", short: "קימה מכיסא",
-      timer: 30, input: "count", label: "כמה פעמים עמדת?",
+      timer: 30, input: "count", label: "כמה פעמים עמדת?", fact: 3,
       steps: [
         "כיסא בלי ידיות, צמוד לקיר. שבי באמצע הכיסא, כפות הרגליים על הרצפה, הידיים שלובות על החזה.",
-        "לחצי התחלה. בכל פעם קומי עד עמידה זקופה ושבי בחזרה.",
+        // טיוטה 16.9 - ממתין לאישור לאה (4: ספירה לאחור)
+        COUNTDOWN_LINE + " בכל פעם קומי עד עמידה זקופה ושבי בחזרה.",
         "ספרי כמה פעמים עמדת זקוף ב-30 שניות."
       ],
-      safety: "מישהו עומד לידך. אם צריך להיעזר בידיים כדי לקום, עצרי ורשמי 0. זה בסדר, מכאן מתחילים."
+      safety: "מישהו עומד לידך. אם צריך להיעזר בידיים כדי לקום, עצרי ורשמי 0. זה בסדר, מכאן מתחילים.",
+      // "אני לבד" (16.9.2026): the same line without its first sentence
+      safetyAlone: "אם צריך להיעזר בידיים כדי לקום, עצרי ורשמי 0. זה בסדר, מכאן מתחילים."
     },
     {
       key: "armCurl", name: "כפיפת מרפק 30 שניות", short: "כפיפת מרפק",
@@ -238,23 +436,14 @@
       steps: [
         "שבי על כיסא בלי ידיות. משקולת 2.5 ק\"ג (או בקבוק מים של 2 ליטר מלא) ביד החזקה, הזרוע ישרה לצד הגוף.",
         "כופפי את המרפק עד הסוף ויישרי עד הסוף. הזרוע העליונה נשארת צמודה לגוף.",
-        "לחצי התחלה וספרי כמה כפיפות מלאות עשית ב-30 שניות."
+        // טיוטה 16.9 - ממתין לאישור לאה (4: ספירה לאחור)
+        COUNTDOWN_LINE + " ספרי כמה כפיפות מלאות עשית ב-30 שניות."
       ],
       safety: "תנועה מלאה ומבוקרת, בלי תנופה."
     },
     {
-      key: "step", name: "צעידה במקום 2 דקות", short: "צעידה במקום",
-      timer: 120, input: "count", label: "כמה פעמים הברך הימנית הגיעה לסימון?",
-      steps: [
-        "סמני על הקיר את נקודת האמצע בין פיקת הברך לבליטת עצם האגן.",
-        "לחצי התחלה וצעדי במקום 2 דקות. כל ברך עולה עד הסימון.",
-        "ספרי רק את הברך הימנית."
-      ],
-      safety: "אפשר לגעת במשענת כיסא. אם צריך, האטי או עצרי - השעון ממשיך. לא מבצעים עם כאב בחזה, סחרחורת או לחץ דם מעל 160/100."
-    },
-    {
       key: "sitReach", name: "כפיפה קדימה בישיבה", short: "כפיפה קדימה",
-      timer: 0, input: "cm", label: "המרחק בס\"מ",
+      timer: 0, input: "cm", label: "המרחק בס\"מ", optional: true, fact: 6,
       signs: ["לא הגעתי (−)", "נגעתי (0)", "עברתי (+)"],
       steps: [
         "שבי בקצה כיסא צמוד לקיר. רגל אחת ישרה, העקב על הרצפה, כף הרגל ב-90°.",
@@ -265,7 +454,7 @@
     },
     {
       key: "backScratch", name: "אצבע-אצבע מאחורי הגב", short: "אצבע-אצבע",
-      timer: 0, input: "cm", label: "המרחק בס\"מ",
+      timer: 0, input: "cm", label: "המרחק בס\"מ", optional: true,
       signs: ["יש רווח (−)", "נוגעות (0)", "יש חפיפה (+)"],
       steps: [
         "יד אחת מעל הכתף ולאורך הגב כלפי מטה, כף היד אל הגוף.",
@@ -276,19 +465,32 @@
     },
     {
       key: "upAndGo", name: "קום-לך-שב 2.44 מטר", short: "קום-לך-שב",
-      timer: 0, input: "stopwatch", attempts: 2, best: "min", maxSeconds: 60,
+      timer: 0, input: "stopwatch", attempts: 2, best: "min", maxSeconds: 60, fact: 2,
       steps: [
         "כיסא צמוד לקיר. סמני נקודה על הרצפה במרחק 2.44 מטר מקדמת הכיסא.",
         "שבי. בלחיצה על התחלה: קומי, לכי סביב הסימון, חזרי ושבי. עצירה ברגע שישבת.",
         "שני ניסיונות. נשמר הזמן הטוב."
       ],
       safety: "הולכים, לא רצים - מהר ככל שאפשר ובבטחה. כדאי שמישהו אחר יפעיל את השעון."
+    },
+    {
+      // last test, per Leah's order of 15.9.2026 (the endurance test closes the battery);
+      // since 16.9.2026 the balance bonus comes right before it.
+      key: "step", name: "צעידה במקום 2 דקות", short: "צעידה במקום",
+      timer: 120, input: "count", label: "כמה פעמים הברך הימנית הגיעה לסימון?",
+      steps: [
+        "סמני על הקיר את נקודת האמצע בין פיקת הברך לבליטת עצם האגן.",
+        // טיוטה 16.9 - ממתין לאישור לאה (4: ספירה לאחור)
+        COUNTDOWN_LINE + " צעדי במקום 2 דקות. כל ברך עולה עד הסימון.",
+        "ספרי רק את הברך הימנית."
+      ],
+      safety: "אפשר לגעת במשענת כיסא. אם צריך, האטי או עצרי - השעון ממשיך. לא מבצעים עם כאב בחזה, סחרחורת או לחץ דם מעל 160/100."
     }
   ];
 
   var BALANCE = {
     key: "balance", name: "בונוס: עמידה על רגל אחת",
-    input: "stopwatch", attempts: 3, best: "max", maxSeconds: 45,
+    input: "stopwatch", attempts: 3, best: "max", maxSeconds: 45, fact: 4,
     steps: [
       "יחפה, הידיים שלובות על החזה, המבט לנקודה בגובה העיניים.",
       "הרימי רגל אחת ליד הקרסול של רגל העמידה, בלי לגעת בה.",
@@ -297,6 +499,28 @@
     ],
     safety: "על רצפה יציבה, ליד קיר, ומישהו צמוד לשמירה."
   };
+
+  // screen number -> test key (see the header comment)
+  var SCREEN_KEYS = [null, "chairStand", "armCurl", "sitReach", "backScratch", "upAndGo", "balance", "step"];
+  var STEP_BALANCE = 6;
+  var STEP_NUTRITION = 8;
+  var STEP_RESULT = 9;
+  var LAST_STEP = STEP_RESULT;
+  var OLD_STEP_FORM = 10; // removed 16.9.2026 - a save on it resumes on the result
+  var NEXT_PAGE = "bat-kama-next.html";
+  // Page numbers for Leah's review (16.9.2026): intro = 1, screen N = N + 1, the next page = 11.
+  // Internal review note - removed on launch day with every .bk-review-note.
+  var PAGE_COUNT = 11;
+  function pageNoHtml(step) {
+    return '<p class="bk-review-note bk-page-no">דף ' + (step + 1) + ' מתוך ' + PAGE_COUNT + '</p>';
+  }
+
+  function testByKey(key) {
+    for (var i = 0; i < TESTS.length; i++) {
+      if (TESTS[i].key === key) return TESTS[i];
+    }
+    return key === BALANCE.key ? BALANCE : null;
+  }
 
   var BALANCE_LABELS = { good: "טוב", medium: "בינוני", work: "דורש עבודה" };
 
@@ -321,10 +545,12 @@
     backScratch: "גמישות בכתפיים: מתיחות לכתפיים, להחזיק 30–60 שניות, 2–3 פעמים בשבוע.",
     upAndGo: "זריזות: אימון שמשלב כוח, שיווי משקל והליכה, 3 פעמים בשבוע.",
     balance: "שיווי משקל: תרגול שיווי משקל ליד קיר, 3 פעמים בשבוע.",
-    protein: "חלבון: 25–30 גרם חלבון בכל ארוחה - ביצים, מוצרי חלב, עוף, דג, בשר או קטניות.",
+    // טיוטה 16.9 - ממתין לאישור לאה (9: חלבון)
+    protein: "חלבון: משהו חלבוני בכל ארוחה — ביצה, יוגורט, גבינה, עוף, דג או קטניות. אם יש לך בעיה בכליות, תשאלי את הרופא/ה כמה מתאים לך.",
     calcium: "סידן: מוצרי חלב, סרדינים, טחינה, עלים ירוקים, שקדים וטופו.",
     vitaminD: "ויטמין D: לבדוק את הרמה בדם ולשאול את הרופא אם צריך תוסף.",
-    fluids: "שתייה: לפחות 8 כוסות ביום.",
+    // טיוטה 16.9 - ממתין לאישור לאה (9: שתייה)
+    fluids: "שתייה: לשים בקבוק מים במקום שאת רואה אותו, ולשתות לאורך היום. אם הרופא/ה הגביל לך נוזלים — הולכים לפי מה שהוא אמר.",
     fruitVeg: "פירות וירקות: לפחות 5 מנות ביום."
   };
 
@@ -340,6 +566,28 @@
       values: { chairStand: 20, armCurl: 22, step: 115, sitReach: 15, backScratch: 5 },
       attempts: { upAndGo: [4.2, 4.0], balance: [41.0, 45] },
       nutrition: { protein: 0, calcium: 1, vitaminD: 0, fluids: 0, fruitVeg: 2 }
+    },
+    // only two age tests - no overall age (Leah 16.9.2026, min 3 of 4)
+    "3": {
+      idAge: 66,
+      values: { chairStand: 11, armCurl: 14 },
+      attempts: { upAndGo: [], balance: [] },
+      skipped: { sitReach: true, backScratch: true, upAndGo: true, balance: true, step: true },
+      nutrition: { protein: 0, calcium: 0, vitaminD: 0, fluids: 1, fruitVeg: 0 }
+    },
+    // below the whole table (audit 16.9.2026 repro: 3/7/43/12.0, ID 70)
+    "4": {
+      idAge: 70,
+      values: { chairStand: 3, armCurl: 7, step: 43, sitReach: -12, backScratch: -25 },
+      attempts: { upAndGo: [12.4, 12.0], balance: [4.1, 3.2] },
+      nutrition: { protein: 1, calcium: 1, vitaminD: 1, fluids: 2, fruitVeg: 1 }
+    },
+    // older than the ID age (72/77/72/77 -> 75, ID 66) - shows the doctor line (draft 5, 16.9.2026)
+    "5": {
+      idAge: 66,
+      values: { chairStand: 10, armCurl: 11, step: 68, sitReach: -3, backScratch: -12 },
+      attempts: { upAndGo: [7.6, 7.3], balance: [12.5, 14.0] },
+      nutrition: { protein: 0, calcium: 1, vitaminD: 0, fluids: 1, fruitVeg: 0 }
     }
   };
 
@@ -347,27 +595,149 @@
    * 3. UI
    * ================================================================ */
   var params = new URLSearchParams(window.location.search);
-  var demoKey = params.get("demo");
-  var DEMO = DEMOS[demoKey] || null;
-  var noTracking = window.location.search.indexOf("_scan=1") > -1 || !!DEMO;
+  var DEMO = DEMOS[params.get("demo")] || null;
+  // same rule as the two inline tags in <head>: _scan=1 or any demo= parameter
+  // step= (jump to a screen) is a review link too - it never counts as a real visit (16.9.2026)
+  var noTracking = /[?&](_scan=1|demo=|step=)/.test(window.location.search);
 
-  var LAST_STEP = 10;
   var state = {
     step: 0,
     idAge: null,
+    alone: false,     // true after she chose "אני לבד"
+    aloneAnswered: false,
     values: {},       // test key -> number (cm for flexibility, s for up-and-go)
     signs: {},        // flexibility key -> -1 | 0 | 1
     attempts: { upAndGo: [], balance: [] },
     skipped: {},      // key -> true
     nutrition: {},    // key -> option index
+    startTracked: false,  // saved with the progress, so a reload / "להמשיך" never counts twice
     resultTracked: false
   };
   var activeTimer = null;
   var audioCtx = null;
+  var exitTracked = false;
 
-  function track(name, params) {
+  /* ---------- saved progress (localStorage, this phone only) ---------- */
+  // v2 = the screen order of 16.9.2026. v1 saves (balance 7, step 6) are migrated once.
+  var SAVE_KEY = "batKama.progress.v2";
+  var OLD_SAVE_KEY = "batKama.progress.v1";
+  var SAVE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+  var V1_TO_V2_STEP = { 6: 7, 7: 6 };
+  var pendingResume = null; // saved progress waiting for "להמשיך" / "להתחיל מחדש"
+
+  function hasProgress() {
+    if (state.step >= 1 || state.aloneAnswered || isNum(state.idAge)) return true;
+    return Object.keys(state.values).some(function (k) { return isNum(state.values[k]); });
+  }
+
+  function saveState() {
+    if (DEMO) return; // demo mode never writes saved state
+    try {
+      if (!hasProgress()) return;
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        v: 2, step: state.step, idAge: state.idAge, alone: state.alone, aloneAnswered: state.aloneAnswered,
+        values: state.values, signs: state.signs, attempts: state.attempts,
+        skipped: state.skipped, nutrition: state.nutrition,
+        startTracked: state.startTracked, resultTracked: state.resultTracked, savedAt: Date.now()
+      }));
+    } catch (e) { /* private mode / full storage - the page still works */ }
+  }
+
+  function validStep(s) {
+    return typeof s === "number" && Math.floor(s) === s && s >= 0 && s <= LAST_STEP;
+  }
+
+  function loadSaved() {
+    if (DEMO) return null; // demo mode ignores saved state
+    try {
+      var s = localStorage.getItem(SAVE_KEY);
+      var migrate = false;
+      if (!s) {
+        s = localStorage.getItem(OLD_SAVE_KEY);
+        migrate = !!s;
+      }
+      if (!s) return null;
+      var d = JSON.parse(s);
+      if (migrate) localStorage.removeItem(OLD_SAVE_KEY);
+      if (!d || typeof d !== "object") return null;
+      // older than 24 hours (or no time stamp): start fresh
+      if (!isNum(d.savedAt) || Date.now() - d.savedAt > SAVE_MAX_AGE_MS || d.savedAt > Date.now() + 60000) {
+        localStorage.removeItem(SAVE_KEY);
+        return null;
+      }
+      if (d.step === OLD_STEP_FORM) d.step = STEP_RESULT;
+      if (!validStep(d.step)) d.step = 1;
+      else if (migrate && V1_TO_V2_STEP[d.step]) d.step = V1_TO_V2_STEP[d.step];
+      return d;
+    } catch (e) { return null; }
+  }
+
+  function clearSaved() {
+    try {
+      localStorage.removeItem(SAVE_KEY);
+      localStorage.removeItem(OLD_SAVE_KEY);
+    } catch (e) { /* ignore */ }
+  }
+
+  function numMap(o) {
+    var out = {};
+    if (o && typeof o === "object") {
+      Object.keys(o).forEach(function (k) { if (isNum(o[k])) out[k] = o[k]; });
+    }
+    return out;
+  }
+
+  function applySaved(d) {
+    if (!d) return;
+    state.idAge = isNum(d.idAge) ? d.idAge : null;
+    state.alone = !!d.alone;
+    state.aloneAnswered = !!d.aloneAnswered;
+    state.startTracked = d.startTracked === true;
+    state.resultTracked = d.resultTracked === true;
+    state.values = numMap(d.values);
+    state.signs = numMap(d.signs);
+    state.nutrition = numMap(d.nutrition);
+    state.skipped = {};
+    if (d.skipped && typeof d.skipped === "object") {
+      Object.keys(d.skipped).forEach(function (k) { if (d.skipped[k] === true) state.skipped[k] = true; });
+    }
+    var at = d.attempts && typeof d.attempts === "object" ? d.attempts : {};
+    function arr(a) { return Array.isArray(a) ? a.map(function (v) { return isNum(v) ? v : null; }) : []; }
+    state.attempts = { upAndGo: arr(at.upAndGo), balance: arr(at.balance) };
+  }
+
+  /* ---------- tracking (GA4 + Meta Pixel), never in demo / scan mode ---------- */
+  function track(name, p) {
     if (noTracking || typeof gtag !== "function") return;
-    gtag("event", name, params || {});
+    gtag("event", name, p || {});
+  }
+
+  function pixel(kind, name, p) {
+    if (noTracking || typeof fbq !== "function") return;
+    try {
+      if (p) fbq(kind, name, p);
+      else fbq(kind, name);
+    } catch (e) { /* ignore */ }
+  }
+
+  function getUtmParams() {
+    return {
+      utmSource: params.get("utm_source") || null,
+      utmMedium: params.get("utm_medium") || null,
+      utmCampaign: params.get("utm_campaign") || null,
+      utmContent: params.get("utm_content") || null,
+      utmTerm: params.get("utm_term") || null
+    };
+  }
+
+  // Meta ad attribution from the landing URL
+  function getAdParams() {
+    return {
+      adId: params.get("ad_id") || null,
+      adsetId: params.get("adset_id") || null,
+      campaignId: params.get("campaign_id") || null,
+      fbclid: params.get("fbclid") || null
+    };
   }
 
   function esc(s) {
@@ -383,6 +753,20 @@
     var s = String(str).trim().replace(",", ".");
     if (s === "" || !/^-?\d*\.?\d*$/.test(s)) return NaN;
     return parseFloat(s);
+  }
+
+  // "‎-3 ס״מ" - measured flexibility value, shown when there is no ID age to judge it by
+  function formatCm(cm) {
+    var n = Math.round(cm * 10) / 10;
+    return "‎" + (n > 0 ? "+" : "") + String(n) + " ס״מ";
+  }
+
+  // one polite live region (#bk-live): only start / end / result, never the running clock
+  function announce(text) {
+    var live = $("#bk-live");
+    if (!live) return;
+    live.textContent = "";
+    setTimeout(function () { live.textContent = text; }, 60);
   }
 
   function beep(ms, freq) {
@@ -402,11 +786,37 @@
     try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e2) { /* ignore */ }
   }
 
+  // 16.9.2026: most phones turn the screen off after 30-60 s without a touch, and a locked
+  // phone stops the clock (no end beep in the 2-minute step). While a clock runs the screen
+  // stays on. Browsers without the Wake Lock API simply skip this.
+  var wakeLock = null;
+  function keepScreenOn(on) {
+    try {
+      if (on) {
+        if (wakeLock || !navigator.wakeLock || typeof navigator.wakeLock.request !== "function") return;
+        navigator.wakeLock.request("screen").then(function (lock) {
+          if (!activeTimer) { lock.release().catch(function () {}); return; }
+          wakeLock = lock;
+          lock.addEventListener("release", function () { if (wakeLock === lock) wakeLock = null; });
+        }).catch(function () { /* not allowed / battery saver - the clock still works */ });
+      } else if (wakeLock) {
+        var l = wakeLock;
+        wakeLock = null;
+        l.release().catch(function () {});
+      }
+    } catch (e) { /* ignore */ }
+  }
+  // the lock is dropped when the page is hidden - take it again when she comes back mid-clock
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && activeTimer) keepScreenOn(true);
+  });
+
   function stopTimer() {
     if (activeTimer) {
       clearInterval(activeTimer.id);
       activeTimer = null;
     }
+    keepScreenOn(false);
   }
 
   function mediaSlot(key, testName) {
@@ -449,21 +859,40 @@
 
   function stepsHtml(t) {
     return '<ol class="bk-steps">' + t.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + '</ol>' +
-      '<p class="bk-safety">' + esc(t.safety) + '</p>';
+      '<p class="bk-safety">' + esc(state.alone && t.safetyAlone ? t.safetyAlone : t.safety) + '</p>' +
+      (isTimed(t) ? '<p class="bk-safety bk-stop">' + esc(TXT.stopNow) + '</p>' : "") +
+      (t.fact ? factHtml(t.fact) : "");
+  }
+
+  // every screen with a clock: the 3 countdown tests, up-and-go and balance
+  function isTimed(t) {
+    return !!t.timer || t.input === "stopwatch";
+  }
+
+  // One research sentence with its source (FACTS, research-2026-09.md)
+  function factHtml(n) {
+    var f = FACTS[n];
+    if (!f) return "";
+    return '<div class="bk-fact"><p>' + esc(f.text) + '</p>' +
+      '<p class="bk-src"><a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.src) + '</a></p></div>';
   }
 
   function navHtml(nextLabel) {
     return '<div class="bk-nav">' +
       '<button type="button" class="btn bk-btn-lg bk-next" disabled>' + (nextLabel || "הבא") + '</button>' +
       '<button type="button" class="bk-btn-ghost bk-skip">לא יכולה לבצע</button>' +
+      '<p class="bk-nav-note">' + esc(TXT.pain) + '</p>' +
+      '<button type="button" class="bk-btn-ghost bk-redo">' + esc(TXT.redoBtn) + '</button>' +
+      '<p class="bk-nav-note">' + esc(TXT.redo) + '</p>' +
       '<button type="button" class="bk-link bk-back">חזרה</button>' +
       '</div>';
   }
 
+  // no aria-live on the running display - start/end go to #bk-live
   function countdownHtml(seconds) {
     return '<div class="bk-timer" data-seconds="' + seconds + '">' +
-      '<div class="bk-timer__display" aria-live="polite">' + fmtClock(seconds) + '</div>' +
-      '<button type="button" class="btn bk-btn-lg bk-timer__btn">התחלה</button>' +
+      '<div class="bk-timer__display">' + fmtClock(seconds) + '</div>' +
+      '<button type="button" class="btn bk-btn-lg bk-timer__btn">' + TXT.start + '</button>' +
       '</div>';
   }
 
@@ -474,8 +903,8 @@
         '<input class="bk-num bk-attempt__input" id="bk-' + t.key + '-a' + i + '" data-attempt="' + i + '" type="text" inputmode="decimal" autocomplete="off" placeholder="שניות"></div>';
     }
     return '<div class="bk-timer bk-timer--sw" data-max="' + t.maxSeconds + '">' +
-      '<div class="bk-timer__display" aria-live="polite">0.00</div>' +
-      '<button type="button" class="btn bk-btn-lg bk-timer__btn">התחלה</button>' +
+      '<div class="bk-timer__display">0.00</div>' +
+      '<button type="button" class="btn bk-btn-lg bk-timer__btn">' + TXT.start + '</button>' +
       '</div>' +
       '<div class="bk-attempts">' + rows + '</div>' +
       '<p class="bk-best" hidden>הזמן הטוב: <strong class="bk-best__val"></strong> שניות</p>';
@@ -484,7 +913,7 @@
   function inputHtml(t) {
     if (t.input === "count") {
       return '<div class="bk-field"><label for="bk-in-' + t.key + '">' + esc(t.label) + '</label>' +
-        '<input class="bk-num bk-value" id="bk-in-' + t.key + '" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></div>';
+        '<input class="bk-num bk-value" id="bk-in-' + t.key + '" type="text" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off"></div>';
     }
     if (t.input === "cm") {
       return '<div class="bk-field">' +
@@ -499,10 +928,25 @@
     return stopwatchHtml(t);
   }
 
-  function renderTestScreen(t, idx) {
-    var el = document.querySelector('.bk-screen[data-step="' + (idx + 1) + '"]');
-    el.innerHTML = progressHtml("מבחן " + (idx + 1) + " מתוך 6", (idx + 1) / 6) +
+  // Alone mode runs 3 tests, not 6 - the progress line has to stay truthful.
+  function testProgress(t) {
+    if (state.alone) {
+      var i = ALONE_TESTS.indexOf(t.key) + 1;
+      if (i > 0) return progressHtml("מבחן " + i + " מתוך 3", i / 3);
+    }
+    var idx = TESTS.indexOf(t);
+    return progressHtml("מבחן " + (idx + 1) + " מתוך 6", (idx + 1) / 6);
+  }
+
+  function screenEl(step) {
+    return document.querySelector('.bk-screen[data-step="' + step + '"]');
+  }
+
+  function renderTestScreen(t, stepNo) {
+    var el = screenEl(stepNo);
+    el.innerHTML = pageNoHtml(stepNo) + testProgress(t) +
       '<h2>' + esc(t.name) + '</h2>' +
+      (t.optional ? '<p class="form-note bk-optional">לא חובה</p>' : "") +
       mediaSlot(t.key, t.name) +
       stepsHtml(t) +
       (t.timer ? countdownHtml(t.timer) : "") +
@@ -512,8 +956,9 @@
   }
 
   function renderBalanceScreen() {
-    var el = document.querySelector('.bk-screen[data-step="7"]');
-    el.innerHTML = progressHtml("בונוס", 1) +
+    var el = screenEl(STEP_BALANCE);
+    // "בונוס" comes before the last test now, so the bar shows 5 of 6
+    el.innerHTML = pageNoHtml(STEP_BALANCE) + progressHtml("בונוס", 5 / 6) +
       '<h2>' + esc(BALANCE.name) + '</h2>' +
       mediaSlot("balance", "עמידה על רגל אחת") +
       stepsHtml(BALANCE) +
@@ -524,24 +969,24 @@
   }
 
   function renderNutritionScreen() {
-    var el = document.querySelector('.bk-screen[data-step="8"]');
+    var el = screenEl(STEP_NUTRITION);
     var qs = NUTRITION.map(function (n) {
       return '<fieldset class="bk-q"><legend>' + esc(n.q) + '</legend>' +
         n.options.map(function (o, i) {
           return '<label class="bk-opt"><input type="radio" name="bk-n-' + n.key + '" value="' + i + '"><span>' + esc(o[1]) + '</span></label>';
         }).join("") + '</fieldset>';
     }).join("");
-    el.innerHTML = '<p class="bk-progress">שאלון תזונה קצר</p>' +
-      '<h2>שאלון תזונה קצר</h2>' + qs +
+    el.innerHTML = pageNoHtml(STEP_NUTRITION) + '<p class="bk-progress">שאלון תזונה קצר</p>' +
+      '<h2>שאלון תזונה קצר</h2>' + factHtml(9) + qs +
       '<div class="bk-nav"><button type="button" class="btn bk-btn-lg bk-next">הבא</button>' +
       '<button type="button" class="bk-link bk-back">חזרה</button></div>';
     el.querySelectorAll('input[type="radio"]').forEach(function (r) {
       var key = r.name.replace("bk-n-", "");
       if (state.nutrition[key] === Number(r.value)) r.checked = true;
-      r.addEventListener("change", function () { state.nutrition[key] = Number(r.value); });
+      r.addEventListener("change", function () { state.nutrition[key] = Number(r.value); saveState(); });
     });
-    $(".bk-next", el).addEventListener("click", function () { go(9); });
-    $(".bk-back", el).addEventListener("click", function () { go(7); });
+    $(".bk-next", el).addEventListener("click", function () { go(STEP_RESULT); });
+    $(".bk-back", el).addEventListener("click", function () { goBack(STEP_NUTRITION - 1); });
   }
 
   function fmtClock(sec) {
@@ -550,15 +995,19 @@
   }
 
   function screenValid(t) {
-    if (t.input === "count") return isNum(state.values[t.key]);
+    if (t.input === "count") return plausible(t.key, state.values[t.key]);
     if (t.input === "cm") return isNum(state.values[t.key]);
     return bestAttempt(t) !== null;
   }
 
+  function attemptsFull(t) {
+    var a = state.attempts[t.key] || [];
+    for (var i = 0; i < t.attempts; i++) { if (!isNum(a[i])) return false; }
+    return true;
+  }
+
   function bestAttempt(t) {
-    var vals = (state.attempts[t.key] || []).filter(function (v) { return isNum(v) && v > 0 && v <= t.maxSeconds; });
-    if (!vals.length) return null;
-    return t.best === "min" ? Math.min.apply(null, vals) : Math.max.apply(null, vals);
+    return bestOf(t.key, state.attempts[t.key], t.best);
   }
 
   function wireScreen(el, t) {
@@ -568,6 +1017,11 @@
     function refresh() {
       next.disabled = !screenValid(t);
       if (t.input === "stopwatch") {
+        // 16.9.2026: 2 attempts (up-and-go) / 3 (balance) - once all are in, the clock is locked,
+        // so a new run can't overwrite a recorded attempt. "לעשות שוב" clears them all.
+        var swB = $(".bk-timer--sw .bk-timer__btn", el);
+        var runningHere = !!activeTimer && activeTimer.el === $(".bk-timer--sw", el);
+        if (swB && !runningHere) swB.disabled = attemptsFull(t);
         var b = bestAttempt(t);
         var bestEl = $(".bk-best", el);
         bestEl.hidden = b === null;
@@ -581,8 +1035,15 @@
       if (isNum(state.values[t.key])) inp.value = state.values[t.key];
       inp.addEventListener("input", function () {
         var n = parseNum(inp.value);
-        state.values[t.key] = (isNum(n) && n >= 0 && n <= 300 && Math.floor(n) === n) ? n : null;
+        state.values[t.key] = plausible(t.key, n) ? n : null;
         refresh();
+        saveState();
+      });
+      // Enter / "next" on the phone keyboard = "הבא" when it is enabled
+      inp.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter") return;
+        e.preventDefault();
+        if (!next.disabled) next.click();
       });
     }
 
@@ -590,6 +1051,15 @@
     if (t.input === "cm") {
       var cmIn = $(".bk-value", el);
       var segBtns = el.querySelectorAll(".bk-seg__btn");
+      var update = function () {
+        var sign = state.signs[t.key];
+        var n = parseNum(cmIn.value);
+        if (sign === 0) state.values[t.key] = 0;
+        else if ((sign === 1 || sign === -1) && isNum(n) && n >= 0 && n <= 60) state.values[t.key] = sign * Math.abs(n);
+        else state.values[t.key] = null;
+        refresh();
+        saveState();
+      };
       var setSign = function (sign) {
         state.signs[t.key] = sign;
         segBtns.forEach(function (b) { b.setAttribute("aria-pressed", Number(b.getAttribute("data-sign")) === sign ? "true" : "false"); });
@@ -598,14 +1068,6 @@
         else if (cmIn.value === "0") cmIn.value = "";
         update();
         if (sign !== 0) cmIn.focus();
-      };
-      var update = function () {
-        var sign = state.signs[t.key];
-        var n = parseNum(cmIn.value);
-        if (sign === 0) state.values[t.key] = 0;
-        else if ((sign === 1 || sign === -1) && isNum(n) && n >= 0 && n <= 60) state.values[t.key] = sign * Math.abs(n);
-        else state.values[t.key] = null;
-        refresh();
       };
       segBtns.forEach(function (b) {
         b.addEventListener("click", function () { setSign(Number(b.getAttribute("data-sign"))); });
@@ -629,9 +1091,11 @@
       var btn = $(".bk-timer__btn", cd);
       btn.addEventListener("click", function () {
         if (activeTimer && activeTimer.el === cd) {
+          // a second tap right after the first is a double tap, not a stop
+          if (!stopAccepted("countdown", performance.now() - activeTimer.t0)) return;
           stopTimer();
           disp.textContent = fmtClock(total);
-          btn.textContent = "התחלה";
+          btn.textContent = TXT.start;
           cd.classList.remove("is-running");
           return;
         }
@@ -640,24 +1104,27 @@
         var lead = 3;
         var startAt = null;
         cd.classList.add("is-running");
-        btn.textContent = "עצירה";
+        btn.textContent = TXT.stop;
         disp.textContent = String(lead);
         var t0 = performance.now();
-        activeTimer = { el: cd, id: setInterval(function () {
+        keepScreenOn(true);
+        activeTimer = { el: cd, t0: t0, id: setInterval(function () {
           var now = performance.now();
           if (startAt === null) {
             var left = lead - Math.floor((now - t0) / 1000);
             if (left > 0) { disp.textContent = String(left); return; }
             startAt = now;
             beep(250, 880);
+            announce(TXT.start);
           }
           var remain = total - (now - startAt) / 1000;
           if (remain <= 0) {
             stopTimer();
             disp.textContent = "0:00";
-            btn.textContent = "התחלה";
+            btn.textContent = TXT.start;
             cd.classList.remove("is-running");
             beep(700, 660);
+            announce("0:00");
             var focusIn = $(".bk-value", el);
             if (focusIn) focusIn.focus();
             return;
@@ -679,33 +1146,46 @@
         if (isNum(arr[i])) inpA.value = arr[i].toFixed(2);
         inpA.addEventListener("input", function () {
           var n = parseNum(inpA.value);
-          arr[i] = isNum(n) && n > 0 && n <= max ? n : null;
+          arr[i] = plausible(t.key, n) ? n : null;
           refresh();
+          saveState();
         });
       });
       var finish = function (secs) {
         stopTimer();
         sw.classList.remove("is-running");
-        swBtn.textContent = "התחלה";
+        swBtn.textContent = TXT.start;
         var s = Math.min(max, Math.round(secs * 100) / 100);
+        if (!plausible(t.key, s)) {
+          // too short to be a real attempt - not recorded
+          swDisp.textContent = "0.00";
+          return;
+        }
         swDisp.textContent = s.toFixed(2);
         var slot = -1;
         for (var i = 0; i < inputs.length; i++) { if (!isNum(arr[i])) { slot = i; break; } }
-        if (slot === -1) slot = inputs.length - 1;
+        if (slot === -1) { refresh(); return; } // all attempts recorded - nothing is overwritten
         arr[slot] = s;
         inputs[slot].value = s.toFixed(2);
+        announce(s.toFixed(2));
         refresh();
+        saveState();
       };
       swBtn.addEventListener("click", function () {
+        if (!(activeTimer && activeTimer.el === sw) && attemptsFull(t)) return;
         if (activeTimer && activeTimer.el === sw) {
-          finish((performance.now() - activeTimer.start) / 1000);
+          var elapsed = performance.now() - activeTimer.start;
+          if (!stopAccepted("stopwatch", elapsed)) return; // double tap - keep running
+          finish(elapsed / 1000);
           return;
         }
         stopTimer();
         beep(120, 880);
         sw.classList.add("is-running");
-        swBtn.textContent = "עצירה";
+        swBtn.textContent = TXT.stop;
+        announce(TXT.start);
         var start = performance.now();
+        keepScreenOn(true);
         activeTimer = { el: sw, start: start, id: setInterval(function () {
           var secs = (performance.now() - start) / 1000;
           if (secs >= max) { finish(max); beep(500, 660); return; }
@@ -727,7 +1207,17 @@
       track("bat_kama_test_done", { test_name: t.key, skipped: true });
       go(stepNo + 1);
     });
-    $(".bk-back", el).addEventListener("click", function () { go(stepNo - 1); });
+    // "לעשות שוב" - clears this test and re-draws the screen, timer display included
+    $(".bk-redo", el).addEventListener("click", function () {
+      stopTimer();
+      state.values[t.key] = null;
+      delete state.skipped[t.key];
+      delete state.signs[t.key];
+      if (state.attempts[t.key]) state.attempts[t.key] = [];
+      saveState();
+      go(stepNo, "stay");
+    });
+    $(".bk-back", el).addEventListener("click", function () { goBack(stepNo - 1); });
     refresh();
   }
 
@@ -741,11 +1231,18 @@
     return out;
   }
 
+  // In alone mode only her three tests count, whatever else is stored on the phone.
+  function doneAlone(key) {
+    return !state.alone || ALONE_TESTS.indexOf(key) > -1;
+  }
+
   function rawForScore() {
     var raw = {};
-    BatKamaScore.TEST_KEYS.forEach(function (k) {
-      var v = state.skipped[k] ? null : state.values[k];
-      if (k === "upAndGo" && !state.skipped[k]) v = bestAttempt(TESTS[5]);
+    TEST_KEYS.forEach(function (k) {
+      var v = null;
+      if (doneAlone(k) && !state.skipped[k]) {
+        v = k === "upAndGo" ? bestAttempt(testByKey("upAndGo")) : state.values[k];
+      }
       raw[k] = isNum(v) ? v : null;
     });
     return raw;
@@ -753,12 +1250,17 @@
 
   function computeAll() {
     var raw = rawForScore();
-    var result = BatKamaScore.score(raw);
-    var balSecs = state.skipped.balance ? null : bestAttempt(BALANCE);
-    var balance = { seconds: balSecs, rating: BatKamaScore.balanceRating(balSecs), skipped: !!state.skipped.balance };
+    var result = score(raw);
+    var balSecs = doneAlone("balance") && !state.skipped.balance ? bestAttempt(BALANCE) : null;
+    var balance = { seconds: balSecs, rating: balanceRating(balSecs), skipped: !!state.skipped.balance };
     var nutrition = nutritionStatus();
-    var recs = BatKamaScore.pickRecommendations(result, balance, nutrition, state.skipped);
-    return { raw: raw, result: result, balance: balance, nutrition: nutrition, recs: recs };
+    var flexibility = {};
+    FLEX_KEYS.forEach(function (k) {
+      flexibility[k] = flexibilityStatus(k, raw[k], state.idAge); // null when not done or no ID age
+    });
+    var recs = pickRecommendations(result, balance, nutrition, state.skipped, flexibility,
+      state.alone ? ALONE_TESTS : null);
+    return { raw: raw, result: result, balance: balance, nutrition: nutrition, flexibility: flexibility, recs: recs };
   }
 
   function compareText(cmp) {
@@ -769,173 +1271,251 @@
     return "בדיוק הגיל שבתעודת הזהות";
   }
 
+  // ID age outside the Rikli & Jones tables (60-94), Leah 15.9.2026
+  function idAgeNote() {
+    var o = idAgeOutsideTable(state.idAge);
+    if (o === "young") return TXT.idAgeYoung;
+    if (o === "old") return TXT.idAgeOld;
+    return "";
+  }
+
+  function breakdownHtml(r) {
+    var html = '<div class="bk-card"><h3>לפי מבחן</h3><ul class="bk-breakdown">';
+    TESTS.forEach(function (t) {
+      if (AGE_KEYS.indexOf(t.key) === -1) return;
+      var pt = r.perTest[t.key];
+      var tag = "";
+      if (r.strongest.indexOf(t.key) > -1) tag = '<span class="bk-tag bk-tag--good">הכי חזק</span>';
+      if (r.weakest.indexOf(t.key) > -1) tag = '<span class="bk-tag bk-tag--work">הכי כדאי לחזק</span>';
+      html += '<li><span class="bk-breakdown__name">' + esc(t.short) + tag + '</span>' +
+        '<span class="bk-breakdown__age">' + (pt ? esc(testDisplayText(pt)) : "לא בוצע") + '</span></li>';
+    });
+    return html + '</ul></div>';
+  }
+
   function renderResult() {
-    var el = document.querySelector('.bk-screen[data-step="9"]');
+    var el = screenEl(STEP_RESULT);
     var all = computeAll();
     var r = all.result;
-    var html = '<h2 class="bk-center">הגיל הפיזיולוגי שלך</h2>';
+    var html = pageNoHtml(STEP_RESULT) + '<h2 class="bk-center">' + esc(TXT.resultHeading) + '</h2>';
+    var outside = idAgeNote();
+    var spoken;
 
-    if (r.method === "none") {
-      html += '<p class="bk-age bk-age--none">כדי לחשב גיל צריך לבצע לפחות מבחן אחד.</p>';
+    if (r.lessThanThree) {
+      // Leah 16.9.2026: fewer than 3 age tests - no overall age, no ID-age comparison
+      html += '<p class="bk-min-tests">' + esc(TXT.minTests) + '</p>';
+      if (outside) html += '<p class="bk-outside">' + esc(outside) + '</p>';
+      html += breakdownHtml(r);
+      if (hasBelowTable(r)) html += '<p class="bk-voice bk-center">' + esc(TXT.belowTable) + '</p>';
+      spoken = TXT.minTests;
     } else {
-      html += '<p class="bk-age">' + esc(r.ageText) + '</p>';
-      var cmpText = compareText(BatKamaScore.compareToIdAge(r, state.idAge));
-      if (cmpText) html += '<p class="bk-compare">' + esc(cmpText) + '</p>';
-      if (r.testsDone < 6) html += '<p class="bk-muted bk-center">התוצאה מבוססת על ' + r.testsDone + ' מתוך 6 מבחנים.</p>';
-      html += '<p class="bk-muted bk-center">' + (r.method === "formula" ? "חישוב לפי Latorre-Rojas 2019" : "חישוב לפי טבלאות Rikli & Jones") + '</p>';
-
-      html += '<div class="bk-card"><h3>לפי מבחן</h3><ul class="bk-breakdown">';
-      TESTS.forEach(function (t) {
-        var pt = r.perTest[t.key];
-        var tag = "";
-        if (r.strongest.indexOf(t.key) > -1) tag = '<span class="bk-tag bk-tag--good">הכי חזק</span>';
-        if (r.weakest.indexOf(t.key) > -1) tag = '<span class="bk-tag bk-tag--work">הכי כדאי לחזק</span>';
-        html += '<li><span class="bk-breakdown__name">' + esc(t.short) + tag + '</span>' +
-          '<span class="bk-breakdown__age">' + (pt ? esc(BatKamaScore.testAgeText(pt)) : "לא בוצע") + '</span></li>';
-      });
-      html += '</ul></div>';
+      if (r.belowTable) {
+        // the approved sentence replaces the big number; no comparison, and not repeated below
+        html += '<p class="bk-age bk-age--sentence">' + esc(TXT.belowTable) + '</p>';
+        spoken = TXT.belowTable;
+      } else {
+        html += '<p class="bk-age">' + esc(r.ageText) + '</p>';
+        spoken = r.ageText;
+        var cmp = compareToIdAge(r, state.idAge);
+        var cmpText = compareText(cmp);
+        if (cmpText) html += '<p class="bk-compare">' + esc(cmpText) + '</p>';
+        // טיוטה 16.9 - ממתין לאישור לאה (5): only when the result is older than her ID age
+        if (cmp && cmp.kind === "older") html += '<p class="bk-safety bk-doctor">' + esc(TXT.olderDoctor) + '</p>';
+      }
+      if (outside) html += '<p class="bk-outside">' + esc(outside) + '</p>';
+      if (state.alone && r.testsDone === ALONE_TESTS.length) {
+        // טיוטה 16.9 - ממתין לאישור לאה (7): alone mode, the age comes from her 3 tests
+        html += '<p class="bk-muted bk-center">' + esc(TXT.aloneComputed) + '</p>';
+      } else if (r.testsDone < r.testsTotal) {
+        // a test skipped because of pain ("לא יכולה לבצע")
+        html += '<p class="bk-muted bk-center">הגיל מחושב מ-' + r.testsDone + ' מבחנים. כשזה יעבור — אפשר להשלים.</p>';
+      }
+      html += '<p class="bk-muted bk-center">' + esc(r.method === "formula" ? TXT.methodFormula : TXT.methodTable) + '</p>';
+      html += factHtml(1);
+      html += breakdownHtml(r);
+      if (hasBelowTable(r) && !r.belowTable) {
+        html += '<p class="bk-voice bk-center">' + esc(TXT.belowTable) + '</p>';
+      }
     }
+
+    html += '<div class="bk-card"><h3>גמישות</h3><ul class="bk-breakdown">';
+    TESTS.forEach(function (t) {
+      if (FLEX_KEYS.indexOf(t.key) === -1) return;
+      var fs = all.flexibility[t.key];
+      var rawV = all.raw[t.key];
+      // no ID age -> no age group to judge by: the measured value only
+      var txt = fs ? FLEX_LABELS[fs] : (isNum(rawV) ? formatCm(rawV) : "לא בוצע");
+      html += '<li><span class="bk-breakdown__name">' + esc(t.short) + '</span>' +
+        '<span class="bk-breakdown__age">' + esc(txt) + '</span></li>';
+    });
+    html += '</ul><p class="bk-muted bk-flex-note">לא נכנס לחישוב הגיל.</p></div>';
 
     html += '<div class="bk-card"><h3>שיווי משקל</h3><p class="bk-balance">' +
       (all.balance.rating
         ? esc(BALANCE_LABELS[all.balance.rating]) + ' <span class="bk-muted">(' + all.balance.seconds.toFixed(1) + ' שניות)</span>'
         : "לא בוצע") + '</p></div>';
 
-    html += '<div class="bk-card"><h3>3 דברים שהייתי מתחילה איתם</h3><ol class="bk-recs">' +
-      all.recs.map(function (k) { return "<li>" + esc(RECS[k]) + "</li>"; }).join("") + '</ol></div>';
+    if (all.recs.length) {
+      html += '<div class="bk-card"><h3>3 דברים שהייתי מתחילה איתם</h3><ol class="bk-recs">' +
+        all.recs.map(function (k) { return "<li>" + esc(RECS[k]) + "</li>"; }).join("") + '</ol></div>';
+    }
 
-    html += '<p class="bk-note">מבוסס על שני מחקרים מדעיים. לא תחליף לייעוץ רפואי.</p>' +
-      '<p class="bk-voice bk-center">רוצה לראות את המספר הזה יורד? 30 יום איתי — תנועה, תזונה, שינה. ומודדים שוב.</p>' +
-      '<div class="bk-nav"><button type="button" class="btn bk-btn-lg bk-to-form">רוצה תוכנית 30 יום</button>' +
+    html += factHtml(5);
+    if (all.recs.indexOf("protein") > -1) html += factHtml(8);
+
+    html += '<p class="bk-note">מבוסס על מחקרים מדעיים. לא תחליף לייעוץ רפואי.</p>' +
+      factHtml(10);
+    // "המספר הזה" needs a number: hidden with fewer than 3 tests and below the table (16.9.2026)
+    if (!r.lessThanThree && !r.belowTable) {
+      html += '<p class="bk-voice bk-center bk-see-drop">רוצה לראות את המספר הזה יורד? 30 יום איתי — תנועה, תזונה, שינה. ומודדים שוב.</p>';
+    }
+    // Leah 16.9.2026: one button -> the page with the two products
+    html += '<div class="bk-nav"><a class="btn bk-btn-lg bk-to-next" href="' + esc(nextPageUrl()) + '">' + esc(TXT.nextBtn) + '</a>' +
       '<button type="button" class="bk-link bk-back">חזרה</button></div>';
 
     el.innerHTML = html;
-    $(".bk-to-form", el).addEventListener("click", function () { go(10); });
-    $(".bk-back", el).addEventListener("click", function () { go(8); });
+    $(".bk-to-next", el).addEventListener("click", function (e) {
+      e.preventDefault();
+      storeResultForNext(all);
+      track("bat_kama_next_click", { age_bucket: ageBucket(r), method: r.method });
+      window.location.href = nextPageUrl();
+    });
+    $(".bk-back", el).addEventListener("click", function () { goBack(STEP_RESULT - 1); });
+    announce(TXT.resultHeading + ": " + spoken);
 
     if (!state.resultTracked) {
       state.resultTracked = true;
-      track("bat_kama_result", { age_bucket: BatKamaScore.ageBucket(r), method: r.method, tests_done: r.testsDone });
+      var bucket = ageBucket(r);
+      track("bat_kama_result", { age_bucket: bucket, method: r.method, tests_done: r.testsDone });
+      pixel("trackCustom", "BatKamaResult", { age_bucket: bucket });
     }
     return all;
   }
 
-  /* ---------- lead form ---------- */
-  function getUtmParams() {
-    return {
-      utmSource: params.get("utm_source") || null,
-      utmMedium: params.get("utm_medium") || null,
-      utmCampaign: params.get("utm_campaign") || null,
-      utmContent: params.get("utm_content") || null,
-      utmTerm: params.get("utm_term") || null
-    };
-  }
+  /* ---------- hand-off to bat-kama-next.html ---------- */
+  // Leah 16.9.2026: the workshop lead form is on bat-kama-next.html. Before leaving, a compact
+  // copy of the result is kept on this phone so that page can attach it to a workshop lead.
+  // Same key and shape are read in js/bat-kama-next.js. Demo mode never writes it.
+  var RESULT_KEY = "batKama.result.v1";
 
-  function leadResultPayload() {
-    var all = computeAll();
+  function compactResult(all) {
     var r = all.result;
     var perTestAges = {};
-    BatKamaScore.TEST_KEYS.forEach(function (k) {
-      perTestAges[k] = r.perTest[k] ? BatKamaScore.testAgeText(r.perTest[k]) : (state.skipped[k] ? "skipped" : null);
+    AGE_KEYS.forEach(function (k) {
+      perTestAges[k] = r.perTest[k] ? testAgeText(r.perTest[k]) : (state.skipped[k] ? "skipped" : null);
     });
+    var flexibility = {};
+    FLEX_KEYS.forEach(function (k) {
+      var fs = all.flexibility[k];
+      flexibility[k] = fs ? FLEX_LABELS[fs]
+        : (isNum(all.raw[k]) ? "measured-no-id-age" : (state.skipped[k] ? "skipped" : null));
+    });
+    var utm = getUtmParams();
+    var ad = getAdParams();
     return {
-      ageNumber: r.ageNumber,
+      v: 1,
+      savedAt: Date.now(),
       ageText: r.ageText || null,
+      ageNumber: isNum(r.ageNumber) ? r.ageNumber : null,
       method: r.method,
+      // Latorre-Rojas 2019 value, only when it actually produced the age (above the table)
+      ffa: r.method === "formula" && isNum(r.ffa) ? r.ffa : null,
       testsDone: r.testsDone,
-      ffa: isNum(r.ffa) ? Math.round(r.ffa * 100) / 100 : null,
+      lessThanThreeTests: !!r.lessThanThree,
+      belowTable: !!r.belowTable,
+      alone: !!state.alone,
       perTestAges: perTestAges,
-      rawResults: all.raw,
+      flexibility: flexibility,
       balanceRating: all.balance.rating ? BALANCE_LABELS[all.balance.rating] : null,
       balanceSeconds: isNum(all.balance.seconds) ? all.balance.seconds : null,
-      idAge: isNum(state.idAge) ? state.idAge : null,
+      nutrition: all.nutrition,
       recommendations: all.recs,
-      nutrition: all.nutrition
+      idAge: isNum(state.idAge) ? state.idAge : null,
+      utmSource: utm.utmSource, utmMedium: utm.utmMedium, utmCampaign: utm.utmCampaign,
+      utmContent: utm.utmContent, utmTerm: utm.utmTerm,
+      adId: ad.adId, adsetId: ad.adsetId, campaignId: ad.campaignId, fbclid: ad.fbclid
     };
   }
 
-  function wireForm() {
-    var form = $("#bat-kama-lead-form");
-    if (!form) return;
-    var statusEl = $("#bat-kama-lead-status");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var submitBtn = form.querySelector("button[type=submit]");
-      var name = form.name.value.trim();
-      var phone = form.phone.value.trim();
-      if (!name || !phone) return;
+  function storeResultForNext(all) {
+    if (DEMO || params.has("demo")) return; // demo mode (any demo= value) never writes
+    try {
+      localStorage.setItem(RESULT_KEY, JSON.stringify(compactResult(all)));
+    } catch (e) { /* private mode / full storage - the next page works without it */ }
+  }
 
-      if (DEMO) {
-        statusEl.textContent = "מצב הדגמה - לא נשלח.";
-        return;
-      }
-      if (typeof db === "undefined") {
-        statusEl.textContent = "משהו השתבש בשליחת הטופס. נסי שוב.";
-        statusEl.classList.add("error");
-        return;
-      }
-
-      submitBtn.disabled = true;
-      statusEl.textContent = "שולח...";
-      statusEl.classList.remove("error");
-      var utm = getUtmParams();
-      var result = leadResultPayload();
-
-      // Separate list from the studio leads (Leah, 13.9.2026). Needs its own rule in
-      // firestore.rules (published in the console) before the page goes live.
-      db.collection("age_test_leads").add({
-        name: name,
-        phone: phone,
-        source: "bat-kama",
-        site: "guralea.com",
-        page: window.location.pathname,
-        utmSource: utm.utmSource,
-        utmMedium: utm.utmMedium,
-        utmCampaign: utm.utmCampaign,
-        utmContent: utm.utmContent,
-        utmTerm: utm.utmTerm,
-        status: "new",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        result: result
-      })
-        .then(function (docRef) {
-          // Copy to the leads sheet (tab בת כמה את באמת) - fire-and-forget, see js/leads-sheet.js.
-          if (window.sendLeadToSheet) {
-            window.sendLeadToSheet({ form: "bat-kama", id: docRef && docRef.id, name: name, phone: phone });
-          }
-          statusEl.textContent = "הפרטים הגיעו. אני אחזור אלייך.";
-          track("bat_kama_lead_submitted", { age_bucket: BatKamaScore.ageBucket(computeAll().result), method: result.method });
-          form.reset();
-        })
-        .catch(function (err) {
-          console.error(err);
-          statusEl.textContent = "משהו השתבש בשליחת הטופס. נסי שוב.";
-          statusEl.classList.add("error");
-        })
-        .finally(function () {
-          submitBtn.disabled = false;
-        });
-    });
-    $("#bk-form-back").addEventListener("click", function () { go(9); });
+  // demo= and _scan=1 travel along, so the next page also stays silent (no tracking, no writes).
+  // UTM / ad ids do not go in the URL (that would start a new GA4 session) - they are in RESULT_KEY.
+  function nextPageUrl() {
+    var q = [];
+    if (params.has("demo")) q.push("demo=" + encodeURIComponent(params.get("demo")));
+    if (params.get("_scan") === "1") q.push("_scan=1");
+    return NEXT_PAGE + (q.length ? "?" + q.join("&") : "");
   }
 
   /* ---------- navigation ---------- */
-  function go(step, fromHistory) {
-    step = Math.max(0, Math.min(LAST_STEP, step));
+  // In alone mode the screens she can't do on her own don't exist - forward or backward.
+  function stepAllowed(step) {
+    return !state.alone || ALONE_SKIP_STEPS.indexOf(step) === -1;
+  }
+
+  function resolveStep(step, dir) {
+    var s = Math.max(0, Math.min(LAST_STEP, step));
+    while (s > 0 && s < LAST_STEP && !stepAllowed(s)) s += dir;
+    return Math.max(0, Math.min(LAST_STEP, s));
+  }
+
+  function focusHeading(screen) {
+    var h = screen && screen.querySelector("h1, h2");
+    if (!h) return;
+    h.setAttribute("tabindex", "-1");
+    try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); }
+  }
+
+  // mode: undefined = new history entry (forward), "replace" = replace the current entry
+  // (in-page "חזרה"), "history" = popstate (no entry), "stay" = redraw, "init" = page load.
+  function go(step, mode) {
+    var dir = step >= state.step ? 1 : -1;
+    step = resolveStep(step, dir);
     stopTimer();
     state.step = step;
-    if (step >= 1 && step <= 6) renderTestScreen(TESTS[step - 1], step - 1);
-    if (step === 7) renderBalanceScreen();
-    if (step === 8) renderNutritionScreen();
-    if (step === 9) renderResult();
-    document.querySelectorAll(".bk-screen").forEach(function (s) {
-      s.hidden = Number(s.getAttribute("data-step")) !== step;
-    });
-    if (!fromHistory) {
-      try { history.pushState({ bkStep: step }, "", window.location.href); } catch (e) { /* ignore */ }
+    var key = SCREEN_KEYS[step];
+    if (key) {
+      var t = testByKey(key);
+      // a screen that already holds a valid result is not "skipped" any more
+      if (screenValid(t)) delete state.skipped[key];
+      if (key === BALANCE.key) renderBalanceScreen();
+      else renderTestScreen(t, step);
     }
+    if (step === STEP_NUTRITION) renderNutritionScreen();
+    if (step === STEP_RESULT) renderResult();
+    var current = null;
+    document.querySelectorAll(".bk-screen").forEach(function (s) {
+      var on = Number(s.getAttribute("data-step")) === step;
+      s.hidden = !on;
+      if (on) current = s;
+    });
+    try {
+      var hs = history.state || {};
+      if (!mode) history.pushState({ bkStep: step, bkPrev: hs.bkStep }, "", window.location.href);
+      else if (mode === "replace") history.replaceState({ bkStep: step, bkPrev: hs.bkPrev }, "", window.location.href);
+    } catch (e) { /* ignore */ }
+    saveState();
     // style.css sets scroll-behavior:smooth on <html>; a new screen should start at the top at once
     try { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); } catch (e3) { window.scrollTo(0, 0); }
+    if (mode !== "init") focusHeading(current);
+  }
+
+  // In-page "חזרה": never adds a history entry. When the previous entry is exactly the
+  // screen we go back to, use the browser's own Back, so the phone's Back stays in sync.
+  function goBack(target) {
+    target = resolveStep(target, -1);
+    var hs = history.state;
+    if (hs && hs.bkStep === state.step && hs.bkPrev === target) {
+      history.back();
+      return;
+    }
+    go(target, "replace");
   }
 
   function applyDemo() {
@@ -944,10 +1524,83 @@
     Object.keys(DEMO.values).forEach(function (k) { state.values[k] = DEMO.values[k]; });
     state.attempts.upAndGo = DEMO.attempts.upAndGo.slice();
     state.attempts.balance = DEMO.attempts.balance.slice();
-    state.values.upAndGo = Math.min.apply(null, DEMO.attempts.upAndGo);
+    if (DEMO.attempts.upAndGo.length) state.values.upAndGo = Math.min.apply(null, DEMO.attempts.upAndGo);
+    state.skipped = JSON.parse(JSON.stringify(DEMO.skipped || {}));
     state.nutrition = JSON.parse(JSON.stringify(DEMO.nutrition));
     var idIn = $("#bk-id-age");
     if (idIn) idIn.value = DEMO.idAge;
+  }
+
+  /* ---------- intro: "מי לידך" + resume ---------- */
+  function renderIntroState() {
+    var withBtn = $("#bk-with");
+    var aloneBtn = $("#bk-alone");
+    var note = $("#bk-alone-note");
+    if (withBtn && aloneBtn && note) {
+      withBtn.setAttribute("aria-pressed", state.aloneAnswered && !state.alone ? "true" : "false");
+      aloneBtn.setAttribute("aria-pressed", state.aloneAnswered && state.alone ? "true" : "false");
+      if (state.aloneAnswered) {
+        var needCard = $(".bk-alone");
+        if (needCard) needCard.classList.remove("is-needed");
+      }
+      note.hidden = !state.alone;
+      note.textContent = state.alone ? TXT.alone : "";
+    }
+    var resume = $("#bk-resume");
+    if (resume) resume.hidden = !pendingResume;
+  }
+
+  function wireIntro() {
+    var withBtn = $("#bk-with");
+    var aloneBtn = $("#bk-alone");
+    if (withBtn) {
+      withBtn.addEventListener("click", function () {
+        state.alone = false;
+        state.aloneAnswered = true;
+        renderIntroState();
+        saveState();
+      });
+    }
+    if (aloneBtn) {
+      aloneBtn.addEventListener("click", function () {
+        state.alone = true;
+        state.aloneAnswered = true;
+        renderIntroState();
+        saveState();
+      });
+    }
+    var yes = $("#bk-resume-yes");
+    var no = $("#bk-resume-no");
+    if (yes) {
+      yes.addEventListener("click", function () {
+        var saved = pendingResume;
+        pendingResume = null;
+        applySaved(saved);
+        var idIn = $("#bk-id-age");
+        if (idIn && isNum(state.idAge)) idIn.value = state.idAge;
+        renderIntroState();
+        go(saved && validStep(saved.step) ? saved.step : 1);
+      });
+    }
+    if (no) {
+      no.addEventListener("click", function () {
+        pendingResume = null;
+        clearSaved();
+        state.idAge = null;
+        state.alone = false;
+        state.aloneAnswered = false;
+        state.values = {};
+        state.signs = {};
+        state.attempts = { upAndGo: [], balance: [] };
+        state.skipped = {};
+        state.nutrition = {};
+        state.startTracked = false;
+        state.resultTracked = false;
+        var idIn = $("#bk-id-age");
+        if (idIn) idIn.value = "";
+        renderIntroState();
+      });
+    }
   }
 
   function init() {
@@ -955,26 +1608,58 @@
     renderLeah();
     applyDemo();
 
+    var saved = loadSaved();
+    if (saved) {
+      if (saved.step >= 1) pendingResume = saved; // she stopped in the middle - ask first
+      else applySaved(saved);                     // only the "מי לידך" answer / ID age
+    }
+    wireIntro();
+    renderIntroState();
+
     var idIn = $("#bk-id-age");
+    if (isNum(state.idAge) && !DEMO) idIn.value = state.idAge;
     idIn.addEventListener("input", function () {
       var n = parseNum(idIn.value);
       state.idAge = isNum(n) && n >= 18 && n <= 110 && Math.floor(n) === n ? n : null;
+      saveState();
     });
     $("#bk-start").addEventListener("click", function () {
-      track("bat_kama_start", {});
+      // 16.9.2026: no start before "מי לידך עכשיו?" is answered - a woman alone must not get
+      // the screens that need someone next to her. The card is highlighted and focused.
+      if (!state.aloneAnswered) {
+        var card = $(".bk-alone");
+        if (card) {
+          card.classList.add("is-needed");
+          try { card.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) { card.scrollIntoView(); }
+        }
+        var first = $("#bk-with");
+        if (first) { try { first.focus({ preventScroll: true }); } catch (e2) { first.focus(); } }
+        return;
+      }
+      if (!state.startTracked) {
+        state.startTracked = true;
+        track("bat_kama_start", {});
+        pixel("trackCustom", "BatKamaStart");
+      }
       go(1);
     });
-    wireForm();
 
     window.addEventListener("popstate", function (e) {
-      var s = e.state && typeof e.state.bkStep === "number" ? e.state.bkStep : 0;
-      go(s, true);
+      var s = e.state && validStep(e.state.bkStep) ? e.state.bkStep : 0;
+      go(s, "history");
+    });
+
+    // left the page before the result: once, with the screen she stopped on
+    window.addEventListener("pagehide", function () {
+      if (exitTracked || state.resultTracked) return;
+      exitTracked = true;
+      track("bat_kama_exit", { last_step: state.step, transport_type: "beacon" });
     });
 
     var startStep = parseInt(params.get("step"), 10);
-    var first = isNum(startStep) ? startStep : 0;
+    var first = validStep(startStep) ? startStep : 0;
     try { history.replaceState({ bkStep: first }, "", window.location.href); } catch (e) { /* ignore */ }
-    go(first, true);
+    go(first, "init");
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
