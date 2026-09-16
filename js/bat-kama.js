@@ -619,8 +619,9 @@
   // v2 = the screen order of 16.9.2026. v1 saves (balance 7, step 6) are migrated once.
   var SAVE_KEY = "batKama.progress.v2";
   var OLD_SAVE_KEY = "batKama.progress.v1";
-  // 30 days (was 24h). Leah 17.9.2026: "תתחיל ביום שישי... או תעשה אותו כל השבוע - זה לא משנה".
-  var SAVE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+  // 60 days (was 24h). Leah 17.9.2026: she may finish any time until the workshop starts
+  // (launch 11.10 -> workshop 26-27.11 is ~47 days).
+  var SAVE_MAX_AGE_MS = 60 * 24 * 60 * 60 * 1000;
   var LINK_PARAM = "p"; // progress carried inside the saved WhatsApp link (no expiry)
   var V1_TO_V2_STEP = { 6: 7, 7: 6 };
   var pendingResume = null; // saved progress waiting for "להמשיך" / "להתחיל מחדש"
@@ -694,7 +695,7 @@
       var d = JSON.parse(s);
       if (migrate) localStorage.removeItem(OLD_SAVE_KEY);
       if (!d || typeof d !== "object") return null;
-      // older than 30 days (or no time stamp): start fresh
+      // older than 60 days (or no time stamp): start fresh
       if (!isNum(d.savedAt) || Date.now() - d.savedAt > SAVE_MAX_AGE_MS || d.savedAt > Date.now() + 60000) {
         localStorage.removeItem(SAVE_KEY);
         return null;
