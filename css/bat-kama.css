@@ -655,6 +655,24 @@ input.bk-num:disabled {
 }
 
 /* Leah's own voice lines (13.9.2026) */
+/* "לא יכולה לבצע את המבחן עכשיו?" - save the link to WhatsApp (Leah 17.9.2026) */
+.bk-later {
+  display: block;
+  margin: 0.75rem auto 1rem;
+  max-width: 32rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid #25d366;
+  border-radius: 12px;
+  background: #f0fbf4;
+  color: #14532d;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+.bk-later strong { display: block; }
+.bk-later:focus-visible { outline: 3px solid #14532d; outline-offset: 2px; }
+
 .bk-voice { font-size: 1.05rem; font-weight: 600; line-height: 1.5; margin: 0.25rem 0 0.75rem; }
 
 /* "עוצרים מיד" (draft 16.9.2026) - intro and every screen with a clock */
