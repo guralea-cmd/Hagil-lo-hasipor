@@ -619,8 +619,9 @@
   // v2 = the screen order of 16.9.2026. v1 saves (balance 7, step 6) are migrated once.
   var SAVE_KEY = "batKama.progress.v2";
   var OLD_SAVE_KEY = "batKama.progress.v1";
-  // 7 days (was 24h) since "שמרי את המבחן בוואטסאפ" (17.9.2026) - "later" is often not the same day
-  var SAVE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+  // 30 days (was 24h). Leah 17.9.2026: "תתחיל ביום שישי... או תעשה אותו כל השבוע - זה לא משנה".
+  var SAVE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+  var LINK_PARAM = "p"; // progress carried inside the saved WhatsApp link (no expiry)
   var V1_TO_V2_STEP = { 6: 7, 7: 6 };
   var pendingResume = null; // saved progress waiting for "להמשיך" / "להתחיל מחדש"
 
@@ -629,17 +630,51 @@
     return Object.keys(state.values).some(function (k) { return isNum(state.values[k]); });
   }
 
+  function snapshot() {
+    return {
+      v: 2, step: state.step, idAge: state.idAge, alone: state.alone, aloneAnswered: state.aloneAnswered,
+      values: state.values, signs: state.signs, attempts: state.attempts,
+      skipped: state.skipped, nutrition: state.nutrition,
+      startTracked: state.startTracked, resultTracked: state.resultTracked, savedAt: Date.now()
+    };
+  }
+
   function saveState() {
     if (DEMO) return; // demo mode never writes saved state
     try {
       if (!hasProgress()) return;
-      localStorage.setItem(SAVE_KEY, JSON.stringify({
-        v: 2, step: state.step, idAge: state.idAge, alone: state.alone, aloneAnswered: state.aloneAnswered,
-        values: state.values, signs: state.signs, attempts: state.attempts,
-        skipped: state.skipped, nutrition: state.nutrition,
-        startTracked: state.startTracked, resultTracked: state.resultTracked, savedAt: Date.now()
-      }));
+      localStorage.setItem(SAVE_KEY, JSON.stringify(snapshot()));
     } catch (e) { /* private mode / full storage - the page still works */ }
+  }
+
+  // The saved WhatsApp link carries her progress, so it resumes even in another browser:
+  // the ad opens in Facebook's in-app browser, the link later opens in Safari/Chrome,
+  // and those don't share localStorage. The snapshot is numbers only (ASCII JSON).
+  function progressLink() {
+    var url = "https://guralea.com/bat-kama.html?utm_source=whatsapp&utm_medium=save_later";
+    if (DEMO || !hasProgress()) return url;
+    try {
+      var b64 = btoa(JSON.stringify(snapshot())).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      return url + "&" + LINK_PARAM + "=" + b64;
+    } catch (e) { return url; }
+  }
+
+  function loadFromLink() {
+    try {
+      var m = new RegExp("[?&]" + LINK_PARAM + "=([A-Za-z0-9_-]+)").exec(location.search);
+      if (!m) return null;
+      var b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      var d = JSON.parse(atob(b64));
+      // take it out of the address bar, so a reload or a shared link doesn't carry it again
+      try {
+        var clean = location.search.replace(new RegExp("([?&])" + LINK_PARAM + "=[^&]*&?"), "$1").replace(/[?&]$/, "");
+        history.replaceState(history.state, "", location.pathname + clean + location.hash);
+      } catch (e2) { /* ignore */ }
+      if (!d || typeof d !== "object" || !isNum(d.savedAt)) return null;
+      if (!validStep(d.step)) d.step = 1;
+      return d;
+    } catch (e) { return null; }
   }
 
   function validStep(s) {
@@ -659,7 +694,7 @@
       var d = JSON.parse(s);
       if (migrate) localStorage.removeItem(OLD_SAVE_KEY);
       if (!d || typeof d !== "object") return null;
-      // older than 24 hours (or no time stamp): start fresh
+      // older than 30 days (or no time stamp): start fresh
       if (!isNum(d.savedAt) || Date.now() - d.savedAt > SAVE_MAX_AGE_MS || d.savedAt > Date.now() + 60000) {
         localStorage.removeItem(SAVE_KEY);
         return null;
@@ -883,7 +918,7 @@
     var src = $("#bk-later");
     if (!src) return "";
     return '<a class="bk-later" target="_blank" rel="noopener" href="' + esc(src.getAttribute("href")) + '">' +
-      '<strong>לא יכולה להמשיך עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך. מה שכבר עשית נשמר בטלפון הזה לשבוע.</a>';
+      '<strong>לא יכולה להמשיך עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך. כשתחזרי מהקישור, תמשיכי בדיוק מאיפה שעצרת.</a>';
   }
 
   function navHtml(nextLabel) {
@@ -1568,6 +1603,10 @@
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest(".bk-later");
       if (!a) return;
+      // put her progress into the link right before WhatsApp opens
+      var msg = "המבחן \"בת כמה את באמת?\" של לאה גורא - להמשיך כשיהיה לי זמן: " + progressLink();
+      a.setAttribute("href", "https://wa.me/?text=" + encodeURIComponent(msg));
+      saveState();
       track("bat_kama_save_later", { method: "whatsapp", step: state.step });
       pixel("trackCustom", "BatKamaSaveLater");
     });
@@ -1627,6 +1666,9 @@
     applyDemo();
 
     var saved = loadSaved();
+    var fromLink = DEMO ? null : loadFromLink();
+    // the link wins unless this phone has newer progress of its own
+    if (fromLink && (!saved || fromLink.savedAt >= saved.savedAt)) saved = fromLink;
     if (saved) {
       if (saved.step >= 1) pendingResume = saved; // she stopped in the middle - ask first
       else applySaved(saved);                     // only the "מי לידך" answer / ID age
