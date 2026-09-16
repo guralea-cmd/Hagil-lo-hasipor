@@ -1553,6 +1553,14 @@
   function wireIntro() {
     var withBtn = $("#bk-with");
     var aloneBtn = $("#bk-alone");
+    // "לא יכולה לבצע את המבחן עכשיו?" (Leah 17.9.2026): opens her WhatsApp to save the link for later
+    var later = $("#bk-later");
+    if (later) {
+      later.addEventListener("click", function () {
+        track("bat_kama_save_later", { method: "whatsapp" });
+        pixel("trackCustom", "BatKamaSaveLater");
+      });
+    }
     if (withBtn) {
       withBtn.addEventListener("click", function () {
         state.alone = false;
