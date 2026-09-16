@@ -2,7 +2,19 @@
    Uses the tokens from style.css; nothing here affects other pages. */
 
 .bk-main {
-  padding: var(--space-5) 0 110px; /* bottom room for the floating WhatsApp button */
+  padding: var(--space-5) 0 var(--space-8);
+}
+
+/* The site-wide floating WhatsApp button (js/main.js) opens the community-story template and
+   covers the main buttons here - hidden on this page only (audit 16.9.2026). */
+.wa-float-btn {
+  display: none !important;
+}
+
+/* Headings get focus after each screen change (tabindex=-1) - no box around them */
+.bk-screen h1:focus,
+.bk-screen h2:focus {
+  outline: none;
 }
 
 .bk-wrap {
@@ -41,7 +53,7 @@
 }
 
 .bk-note {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-muted);
   text-align: center;
   margin: 0 0 var(--space-4);
@@ -178,8 +190,15 @@
   border-inline-start: 4px solid var(--color-accent);
   border-radius: 8px;
   padding: var(--space-3) var(--space-4);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
+  line-height: 1.55;
   margin: 0 0 var(--space-4);
+}
+
+/* the safety block on the intro screen: larger and bold (audit 16.9.2026) */
+.bk-screen[data-step="0"] > .bk-safety {
+  font-size: var(--text-md);
+  font-weight: 700;
 }
 
 /* Progress */
@@ -403,8 +422,19 @@ input.bk-num:disabled {
   margin: var(--space-2) 0 var(--space-2);
 }
 
-.bk-age--none {
-  font-size: var(--text-lg);
+/* below the table: the approved sentence stands in for the number */
+.bk-age--sentence {
+  font-size: var(--text-xl);
+  line-height: 1.3;
+}
+
+/* fewer than 3 age tests: the explanation line instead of an age */
+.bk-min-tests {
+  text-align: center;
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.5;
+  margin: var(--space-2) 0 var(--space-3);
 }
 
 .bk-compare {
@@ -478,5 +508,318 @@ input.bk-num:disabled {
   font-size: var(--text-md);
 }
 
+/* Optional tests 4-5: "לא חובה" under the heading (14.9.2026) */
+.bk-optional {
+  font-size: var(--text-sm);
+  margin: -4px 0 var(--space-3);
+}
+
+.bk-flex-note {
+  margin: var(--space-2) 0 0;
+}
+
+/* Research sentences, "10 משפטים" (14.9.2026) */
+/* תנאי המבחן - Leah 15.9.2026, prominent block at the top of the intro */
+.bk-terms {
+  border-right: 6px solid var(--primary, #B33A22);
+  background: #FFF6F2;
+}
+.bk-terms__list {
+  margin: 0;
+  padding-inline-start: 1.2rem;
+  display: grid;
+  gap: 0.55rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.bk-terms__list li::marker { font-weight: 700; }
+
+/* מקרי קצה - לאה 15.9.2026 */
+
+/* תחליפי ציוד מתחת לרשימת "מה צריך" */
+.bk-swap {
+  font-size: var(--text-base);
+  line-height: 1.55;
+  margin: var(--space-3) 0 0;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 3px solid var(--color-accent);
+}
+
+/* בחירה: "יש מישהו לידי" / "אני לבד", וגם "להמשיך" / "להתחיל מחדש" */
+.bk-choice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.bk-choice__btn {
+  min-height: 60px;
+  border-radius: 30px;
+  border: 2px solid var(--color-border);
+  background: var(--color-card);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.3;
+  padding: var(--space-2);
+  cursor: pointer;
+}
+
+.bk-choice__btn[aria-pressed="true"] {
+  background: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+  color: #fff;
+}
+
+.bk-alone.is-needed {
+  outline: 3px solid #b5402a;
+  outline-offset: 3px;
+}
+
+.bk-timer__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.bk-alone__note {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-base);
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.bk-resume {
+  border-inline-start: 6px solid var(--color-accent-dark);
+}
+
+.bk-resume__q {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.bk-resume__note {
+  margin: var(--space-3) 0 0;
+}
+
+/* "כואב? עוצרים" ו"לעשות שוב" מתחת לכפתורים במסך מבחן */
+.bk-nav-note {
+  width: 100%;
+  margin: calc(var(--space-2) * -1) 0 0;
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--color-text);
+  text-align: start;
+}
+
+/* גיל תעודת זהות מחוץ לטבלאות */
+.bk-outside {
+  background: #fff5ea;
+  border-radius: 8px;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  text-align: center;
+  margin: 0 0 var(--space-3);
+}
+
+.bk-fact {
+  background: #f7f1ea;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.bk-fact p {
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.bk-fact .bk-src {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+
+.bk-src a {
+  color: var(--color-muted);
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
 /* Leah's own voice lines (13.9.2026) */
 .bk-voice { font-size: 1.05rem; font-weight: 600; line-height: 1.5; margin: 0.25rem 0 0.75rem; }
+
+/* "עוצרים מיד" (draft 16.9.2026) - intro and every screen with a clock */
+.bk-stop {
+  border-inline-start-color: #b3261e;
+}
+
+/* result older than the ID age: the doctor line under the comparison (draft 16.9.2026) */
+.bk-doctor {
+  text-align: start;
+  margin: var(--space-2) 0 var(--space-3);
+}
+
+/* the single result button is a link styled as the big button */
+a.btn.bk-btn-lg {
+  text-align: center;
+  text-decoration: none;
+}
+
+/* ================================================================
+   bat-kama-next.html - "מה עושים עם התוצאה?" (Leah 16.9.2026)
+   two products side by side from 820px, stacked below
+   ================================================================ */
+.bk-next__wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.bk-next__title {
+  font-size: var(--text-2xl);
+  line-height: 1.25;
+  color: var(--color-primary);
+  text-align: center;
+  margin: var(--space-2) 0 var(--space-5);
+}
+
+.bk-next__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 820px) {
+  .bk-next__grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.bk-product {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-top: 6px solid var(--color-accent-dark);
+  border-radius: var(--radius);
+  padding: var(--space-5) var(--space-4);
+}
+
+.bk-product h2 {
+  font-size: var(--text-xl);
+  line-height: 1.3;
+  color: var(--color-primary);
+  text-align: right;
+  margin: 0 0 var(--space-3);
+}
+
+.bk-product h3 {
+  font-size: var(--text-md);
+  color: var(--color-primary);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.bk-product__line {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  margin: 0 0 var(--space-3);
+}
+
+.bk-product__sub {
+  font-size: var(--text-md);
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0 0 var(--space-3);
+}
+
+.bk-product__list {
+  margin: 0 0 var(--space-4);
+  padding-inline-start: var(--space-5);
+  line-height: 1.55;
+}
+
+.bk-product__list li {
+  margin-bottom: var(--space-1);
+}
+
+/* the app button sits at the bottom of its column */
+.bk-product__cta {
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+
+.btn.bk-btn-lg.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.bk-product form {
+  max-width: none;
+  margin-top: auto;
+}
+
+.bk-product form input {
+  min-height: 52px;
+  font-size: var(--text-md);
+}
+
+.bk-disclosure {
+  font-size: var(--text-base);
+  line-height: 1.55;
+  margin: var(--space-3) 0;
+}
+
+/* internal review notes - remove before launch (class bk-review-note) */
+.bk-review-note {
+  border: 2px dashed #b07d00;
+  background: #fff8db;
+  color: #5c4500;
+  border-radius: 8px;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 0 0 var(--space-3);
+}
+
+.bk-page-no {
+  display: inline-block;
+  margin: 0 0 var(--space-3);
+}
+
+.bk-product__cta .bk-review-note {
+  margin: var(--space-2) 0 0;
+  text-align: center;
+}
+
+/* "למה המבחן הזה" - intro card (draft 16.9.2026) */
+.bk-intro__title {
+  margin-top: 0;
+}
+.bk-intro h3 {
+  margin: var(--space-4) 0 var(--space-2);
+}
+.bk-intro p {
+  margin: 0 0 var(--space-2);
+  line-height: 1.6;
+}
+.bk-intro__nofail {
+  margin-top: var(--space-4) !important;
+  font-size: 1.15em;
+  color: #8a2f1f;
+}
