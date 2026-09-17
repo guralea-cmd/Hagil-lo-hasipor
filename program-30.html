@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<!-- 18.9.2026: the saved-link progress (?s=) is hers. Strip it from the address BEFORE the Pixel
+     and GA4 tags read the URL - same rule as bat-kama.html. -->
+<script>
+window.__p30 = (function () {
+  try {
+    var m = /[?&]s=([A-Za-z0-9_-]+)/.exec(location.search);
+    if (!m) return null;
+    var clean = location.search.replace(/([?&])s=[^&]*&?/, "$1").replace(/[?&]$/, "");
+    history.replaceState(null, "", location.pathname + clean + location.hash);
+    return m[1];
+  } catch (e) { return null; }
+})();
+</script>
+<!-- Meta Pixel Code -->
+<script>
+var _skipTracking = /[?&](_scan=1|demo=|day=)/.test(location.search);
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+if (!_skipTracking) {
+fbq('init', '1002367290734793');
+fbq('track', 'PageView');
+}
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1002367290734793&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MEG8NMMGTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+if (!/[?&](_scan=1|demo=|day=)/.test(location.search)) {
+gtag('config', 'G-MEG8NMMGTD');
+}
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>30 יום איתי | הגיל הוא לא הסיפור</title>
+<meta name="description" content="יום אחד בכל פעם: תנועה, צלחת, תבלין, מים ושינה - ביחד. 30 יום, ואז מודדים שוב.">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/style.css?v=96">
+<link rel="stylesheet" href="css/program-30.css?v=1">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">דלגי לתוכן הראשי</a>
+
+<header>
+  <nav class="nav" aria-label="ניווט ראשי">
+    <a href="index.html" class="logo"><img class="logo__mark" src="images/favicon.svg" alt="הגיל הוא לא הסיפור" width="44" height="44"><span class="logo__text">הגיל הוא<br>לא הסיפור</span></a>
+    <button class="menu-toggle" aria-label="פתח תפריט" aria-expanded="false" aria-controls="primary-navigation">&#9776;</button>
+    <ul class="nav-links" id="primary-navigation">
+      <li><a href="index.html">בית</a></li>
+      <li><a href="about.html">קצת עליי</a></li>
+      <li><a href="bat-kama.html">בת כמה את באמת?</a></li>
+      <li><a href="workshop.html">פרטים והרשמה לסדנה</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main-content" class="p30-main">
+  <div class="p30-wrap">
+    <p class="bk-review-note bk-page-no">טיוטה 18.9 - לאישור לאה</p>
+    <h1>30 יום איתי</h1>
+    <p class="p30-lead">יום אחד בכל פעם. תנועה, צלחת, תבלין, מים ושינה - ביחד, לא כל אחד לבד.<br>
+    ביום 30 מודדות שוב, ורואות את המספר.</p>
+
+    <div id="p30-app"></div>
+
+    <div class="p30-card p30-safety" id="p30-safety">
+      <h2>לפני שמתחילות - שאלון קצר</h2>
+      <ul>
+        <li>מחלת כליות? אל תעלי את כמות החלבון בלי לשאול את הרופא/ה.</li>
+        <li>לוקחת מדללי דם? תבלינים באוכל בסדר. תוספים ותמציות - רק באישור רופא/ה.</li>
+        <li>אבנים בכיס המרה או בכליות? בלי תוספי כורכום.</li>
+        <li>נוחרת חזק, יש הפסקות נשימה בשינה, או ישנוניות קשה ביום? תפני לרופא/ה.</li>
+        <li>קשה לך להירדם כבר חודשים? יש טיפול קצר ויעיל אצל איש מקצוע, ושווה לך לשאול עליו.</li>
+        <li>גלי חום שמפריעים? תפני לרופאת נשים. התוכנית הזאת לא מטפלת בהם.</li>
+        <li>הכלל של המבחן ממשיך כאן: עוצרים מיד בכאב, בלחץ בחזה, בסחרחורת או בקוצר נשימה.</li>
+      </ul>
+    </div>
+
+    <p class="p30-foot-note">התוכנית לא מחליפה ייעוץ רפואי. ב-30 יום רואים בעיקר שינה, אנרגיה והרגלים.<br>
+    השינוי הגדול בשריר ובכאב נמדד במחקרים אחרי 10 עד 16 שבועות, ולכן יום 30 הוא המדידה הראשונה.</p>
+  </div>
+</main>
+
+<footer>
+  <p>הגיל הוא לא הסיפור © <span id="year"></span> לאה גורא | כל הזכויות שמורות</p>
+  <p><a href="accessibility.html">הצהרת נגישות</a></p>
+  <p><a href="privacy.html">מדיניות פרטיות</a></p>
+</footer>
+
+<script defer src="js/main.js?v=9"></script>
+<script defer src="js/program-30.js?v=1"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

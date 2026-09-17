@@ -1339,7 +1339,52 @@
     return html + '</ul></div>';
   }
 
+  // Leah 17.9.2026: "הטלפון שלה על ההתחלה זה מאוד לא טוב, זה יוריד לנו הרבה" - and the 13.9
+  // decision says the form is at the end ("כמה שפחות, כדי שאף אחת לא תעזוב באמצע").
+  // So the details are asked here, after she finished, right before the number is shown.
+  function renderLeadGate() {
+    var el = screenEl(STEP_RESULT);
+    el.innerHTML = pageNoHtml(STEP_RESULT) +
+      '<h2 class="bk-center">סיימת. המספר שלך מוכן.</h2>' +
+      '<div class="bk-card bk-lead is-gate" id="bk-lead">' +
+      '<p>כדי לראות את התוצאה ולקבל אותה ממני, השאירי שם וטלפון.</p>' +
+      '<div class="bk-field"><label for="bk-name">שם</label>' +
+      '<input id="bk-name" type="text" autocomplete="name" maxlength="80"></div>' +
+      '<div class="bk-field"><label for="bk-phone">טלפון</label>' +
+      '<input id="bk-phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20"></div>' +
+      '<label class="bk-consent"><input type="checkbox" id="bk-consent">' +
+      '<span>אני מאשרת שלאה תחזור אליי ותשלח לי את התוצאות.</span></label>' +
+      '<p class="bk-muted">רק אני רואה את הפרטים ואת התוצאות שלך. <a href="privacy.html">מדיניות פרטיות</a></p>' +
+      '<p class="bk-lead__status" id="bk-lead-status" role="status"></p>' +
+      '<div class="bk-nav"><button type="button" class="btn bk-btn-lg" id="bk-lead-go">לראות את התוצאה</button></div>' +
+      '</div>' +
+      '<div class="bk-nav"><button type="button" class="bk-link bk-back">חזרה</button></div>';
+
+    $("#bk-lead-go", el).addEventListener("click", function () {
+      var nameEl = $("#bk-name", el);
+      var phoneEl = $("#bk-phone", el);
+      var consentEl = $("#bk-consent", el);
+      var statusEl = $("#bk-lead-status", el);
+      var nm = nameEl.value.trim();
+      var ph = phoneEl.value.trim();
+      if (!validLead(nm, ph)) {
+        statusEl.textContent = "צריך שם ומספר טלפון מלא, כדי שאוכל לחזור אלייך.";
+        nameEl.value.trim() ? phoneEl.focus() : nameEl.focus();
+        return;
+      }
+      if (consentEl && !consentEl.checked) {
+        statusEl.textContent = "צריך לסמן את האישור, כדי שאוכל לחזור אלייך.";
+        consentEl.focus();
+        return;
+      }
+      saveLead(nm, ph);
+      renderResult();
+    });
+    $(".bk-back", el).addEventListener("click", function () { goBack(STEP_RESULT - 1); });
+  }
+
   function renderResult() {
+    if (!state.leadSent && !DEMO) { renderLeadGate(); return; }
     var el = screenEl(STEP_RESULT);
     var all = computeAll();
     var r = all.result;
@@ -1600,11 +1645,6 @@
      Her details are saved the moment she starts, so a woman who stops in the middle is not lost.
      They go to age_test_leads (source "bat-kama") and to the sheet tab "בת כמה את באמת".
      They are never written into the saved-progress link - only the flag that they were sent. */
-  function renderLeadCard() {
-    var card = $("#bk-lead");
-    if (card) card.hidden = DEMO || state.leadSent;
-  }
-
   function cleanPhone(v) {
     return String(v || "").replace(/[^\d]/g, "");
   }
@@ -1624,17 +1664,11 @@
     };
   }
 
-  // Saves her details, then calls done() either way - a failed save must never block the test.
-  function saveLead(done) {
-    var nameEl = $("#bk-name");
-    var phoneEl = $("#bk-phone");
-    var statusEl = $("#bk-lead-status");
-    var name = nameEl ? nameEl.value.trim() : "";
-    var phone = phoneEl ? phoneEl.value.trim() : "";
+  // Saves her details. A failed save never blocks her from seeing the result.
+  function saveLead(name, phone) {
     state.leadSent = true;
     saveState();
-    renderLeadCard();
-    track("generate_lead", { form_name: "bat_kama_start" });
+    track("generate_lead", { form_name: "bat_kama_result" });
     pixel("track", "Lead", { content_name: "bat-kama" });
     var attr = attribution();
     function toSheet(id) {
@@ -1750,7 +1784,6 @@
       state.idAge = isNum(n) && n >= 18 && n <= 110 && Math.floor(n) === n ? n : null;
       saveState();
     });
-    renderLeadCard();
     $("#bk-start").addEventListener("click", function () {
       // 16.9.2026: no start before "מי לידך עכשיו?" is answered - a woman alone must not get
       // the screens that need someone next to her. The card is highlighted and focused.
@@ -1763,30 +1796,6 @@
         var first = $("#bk-with");
         if (first) { try { first.focus({ preventScroll: true }); } catch (e2) { first.focus(); } }
         return;
-      }
-      // name + phone before the test (Leah 17.9.2026)
-      var leadCard = $("#bk-lead");
-      if (leadCard && !leadCard.hidden) {
-        var nameEl = $("#bk-name");
-        var phoneEl = $("#bk-phone");
-        var consentEl = $("#bk-consent");
-        var statusEl = $("#bk-lead-status");
-        var nm = nameEl ? nameEl.value.trim() : "";
-        var ph = phoneEl ? phoneEl.value.trim() : "";
-        if (!validLead(nm, ph) || (consentEl && !consentEl.checked)) {
-          if (statusEl) {
-            statusEl.textContent = !validLead(nm, ph)
-              ? "צריך שם ומספר טלפון מלא, כדי שאוכל לחזור אלייך."
-              : "צריך לסמן את האישור, כדי שאוכל לחזור אלייך.";
-          }
-          leadCard.classList.add("is-needed");
-          try { leadCard.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e3) { leadCard.scrollIntoView(); }
-          var focusEl = !nm ? nameEl : (!validLead(nm, ph) ? phoneEl : consentEl);
-          if (focusEl) { try { focusEl.focus({ preventScroll: true }); } catch (e4) { focusEl.focus(); } }
-          return;
-        }
-        leadCard.classList.remove("is-needed");
-        saveLead(function () { /* the test starts either way */ });
       }
       if (!state.startTracked) {
         state.startTracked = true;

@@ -1,0 +1,54 @@
+/* program-30.css - "30 יום איתי" (program-30.html), 18.9.2026 */
+.p30-main { padding: 1.5rem 1rem 3rem; }
+.p30-wrap { max-width: 42rem; margin: 0 auto; }
+.p30-wrap h1 { text-align: center; margin-bottom: 0.25rem; }
+.p30-lead { text-align: center; font-size: 1.05rem; line-height: 1.6; margin: 0 0 1.25rem; }
+.p30-week { text-align: center; font-weight: 700; color: var(--color-muted, #6b6b6b); margin: 0 0 0.25rem; }
+.p30-day { text-align: center; margin: 0 0 1rem; }
+
+.p30-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+.p30-row { display: flex; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.06); }
+.p30-row:last-child { border-bottom: 0; }
+.p30-row__label { flex: none; width: 4.5rem; font-weight: 700; }
+.p30-row__text { line-height: 1.6; }
+.p30-first p { margin: 0 0 0.5rem; line-height: 1.6; }
+
+.p30-actions { text-align: center; margin: 1rem 0 0.5rem; }
+.p30-btn { font-size: 1.1rem; padding: 0.85rem 1.6rem; }
+.p30-btn.is-done { background: #2e7d32; border-color: #2e7d32; }
+.p30-count { text-align: center; font-weight: 600; margin: 0.5rem 0 1rem; }
+
+.p30-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 0.35rem; margin-bottom: 1.5rem; }
+.p30-dot {
+  display: flex; align-items: center; justify-content: center;
+  aspect-ratio: 1 / 1; border-radius: 8px;
+  background: rgba(0, 0, 0, 0.05); font-size: 0.8rem; color: #555;
+}
+.p30-dot.is-done { background: #2e7d32; color: #fff; font-weight: 700; }
+.p30-dot.is-today { outline: 2px solid var(--color-primary, #c0392b); outline-offset: 1px; }
+
+.p30-measure .p30-note { font-size: 0.9rem; color: var(--color-muted, #6b6b6b); line-height: 1.6; }
+
+.p30-later {
+  display: block; margin: 0 auto 1.25rem; max-width: 32rem;
+  padding: 0.85rem 1rem; border: 2px solid #25d366; border-radius: 12px;
+  background: #f0fbf4; color: #14532d; text-align: center; text-decoration: none; line-height: 1.5;
+}
+.p30-later strong { display: block; }
+
+.p30-safety { background: #fff8e1; border: 1px solid #f0c674; }
+.p30-safety li { margin-bottom: 0.5rem; line-height: 1.6; }
+.p30-foot-note { font-size: 0.9rem; color: var(--color-muted, #6b6b6b); text-align: center; line-height: 1.6; }
+
+@media (max-width: 480px) {
+  .p30-row { flex-direction: column; gap: 0.15rem; }
+  .p30-row__label { width: auto; }
+  .p30-grid { grid-template-columns: repeat(6, 1fr); }
+}
