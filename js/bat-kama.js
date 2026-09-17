@@ -1365,8 +1365,8 @@
         var cmp = compareToIdAge(r, state.idAge);
         var cmpText = compareText(cmp);
         if (cmpText) html += '<p class="bk-compare">' + esc(cmpText) + '</p>';
-        // טיוטה 16.9 - ממתין לאישור לאה (5): only when the result is older than her ID age
-        if (cmp && cmp.kind === "older") html += '<p class="bk-safety bk-doctor">' + esc(TXT.olderDoctor) + '</p>';
+        // The doctor line (draft 5) was removed by Leah 17.9.2026 ("תורידי את השטויות האלה").
+        // Its place: "השאירי שם וטלפון ואחזור אלייך" - waiting for her business WhatsApp number / decision.
       }
       if (outside) html += '<p class="bk-outside">' + esc(outside) + '</p>';
       if (state.alone && r.testsDone === ALONE_TESTS.length) {
