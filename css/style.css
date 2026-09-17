@@ -1335,7 +1335,7 @@ input[type="file"] {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .nav {
     justify-content: space-between;
   }
