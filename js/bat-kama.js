@@ -919,7 +919,7 @@
     var src = $("#bk-later");
     if (!src) return "";
     return '<a class="bk-later" target="_blank" rel="noopener" href="' + esc(src.getAttribute("href")) + '">' +
-      '<strong>לא יכולה להמשיך עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך. כשתחזרי מהקישור, תמשיכי בדיוק מאיפה שעצרת.</a>';
+      '<strong>לא יכולה להמשיך עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך, ותמשיכי אותו בזמנך הפנוי. כשתחזרי מהקישור, תמשיכי בדיוק מאיפה שעצרת.</a>';
   }
 
   function navHtml(nextLabel) {
