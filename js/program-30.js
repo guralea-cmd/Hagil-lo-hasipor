@@ -161,9 +161,14 @@
     });
   }
 
+  var ICONS = {
+    "תנועה": "🚶‍♀️", "צלחת": "🥗", "תבלין": "🫚", "מים": "💧", "שינה": "🌙"
+  };
+
   function row(label, text) {
-    return '<div class="p30-row"><span class="p30-row__label">' + esc(label) + '</span>' +
-      '<span class="p30-row__text">' + esc(text) + '</span></div>';
+    return '<div class="p30-row"><span class="p30-row__icon" aria-hidden="true">' + (ICONS[label] || "") + '</span>' +
+      '<span class="p30-row__body"><span class="p30-row__label">' + esc(label) + '</span>' +
+      '<span class="p30-row__text">' + esc(text) + '</span></span></div>';
   }
 
   function render() {
@@ -174,8 +179,11 @@
     var isDone = state.done[day] === true;
     var html = "";
 
-    html += '<p class="p30-week">' + esc(plan.weekTitle) + '</p>';
-    html += '<h2 class="p30-day">יום ' + day + ' מתוך 30</h2>';
+    html += '<div class="p30-head">' +
+      '<p class="p30-week">' + esc(plan.weekTitle) + '</p>' +
+      '<h2 class="p30-day"><span class="p30-day__num">' + day + '</span><span class="p30-day__of">היום, מתוך 30</span></h2>' +
+      '<div class="p30-bar"><span style="width:' + Math.round((day / 30) * 100) + '%"></span></div>' +
+      '</div>';
 
     if (day === 1 && !state.startedAt) {
       html += '<div class="p30-card p30-first"><p>לפני שמתחילות, שתי דקות:</p>' +
