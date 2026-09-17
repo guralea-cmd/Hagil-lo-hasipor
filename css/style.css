@@ -1695,3 +1695,39 @@ footer .social-icon {
 .studio-site-cta .btn {
   font-size: var(--text-base);
 }
+
+/* pilates.html has a longer logo text, so its nav row needs ~1260px -
+   keep the ☰ menu there up to 1280px so the page never scrolls sideways. */
+@media (max-width: 1280px) {
+  .nav--wide {
+    justify-content: space-between;
+  }
+
+  .nav--wide .menu-toggle {
+    display: block;
+  }
+
+  .nav--wide .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--color-card);
+    flex-direction: column;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav--wide .nav-links.open {
+    display: flex;
+  }
+
+  .nav--wide .nav-links li {
+    padding-inline: 0;
+  }
+
+  .nav--wide .nav-links li:not(:last-child)::after {
+    content: none;
+  }
+}
