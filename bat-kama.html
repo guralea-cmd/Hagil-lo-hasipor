@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+<!-- 17.9.2026: the saved-link progress (?p=) holds her results. Strip it from the address BEFORE
+     the Pixel and GA4 tags read the URL, so her results are never sent to Meta or Google. -->
+<script>
+window.__bkP = (function () {
+  try {
+    var m = /[?&]p=([A-Za-z0-9_-]+)/.exec(location.search);
+    if (!m) return null;
+    var clean = location.search.replace(/([?&])p=[^&]*&?/, "$1").replace(/[?&]$/, "");
+    history.replaceState(null, "", location.pathname + clean + location.hash);
+    return m[1];
+  } catch (e) { return null; }
+})();
+</script>
 <!-- Meta Pixel Code -->
 <script>
 // _scan=1 (health scan), any demo= or step= parameter (screenshots / review links): no Pixel, no GA4 - same rule in js/bat-kama.js
@@ -42,7 +55,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="css/style.css?v=96">
-<link rel="stylesheet" href="css/bat-kama.css?v=11">
+<link rel="stylesheet" href="css/bat-kama.css?v=12">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -99,7 +112,7 @@ gtag('config', 'G-MEG8NMMGTD');
       <p class="bk-review-note bk-page-no">דף 1 מתוך 11</p>
       <h1>רוצה לדעת בת כמה את באמת?</h1>
       <p class="bk-voice">אני לאה. בת 72. עשיתי את זה בעצמי — ואת רואה את התוצאה שלי כאן למטה. עכשיו תורך.</p>
-      <p class="bk-sub">לא לפי תעודת הזהות — לפי מה שהגוף שלך יודע לעשות היום. 6 מבחנים, כ-30 דקות, בבית, לפי מחקר.</p>
+      <p class="bk-sub">לא לפי תעודת הזהות — לפי מה שהגוף שלך יודע לעשות היום. 6 מבחנים ובונוס שיווי משקל, כ-45 דקות, בבית, לפי מחקר. אפשר גם בשתי פעמים.</p>
       <p class="bk-note">המבחן מיועד לנשים בנות 55 ומעלה. אם את צעירה יותר ובכל זאת עושה את המבחן, לא תקבלי תוצאה שמתאימה לגיל שלך.</p>
       <p class="bk-note">מבוסס על מחקרים מדעיים. לא תחליף לייעוץ רפואי.</p>
       <!-- לאה 17.9: "את לא יכולה לבצע את המבחן עכשיו? תלחצי כאן ואז הוא עובר ל-WhatsApp שלה כדי לשמור אותו" -->
@@ -199,9 +212,28 @@ gtag('config', 'G-MEG8NMMGTD');
         <p class="bk-muted bk-resume__note">מה שכבר עשית נשמר. אין צורך להתחיל מההתחלה.</p>
       </div>
 
+      <!-- לאה 17.9: "המבחן חינם, ובתמורה היא משאירה פרטים" - שם + טלפון לפני ההתחלה -->
+      <div class="bk-card bk-lead" id="bk-lead">
+        <h3>המבחן בחינם</h3>
+        <p>כדי לקבל את התוצאות שלך, השאירי שם וטלפון.</p>
+        <div class="bk-field">
+          <label for="bk-name">שם</label>
+          <input id="bk-name" type="text" autocomplete="name" maxlength="80">
+        </div>
+        <div class="bk-field">
+          <label for="bk-phone">טלפון</label>
+          <input id="bk-phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20">
+        </div>
+        <label class="bk-consent"><input type="checkbox" id="bk-consent"><span>אני מאשרת שלאה תחזור אליי ותשלח לי את התוצאות.</span></label>
+        <p class="bk-muted">רק אני רואה את הפרטים ואת התוצאות שלך. <a href="privacy.html">מדיניות פרטיות</a></p>
+        <p class="bk-lead__status" id="bk-lead-status" role="status"></p>
+      </div>
+
       <!-- לאה 17.9: נקודת יציאה גם ליד כפתור ההתחלה - אותו קישור כמו #bk-later -->
       <a class="bk-later" target="_blank" rel="noopener"
          href="https://wa.me/?text=%D7%94%D7%9E%D7%91%D7%97%D7%9F%20%22%D7%91%D7%AA%20%D7%9B%D7%9E%D7%94%20%D7%90%D7%AA%20%D7%91%D7%90%D7%9E%D7%AA%3F%22%20%D7%A9%D7%9C%20%D7%9C%D7%90%D7%94%20%D7%92%D7%95%D7%A8%D7%90%20-%20%D7%9C%D7%A2%D7%A9%D7%95%D7%AA%20%D7%9B%D7%A9%D7%99%D7%94%D7%99%D7%94%20%D7%9C%D7%99%20%D7%96%D7%9E%D7%9F%3A%20https%3A%2F%2Fguralea.com%2Fbat-kama.html%3Futm_source%3Dwhatsapp%26utm_medium%3Dsave_later"><strong>לא יכולה לבצע את המבחן עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך, ותבצעי אותו בזמנך הפנוי</a>
+      <!-- אין לה וואטסאפ? העתקת הקישור (לאה 17.9) -->
+      <p class="bk-copy-line"><button type="button" class="bk-link bk-copy">אין לך וואטסאפ? להעתיק את הקישור</button></p>
 
       <div class="bk-nav">
         <button type="button" id="bk-start" class="btn bk-btn-lg">להתחלה</button>
@@ -239,9 +271,13 @@ gtag('config', 'G-MEG8NMMGTD');
   <p><a href="https://www.instagram.com/lea_gura_pilates/" target="_blank" rel="noopener"><svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>עקבי אחרינו באינסטגרם - הסטודיו</a></p>
 </footer>
 
-<!-- no Firestore on this page since 16.9.2026: the lead form is on bat-kama-next.html -->
+<!-- 17.9.2026: the name+phone form is back on this page, before the test starts -->
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script defer src="js/firebase-config.js?v=4"></script>
+<script defer src="js/leads-sheet.js?v=1"></script>
 <script defer src="js/main.js?v=11"></script>
-<script defer src="js/bat-kama.js?v=20"></script>
+<script defer src="js/bat-kama.js?v=21"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
