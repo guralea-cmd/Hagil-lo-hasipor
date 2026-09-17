@@ -1,4 +1,8 @@
 /* program-30.css - "30 יום איתי" (program-30.html), 18.9.2026 */
+
+/* כפתור הוואטסאפ הצף מזמין לשלוח סיפור חיים - לא שייך לדף הזה (כמו בדף המבחן) */
+.wa-float-btn { display: none !important; }
+
 .p30-main { padding: 1.5rem 1rem 3rem; }
 .p30-wrap { max-width: 42rem; margin: 0 auto; }
 .p30-wrap h1 { text-align: center; margin-bottom: 0.25rem; }
