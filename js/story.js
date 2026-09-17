@@ -73,7 +73,7 @@
   // Existing CTA block, copied verbatim from workshopCtaHtml() in js/stories.js.
   function workshopCtaHtml() {
     return '<div class="story-row-cta">' +
-      '<p>רוצה לדעת איך להתחיל כבר היום לעשות שינוי? לחצו על הרשמה לסדנה ונחזור אליכם עם כל הפרטים.</p>' +
+      '<p>רוצה לדעת איך להתחיל כבר היום לעשות שינוי? לחצי על הרשמה לסדנה ונחזור אלייך עם כל הפרטים.</p>' +
       '<a class="btn btn-sm" href="workshop.html">הרשמה לסדנה</a>' +
       '</div>';
   }

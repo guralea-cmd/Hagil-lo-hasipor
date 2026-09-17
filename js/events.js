@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
       form.reset();
     }).catch(function (err) {
       console.error(err);
-      statusEl.textContent = "משהו השתבש. נסה/י שוב.";
+      statusEl.textContent = "משהו השתבש. נסי שוב.";
       statusEl.classList.add("error");
     }).finally(function () {
       submitBtn.disabled = false;

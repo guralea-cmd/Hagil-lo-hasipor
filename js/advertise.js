@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var bannerFile = bannerFileInput.files[0];
     if (!bannerFile) {
-      statusEl.textContent = "יש לצרף קובץ באנר.";
+      statusEl.textContent = "צרפי קובץ באנר.";
       statusEl.classList.add("error");
       return;
     }
     if (bannerFile.size > 10 * 1024 * 1024) {
-      statusEl.textContent = "קובץ הבאנר גדול מ-10MB. נסה/י קובץ קטן יותר.";
+      statusEl.textContent = "קובץ הבאנר גדול מ-10MB. נסי קובץ קטן יותר.";
       statusEl.classList.add("error");
       return;
     }
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(function (err) {
         console.error(err);
         progressEl.textContent = "";
-        statusEl.textContent = "משהו השתבש בשליחת הטופס. נסה/י שוב.";
+        statusEl.textContent = "משהו השתבש בשליחת הטופס. נסי שוב.";
         statusEl.classList.add("error");
       })
       .finally(function () {

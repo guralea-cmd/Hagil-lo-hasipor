@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var photosNote = document.querySelector("#photos-note");
   photosInput.addEventListener("change", function () {
     if (photosInput.files.length > 5) {
-      photosNote.textContent = "ניתן לבחור עד 5 תמונות בלבד - נא לבחור שוב.";
+      photosNote.textContent = "ניתן לבחור עד 5 תמונות בלבד - בחרי שוב.";
       photosNote.classList.add("error");
       photosInput.value = "";
     } else {
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(function (err) {
         console.error(err);
         progressEl.textContent = "";
-        statusEl.textContent = "משהו השתבש בשליחת הטופס. נסה/י שוב.";
+        statusEl.textContent = "משהו השתבש בשליחת הטופס. נסי שוב.";
         statusEl.classList.add("error");
       })
       .finally(function () {
