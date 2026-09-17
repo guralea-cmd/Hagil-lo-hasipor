@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }).slice(0, MAX_ITEMS);
 
       if (!all.length) {
-        grid.innerHTML = '<div class="empty-state"><p>הסיפורים הראשונים בדרך — רוצים להיות ביניהם?</p><a href="register.html" class="btn">שתפו את הסיפור שלכם</a></div>';
+        grid.innerHTML = '<div class="empty-state"><p>הסיפורים הראשונים בדרך — רוצה להיות ביניהם?</p><a href="register.html" class="btn">שתפי את הסיפור שלך</a></div>';
         return;
       }
 
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
           '<h3 class="story-name">' + name + '</h3>' +
           '</div>' +
           '</a>' +
-          '<p style="margin:0; padding:0 var(--space-3) var(--space-2);"><a class="btn btn-outline btn-sm" href="' + shareHref + '" target="_blank" rel="noopener">שתפו בפייסבוק</a></p>';
+          '<p style="margin:0; padding:0 var(--space-3) var(--space-2);"><a class="btn btn-outline btn-sm" href="' + shareHref + '" target="_blank" rel="noopener">שתפי בפייסבוק</a></p>';
         grid.appendChild(card);
       });
     })

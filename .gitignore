@@ -9,3 +9,6 @@
 
 # Google Cloud service-account key (Sheets/Drive/Calendar API) - never commit, this repo is public
 .claude/skills/google-account-access/service-account-key.json
+
+# Meta Ads Manager access token (ads_management/ads_read) - never commit, this repo is public
+.claude/skills/facebook-ads-plan/secrets.json

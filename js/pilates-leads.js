@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch(function (err) {
         console.error(err);
-        statusEl.textContent = "משהו השתבש בשליחת הטופס. נסה/י שוב.";
+        statusEl.textContent = "משהו השתבש בשליחת הטופס. נסי שוב.";
         statusEl.classList.add("error");
       })
       .finally(function () {
