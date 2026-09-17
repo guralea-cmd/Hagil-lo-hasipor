@@ -19,7 +19,18 @@ If a CTA needs new wording and neither (a) nor (b) covers it, ask her for the ex
 
 This rule is about *functional* text specifically. Longer narrative copy (blog post bodies, page intros, about-page prose) still gets drafted in her voice per the guidance below - but always present it as a draft awaiting her explicit approval, never publish it as final without sign-off.
 
-## Hard rule: feminine-singular address is workshop-only; everywhere else, address everyone
+## 🔒 חוק קבוע ובלתי ניתן לשינוי (לאה, 17.9.2026): לשון נקבה רק במבחן "בת כמה את באמת"
+
+**guralea.com ("הגיל הוא לא הסיפור") פונה לשני המינים - גברים ונשים. כל הטקסט באתר כתוב לשני המינים** (פנייה כללית/רבים כמו שהיה: "שלחו", "היכנסו", "הסיפור שלכם").
+
+**היוצא מן הכלל היחיד:** המבחן "בת כמה את באמת" (`bat-kama.html`) והמסלול שאחריו (`bat-kama-next.html` - "מה עכשיו": להתאמן, לרכוש את האפליקציה, להירשם לסדנה אונליין או להגיע פרונטלית). המבחן נועד להביא קהילה של נשים בגילאי כ-45-65, ולכן **רק שם** - לשון נקבה יחיד (את, שלך, השאירי), בלי ערבוב יחיד/רבים.
+
+- אתר הפילאטיס (guraleapilates.com) הוא אתר נפרד לגמרי - החוק הזה לא עוסק בו.
+- אסור להחיל לשון נקבה על שאר האתר, גם אם משפט כלשהו נשמע כמו הוראה כזו. בספק - לשאול את לאה, לא להחיל.
+- היסטוריה: ב-16.9 המשפט "בוא נדבר כל האתר בלשון נקבה" פורש בטעות ככל האתר; ב-17.9 הוחל על כל האתר ונלקח בחזרה באותו יום. לאה הבהירה: היא התכוונה למבחן בלבד.
+- workshop.html הוחזר לנוסח שהיה לפני 16.9 ולא שונה. הכלל של 17.8 למטה נשאר היסטוריה - בכל שאלה על פנייה, החוק הזה גובר.
+
+## (superseded) Hard rule: feminine-singular address is workshop-only; everywhere else, address everyone
 
 **Scoped 2026-08-17** (was previously site-wide - see below): "את"/"שלך" feminine-singular direct address applies **only to workshop copy** (`workshop.html` and any content promoting the workshop itself, e.g. marquee/Facebook lines of content-type סדנה) - the workshop itself is women-only, so addressing "את" there is factually correct.
 
