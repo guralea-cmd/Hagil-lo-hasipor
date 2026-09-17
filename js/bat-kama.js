@@ -609,7 +609,8 @@
     skipped: {},      // key -> true
     nutrition: {},    // key -> option index
     startTracked: false,  // saved with the progress, so a reload / "להמשיך" never counts twice
-    resultTracked: false
+    resultTracked: false,
+    leadSent: false       // name + phone already saved (17.9.2026) - the form is not shown again
   };
   var activeTimer = null;
   var audioCtx = null;
@@ -636,7 +637,8 @@
       v: 2, step: state.step, idAge: state.idAge, alone: state.alone, aloneAnswered: state.aloneAnswered,
       values: state.values, signs: state.signs, attempts: state.attempts,
       skipped: state.skipped, nutrition: state.nutrition,
-      startTracked: state.startTracked, resultTracked: state.resultTracked, savedAt: Date.now()
+      startTracked: state.startTracked, resultTracked: state.resultTracked,
+      leadSent: state.leadSent, savedAt: Date.now()
     };
   }
 
@@ -662,16 +664,13 @@
 
   function loadFromLink() {
     try {
-      var m = new RegExp("[?&]" + LINK_PARAM + "=([A-Za-z0-9_-]+)").exec(location.search);
-      if (!m) return null;
-      var b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+      // the inline script in <head> already took ?p= out of the address bar, before GA4 and the
+      // Pixel read the URL (17.9.2026 - her results must not reach Meta or Google)
+      var raw = window.__bkP || null;
+      if (!raw) return null;
+      var b64 = raw.replace(/-/g, "+").replace(/_/g, "/");
       while (b64.length % 4) b64 += "=";
       var d = JSON.parse(atob(b64));
-      // take it out of the address bar, so a reload or a shared link doesn't carry it again
-      try {
-        var clean = location.search.replace(new RegExp("([?&])" + LINK_PARAM + "=[^&]*&?"), "$1").replace(/[?&]$/, "");
-        history.replaceState(history.state, "", location.pathname + clean + location.hash);
-      } catch (e2) { /* ignore */ }
       if (!d || typeof d !== "object" || !isNum(d.savedAt)) return null;
       if (!validStep(d.step)) d.step = 1;
       return d;
@@ -729,6 +728,7 @@
     state.aloneAnswered = !!d.aloneAnswered;
     state.startTracked = d.startTracked === true;
     state.resultTracked = d.resultTracked === true;
+    state.leadSent = d.leadSent === true;
     state.values = numMap(d.values);
     state.signs = numMap(d.signs);
     state.nutrition = numMap(d.nutrition);
@@ -1596,6 +1596,72 @@
     if (resume) resume.hidden = !pendingResume;
   }
 
+  /* ---------- name + phone before the test (Leah 17.9.2026) ----------
+     Her details are saved the moment she starts, so a woman who stops in the middle is not lost.
+     They go to age_test_leads (source "bat-kama") and to the sheet tab "בת כמה את באמת".
+     They are never written into the saved-progress link - only the flag that they were sent. */
+  function renderLeadCard() {
+    var card = $("#bk-lead");
+    if (card) card.hidden = DEMO || state.leadSent;
+  }
+
+  function cleanPhone(v) {
+    return String(v || "").replace(/[^\d]/g, "");
+  }
+
+  function validLead(name, phone) {
+    return name.length >= 2 && cleanPhone(phone).length >= 9 && cleanPhone(phone).length <= 11;
+  }
+
+  function attribution() {
+    var q = new URLSearchParams(location.search);
+    function g(k) { return (q.get(k) || "").slice(0, 200); }
+    return {
+      utmSource: g("utm_source"), utmMedium: g("utm_medium"), utmCampaign: g("utm_campaign"),
+      utmContent: g("utm_content"), utmTerm: g("utm_term"),
+      adId: g("ad_id").slice(0, 40), adsetId: g("adset_id").slice(0, 40),
+      campaignId: g("campaign_id").slice(0, 40), fbclid: g("fbclid").slice(0, 255)
+    };
+  }
+
+  // Saves her details, then calls done() either way - a failed save must never block the test.
+  function saveLead(done) {
+    var nameEl = $("#bk-name");
+    var phoneEl = $("#bk-phone");
+    var statusEl = $("#bk-lead-status");
+    var name = nameEl ? nameEl.value.trim() : "";
+    var phone = phoneEl ? phoneEl.value.trim() : "";
+    state.leadSent = true;
+    saveState();
+    renderLeadCard();
+    track("generate_lead", { form_name: "bat_kama_start" });
+    pixel("track", "Lead", { content_name: "bat-kama" });
+    var attr = attribution();
+    function toSheet(id) {
+      if (window.sendLeadToSheet) window.sendLeadToSheet({ form: "bat-kama", id: id || "", name: name, phone: phone });
+    }
+    if (typeof db === "undefined" || typeof firebase === "undefined") {
+      toSheet("");
+      if (statusEl) statusEl.textContent = "";
+      done();
+      return;
+    }
+    db.collection("age_test_leads").add({
+      name: name, phone: phone, source: "bat-kama", interest: "test-start",
+      site: "guralea.com", page: window.location.pathname,
+      utmSource: attr.utmSource, utmMedium: attr.utmMedium, utmCampaign: attr.utmCampaign,
+      utmContent: attr.utmContent, utmTerm: attr.utmTerm,
+      adId: attr.adId, adsetId: attr.adsetId, campaignId: attr.campaignId, fbclid: attr.fbclid,
+      status: "new", createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function (ref) {
+      toSheet(ref && ref.id);
+    }).catch(function () {
+      toSheet("");
+      track("bat_kama_lead_error", { form_name: "bat_kama_start" });
+    });
+    done();
+  }
+
   function wireIntro() {
     var withBtn = $("#bk-with");
     var aloneBtn = $("#bk-alone");
@@ -1684,6 +1750,7 @@
       state.idAge = isNum(n) && n >= 18 && n <= 110 && Math.floor(n) === n ? n : null;
       saveState();
     });
+    renderLeadCard();
     $("#bk-start").addEventListener("click", function () {
       // 16.9.2026: no start before "מי לידך עכשיו?" is answered - a woman alone must not get
       // the screens that need someone next to her. The card is highlighted and focused.
@@ -1697,12 +1764,50 @@
         if (first) { try { first.focus({ preventScroll: true }); } catch (e2) { first.focus(); } }
         return;
       }
+      // name + phone before the test (Leah 17.9.2026)
+      var leadCard = $("#bk-lead");
+      if (leadCard && !leadCard.hidden) {
+        var nameEl = $("#bk-name");
+        var phoneEl = $("#bk-phone");
+        var consentEl = $("#bk-consent");
+        var statusEl = $("#bk-lead-status");
+        var nm = nameEl ? nameEl.value.trim() : "";
+        var ph = phoneEl ? phoneEl.value.trim() : "";
+        if (!validLead(nm, ph) || (consentEl && !consentEl.checked)) {
+          if (statusEl) {
+            statusEl.textContent = !validLead(nm, ph)
+              ? "צריך שם ומספר טלפון מלא, כדי שאוכל לחזור אלייך."
+              : "צריך לסמן את האישור, כדי שאוכל לחזור אלייך.";
+          }
+          leadCard.classList.add("is-needed");
+          try { leadCard.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e3) { leadCard.scrollIntoView(); }
+          var focusEl = !nm ? nameEl : (!validLead(nm, ph) ? phoneEl : consentEl);
+          if (focusEl) { try { focusEl.focus({ preventScroll: true }); } catch (e4) { focusEl.focus(); } }
+          return;
+        }
+        leadCard.classList.remove("is-needed");
+        saveLead(function () { /* the test starts either way */ });
+      }
       if (!state.startTracked) {
         state.startTracked = true;
         track("bat_kama_start", {});
         pixel("trackCustom", "BatKamaStart");
       }
       go(1);
+    });
+
+    // "אין לך וואטסאפ? להעתיק את הקישור" (Leah 17.9.2026)
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest && e.target.closest(".bk-copy");
+      if (!btn) return;
+      var link = progressLink();
+      function done(ok) { btn.textContent = ok ? "הקישור הועתק" : link; }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(link).then(function () { done(true); }, function () { done(false); });
+        } else { done(false); }
+      } catch (e5) { done(false); }
+      track("bat_kama_copy_link", {});
     });
 
     window.addEventListener("popstate", function (e) {

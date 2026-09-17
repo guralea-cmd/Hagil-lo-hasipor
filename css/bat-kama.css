@@ -655,6 +655,14 @@ input.bk-num:disabled {
 }
 
 /* Leah's own voice lines (13.9.2026) */
+/* שם + טלפון לפני המבחן (לאה 17.9.2026) */
+.bk-lead.is-needed { border: 2px solid var(--color-primary, #c0392b); }
+.bk-lead .bk-field { margin-bottom: 0.75rem; }
+.bk-consent { display: flex; gap: 0.5rem; align-items: flex-start; margin: 0.5rem 0; line-height: 1.5; }
+.bk-consent input { margin-top: 0.3rem; width: 1.15rem; height: 1.15rem; flex: none; }
+.bk-lead__status:not(:empty) { color: #b3261e; font-weight: 600; margin-top: 0.5rem; }
+.bk-copy-line { text-align: center; margin: 0 0 1rem; }
+
 /* "לא יכולה לבצע את המבחן עכשיו?" - save the link to WhatsApp (Leah 17.9.2026) */
 .bk-later {
   display: block;
