@@ -3,8 +3,19 @@
 .p30-wrap { max-width: 42rem; margin: 0 auto; }
 .p30-wrap h1 { text-align: center; margin-bottom: 0.25rem; }
 .p30-lead { text-align: center; font-size: 1.05rem; line-height: 1.6; margin: 0 0 1.25rem; }
-.p30-week { text-align: center; font-weight: 700; color: var(--color-muted, #6b6b6b); margin: 0 0 0.25rem; }
-.p30-day { text-align: center; margin: 0 0 1rem; }
+.p30-head {
+  text-align: center;
+  background: linear-gradient(160deg, #fdf6ef 0%, #f6efe6 100%);
+  border-radius: 18px;
+  padding: 1.1rem 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.p30-week { font-weight: 700; color: #8a6d4b; margin: 0 0 0.5rem; letter-spacing: 0.01em; }
+.p30-day { display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; margin: 0 0 0.75rem; }
+.p30-day__num { font-size: 3rem; line-height: 1; font-weight: 800; color: var(--color-primary, #c0392b); }
+.p30-day__of { font-size: 1rem; font-weight: 600; color: #6b6b6b; }
+.p30-bar { height: 8px; border-radius: 99px; background: rgba(0, 0, 0, 0.08); overflow: hidden; }
+.p30-bar span { display: block; height: 100%; border-radius: 99px; background: #2e7d32; transition: width 0.4s ease; }
 
 .p30-card {
   background: #fff;
@@ -14,10 +25,12 @@
   margin-bottom: 1rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
-.p30-row { display: flex; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.06); }
+.p30-row { display: flex; gap: 0.85rem; padding: 0.85rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.06); }
 .p30-row:last-child { border-bottom: 0; }
-.p30-row__label { flex: none; width: 4.5rem; font-weight: 700; }
-.p30-row__text { line-height: 1.6; }
+.p30-row__icon { flex: none; font-size: 1.5rem; line-height: 1.4; }
+.p30-row__body { display: block; }
+.p30-row__label { display: block; font-weight: 800; color: #8a6d4b; font-size: 0.95rem; margin-bottom: 0.15rem; }
+.p30-row__text { display: block; line-height: 1.65; font-size: 1.05rem; }
 .p30-first p { margin: 0 0 0.5rem; line-height: 1.6; }
 
 .p30-actions { text-align: center; margin: 1rem 0 0.5rem; }
@@ -48,7 +61,6 @@
 .p30-foot-note { font-size: 0.9rem; color: var(--color-muted, #6b6b6b); text-align: center; line-height: 1.6; }
 
 @media (max-width: 480px) {
-  .p30-row { flex-direction: column; gap: 0.15rem; }
-  .p30-row__label { width: auto; }
   .p30-grid { grid-template-columns: repeat(6, 1fr); }
+  .p30-day__num { font-size: 2.6rem; }
 }
