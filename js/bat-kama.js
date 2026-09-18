@@ -266,7 +266,7 @@
   function flexibilityStatus(key, cmValue, idAge) {
     var n = NORMS[key];
     if (!n || !n.inches || !isNum(cmValue) || !isNum(idAge)) return null;
-    return cmToHalfInch(cmValue) >= n.lower[flexAgeIndex(idAge)] ? "ok" : "stiff";
+    return cmToHalfInch(cmValue) >= n.median[flexAgeIndex(idAge)] ? "ok" : "stiff";
   }
 
   // Springer 2007 (via Heyward 2019) women eyes open: 60-69 = 30.4 s, 80-99 = 10.6 s.
