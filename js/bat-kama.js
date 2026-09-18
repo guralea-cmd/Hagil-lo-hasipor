@@ -33,22 +33,27 @@
    * ================================================================ */
   var GROUP_AGES = [62, 67, 72, 77, 82, 87, 92];
   var TEST_KEYS = ["chairStand", "armCurl", "step", "sitReach", "backScratch", "upAndGo"];
-  var AGE_KEYS = ["chairStand", "armCurl", "step", "upAndGo"];
+  var AGE_KEYS = ["chairStand", "armCurl", "step", "sitReach", "backScratch", "upAndGo"];
   var FLEX_KEYS = ["sitReach", "backScratch"];
   var MIN_AGE_TESTS = 3;
   var TABLE_START_AGE = 60;   // Rikli & Jones tables start at 60
   var TABLE_END_AGE = 94;     // ... and end at 94
   var FLOOR_REGION_MAX = 67;  // results this low can't be compared to an ID age under 60
 
+  // Median (P50) per 5-year age group, women, Senior Fitness Test Manual 2nd ed. 2013
+  // (percentile curves modelled from the same 7,183-person sample as Rikli & Jones 1999).
+  // Anchoring to the median is the published fitness-age method: Krause et al.,
+  // Sci Rep 2026 - "the midpoint of the age band corresponding to the 50th percentile
+  // of the individual test result", averaged over the six items.
   var NORMS = {
-    chairStand:  { better: "higher", lower: [12, 11, 10, 10, 9, 8, 4], youngestTop: 17 },
-    armCurl:     { better: "higher", lower: [13, 12, 12, 11, 10, 10, 8], youngestTop: 19 },
-    step:        { better: "higher", lower: [75, 73, 68, 68, 60, 55, 44], youngestTop: 107 },
+    chairStand:  { better: "higher", median: [15, 14, 13, 12, 11, 10, 8] },
+    armCurl:     { better: "higher", median: [16, 15, 14, 14, 13, 12, 11] },
+    step:        { better: "higher", median: [91, 90, 84, 84, 75, 70, 58] },
     // inches, as published; input is cm -> /2.54 -> nearest half inch
-    sitReach:    { better: "higher", inches: true, lower: [-0.5, -0.5, -1.0, -1.5, -2.0, -2.5, -4.5], youngestTop: 5.0 },
-    backScratch: { better: "higher", inches: true, lower: [-3.0, -3.5, -4.0, -5.0, -5.5, -7.0, -8.0], youngestTop: 1.5 },
-    // seconds, lower is better: slow end of each normal range; fast end of 60-64
-    upAndGo:     { better: "lower", slow: [6.0, 6.4, 7.1, 7.4, 8.7, 9.6, 11.5], youngestFast: 4.4 }
+    sitReach:    { better: "higher", inches: true, median: [2.1, 2.0, 1.4, 1.2, 0.5, -0.1, -1.7] },
+    backScratch: { better: "higher", inches: true, median: [-0.7, -1.2, -1.7, -2.1, -2.6, -3.9, -4.5] },
+    // seconds, lower is better
+    upAndGo:     { better: "lower", median: [5.2, 5.6, 6.0, 6.3, 7.2, 7.9, 9.4] }
   };
 
   // Plausibility (audit 16.9.2026): anything outside these ranges is treated as not recorded.
@@ -58,6 +63,8 @@
     armCurl:    { min: 0, max: 60, int: true },
     step:       { min: 0, max: 250, int: true },
     upAndGo:    { min: 2.0, max: 60 },
+    sitReach:   { min: -50, max: 50 },
+    backScratch: { min: -60, max: 40 },
     balance:    { min: 1.0, max: 45 }
   };
   // A stop tap this soon after the start tap is ignored (the timer keeps running).
@@ -106,16 +113,16 @@
     var i, v;
     if (n.better === "higher") {
       v = n.inches ? cmToHalfInch(value) : value;
-      if (v > n.youngestTop) return { age: 62, cap: "younger", scored: v };
-      for (i = 0; i < n.lower.length; i++) {
-        if (v >= n.lower[i]) return { age: GROUP_AGES[i], cap: null, scored: v };
+      if (v > n.median[0]) return { age: 62, cap: "younger", scored: v };
+      for (i = 0; i < n.median.length; i++) {
+        if (v >= n.median[i]) return { age: GROUP_AGES[i], cap: null, scored: v };
       }
       return { age: 92, cap: "older", scored: v };
     }
     v = roundTenth(value);
-    if (v < n.youngestFast) return { age: 62, cap: "younger", scored: v };
-    for (i = 0; i < n.slow.length; i++) {
-      if (v <= n.slow[i]) return { age: GROUP_AGES[i], cap: null, scored: v };
+    if (v < n.median[0]) return { age: 62, cap: "younger", scored: v };
+    for (i = 0; i < n.median.length; i++) {
+      if (v <= n.median[i]) return { age: GROUP_AGES[i], cap: null, scored: v };
     }
     return { age: 92, cap: "older", scored: v };
   }
@@ -297,9 +304,6 @@
       if (balance.rating === "work") cands.push({ key: "balance", sev: SEV.balanceWork });
       else if (balance.rating === "medium") cands.push({ key: "balance", sev: SEV.balanceMedium });
     }
-    FLEX_KEYS.forEach(function (k) {
-      if (flexibility && flexibility[k] === "stiff" && allowed(k)) cands.push({ key: k, sev: SEV.flexStiff });
-    });
     cands.sort(function (a, b) {
       return (b.sev - a.sev) || (MOVE_ORDER.indexOf(a.key) - MOVE_ORDER.indexOf(b.key));
     });
@@ -441,7 +445,7 @@
     },
     {
       key: "sitReach", name: "כפיפה קדימה בישיבה", short: "כפיפה קדימה",
-      timer: 0, input: "cm", label: "המרחק בס\"מ", optional: true, fact: 6,
+      timer: 0, input: "cm", label: "המרחק בס\"מ", fact: 6,
       signs: ["לא הגעתי (−)", "נגעתי (0)", "עברתי (+)"],
       steps: [
         "שבי בקצה כיסא צמוד לקיר. רגל אחת ישרה, העקב על הרצפה, כף הרגל ב-90°.",
@@ -452,7 +456,7 @@
     },
     {
       key: "backScratch", name: "אצבע-אצבע מאחורי הגב", short: "אצבע-אצבע",
-      timer: 0, input: "cm", label: "המרחק בס\"מ", optional: true,
+      timer: 0, input: "cm", label: "המרחק בס\"מ",
       signs: ["יש רווח (−)", "נוגעות (0)", "יש חפיפה (+)"],
       steps: [
         "יד אחת מעל הכתף ולאורך הגב כלפי מטה, כף היד אל הגוף.",
@@ -1428,18 +1432,6 @@
         html += '<p class="bk-voice bk-center">' + esc(TXT.belowTable) + '</p>';
       }
     }
-
-    html += '<div class="bk-card"><h3>גמישות</h3><ul class="bk-breakdown">';
-    TESTS.forEach(function (t) {
-      if (FLEX_KEYS.indexOf(t.key) === -1) return;
-      var fs = all.flexibility[t.key];
-      var rawV = all.raw[t.key];
-      // no ID age -> no age group to judge by: the measured value only
-      var txt = fs ? FLEX_LABELS[fs] : (isNum(rawV) ? formatCm(rawV) : "לא בוצע");
-      html += '<li><span class="bk-breakdown__name">' + esc(t.short) + '</span>' +
-        '<span class="bk-breakdown__age">' + esc(txt) + '</span></li>';
-    });
-    html += '</ul><p class="bk-muted bk-flex-note">לא נכנס לחישוב הגיל.</p></div>';
 
     html += '<div class="bk-card"><h3>שיווי משקל</h3><p class="bk-balance">' +
       (all.balance.rating
