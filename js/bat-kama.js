@@ -1288,7 +1288,7 @@
   function compareText(cmp) {
     if (!cmp) return "";
     var yrs = cmp.years === 1 ? "בשנה אחת" : "ב-" + cmp.years + " שנים";
-    if (cmp.kind === "younger") return "צעירה " + (cmp.atLeast ? "לפחות " : "") + yrs + " מהגיל בתעודת הזהות. יפה. ואת יכולה עוד.";
+    if (cmp.kind === "younger") return "צעירה " + (cmp.atLeast ? "לפחות " : "") + yrs + " מהגיל שלך. יפה. ואת יכולה עוד.";
     // Leah 16.9.2026: "יש לך חמש שנים להחזיר... ואני יכולה לעזור לך להחזיר אותם"
     // Leah 18.9.2026: past ten years that sentence is a promise nobody can keep, and the
     // subtraction is what makes a woman close the page. The band is left to speak on its own.
@@ -1296,7 +1296,7 @@
       if (cmp.years > 10) return "";
       return "יש לך " + (cmp.years === 1 ? "שנה אחת" : cmp.years + " שנים") + " להחזיר, ואני יכולה לעזור לך להחזיר אותן.";
     }
-    return "בדיוק הטווח של הגיל שבתעודת הזהות";
+    return "בדיוק הטווח של הגיל שלך";
   }
 
   // ID age outside the Rikli & Jones tables (60-94), Leah 15.9.2026
