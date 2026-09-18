@@ -34,8 +34,8 @@
   var GROUP_AGES = [62, 67, 72, 77, 82, 87, 92];
   // Leah 18.9.2026: only the tests a woman can do alone with a chair, a bottle and a phone.
   // Up-and-go and the two flexibility tests need a second person, so they left the product.
-  var TEST_KEYS = ["chairStand", "armCurl", "step"];
-  var AGE_KEYS = ["chairStand", "armCurl", "step"];
+  var TEST_KEYS = ["chairStand", "armCurl", "sitReach", "step"];
+  var AGE_KEYS = ["chairStand", "armCurl", "sitReach", "step"];
   var FLEX_KEYS = [];
   var MIN_AGE_TESTS = 2;
   var TABLE_START_AGE = 60;   // Rikli & Jones tables start at 60
@@ -51,6 +51,8 @@
     chairStand:  { better: "higher", median: [15, 14, 13, 12, 11, 10, 8] },
     armCurl:     { better: "higher", median: [16, 15, 14, 14, 13, 12, 11] },
     step:        { better: "higher", median: [91, 90, 84, 84, 75, 70, 58] },
+    // inches, as published; input is cm -> /2.54 -> nearest half inch
+    sitReach:    { better: "higher", inches: true, median: [2.1, 2.0, 1.4, 1.2, 0.5, -0.1, -1.7] }
   };
 
   // Balance is scored on its own and shown as a second result, never averaged into the age
@@ -67,6 +69,7 @@
     chairStand: { min: 0, max: 60, int: true },
     armCurl:    { min: 0, max: 60, int: true },
     step:       { min: 0, max: 250, int: true },
+    sitReach:   { min: -50, max: 50 },
     balance:    { min: 1.0, max: 45 }
   };
   // A stop tap this soon after the start tap is ignored (the timer keeps running).
@@ -401,7 +404,7 @@
   // "אני לבד" (Leah 15.9.2026): only these three tests can be done alone.
   // Screens 3 (כפיפה בישיבה), 4 (אצבע-אצבע), 5 (קום-לך-שב) and 6 (שיווי משקל) are skipped
   // entirely - forward and backward - and count as not done, not as skipped by pain.
-  var ALONE_TESTS = ["chairStand", "armCurl", "step"];
+  var ALONE_TESTS = ["chairStand", "armCurl", "sitReach", "step"];
   var ALONE_SKIP_STEPS = [];
 
   // טיוטה 16.9 - ממתין לאישור לאה (4). Replaces the start of the "לחצי התחלה..." step on the
@@ -435,6 +438,17 @@
       safety: "תנועה מלאה ומבוקרת, בלי תנופה."
     },
     {
+      key: "sitReach", name: "כפיפה קדימה בישיבה", short: "כפיפה קדימה",
+      timer: 0, input: "cm", label: "המרחק בס\"מ", fact: 6,
+      signs: ["לא הגעתי (−)", "נגעתי (0)", "עברתי (+)"],
+      steps: [
+        "שבי בקצה כיסא צמוד לקיר. רגל אחת ישרה, העקב על הרצפה, כף הרגל ב-90°.",
+        "הניחי סרט מדידה לאורך הרגל הישרה, כשהאפס בקצה הבוהן.",
+        "אצבעות אמצעיות זו על זו. נשפי והושיטי את הידיים לכיוון הבוהן, ותראי איפה האצבעות עצרו."
+      ],
+      safety: "גב ישר, בלי קפיצות, אף פעם לא עד כאב. אם יש לך אוסטיאופורוזיס חמורה, אל תעשי את המבחן הזה."
+    },
+    {
       // last test, per Leah's order of 15.9.2026 (the endurance test closes the battery);
       // since 16.9.2026 the balance bonus comes right before it.
       key: "step", name: "צעידה במקום 2 דקות", short: "צעידה במקום",
@@ -462,16 +476,16 @@
   };
 
   // screen number -> test key (see the header comment)
-  var SCREEN_KEYS = [null, "chairStand", "armCurl", "balance", "step"];
-  var STEP_BALANCE = 3;
-  var STEP_NUTRITION = 5;
-  var STEP_RESULT = 6;
+  var SCREEN_KEYS = [null, "chairStand", "armCurl", "sitReach", "balance", "step"];
+  var STEP_BALANCE = 4;
+  var STEP_NUTRITION = 6;
+  var STEP_RESULT = 7;
   var LAST_STEP = STEP_RESULT;
-  var OLD_STEP_FORM = 7; // out of range now - a stale save resumes on the result
+  var OLD_STEP_FORM = 8; // out of range now - a stale save resumes on the result
   var NEXT_PAGE = "bat-kama-next.html";
   // Page numbers for Leah's review (16.9.2026): intro = 1, screen N = N + 1, the next page = 11.
   // Internal review note - removed on launch day with every .bk-review-note.
-  var PAGE_COUNT = 8;
+  var PAGE_COUNT = 9;
   function pageNoHtml(step) {
     return '<p class="bk-review-note bk-page-no">דף ' + (step + 1) + ' מתוך ' + PAGE_COUNT + '</p>';
   }
@@ -519,14 +533,14 @@
     // a typical woman of 72: three tests at 70-74, balance at 70-79
     "1": {
       idAge: 72,
-      values: { chairStand: 13, armCurl: 14, step: 84 },
+      values: { chairStand: 13, armCurl: 14, step: 84, sitReach: 3.5 },
       attempts: { balance: [18.2, 20.0] },
       nutrition: { protein: 1, calcium: 0, vitaminD: 1, fluids: 1, fruitVeg: 0 }
     },
     // everything above the youngest band
     "2": {
       idAge: 63,
-      values: { chairStand: 20, armCurl: 22, step: 115 },
+      values: { chairStand: 20, armCurl: 22, step: 115, sitReach: 15 },
       attempts: { balance: [41.0, 45] },
       nutrition: { protein: 0, calcium: 1, vitaminD: 0, fluids: 0, fruitVeg: 2 }
     },
@@ -541,14 +555,14 @@
     // below the whole table, and under the 10-second balance threshold
     "4": {
       idAge: 70,
-      values: { chairStand: 3, armCurl: 7, step: 43 },
+      values: { chairStand: 3, armCurl: 7, step: 43, sitReach: -12 },
       attempts: { balance: [4.1, 3.2] },
       nutrition: { protein: 1, calcium: 1, vitaminD: 1, fluids: 2, fruitVeg: 1 }
     },
     // older than the ID age
     "5": {
       idAge: 66,
-      values: { chairStand: 11, armCurl: 12, step: 72 },
+      values: { chairStand: 11, armCurl: 12, step: 72, sitReach: -3 },
       attempts: { balance: [12.5, 14.0] },
       nutrition: { protein: 0, calcium: 1, vitaminD: 0, fluids: 1, fruitVeg: 0 }
     }
@@ -583,7 +597,7 @@
 
   /* ---------- saved progress (localStorage, this phone only) ---------- */
   // v2 = the screen order of 16.9.2026. v1 saves (balance 7, step 6) are migrated once.
-  var SAVE_KEY = "batKama.progress.v3";
+  var SAVE_KEY = "batKama.progress.v4";
   var OLD_SAVE_KEY = "batKama.progress.v1";
   // 60 days (was 24h). Leah 17.9.2026: she may finish any time until the workshop starts
   // (launch 11.10 -> workshop 26-27.11 is ~47 days).
@@ -964,7 +978,7 @@
   function renderBalanceScreen() {
     var el = screenEl(STEP_BALANCE);
     // "בונוס" comes before the last test now, so the bar shows 5 of 6
-    el.innerHTML = pageNoHtml(STEP_BALANCE) + progressHtml("בונוס", 3 / 4) +
+    el.innerHTML = pageNoHtml(STEP_BALANCE) + progressHtml("בונוס", 4 / 5) +
       '<h2>' + esc(BALANCE.name) + '</h2>' +
       mediaSlot("balance", "עמידה על רגל אחת") +
       stepsHtml(BALANCE) +
