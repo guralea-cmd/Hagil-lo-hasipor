@@ -866,3 +866,12 @@ a.btn.bk-btn-lg {
 }
 .bk-more > summary:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
 .bk-more[open] > summary { margin-bottom: var(--space-4); }
+
+/* 18.9.2026: the explanation a woman reads before she starts */
+.bk-explain h3 {
+  margin: var(--space-5) 0 var(--space-1);
+  font-size: var(--text-md);
+  color: var(--color-primary);
+}
+.bk-explain h3:first-of-type { margin-top: var(--space-4); }
+.bk-explain p { margin: 0; }
