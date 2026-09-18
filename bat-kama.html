@@ -55,7 +55,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="css/style.css?v=96">
-<link rel="stylesheet" href="css/bat-kama.css?v=12">
+<link rel="stylesheet" href="css/bat-kama.css?v=13">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -113,15 +113,68 @@ gtag('config', 'G-MEG8NMMGTD');
       <h1>רוצה לדעת בת כמה את באמת?</h1>
       <p class="bk-voice">אני לאה. בת 72. עשיתי את זה בעצמי — ואת רואה את התוצאה שלי כאן למטה. עכשיו תורך.</p>
       <p class="bk-sub">לא לפי תעודת הזהות — לפי מה שהגוף שלך יודע לעשות היום. 5 מבחנים, כ-20 דקות, לבד בבית, לפי מחקר. אפשר גם בשתי פעמים.</p>
-      <p class="bk-note">המבחן מיועד לנשים בנות 60 עד 94 — בדיוק טווח הגילאים שנבדק במחקר. מי שצעירה או מבוגרת מהטווח הזה לא תקבל תוצאה שמתאימה לגיל שלה.</p>
-      <p class="bk-note">מבוסס על מחקרים מדעיים. לא תחליף לייעוץ רפואי.</p>
+
+      <!-- 18.9.2026: הציוד והכפתור למעלה. אישה שמגיעה ממודעה צריכה להתחיל, לא לקרוא. -->
+      <div class="bk-card">
+        <h3>מה צריך</h3>
+        <ul class="bk-needs">
+          <li>כיסא בלי ידיות, בגובה 43 ס"מ, צמוד לקיר</li>
+          <li>משקולת 2.5 ק"ג (או בקבוק מים של 2 ליטר מלא)</li>
+          <li>סרט מדידה</li>
+          <li>סלוטייפ או מדבקה לסימון על הקיר</li>
+          <li>קיר להישען עליו בשיווי המשקל</li>
+          <li>שעון עצר - יש כאן בדף</li>
+        </ul>
+        <!-- ציוד חסר - לאה 15.9.2026 (תחליף המשקולת כבר ברשימה עצמה) -->
+        <p class="bk-swap">אין כיסא בגובה 43? כל כיסא יציב בלי ידיות, צמוד לקיר.</p>
+      </div>
+
+      <div class="bk-field">
+        <label for="bk-id-age">בת כמה את לפי תעודת הזהות?</label>
+        <input class="bk-num" id="bk-id-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+        <p class="form-note">לא חובה</p>
+      </div>
+
+      <!-- הפסיקה באמצע - מוצג רק כשיש התקדמות שמורה בטלפון הזה -->
+      <div class="bk-card bk-resume" id="bk-resume" hidden>
+        <p class="bk-resume__q">את באמצע המבחן. להמשיך מאיפה שעצרת?</p>
+        <div class="bk-choice" role="group">
+          <button type="button" class="bk-choice__btn" id="bk-resume-yes">להמשיך</button>
+          <button type="button" class="bk-choice__btn" id="bk-resume-no">להתחיל מחדש</button>
+        </div>
+        <p class="bk-muted bk-resume__note">מה שכבר עשית נשמר. אין צורך להתחיל מההתחלה.</p>
+      </div>
+
+      <div class="bk-nav">
+        <button type="button" id="bk-start" class="btn bk-btn-lg">להתחלה</button>
+      </div>
+    </div>
+
+    <!-- rendered by js/bat-kama.js (order of 16.9.2026): 1 chair stand, 2 arm curl, 3 sit-and-reach,
+         4 back scratch, 5 up-and-go, 6 balance bonus, 7 2-minute step, 8 nutrition, 9 result
+         (its one button, "מה עושים עם התוצאה?", opens bat-kama-next.html) -->
+
+      <!-- התוצאות של לאה נשארות גלויות: זאת ההוכחה, לא רקע -->
+      <div class="bk-leah" id="bk-leah"></div>
+
       <!-- לאה 17.9: "את לא יכולה לבצע את המבחן עכשיו? תלחצי כאן ואז הוא עובר ל-WhatsApp שלה כדי לשמור אותו" -->
       <a class="bk-later" id="bk-later" target="_blank" rel="noopener"
          href="https://wa.me/?text=%D7%94%D7%9E%D7%91%D7%97%D7%9F%20%22%D7%91%D7%AA%20%D7%9B%D7%9E%D7%94%20%D7%90%D7%AA%20%D7%91%D7%90%D7%9E%D7%AA%3F%22%20%D7%A9%D7%9C%20%D7%9C%D7%90%D7%94%20%D7%92%D7%95%D7%A8%D7%90%20-%20%D7%9C%D7%A2%D7%A9%D7%95%D7%AA%20%D7%9B%D7%A9%D7%99%D7%94%D7%99%D7%94%20%D7%9C%D7%99%20%D7%96%D7%9E%D7%9F%3A%20https%3A%2F%2Fguralea.com%2Fbat-kama.html%3Futm_source%3Dwhatsapp%26utm_medium%3Dsave_later"><strong>לא יכולה לבצע את המבחן עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך, ותבצעי אותו בזמנך הפנוי</a>
+      <!-- לאה 17.9: נקודת יציאה גם ליד כפתור ההתחלה - אותו קישור כמו #bk-later -->
+      <a class="bk-later" target="_blank" rel="noopener"
+         href="https://wa.me/?text=%D7%94%D7%9E%D7%91%D7%97%D7%9F%20%22%D7%91%D7%AA%20%D7%9B%D7%9E%D7%94%20%D7%90%D7%AA%20%D7%91%D7%90%D7%9E%D7%AA%3F%22%20%D7%A9%D7%9C%20%D7%9C%D7%90%D7%94%20%D7%92%D7%95%D7%A8%D7%90%20-%20%D7%9C%D7%A2%D7%A9%D7%95%D7%AA%20%D7%9B%D7%A9%D7%99%D7%94%D7%99%D7%94%20%D7%9C%D7%99%20%D7%96%D7%9E%D7%9F%3A%20https%3A%2F%2Fguralea.com%2Fbat-kama.html%3Futm_source%3Dwhatsapp%26utm_medium%3Dsave_later"><strong>לא יכולה לבצע את המבחן עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך, ותבצעי אותו בזמנך הפנוי</a>
+      <!-- אין לה וואטסאפ? העתקת הקישור (לאה 17.9) -->
+      <p class="bk-copy-line"><button type="button" class="bk-link bk-copy">אין לך וואטסאפ? להעתיק את הקישור</button></p>
 
-      <!-- טיוטה 16.9 - ממתין לאישור לאה: הקדמה (מה המחקר, למה לאה, המטרה, "אין במבחן הזה נכשלים").
-           עובדות: Rikli & Jones 1999 (7,183, 21 מדינות בארה"ב, 60-94) - norms-table.md; Wu 2026 - FACTS[1]. -->
-      <div class="bk-card bk-intro">
+      <p class="bk-note">המבחן מיועד לנשים בנות 60 עד 94 — בדיוק טווח הגילאים שנבדק במחקר. מי שצעירה או מבוגרת מהטווח הזה לא תקבל תוצאה שמתאימה לגיל שלה.</p>
+      <p class="bk-note">מבוסס על מחקרים מדעיים. לא תחליף לייעוץ רפואי.</p>
+      <p class="bk-safety">אם קיבלת הוראה רפואית להימנע ממאמץ, או שיש לך עכשיו כאב בחזה, סחרחורת או לחץ דם לא מאוזן — אל תעשי את הצעידה במקום ואת הקימה מכיסא. תשאלי קודם את הרופא/ה שלך.</p>
+      <p class="bk-safety bk-stop">עצרי מיד — לא בסוף — אם יש לך כאב, לחץ בחזה, סחרחורת, או שאת לא מצליחה לנשום. המבחן לא שווה את זה, ואין לך מה להוכיח לאף אחד.</p>
+
+      <!-- הכבד יורד לתוך פתיחה נפתחת: מי שרוצה לקרוא, קוראת -->
+      <details class="bk-more">
+        <summary>מה המבחן בודק, ולמה אני</summary>
+        <div class="bk-card bk-intro">
         <h2 class="bk-intro__title">מה המבחן בודק</h2>
         <!-- תיקון לאה 16.9: "גוף זה זכר" -->
         <p>את הגיל בתעודת הזהות את כבר יודעת. כאן תגלי בן כמה הגוף שלך באמת.</p>
@@ -151,9 +204,7 @@ gtag('config', 'G-MEG8NMMGTD');
       </div>
 
       <!-- "בת כמה אני באמת?" - Leah's own section, filled from LEAH in js/bat-kama.js -->
-      <div class="bk-leah" id="bk-leah"></div>
-
-      <div class="bk-card bk-terms">
+          <div class="bk-card bk-terms">
         <h3>תנאי המבחן</h3>
         <ol class="bk-terms__list">
           <li>עשי את המבחן כשאת רעננה — לא אחרי אימון, לא בסוף יום עבודה.</li>
@@ -163,56 +214,9 @@ gtag('config', 'G-MEG8NMMGTD');
           <li>דקה-שתיים מנוחה בין מבחן למבחן.</li>
         </ol>
       </div>
-
-      <div class="bk-card">
-        <h3>מה צריך</h3>
-        <ul class="bk-needs">
-          <li>כיסא בלי ידיות, בגובה 43 ס"מ, צמוד לקיר</li>
-          <li>משקולת 2.5 ק"ג (או בקבוק מים של 2 ליטר מלא)</li>
-          <li>סרט מדידה</li>
-          <li>סלוטייפ או מדבקה לסימון על הקיר</li>
-          <li>קיר להישען עליו בשיווי המשקל</li>
-          <li>שעון עצר - יש כאן בדף</li>
-        </ul>
-        <!-- ציוד חסר - לאה 15.9.2026 (תחליף המשקולת כבר ברשימה עצמה) -->
-        <p class="bk-swap">אין כיסא בגובה 43? כל כיסא יציב בלי ידיות, צמוד לקיר.</p>
-      </div>
-
-      <!-- טיוטה 16.9 - ממתין לאישור לאה (3: מחליף את משפט הבטיחות הקודם) -->
-      <p class="bk-safety">אם קיבלת הוראה רפואית להימנע ממאמץ, או שיש לך עכשיו כאב בחזה, סחרחורת או לחץ דם לא מאוזן — אל תעשי את הצעידה במקום ואת הקימה מכיסא. תשאלי קודם את הרופא/ה שלך.</p>
-      <!-- טיוטה 16.9 - ממתין לאישור לאה (2: עוצרים מיד) -->
-      <p class="bk-safety bk-stop">עצרי מיד — לא בסוף — אם יש לך כאב, לחץ בחזה, סחרחורת, או שאת לא מצליחה לנשום. המבחן לא שווה את זה, ואין לך מה להוכיח לאף אחד.</p>
-
-      <div class="bk-field">
-        <label for="bk-id-age">בת כמה את לפי תעודת הזהות?</label>
-        <input class="bk-num" id="bk-id-age" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
-        <p class="form-note">לא חובה</p>
-      </div>
-
-      <!-- הפסיקה באמצע - מוצג רק כשיש התקדמות שמורה בטלפון הזה -->
-      <div class="bk-card bk-resume" id="bk-resume" hidden>
-        <p class="bk-resume__q">את באמצע המבחן. להמשיך מאיפה שעצרת?</p>
-        <div class="bk-choice" role="group">
-          <button type="button" class="bk-choice__btn" id="bk-resume-yes">להמשיך</button>
-          <button type="button" class="bk-choice__btn" id="bk-resume-no">להתחיל מחדש</button>
-        </div>
-        <p class="bk-muted bk-resume__note">מה שכבר עשית נשמר. אין צורך להתחיל מההתחלה.</p>
-      </div>
-
-      <!-- לאה 17.9: נקודת יציאה גם ליד כפתור ההתחלה - אותו קישור כמו #bk-later -->
-      <a class="bk-later" target="_blank" rel="noopener"
-         href="https://wa.me/?text=%D7%94%D7%9E%D7%91%D7%97%D7%9F%20%22%D7%91%D7%AA%20%D7%9B%D7%9E%D7%94%20%D7%90%D7%AA%20%D7%91%D7%90%D7%9E%D7%AA%3F%22%20%D7%A9%D7%9C%20%D7%9C%D7%90%D7%94%20%D7%92%D7%95%D7%A8%D7%90%20-%20%D7%9C%D7%A2%D7%A9%D7%95%D7%AA%20%D7%9B%D7%A9%D7%99%D7%94%D7%99%D7%94%20%D7%9C%D7%99%20%D7%96%D7%9E%D7%9F%3A%20https%3A%2F%2Fguralea.com%2Fbat-kama.html%3Futm_source%3Dwhatsapp%26utm_medium%3Dsave_later"><strong>לא יכולה לבצע את המבחן עכשיו?</strong> לחצי כאן ושמרי את המבחן בוואטסאפ שלך, ותבצעי אותו בזמנך הפנוי</a>
-      <!-- אין לה וואטסאפ? העתקת הקישור (לאה 17.9) -->
-      <p class="bk-copy-line"><button type="button" class="bk-link bk-copy">אין לך וואטסאפ? להעתיק את הקישור</button></p>
-
-      <div class="bk-nav">
-        <button type="button" id="bk-start" class="btn bk-btn-lg">להתחלה</button>
-      </div>
+      </details>
     </div>
 
-    <!-- rendered by js/bat-kama.js (order of 16.9.2026): 1 chair stand, 2 arm curl, 3 sit-and-reach,
-         4 back scratch, 5 up-and-go, 6 balance bonus, 7 2-minute step, 8 nutrition, 9 result
-         (its one button, "מה עושים עם התוצאה?", opens bat-kama-next.html) -->
     <div class="bk-screen" data-step="1" hidden></div>
     <div class="bk-screen" data-step="2" hidden></div>
     <div class="bk-screen" data-step="3" hidden></div>
@@ -245,7 +249,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <script defer src="js/firebase-config.js?v=4"></script>
 <script defer src="js/leads-sheet.js?v=1"></script>
 <script defer src="js/main.js?v=11"></script>
-<script defer src="js/bat-kama.js?v=30"></script>
+<script defer src="js/bat-kama.js?v=32"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
