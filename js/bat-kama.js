@@ -335,8 +335,10 @@
   var LEAH = {
     idAge: 72,
     headerImage: { src: "", alt: "לאה גורא" },
-    result: "",
-    testResults: { chairStand: "", armCurl: "", step: "", sitReach: "", backScratch: "", upAndGo: "" },
+    // no age here on purpose (Leah 18.9.2026): the table floors at 60-64, so a number
+    // would make her look average. Her raw results say far more.
+    testResults: { chairStand: "", armCurl: "", sitReach: "", balance: "", step: "" },
+    compare: "",  // e.g. "נשים בנות 40-49 עושות בממוצע 25 קימות"
     videos: {
       chairStand:  { src: "", poster: "" },
       armCurl:     { src: "", poster: "" },
@@ -347,7 +349,7 @@
       balance:     { src: "", poster: "" }
     }
   };
-  var LEAH_PENDING = "התוצאה של לאה: יתעדכן אחרי הצילום";
+  var LEAH_PENDING = "יתעדכן אחרי הצילום";
 
   // "10 משפטים לדף בקול של לאה" - exact text and source from
   // .claude/skills/bat-kama-at-beemet/research-2026-09.md (Leah, 14.9.2026).
@@ -857,10 +859,10 @@
         '<p class="bk-leah__card-result">' + (r ? "התוצאה של לאה: " + esc(r) : LEAH_PENDING) + '</p></div>';
     }).join("");
     el.innerHTML = img +
-      '<h2 class="bk-leah__title">בת כמה אני באמת?</h2>' +
+      '<h2 class="bk-leah__title">התוצאות שלי</h2>' +
       '<div class="bk-leah__ages">' +
-        '<p>גיל בתעודת הזהות: <strong>' + LEAH.idAge + '</strong></p>' +
-        '<p>' + (LEAH.result ? "התוצאה של לאה: <strong>" + esc(LEAH.result) + "</strong>" : LEAH_PENDING) + '</p>' +
+        '<p>אני לאה גורא, בת <strong>' + LEAH.idAge + '</strong>. אלה המספרים שלי במבחן הזה.</p>' +
+        (LEAH.compare ? '<p>' + esc(LEAH.compare) + '</p>' : "") +
       '</div>' +
       '<div class="bk-leah__videos">' + cards + '</div>';
   }

@@ -849,3 +849,20 @@ a.btn.bk-btn-lg {
   font-size: 1.15em;
   color: #8a2f1f;
 }
+
+/* 18.9.2026: the heavy background reading folds away, so a woman arriving from an
+   ad meets a headline, the kit and the start button - not a document. */
+.bk-more {
+  margin: var(--space-6) 0 0;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+.bk-more > summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: var(--text-md);
+  color: var(--color-primary);
+  padding: var(--space-2) 0;
+}
+.bk-more > summary:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+.bk-more[open] > summary { margin-bottom: var(--space-4); }
