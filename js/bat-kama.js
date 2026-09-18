@@ -1676,8 +1676,6 @@
     }
     if (typeof db === "undefined" || typeof firebase === "undefined") {
       toSheet("");
-      if (statusEl) statusEl.textContent = "";
-      done();
       return;
     }
     db.collection("age_test_leads").add({
@@ -1691,9 +1689,8 @@
       toSheet(ref && ref.id);
     }).catch(function () {
       toSheet("");
-      track("bat_kama_lead_error", { form_name: "bat_kama_start" });
+      track("bat_kama_lead_error", { form_name: "bat_kama_result" });
     });
-    done();
   }
 
   function wireIntro() {
