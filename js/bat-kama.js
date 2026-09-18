@@ -32,10 +32,12 @@
    * Leah 16.9.2026: an overall age needs at least 3 of the 4 age tests (MIN_AGE_TESTS).
    * ================================================================ */
   var GROUP_AGES = [62, 67, 72, 77, 82, 87, 92];
-  var TEST_KEYS = ["chairStand", "armCurl", "step", "sitReach", "backScratch", "upAndGo"];
-  var AGE_KEYS = ["chairStand", "armCurl", "step", "sitReach", "backScratch", "upAndGo"];
-  var FLEX_KEYS = ["sitReach", "backScratch"];
-  var MIN_AGE_TESTS = 3;
+  // Leah 18.9.2026: only the tests a woman can do alone with a chair, a bottle and a phone.
+  // Up-and-go and the two flexibility tests need a second person, so they left the product.
+  var TEST_KEYS = ["chairStand", "armCurl", "step"];
+  var AGE_KEYS = ["chairStand", "armCurl", "step"];
+  var FLEX_KEYS = [];
+  var MIN_AGE_TESTS = 2;
   var TABLE_START_AGE = 60;   // Rikli & Jones tables start at 60
   var TABLE_END_AGE = 94;     // ... and end at 94
   var FLOOR_REGION_MAX = 67;  // results this low can't be compared to an ID age under 60
@@ -49,12 +51,15 @@
     chairStand:  { better: "higher", median: [15, 14, 13, 12, 11, 10, 8] },
     armCurl:     { better: "higher", median: [16, 15, 14, 14, 13, 12, 11] },
     step:        { better: "higher", median: [91, 90, 84, 84, 75, 70, 58] },
-    // inches, as published; input is cm -> /2.54 -> nearest half inch
-    sitReach:    { better: "higher", inches: true, median: [2.1, 2.0, 1.4, 1.2, 0.5, -0.1, -1.7] },
-    backScratch: { better: "higher", inches: true, median: [-0.7, -1.2, -1.7, -2.1, -2.6, -3.9, -4.5] },
-    // seconds, lower is better
-    upAndGo:     { better: "lower", median: [5.2, 5.6, 6.0, 6.3, 7.2, 7.9, 9.4] }
   };
+
+  // Balance is scored on its own and shown as a second result, never averaged into the age
+  // (Leah 18.9.2026). Bohannon RW, Topics in Geriatric Rehabilitation 2006;22(1):70-77 -
+  // a meta-analysis of 22 studies, 3,484 people aged 60-99, eyes open. Mean seconds per band.
+  var BALANCE_AGES = [64.5, 74.5, 89.5];
+  var BALANCE_MEDIAN = [27.0, 17.2, 8.5];
+  // Araujo et al., BJSM 2022 (1,702 people aged 51-75, 7 years): the studied threshold.
+  var BALANCE_THRESHOLD = 10;
 
   // Plausibility (audit 16.9.2026): anything outside these ranges is treated as not recorded.
   // counts: whole numbers; up-and-go under 2.0 s and balance under 1.0 s are double taps.
@@ -62,19 +67,11 @@
     chairStand: { min: 0, max: 60, int: true },
     armCurl:    { min: 0, max: 60, int: true },
     step:       { min: 0, max: 250, int: true },
-    upAndGo:    { min: 2.0, max: 60 },
-    sitReach:   { min: -50, max: 50 },
-    backScratch: { min: -60, max: 40 },
     balance:    { min: 1.0, max: 45 }
   };
   // A stop tap this soon after the start tap is ignored (the timer keeps running).
   var MIN_STOP_MS = { stopwatch: 500, countdown: 800 };
 
-  // Latorre-Rojas 2019, Table 1 - the study's own sample means for the two flexibility
-  // tests (459 women, mean age 70.3): chair sit-and-reach 0.7 cm, back scratch -0.1 cm.
-  // Since 16.9.2026 the formula ALWAYS uses these two means, whether or not she did the
-  // flexibility tests - so her own flexibility never changes her age.
-  var FLEX_SAMPLE_MEAN = { sitReach: 0.7, backScratch: -0.1 };
 
   var NUTRITION_KEYS = ["protein", "calcium", "vitaminD", "fluids", "fruitVeg"];
   var MOVE_KEYS = ["chairStand", "balance", "upAndGo", "step", "armCurl", "sitReach", "backScratch"];
@@ -125,21 +122,6 @@
       if (v <= n.median[i]) return { age: GROUP_AGES[i], cap: null, scored: v };
     }
     return { age: 92, cap: "older", scored: v };
-  }
-
-  // Latorre-Rojas et al. 2019, J Sport Health Sci 8(3). CSR and BS in cm, FUG in seconds.
-  function latorreRojas(r) {
-    return 40.146 + 0.350 * r.chairStand - 0.714 * r.armCurl - 0.110 * r.step
-      - 0.177 * r.sitReach - 0.101 * r.backScratch + 8.835 * r.upAndGo;
-  }
-
-  // The formula as the page uses it: the two flexibility terms are always the study's
-  // sample means (FLEX_SAMPLE_MEAN), never her own values.
-  function latorreRojasFFA(r) {
-    return latorreRojas({
-      chairStand: r.chairStand, armCurl: r.armCurl, step: r.step, upAndGo: r.upAndGo,
-      sitReach: FLEX_SAMPLE_MEAN.sitReach, backScratch: FLEX_SAMPLE_MEAN.backScratch
-    });
   }
 
   function qualifierText(q) {
@@ -196,17 +178,6 @@
     if (allAt(62) && anyYounger) res.qualifier = "younger";
     if (allAt(92) && anyOlder) res.qualifier = "older";
 
-    // All 4 age tests in the youngest group (60-64): Leah 15.9.2026 - the exact number
-    // from the formula when it is under 62, floored at "50 או צעירה יותר".
-    if (done.length === AGE_KEYS.length && allAt(62)) {
-      res.ffa = roundTenth(latorreRojasFFA(raw));
-      var ffaAge = Math.round(res.ffa);
-      if (ffaAge < 62) {
-        res.method = "formula";
-        res.ageNumber = ffaAge < 50 ? 50 : ffaAge;
-        res.qualifier = ffaAge < 50 ? "younger" : null;
-      }
-    }
     // Below the whole table: the headline is "יש מאיפה להתחיל, ואני כאן." (Leah 15.9.2026)
     res.belowTable = res.ageNumber === 92 && res.qualifier === "older";
     res.ageText = res.ageNumber + qualifierText(res.qualifier);
@@ -271,6 +242,17 @@
 
   // Springer 2007 (via Heyward 2019) women eyes open: 60-69 = 30.4 s, 80-99 = 10.6 s.
   // Proposed mapping: good >= 30, medium 10-29.9, needs work < 10.
+  // The age band whose typical one-leg time her result matches (Bohannon 2006).
+  function balanceAge(seconds) {
+    if (!plausible("balance", seconds)) return null;
+    var s = roundTenth(seconds);
+    if (s > BALANCE_MEDIAN[0]) return { age: BALANCE_AGES[0], cap: "younger", scored: s };
+    for (var i = 0; i < BALANCE_MEDIAN.length; i++) {
+      if (s >= BALANCE_MEDIAN[i]) return { age: BALANCE_AGES[i], cap: null, scored: s };
+    }
+    return { age: BALANCE_AGES[BALANCE_AGES.length - 1], cap: "older", scored: s };
+  }
+
   function balanceRating(seconds) {
     if (!plausible("balance", seconds)) return null;
     var s = roundTenth(seconds);
@@ -320,14 +302,15 @@
 
   var BatKamaScore = {
     GROUP_AGES: GROUP_AGES, TEST_KEYS: TEST_KEYS, AGE_KEYS: AGE_KEYS, FLEX_KEYS: FLEX_KEYS,
-    NORMS: NORMS, NUTRITION_KEYS: NUTRITION_KEYS, FLEX_SAMPLE_MEAN: FLEX_SAMPLE_MEAN,
+    NORMS: NORMS, NUTRITION_KEYS: NUTRITION_KEYS,
+    BALANCE_MEDIAN: BALANCE_MEDIAN, BALANCE_AGES: BALANCE_AGES, BALANCE_THRESHOLD: BALANCE_THRESHOLD,
     MIN_AGE_TESTS: MIN_AGE_TESTS, PLAUSIBLE: PLAUSIBLE, MIN_STOP_MS: MIN_STOP_MS, SEV: SEV,
-    cmToHalfInch: cmToHalfInch, ageForTest: ageForTest, latorreRojas: latorreRojas,
-    latorreRojasFFA: latorreRojasFFA, plausible: plausible, stopAccepted: stopAccepted, bestOf: bestOf,
+    cmToHalfInch: cmToHalfInch, ageForTest: ageForTest,
+    plausible: plausible, stopAccepted: stopAccepted, bestOf: bestOf,
     score: score, testAgeText: testAgeText, testDisplayText: testDisplayText,
     isBelowTable: isBelowTable, hasBelowTable: hasBelowTable, compareToIdAge: compareToIdAge,
     idAgeOutsideTable: idAgeOutsideTable, flexibilityStatus: flexibilityStatus,
-    balanceRating: balanceRating, ageBucket: ageBucket, pickRecommendations: pickRecommendations
+    balanceRating: balanceRating, balanceAge: balanceAge, ageBucket: ageBucket, pickRecommendations: pickRecommendations
   };
 
   if (typeof module !== "undefined" && module.exports) module.exports = BatKamaScore;
@@ -411,7 +394,7 @@
   // Screens 3 (כפיפה בישיבה), 4 (אצבע-אצבע), 5 (קום-לך-שב) and 6 (שיווי משקל) are skipped
   // entirely - forward and backward - and count as not done, not as skipped by pain.
   var ALONE_TESTS = ["chairStand", "armCurl", "step"];
-  var ALONE_SKIP_STEPS = [3, 4, 5, 6];
+  var ALONE_SKIP_STEPS = [];
 
   // טיוטה 16.9 - ממתין לאישור לאה (4). Replaces the start of the "לחצי התחלה..." step on the
   // three countdown tests (chair stand, arm curl, 2-minute step) - the only timers that count 3-2-1.
@@ -444,38 +427,6 @@
       safety: "תנועה מלאה ומבוקרת, בלי תנופה."
     },
     {
-      key: "sitReach", name: "כפיפה קדימה בישיבה", short: "כפיפה קדימה",
-      timer: 0, input: "cm", label: "המרחק בס\"מ", fact: 6,
-      signs: ["לא הגעתי (−)", "נגעתי (0)", "עברתי (+)"],
-      steps: [
-        "שבי בקצה כיסא צמוד לקיר. רגל אחת ישרה, העקב על הרצפה, כף הרגל ב-90°.",
-        "אצבעות אמצעיות זו על זו. נשפי והושיטי את הידיים לכיוון הבוהן.",
-        "בקשי ממישהו למדוד את המרחק מקצות האצבעות עד קצה הבוהן."
-      ],
-      safety: "גב ישר, בלי קפיצות, אף פעם לא עד כאב. אם יש לך אוסטיאופורוזיס חמורה, אל תעשי את המבחן הזה."
-    },
-    {
-      key: "backScratch", name: "אצבע-אצבע מאחורי הגב", short: "אצבע-אצבע",
-      timer: 0, input: "cm", label: "המרחק בס\"מ",
-      signs: ["יש רווח (−)", "נוגעות (0)", "יש חפיפה (+)"],
-      steps: [
-        "יד אחת מעל הכתף ולאורך הגב כלפי מטה, כף היד אל הגוף.",
-        "היד השנייה מאחורי הגב כלפי מעלה, כף היד החוצה.",
-        "בקשי ממישהו למדוד את המרחק בין קצות האצבעות האמצעיות."
-      ],
-      safety: "2 ניסיונות, רשמי את הטוב. תחושת מתיחה קלה תקינה. אם כואב לך, עצרי מיד."
-    },
-    {
-      key: "upAndGo", name: "קום-לך-שב 2.44 מטר", short: "קום-לך-שב",
-      timer: 0, input: "stopwatch", attempts: 2, best: "min", maxSeconds: 60, fact: 2,
-      steps: [
-        "כיסא צמוד לקיר. סמני נקודה על הרצפה במרחק 2.44 מטר מקדמת הכיסא.",
-        "שבי. בלחיצה על התחלה: קומי, לכי סביב הסימון, חזרי ושבי. עצירה ברגע שישבת.",
-        "שני ניסיונות. נשמר הזמן הטוב."
-      ],
-      safety: "את הולכת, לא רצה — מהר ככל שאת יכולה, ובבטחה. כדאי שמישהו אחר יפעיל את השעון."
-    },
-    {
       // last test, per Leah's order of 15.9.2026 (the endurance test closes the battery);
       // since 16.9.2026 the balance bonus comes right before it.
       key: "step", name: "צעידה במקום 2 דקות", short: "צעידה במקום",
@@ -503,16 +454,16 @@
   };
 
   // screen number -> test key (see the header comment)
-  var SCREEN_KEYS = [null, "chairStand", "armCurl", "sitReach", "backScratch", "upAndGo", "balance", "step"];
-  var STEP_BALANCE = 6;
-  var STEP_NUTRITION = 8;
-  var STEP_RESULT = 9;
+  var SCREEN_KEYS = [null, "chairStand", "armCurl", "balance", "step"];
+  var STEP_BALANCE = 3;
+  var STEP_NUTRITION = 5;
+  var STEP_RESULT = 6;
   var LAST_STEP = STEP_RESULT;
-  var OLD_STEP_FORM = 10; // removed 16.9.2026 - a save on it resumes on the result
+  var OLD_STEP_FORM = 7; // out of range now - a stale save resumes on the result
   var NEXT_PAGE = "bat-kama-next.html";
   // Page numbers for Leah's review (16.9.2026): intro = 1, screen N = N + 1, the next page = 11.
   // Internal review note - removed on launch day with every .bk-review-note.
-  var PAGE_COUNT = 11;
+  var PAGE_COUNT = 8;
   function pageNoHtml(step) {
     return '<p class="bk-review-note bk-page-no">דף ' + (step + 1) + ' מתוך ' + PAGE_COUNT + '</p>';
   }
@@ -557,38 +508,40 @@
   };
 
   var DEMOS = {
+    // a typical woman of 72: three tests at 70-74, balance at 70-79
     "1": {
       idAge: 72,
-      values: { chairStand: 13, armCurl: 12, step: 70, sitReach: -2.5, backScratch: -11.4 },
-      attempts: { upAndGo: [6.5, 6.3], balance: [18.2, 22.4] },
+      values: { chairStand: 13, armCurl: 14, step: 84 },
+      attempts: { balance: [18.2, 20.0] },
       nutrition: { protein: 1, calcium: 0, vitaminD: 1, fluids: 1, fruitVeg: 0 }
     },
+    // everything above the youngest band
     "2": {
-      idAge: 60,
-      values: { chairStand: 20, armCurl: 22, step: 115, sitReach: 15, backScratch: 5 },
-      attempts: { upAndGo: [4.2, 4.0], balance: [41.0, 45] },
+      idAge: 63,
+      values: { chairStand: 20, armCurl: 22, step: 115 },
+      attempts: { balance: [41.0, 45] },
       nutrition: { protein: 0, calcium: 1, vitaminD: 0, fluids: 0, fruitVeg: 2 }
     },
-    // only two age tests - no overall age (Leah 16.9.2026, min 3 of 4)
+    // only one age test - no overall age (MIN_AGE_TESTS)
     "3": {
       idAge: 66,
-      values: { chairStand: 11, armCurl: 14 },
-      attempts: { upAndGo: [], balance: [] },
-      skipped: { sitReach: true, backScratch: true, upAndGo: true, balance: true, step: true },
+      values: { chairStand: 11 },
+      attempts: { balance: [] },
+      skipped: { armCurl: true, balance: true, step: true },
       nutrition: { protein: 0, calcium: 0, vitaminD: 0, fluids: 1, fruitVeg: 0 }
     },
-    // below the whole table (audit 16.9.2026 repro: 3/7/43/12.0, ID 70)
+    // below the whole table, and under the 10-second balance threshold
     "4": {
       idAge: 70,
-      values: { chairStand: 3, armCurl: 7, step: 43, sitReach: -12, backScratch: -25 },
-      attempts: { upAndGo: [12.4, 12.0], balance: [4.1, 3.2] },
+      values: { chairStand: 3, armCurl: 7, step: 43 },
+      attempts: { balance: [4.1, 3.2] },
       nutrition: { protein: 1, calcium: 1, vitaminD: 1, fluids: 2, fruitVeg: 1 }
     },
-    // older than the ID age (72/77/72/77 -> 75, ID 66) - shows the doctor line (draft 5, 16.9.2026)
+    // older than the ID age
     "5": {
       idAge: 66,
-      values: { chairStand: 10, armCurl: 11, step: 68, sitReach: -3, backScratch: -12 },
-      attempts: { upAndGo: [7.6, 7.3], balance: [12.5, 14.0] },
+      values: { chairStand: 11, armCurl: 12, step: 72 },
+      attempts: { balance: [12.5, 14.0] },
       nutrition: { protein: 0, calcium: 1, vitaminD: 0, fluids: 1, fruitVeg: 0 }
     }
   };
@@ -609,7 +562,7 @@
     aloneAnswered: false,
     values: {},       // test key -> number (cm for flexibility, s for up-and-go)
     signs: {},        // flexibility key -> -1 | 0 | 1
-    attempts: { upAndGo: [], balance: [] },
+    attempts: { balance: [] },
     skipped: {},      // key -> true
     nutrition: {},    // key -> option index
     startTracked: false,  // saved with the progress, so a reload / "להמשיך" never counts twice
@@ -622,7 +575,7 @@
 
   /* ---------- saved progress (localStorage, this phone only) ---------- */
   // v2 = the screen order of 16.9.2026. v1 saves (balance 7, step 6) are migrated once.
-  var SAVE_KEY = "batKama.progress.v2";
+  var SAVE_KEY = "batKama.progress.v3";
   var OLD_SAVE_KEY = "batKama.progress.v1";
   // 60 days (was 24h). Leah 17.9.2026: she may finish any time until the workshop starts
   // (launch 11.10 -> workshop 26-27.11 is ~47 days).
@@ -742,7 +695,7 @@
     }
     var at = d.attempts && typeof d.attempts === "object" ? d.attempts : {};
     function arr(a) { return Array.isArray(a) ? a.map(function (v) { return isNum(v) ? v : null; }) : []; }
-    state.attempts = { upAndGo: arr(at.upAndGo), balance: arr(at.balance) };
+    state.attempts = { balance: arr(at.balance) };
   }
 
   /* ---------- tracking (GA4 + Meta Pixel), never in demo / scan mode ---------- */
@@ -979,12 +932,8 @@
 
   // Alone mode runs 3 tests, not 6 - the progress line has to stay truthful.
   function testProgress(t) {
-    if (state.alone) {
-      var i = ALONE_TESTS.indexOf(t.key) + 1;
-      if (i > 0) return progressHtml("מבחן " + i + " מתוך 3", i / 3);
-    }
     var idx = TESTS.indexOf(t);
-    return progressHtml("מבחן " + (idx + 1) + " מתוך 6", (idx + 1) / 6);
+    return progressHtml("מבחן " + (idx + 1) + " מתוך " + TESTS.length, (idx + 1) / TESTS.length);
   }
 
   function screenEl(step) {
@@ -1007,7 +956,7 @@
   function renderBalanceScreen() {
     var el = screenEl(STEP_BALANCE);
     // "בונוס" comes before the last test now, so the bar shows 5 of 6
-    el.innerHTML = pageNoHtml(STEP_BALANCE) + progressHtml("בונוס", 5 / 6) +
+    el.innerHTML = pageNoHtml(STEP_BALANCE) + progressHtml("בונוס", 3 / 4) +
       '<h2>' + esc(BALANCE.name) + '</h2>' +
       mediaSlot("balance", "עמידה על רגל אחת") +
       stepsHtml(BALANCE) +
@@ -1290,7 +1239,7 @@
     TEST_KEYS.forEach(function (k) {
       var v = null;
       if (doneAlone(k) && !state.skipped[k]) {
-        v = k === "upAndGo" ? bestAttempt(testByKey("upAndGo")) : state.values[k];
+        v = state.values[k];
       }
       raw[k] = isNum(v) ? v : null;
     });
@@ -1327,6 +1276,27 @@
     if (o === "young") return TXT.idAgeYoung;
     if (o === "old") return TXT.idAgeOld;
     return "";
+  }
+
+  function balanceCardHtml(b) {
+    var html = '<div class="bk-card bk-balance-card"><h3>שיווי משקל</h3>';
+    var t = b && isNum(b.seconds) ? balanceAge(b.seconds) : null;
+    if (!t) {
+      return html + '<p class="bk-balance">לא בוצע</p></div>';
+    }
+    html += '<p class="bk-balance"><strong>' + b.seconds.toFixed(1) + ' שניות</strong></p>';
+    html += '<p class="bk-balance__age">שיווי המשקל שלך ברמה של בת ' +
+      Math.round(t.age) + (t.cap === "younger" ? " או צעירה יותר" : "") + '.</p>';
+    // טיוטה 18.9 - ממתין לאישור לאה (Araujo 2022: 1,702 נבדקים, 7 שנות מעקב, סף 10 שניות)
+    if (b.seconds >= BALANCE_THRESHOLD) {
+      html += '<p class="bk-review-note">במחקר שליווה 1,702 אנשים במשך שבע שנים, הסף שנבדק היה ' +
+        BALANCE_THRESHOLD + ' שניות. את מעליו. ומכל מה שנמדד כאן, שיווי המשקל הוא זה שמגיב הכי מהר לאימון.</p>';
+    } else {
+      html += '<p class="bk-review-note">במחקר שליווה 1,702 אנשים במשך שבע שנים, מי שלא עמדו ' +
+        BALANCE_THRESHOLD + ' שניות היו בסיכון בריאותי גבוה יותר בשנים שאחרי: 7.5 מכל 100 לעומת 4.6 מכל 100. ' +
+        'זה לא אומר עלייך שום דבר. זה אומר שכאן כדאי להתחיל — ודווקא זה המקום שמשתפר הכי מהר.</p>';
+    }
+    return html + '</div>';
   }
 
   function breakdownHtml(r) {
@@ -1433,10 +1403,7 @@
       }
     }
 
-    html += '<div class="bk-card"><h3>שיווי משקל</h3><p class="bk-balance">' +
-      (all.balance.rating
-        ? esc(BALANCE_LABELS[all.balance.rating]) + ' <span class="bk-muted">(' + all.balance.seconds.toFixed(1) + ' שניות)</span>'
-        : "לא בוצע") + '</p></div>';
+    html += balanceCardHtml(all.balance);
 
     if (all.recs.length) {
       html += '<div class="bk-card"><h3>3 דברים שהייתי מתחילה איתם</h3><ol class="bk-recs">' +
@@ -1510,6 +1477,7 @@
       perTestAges: perTestAges,
       flexibility: flexibility,
       balanceRating: all.balance.rating ? BALANCE_LABELS[all.balance.rating] : null,
+      balanceAge: (function () { var t = isNum(all.balance.seconds) ? balanceAge(all.balance.seconds) : null; return t ? Math.round(t.age) : null; })(),
       balanceSeconds: isNum(all.balance.seconds) ? all.balance.seconds : null,
       nutrition: all.nutrition,
       recommendations: all.recs,
@@ -1605,9 +1573,7 @@
     if (!DEMO) return;
     state.idAge = DEMO.idAge;
     Object.keys(DEMO.values).forEach(function (k) { state.values[k] = DEMO.values[k]; });
-    state.attempts.upAndGo = DEMO.attempts.upAndGo.slice();
-    state.attempts.balance = DEMO.attempts.balance.slice();
-    if (DEMO.attempts.upAndGo.length) state.values.upAndGo = Math.min.apply(null, DEMO.attempts.upAndGo);
+    state.attempts.balance = (DEMO.attempts && DEMO.attempts.balance ? DEMO.attempts.balance : []).slice();
     state.skipped = JSON.parse(JSON.stringify(DEMO.skipped || {}));
     state.nutrition = JSON.parse(JSON.stringify(DEMO.nutrition));
     var idIn = $("#bk-id-age");
@@ -1738,7 +1704,7 @@
         state.aloneAnswered = false;
         state.values = {};
         state.signs = {};
-        state.attempts = { upAndGo: [], balance: [] };
+        state.attempts = { balance: [] };
         state.skipped = {};
         state.nutrition = {};
         state.startTracked = false;
@@ -1776,16 +1742,6 @@
     $("#bk-start").addEventListener("click", function () {
       // 16.9.2026: no start before "מי לידך עכשיו?" is answered - a woman alone must not get
       // the screens that need someone next to her. The card is highlighted and focused.
-      if (!state.aloneAnswered) {
-        var card = $(".bk-alone");
-        if (card) {
-          card.classList.add("is-needed");
-          try { card.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) { card.scrollIntoView(); }
-        }
-        var first = $("#bk-with");
-        if (first) { try { first.focus({ preventScroll: true }); } catch (e2) { first.focus(); } }
-        return;
-      }
       if (!state.startTracked) {
         state.startTracked = true;
         track("bat_kama_start", {});
