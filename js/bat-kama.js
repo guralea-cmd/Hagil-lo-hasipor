@@ -152,7 +152,8 @@
 
     var res = {
       perTest: perTest, testsDone: done.length, testsTotal: AGE_KEYS.length, method: "none", mean: null,
-      ageNumber: null, qualifier: null, ageText: "", ffa: null, strongest: [], weakest: [],
+      ageNumber: null, qualifier: null, ageText: "", bandLow: null, bandHigh: null, bandText: "",
+      ffa: null, strongest: [], weakest: [],
       lessThanThree: done.length < MIN_AGE_TESTS, belowTable: false
     };
 
@@ -180,7 +181,11 @@
 
     // Below the whole table: the headline is "יש מאיפה להתחיל, ואני כאן." (Leah 15.9.2026)
     res.belowTable = res.ageNumber === 92 && res.qualifier === "older";
-    res.ageText = res.ageNumber + qualifierText(res.qualifier);
+    var bi = Math.max(0, Math.min(GROUP_AGES.length - 1, Math.round((res.ageNumber - GROUP_AGES[0]) / 5)));
+    res.bandLow = 60 + bi * 5;
+    res.bandHigh = res.bandLow + 4;
+    res.bandText = res.bandLow + "\u2013" + res.bandHigh + qualifierText(res.qualifier);
+    res.ageText = res.bandText;
     return res;
   }
 
@@ -212,16 +217,17 @@
   }
 
   function compareToIdAge(result, idAge) {
-    if (!isNum(idAge) || !result || !isNum(result.ageNumber)) return null;
+    if (!isNum(idAge) || !result || !isNum(result.bandLow)) return null;
     if (result.lessThanThree || result.belowTable) return null;
-    var diff = idAge - result.ageNumber;
-    if (result.qualifier === "younger" && diff <= 0) return null; // "62 or younger" vs 55: unknown
-    if (result.qualifier === "older" && diff >= 0) return null;
-    // The table can't go below 62: a woman under 60 near the floor is not "older" than her ID age.
-    if (diff < 0 && idAge < TABLE_START_AGE && result.ageNumber <= FLOOR_REGION_MAX) return null;
-    if (diff > 0) return { kind: "younger", years: diff, atLeast: result.qualifier === "younger" };
-    if (diff < 0) return { kind: "older", years: -diff, atLeast: result.qualifier === "older" };
-    return { kind: "same", years: 0, atLeast: false };
+    if (idAge >= result.bandLow && idAge <= result.bandHigh) return { kind: "same", years: 0, atLeast: false };
+    if (idAge > result.bandHigh) {
+      if (result.qualifier === "older") return null;
+      return { kind: "younger", years: idAge - result.bandHigh, atLeast: result.qualifier === "younger" };
+    }
+    if (result.qualifier === "younger") return null; // "60-64 or younger" vs 58: unknown
+    // The table starts at 60: a woman under 60 in the youngest band is not "older" than her ID age.
+    if (idAge < TABLE_START_AGE && result.bandHigh <= FLOOR_REGION_MAX) return null;
+    return { kind: "older", years: result.bandLow - idAge, atLeast: result.qualifier === "older" };
   }
 
   // Flexibility, not part of the age. Compared to the lower bound of the Rikli & Jones
@@ -385,7 +391,7 @@
     nextBtn: "מה עושים עם התוצאה?",
     methodTable: "חישוב לפי טבלאות Rikli & Jones",
     // לאה 18.9.2026, המילים שלה - מתחת לכל תוצאה, בלי קשר למספר
-    noFailing: "זו רק בדיקה, ואין כאן נכשלים. זה לא כישלון. זה רק אומר שאת צריכה להתחיל לשנות את ההרגלים שלך — ואני יכולה לעזור לך לשנות אותם, להתקדם, להרגיש הרבה יותר טוב, להגדיל את איכות החיים שלך ולחיות בעוצמה. כי זה אפשרי עבורך.",
+    noFailing: "זו רק בדיקה, ואין כאן נכשלים. זה לא כישלון. זה רק אומר שאת צריכה להתחיל לשנות את ההרגלים שלך — ואני יכולה לעזור לך לשנות אותם, להתקדם, להרגיש הרבה יותר טוב, להגדיל את איכות החיים שלך ולחיות בעוצמה ובעצמאות, בלי להיות תלויה באף אחד. כי זה אפשרי עבורך.",
     methodFormula: "חישוב לפי Latorre-Rojas 2019",
     resultHeading: "הגיל הפיזיולוגי שלך",
     start: "התחלה",
@@ -1268,8 +1274,13 @@
     var yrs = cmp.years === 1 ? "בשנה אחת" : "ב-" + cmp.years + " שנים";
     if (cmp.kind === "younger") return "צעירה " + (cmp.atLeast ? "לפחות " : "") + yrs + " מהגיל בתעודת הזהות. יפה. ואת יכולה עוד.";
     // Leah 16.9.2026: "יש לך חמש שנים להחזיר... ואני יכולה לעזור לך להחזיר אותם"
-    if (cmp.kind === "older") return "יש לך " + (cmp.years === 1 ? "שנה אחת" : cmp.years + " שנים") + " להחזיר, ואני יכולה לעזור לך להחזיר אותן.";
-    return "בדיוק הגיל שבתעודת הזהות";
+    // Leah 18.9.2026: past ten years that sentence is a promise nobody can keep, and the
+    // subtraction is what makes a woman close the page. The band is left to speak on its own.
+    if (cmp.kind === "older") {
+      if (cmp.years > 10) return "";
+      return "יש לך " + (cmp.years === 1 ? "שנה אחת" : cmp.years + " שנים") + " להחזיר, ואני יכולה לעזור לך להחזיר אותן.";
+    }
+    return "בדיוק הטווח של הגיל שבתעודת הזהות";
   }
 
   // ID age outside the Rikli & Jones tables (60-94), Leah 15.9.2026
