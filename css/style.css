@@ -773,6 +773,22 @@ footer a {
     margin: 0 auto;
   }
 
+  /* מקטע "מתוך החיים שלי נולד החזון" בראש דף הבית (19.9):
+     הסרטון של לאה מעל הטקסט, כדי שמי שמגיעה מהמודעה תראה אותו
+     במסך הראשון בטלפון בלי לגלול. */
+  .vision-first .split-cta-inner {
+    flex-direction: column-reverse;
+  }
+
+  .vision-first .split-cta-video .video-wrap {
+    max-width: 230px;
+  }
+
+  .vision-first .split-cta-text h2 {
+    text-align: center;
+    margin-top: var(--space-3);
+  }
+
   .heroes-section {
     padding-top: var(--space-5);
   }
@@ -1589,21 +1605,23 @@ input[type="file"] {
   padding: var(--space-1) var(--space-5);
 }
 
+/* הורד מכפתור צהוב בולט לקישור טקסט רגיל (19.9) - הוא היה הדבר
+   הכי בולט במסך הראשון בטלפון ושלח את מי שהגיעה מהמודעה לאתר אחר. */
 .site-topbar__studio {
   display: inline-block;
-  padding: 3px var(--space-4);
-  border-radius: 30px;
-  background: var(--color-accent);
-  color: var(--color-text);
+  padding: 3px 0;
+  color: #f0d9bc;
   font-size: var(--text-sm);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.5;
   white-space: nowrap;
-  transition: background 0.15s;
+  opacity: 0.85;
+  transition: opacity 0.15s;
 }
 
 .site-topbar__studio:hover {
-  background: #ffc54d;
+  opacity: 1;
+  text-decoration: underline;
 }
 
 .site-topbar__social {
