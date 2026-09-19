@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרופיל | הגיל הוא לא הסיפור (סביבת בדיקה)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../css/style.css?v=93">
+<link rel="stylesheet" href="platform.css?v=2">
+<style>
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  #profile-form {
+    max-width: none;
+    margin: 0;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+  }
+
+  .photo-picker {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .photo-picker > div:last-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #profile-form .form-status:empty {
+    display: none;
+  }
+
+  .profile-preview figcaption {
+    text-align: center;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .profile-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-6) var(--space-5);
+    text-align: center;
+  }
+
+  .profile-card .avatar {
+    margin: 0 auto var(--space-3);
+  }
+
+  .profile-card h2 {
+    font-size: var(--text-lg);
+    color: var(--color-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .profile-card .profile-sentence {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.5;
+    color: var(--color-text);
+    text-wrap: pretty;
+  }
+
+  #profile-form .btn {
+    width: 100%;
+    font-size: var(--text-base);
+  }
+
+  @media (min-width: 900px) {
+    .platform-box--wide {
+      max-width: 900px;
+    }
+
+    .profile-layout {
+      grid-template-columns: 1.3fr 1fr;
+      align-items: start;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="test-banner">
+  <p>סביבת בדיקה - לא האתר החי - נתוני דוגמה בלבד, שום דבר לא נשמר באתר - platform-test/profile-setup.html</p>
+  <nav class="screen-nav" aria-label="מסכי הבדיקה">
+    <a href="join.html">1. הרשמה</a>
+    <a href="profile-setup.html?demo=1" aria-current="page">2. פרופיל</a>
+    <a href="share-story.html">3. העלאת סיפור</a>
+    <a href="admin-queue.html">4. תור האישור</a>
+  </nav>
+  <p class="ph-legend">מסומן <span class="ph">בצהוב</span> = נוסח זמני, ממתין לנוסח של לאה</p>
+</div>
+
+<main class="container platform-box platform-box--wide" id="main-content">
+  <h1><span class="ph">פרופיל</span></h1>
+  <p class="account-line"><span class="ph">מחוברים כ-</span><span id="account-email" dir="ltr"></span></p>
+
+  <div class="profile-layout">
+    <form id="profile-form">
+      <div class="photo-picker">
+        <div class="avatar avatar--lg" id="photo-preview" aria-hidden="true"></div>
+        <div>
+          <label for="photo"><span class="ph">תמונה</span></label>
+          <input type="file" id="photo" name="photo" accept="image/*">
+        </div>
+      </div>
+
+      <div>
+        <label for="displayName">שם מלא</label>
+        <input type="text" id="displayName" name="displayName" required>
+      </div>
+
+      <div>
+        <label for="sentence"><span class="ph">משפט אחד</span></label>
+        <input type="text" id="sentence" name="sentence" maxlength="120">
+        <p class="form-note char-count"><span id="sentence-count">0</span>/120 תווים</p>
+      </div>
+
+      <button type="submit" class="btn ph">שמירה</button>
+      <p id="form-status" class="form-status" aria-live="polite"></p>
+    </form>
+
+    <figure class="profile-preview" style="margin:0;">
+      <figcaption><span class="ph">תצוגה מקדימה</span></figcaption>
+      <div class="profile-card">
+        <div class="avatar avatar--lg" id="card-avatar" aria-hidden="true"></div>
+        <h2 id="card-name"></h2>
+        <p class="profile-sentence" id="card-sentence"></p>
+      </div>
+    </figure>
+  </div>
+</main>
+
+<script src="mock-store.js?v=1"></script>
+<script src="profile-setup.js?v=1"></script>
+</body>
+</html>
