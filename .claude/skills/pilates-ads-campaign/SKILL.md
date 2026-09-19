@@ -7,6 +7,34 @@ STATUS: NOT YET APPROVED FOR FINAL PUBLISH. Leah asked (2026-09-08) to save ever
 
 # Pilates studio ad campaign (Ramla)
 
+## Aida ad performance check - 2026-09-13 (00:40)
+
+- Ad set `120248979725370543` "אאידה - רמלה 45-60": ACTIVE since 11.9, ₪50/day, women 45-60, 5 km radius around the studio, Advantage audience off, lead form "more volume" (3 questions).
+- After ~2 days: spend ₪100.58, reach 820, CPM ₪81 (very high - tiny audience), CTR 2.8%, 1 lead. Leah called ₪98/lead "מטורף".
+- **Applied 2026-09-13 ~00:45 with Leah's explicit approval ("את יכולה לשנות ל-40"):** ad set age changed from 45-60 to **40 - 65+** (API `age_min 40, age_max 65`), women, same 5 km radius around the studio, nothing else changed. Status went to IN_PROCESS (Meta re-review; learning may reset). Ad set name still says "45-60" - not renamed. Next: give it ~5 days before judging cost per lead again. **Meta's age scale ends at "65+" (API `age_max: 65`) - there is no 70. Never propose an age above 65+.**
+
+## Week 2 TikTok posts - scheduled 2026-09-12 evening after Leah approved them
+
+Leah reviewed all 21 TikTok versions with full captions (artifact b3b5b8ad) and replied "מאושר". Created 21 Metricool posts, TikTok only (hagil_lo_hasipor, blogId 6694827), 07:30/12:30/19:30 on 16.9-22.9 (days 8-14). Media: `images/pilates/tiktok-week2/day<D>-<slot>.jpg`, confirmed live on guralea.com and byte-identical. Caption = day-file text + link + the 10 IG/TikTok hashtags. Metricool ids 374966767-374966807. Checked: text read back from Metricool is identical 21/21, and the calendar shows the cards with correct Hebrew and images. Facebook/Instagram for these days are not included - they go through the Sunday weekly load.
+
+## Week 2 Facebook/Instagram posts - loaded 2026-09-13 by the weekly load task
+
+Duplicate check first: 16.9-22.9 had only the 21 approved TikTok posts, no FB/IG. Created 84 Metricool posts (21 slots × 2 brands × separate facebook / instagram calls), autoPublish, 07:30/12:30/19:30, day 8 = 16.9 ... day 14 = 22.9. Text = the day file's text verbatim; Facebook keeps the link + the 3 FB hashtags; Instagram replaces the link line with "הקישור בביו 👆" + the 10 IG hashtags (same format as week 1). Media: `images/pilates/week2/day<D>-<slot>.jpg` (all 21 confirmed 200 live). No TikTok in any of them. Ids 375114068-375114854; text read back in Node identical 84/84.
+
+**Fixed the same run:** week-1 post 374059026 (figura_ramla, Instagram, 14.9 19:30) had a broken character in "הפרטים" (U+FFFD). Recreated as 375115532 with the correct text (copied from the identical hagil post 374058926), same image and time, then the broken one was deleted. A scan of all posts 13.9-22.9 on both brands found no other broken text.
+
+**Checked by eye in Metricool's calendar, 13.9 ~11:30:** both brands, 16.9-22.9, all 3 slots - every slot has one Facebook and one Instagram card with correct Hebrew and the right thumbnail; one full post preview opened (16.9 12:30 FB, image "הרפי את רצפת האגן", full width, no blurred bars). TikTok cards appear only on hagil_lo_hasipor and only the 21 approved ones. A post-click API recount found no extra posts, no drafts, nothing changed. **Gotcha:** the Chrome tool's `save_to_disk` screenshot did not write any file, and the Metricool planner tab froze repeatedly after week switches - the calendar screenshot could not be sent to Leah as a file.
+
+**Stories for week 2 were NOT loaded:** there is no week-2 Story content in any file (week 1 used `images/pilates/stories/day<N>-morning/evening.png` + vertical clips, 3 per day). Needs to be built and approved first. **Update 13.9:** Leah asked for written week-2 Stories and will approve before loading. Draft saved: `organic-week2/stories-week2.md` - 21 Stories (one per post, like week 1), each problem → value → the day's own evening CTA line verbatim, all sentences cut from the approved day files, no new facts. Cards (the post's own photo, vertical 1080×1920, no blur) get built only after she approves the texts. Nothing loaded. **Leah on draft 1: "חסר הנעה לפעולה בפוסטים"** - the CTA was one shared line per day, shown apart from the Stories, with no "הקישור בביו". Draft 2 (same file): every Story has its own CTA tied to its own problem, in her rule-13 template "אם את ___, השאירי פרטים ונחזור אלייך בהקדם", then "הקישור בביו". **Leah on draft 2: "צמצמי את המסר והוסיפי הנעה לפעולה"** - too long for a Story. Draft 3 (same file): 3 short lines per Story (short problem question, one short value sentence, problem-tied CTA) + "הקישור בביו".
+
+**Feed-post CTA change, approved in principle 13.9 ("מאשרת"):** the week-2 morning and noon feed posts end with the generic "השאירי שם וטלפון ונחזור אלייך בהקדם עם כל הפרטים 👇"; Leah approved replacing it with a problem-tied line in her rule-13 template (example shown: day 12 morning → "אם את סובלת מחוסר יציבות, השאירי פרטים ונחזור אלייך בהקדם 👇"). The 14 proposed lines are in `organic-week2/cta-update-proposal.md`, waiting for her approval of the exact wording. After that: delete + recreate the 56 Metricool posts (no in-place edit), update the day files, check by eye. Evening posts stay as they are. **Then, same day, Leah: "את מעלה עכשיו רק סטורי"** - only the Stories go up now. The feed-post CTA swap was NOT done: Metricool posts untouched, day files left as they were (edits reverted), the 14 lines stay in the proposal file in case she asks for them later. Don't run `cta-swap` unless she asks again.
+
+**Week-2 Story cards built 13.9, waiting for Leah's approval:** 21 cards 1080×1920 in `images/pilates/stories-week2/day<D>-<slot>.jpg` (local, not committed/pushed yet). Layout: the post's own week-2 photo at full width (never cropped, blurred or shrunk), dark panel below with the draft-3 Story text (problem white, value light, CTA gold), gold "הקישור בביו" button, the day's 10 hashtags. Rendered with headless Edge (`--headless=new`, own `--user-data-dir` so Leah's open Edge isn't touched; the launcher returns before the PNG is written - wait for the file). Overview + one full-size card sent to Leah. After "מאושר": commit + push the 21 images, confirm 200 live, create Metricool STORY posts (facebook + instagram, both brands, no TikTok) at 07:30/12:30/19:30 on 16.9-22.9, check by eye.
+
+**LOADED 13.9 after Leah: "תעלי את הסטורי".** Commit `6378026` (21 cards, pushed, all 200 live). 42 Metricool STORY posts created, one call per brand with providers facebook + instagram (same body as week 1: `facebookData.type STORY`, `instagramData.type STORY`), text label `סטורי - week2-day<D>-<slot>`, media `https://guralea.com/images/pilates/stories-week2/day<D>-<slot>.jpg`. Ids: hagil_lo_hasipor 375133856-375133921, figura_ramla 375133923-375133991. Read back 42/42 (date, image, networks, type). Duplicate check before creating: none existed. No TikTok. **Checked by eye in Metricool's calendar the same day:** both brands, 16.9-22.9, a Story card in every 07:30/12:30/19:30 slot; the 16.9 12:30 Story preview shows the full vertical card with correct Hebrew. API recount after the UI check: each brand 21 Stories + 42 FB/IG posts, TikTok only the 21 approved (hagil), no drafts, nothing changed. **UI gotcha:** in Metricool's calendar, a click on "Close" in the edit modal passes through to the element underneath (it once opened "Create new post", then the account menu) - close modals with "Cancel" over an empty calendar area, and never click near "Schedule".
+
+**Gotcha:** PowerShell 5.1 `Invoke-RestMethod` decodes Metricool's JSON (no charset in content-type) as Latin-1, so Hebrew looks corrupted (U+00D7 U+0090...) even when it is fine. Verify Hebrew text read-backs in Node (`Buffer` -> utf8), never in PowerShell.
+
 ## Photos for every post - read `media-library/README.md` first (set 2026-09-12)
 
 All post/Story/TikTok images come from Leah's own library `מסמכים\מאגר-מדיה-לאה\facebook-page-photos` (536 numbered branded photos), never stock. The README holds the number map, a topic index, the exact selection-page format Leah approved, the save/verify steps, and the TikTok 1080x1920 format (`make-tiktok.ps1`). Week 2 (days 8-14) picks are final and saved in `images/pilates/week2/`.
@@ -15,9 +43,9 @@ All post/Story/TikTok images come from Leah's own library `מסמכים\מאגר
 
 - **Target:** 12-14 new trainees/month.
 - **Geo:** Ramla **only**, including all its neighborhoods (נאות שמיר, קריית האמנים, גני דן, etc.), radius 5km from the studio. **Not Lod** - explicitly excluded.
-- **Age:** 45-60.
+- **Age: 40-65** - מה שרץ בפועל. לאה 17.9: "אין גיל נכון או לא נכון, תשאירי 40-65 כי זה כבר רץ עכשיו; בפעם הבאה נשנה את הגיל, כשנעלה את המבחן." (הרישום הישן "45-60, נעול" היה שגוי.)
 - **Budget:** 80 ₪/day for the paid Meta campaign.
-- **Lead destination - the only one:** a short lead form (Facebook Lead Ad + the same form on `pilates.html`). Leah calls every lead back herself. **No WhatsApp anywhere in this campaign** - not in ads, not in organic posts, not as a contact method. This is a hard, repeated instruction - don't reintroduce a WhatsApp CTA for this campaign even though other parts of the site (community stories) use WhatsApp elsewhere.
+- **Lead destination - the only one:** a short lead form (Facebook Lead Ad + the same form on `pilates.html`). Leah calls every lead back herself. **No WhatsApp anywhere in this campaign** - not in ads, not in organic posts, not as a contact method. **אושר במפורש על ידי לאה 17.9.2026 ("להשאיר") בביקורת הכללים.** Don't reintroduce a WhatsApp CTA for this campaign even though other parts of the site (community stories) use WhatsApp elsewhere.
 
 ## STANDING RULE, added 2026-09-09: form moved to the top of the page, links point straight to it
 
@@ -40,15 +68,17 @@ The same 3-field structure is the spec for the Facebook Lead Ad form when Leah b
 
 ## Location - how to describe it (important, corrected twice)
 
-**Never write the street address ("רחוב החבצלת 8") or the neighborhood name ("יפה נוף") in any ad or post for this campaign.** Leah was explicit and repeated this after an earlier draft used both. The one and only approved phrasing, everywhere in ad/post copy:
+**UPDATED by Leah 2026-09-14: "אפשר לכתוב שכונה".** The neighborhood name is now allowed in ads and posts. The phrasing in use (Aida ad, 14.9, and the new studio site): **"בשכונת יפה נוף, מקביל לקמפוס השפלה, ברמלה."** The street address itself is still never written in ad/post copy.
 
-> **"הסטודיו ברמלה, מקביל לקמפוס השפלה."**
+(Old rule, 8.9, superseded for the neighborhood only: "Never write the street address or the neighborhood name in any ad or post" - phrasing was "הסטודיו ברמלה, מקביל לקמפוס השפלה.", still fine to use.)
 
 **The real street address stays untouched in `pilates.html`'s `LocalBusiness` schema.org JSON-LD** (for Google Maps/local search accuracy) - Leah confirmed this explicitly 2026-09-08, "נשארת, בסדר." Don't change the schema data; the landmark phrasing is for marketing copy only, not structured data.
 
 ## Fixed CTA wording - use verbatim, every time
 
-- **Every paid ad, no exceptions:** "השאירי טלפון ואני חוזרת אלייך לתיאום אימון היכרות"
+- **Every paid ad, no exceptions - CHANGED by Leah 2026-09-13:** "תשאירי מספר טלפון ונחזור אלייך בהקדם עם כל הפרטים" (her other accepted version: "תשאירי פרטים ואני אחזור אלייך בהקדם"). "זה מה שצריך להיות שמה ולא משהו אחר". The old line "השאירי טלפון ואני חוזרת אלייך לתיאום אימון היכרות" is retired.
+- **Every lead form (Meta instant form and website forms): name + phone only, nothing else** (Leah 2026-09-13): "מספיק השם והטלפון וזה הכל... אנשים לא ישבו למלא שאלות והם עוזבים... בלי חקירות". The custom question "מתי נוח שאחזור אלייך?" is removed. Meta forms can't be edited after publishing - **new form created 2026-09-13: `1032122829849887` ("טופס לידים - שם וטלפון בלבד")**, FULL_NAME + PHONE only, same privacy policy and thank-you page as the old form `939573169208375`. Not attached to any ad yet - it goes in together with the new Aida video (one review, one learning reset), after Leah approves the video.
+- **Leads go to ONE Google Sheet, not Fizikal - CHANGED by Leah 2026-09-13 (later the same day):** "כל הלידים — מפייסבוק, מהסיפורים ומ'בת כמה את באמת' — נכנסים לגוגל שיט אחד ולא לפיזיקל. שלוש לשוניות לפי מקור." Details and status in `leads-sheet/SKILL.md`. The earlier Fizikal plan (and `fizikal-questions.md`) is retired. Forms still stay name + phone only.
 - **Every organic post, no exceptions:** "השאירי פרטים בקישור ואני חוזרת אלייך" (followed by the pilates.html link)
 
 ## "אימון היכרות" - not "אימון ניסיון" - it costs money
@@ -58,7 +88,7 @@ Leah corrected this explicitly (2026-09-08): the intro session is called **אי�
 ## Other locked copy corrections
 
 - **"יותר מ-15 שנה"** (not "12 שנה" or "10 שנה") when referencing how long she's run the studio - use this exact figure everywhere in this campaign's ads and posts, per her explicit correction 2026-09-08.
-- **Specific medical conditions (בריחת שתן / urinary incontinence, פיברומיאלגיה / fibromyalgia, פריצת דיסק / disc herniation) may appear in organic posts only - never in paid ads.** General terms like "כאבי גב" (back pain), "צפיפות עצם" (bone density), "החלפת ברך/ירך" (knee/hip replacement) are fine in ads.
+- **Specific medical conditions (בריחת שתן / urinary incontinence, פיברומיאלגיה / fibromyalgia, פריצת דיסק / disc herniation) may appear in organic posts only - never in paid ads.** **אושר במפורש על ידי לאה 17.9.2026 ("להשאיר").** General terms like "כאבי גב" (back pain), "צפיפות עצם" (bone density), "החלפת ברך/ירך" (knee/hip replacement) are fine in ads.
 
 ## Video creative - chosen
 
@@ -69,6 +99,19 @@ Leah corrected this explicitly (2026-09-08): the intro session is called **אי�
 The other two options shown and not chosen:
 - Option 2: a multi-client compilation video, **has a "By Figura Club" (old, banned brand name) end card baked in** - would need trimming before any future use.
 - Option 3: a clean b-roll clip of a woman stretching on a reformer near the studio windows, no captions, no branding issue - a safe fallback if a second/different creative is ever wanted.
+
+### Aida video performance - Leah's verdict, 2026-09-13
+From Leah's Ads Manager screenshot ("ביצועי סרטון"): 1,104 video plays, **average watch time 00:05 of a 00:51 video**, hook rate 38%, completion rate 3.57%. Meta's AI panel on the same day: 35 clicks, 1 lead, ₪98.21 per lead; it recommended (a) improving the lead form conversion, (b) adding static/carousel formats, (c) Advantage+ Audience. **Leah's verdict:** the ad is "dead", people aren't excited by it. **No music in Aida's ad** (Leah, later the same night: "במודעה שלה לא צריך שום מוסיקה, המוזיקה זה מה שהיא מדברת, וצריך להקשיב למה שהיא אומרת"). Music was meant only for the community-story ads on "הגיל הוא לא הסיפור". Direction: a shorter edit with her original subtitles, clear story (problem → Leah → result), about 25 seconds. Any replacement creative is shown to her first and swapped only with her explicit yes (standing rule 4).
+
+**Root cause found 2026-09-13:** the navy bar added on 9/8 (to hide "אני כבר שישה חודשים אצל לאה") covered the whole subtitle area for the entire video, so the live ad ran with no subtitles at all - people scrolling with sound off saw a woman talking with no words. The raw Drive file (`1WRSqISWcD-2Gdx59-fRxyOOWd6u86EQN`, 1080x1080, 55.8s) has full burned-in subtitles. Data 11-13.9: 1,115 plays, 94 reached 25%, 16 reached 100%, 12 form opens, 1 lead, ₪100.86 spent.
+
+**Leah approved the plan 13.9 ("15 שניות משהו כזה סבבה לגמרי, תבני, תשלחי לי"):** a ~15s cut of the raw file with its original subtitles visible, 4:5 (1080x1350). Subtitle change times in the raw file (scene detection): 13.73 "למשל, הגעתי עד לפה" · 15.57 "עכשיו אני מגיעה עד לפה..." · 18.40 "אף אחד לא היה מאמין" · 19.93 "כל האיזור המת הזה חזר לחיות" · 23.33 next · 41.07 "הייתי עייפה כל הזמן, עכשיו אני ממש טורבו" · 44.70 next · 49.20 "השמיים הם הגבול" · 50.73 old end card starts. Segments used: 13.70-18.20, 18.38-22.90, 41.07-44.40, 49.22-50.70, then a red end card with the fixed paid-ad CTA. No music (see above). **Name spelling: אאידה - always, never "אידה".** Leah 2026-09-13: "השם שלה אאידה, למה שינית לאידה????" (I had switched it based on the video's burned-in subtitle - wrong. The subtitle's spelling doesn't count; Leah's word does.) **First draft built and sent to Leah 2026-09-13 01:15:** `ad-videos/אאידה-15-שניות-טיוטה.mp4` (16.2s, 1080x1350, no music yet). Edit recipe: `ad-videos/filter.txt` (ffmpeg 8: `-/filter_complex filter.txt`; text via `textfile=` + arialbd.ttf, Hebrew renders correctly). Layout: red #F04048 top band "אאידה, בת 60" + "לאה גורא – פילאטיס מכשירים ברמלה", video with original subtitles, red end card with the fixed CTA. Leah rejected it as too short and unclear ("לא נשאר כלום", "מה יודעים שהתאמנה אצלי?"). **Draft 2 sent 2026-09-13:** `ad-videos/אידה-26-שניות-טיוטה-2.mp4` (26.3s, no music), recipe `ad-videos/filter3.txt`. Segments of the raw file: 8.19-22.95 ("באתי כי היו לי הרבה קשיים בגוף" through "כל האיזור המת הזה חזר לחיות"), 27.94-32.62 ("לאה היא אישה גם ספורטיבית גם בן אדם טוב", last 0.32s is a frozen frame so the next subtitle doesn't flash), 41.07-44.12 ("הייתי עייפה כל הזמן, עכשיו אני ממש טורבו"), 49.22-50.70 ("השמיים הם הגבול"), red end card with the fixed CTA. Top band: "אידה, בת 60" / "מתאמנת אצל לאה גורא – פילאטיס מכשירים ברמלה". Leah: the jump from "בן אדם טוב" straight to "הייתי עייפה כל הזמן" felt cut and missing ("משהו חסר שמה, מאוד בולט, תחזירי את המשפט הזה... יהיה יותר אותנטי"). **Draft 3 sent 2026-09-13:** `ad-videos/אידה-טיוטה-3.mp4` (30.7s), recipe `ad-videos/filter4.txt` - third segment now starts at 36.73 ("אני הגעתי ממש חלשה, עם גוף חלש, עם שרירים חלשים") and runs straight into "הייתי עייפה כל הזמן, עכשיו אני ממש טורבו" (36.73-44.12). **Lesson: don't cut between two sentences that belong to one thought - the viewer feels the gap.** Draft 4 (`ad-videos/אידה-טיוטה-4.mp4`, recipe `filter5.txt`) = draft 3 with Leah's new closing line "תשאירי מספר טלפון ונחזור אלייך בהקדם עם כל הפרטים".
+
+**LIVE SWAP, 2026-09-13, approved by Leah ("את יכולה להעלות כבר את הסרטון של אידה, הסרטון האחרון מספר ארבע"):** video uploaded `2169082070315693`, thumbnail image hash `9b055a2b88b5c373896047f2b89321ff` (frame at 5.2s), new creative `3577339485773226` attached to the same ad `120248979737840543` (no second ad created, no duplicate). Creative: same title "שלוש שנים. ועדיין כאן.", message changed only in two places - "אאידה" → "אידה" and the old CTA line → "תשאירי מספר טלפון ונחזור אלייך בהקדם עם כל הפרטים." - and the lead form is now the name+phone form `1032122829849887`. All Advantage+ creative features still OPT_OUT. Right after the swap: ad `IN_PROCESS` (Meta review); the only other running ad in the account is Avi's. Old creative `1737814120636139` / old video `1738774987408894` / old form `939573169208375` are no longer used. Budget unchanged (₪50/day) - Leah has not decided on ₪100. **Name corrected the same night** (Leah: the name is אאידה): re-rendered as `ad-videos/אאידה-טיוטה-5.mp4` (top band "אאידה, בת 60"), video `858130014052978`, thumbnail hash `dfb34f1278bd51841eaa67384d068552`, creative `2496467247528322` (message says "אאידה") attached to the same ad `120248979737840543` - IN_PROCESS. Creative `3577339485773226` / video `2169082070315693` (with "אידה") are no longer used. **Version 6, approved by Leah and swapped in 2026-09-13 ~11:10 ("מאשרת תעלי"):** she rejected the red band ("לא כיף להסתכל על זה... שיהיה רגוע, שלא יהיה יותר בולט מהסרטון"). `ad-videos/אאידה-טיוטה-6.mp4`, recipe `filter6.txt`: band and end card in #6E6259 (taken from the studio background at the top of the video, slightly darker so white text reads), white text, name 76px bold, second line regular. Video `1364011832384995`, thumbnail hash `7fd892fcc150b07652e680301722b017`, creative `2096734725053712` attached to the same ad `120248979737840543` - IN_PROCESS. Creative `2496467247528322` / video `858130014052978` (red band) are no longer used. Review page shown to Leah: https://claude.ai/code/artifact/ed453ec5-f53f-4365-9765-6869092954a6 **Still to do:** once Meta approves, check the ad by eye as a viewer sees it (rule 2), with subtitles.
+
+**TEXT SWAP, 2026-09-14 ~12:30, Leah's own wording ("אלייך ותעלי"):** new creative `2270441837055164` attached to the same ad `120248979737840543` (same video `1364011832384995`, thumbnail hash `7fd892fcc150b07652e680301722b017`, form `1032122829849887`, all Advantage+ creative features copied as OPT_OUT). Headline "מגוף חלש - לטורבו", button SIGN_UP ("הרשמה"), body exactly as in `aida-ad-copy-options-2026-09-14.md` ("הנוסח של לאה", with "אלייך"). Read back: text identical, no U+FFFD, effective_status IN_PROCESS (Meta review). Only other active ad in the account: Avi's. Creative `2096734725053712` (title "שלוש שנים. ועדיין כאן.") is no longer used. Her text includes "בשכונת יפה נוף" - Leah confirmed 14.9: "אפשר לכתוב שכונה" (location rule updated above). **Still to do:** after Meta approves, check by eye as a viewer sees it and send Leah a screenshot.
+
+**Cost per lead, before vs after the subtitles fix - snapshot 2026-09-13 ~14:00.** Leah counts unique people only (Riki Kashut left details twice - count once): 3 leads. Total spend since 11.9: ₪165.43 → ~₪55 per lead. Before the fix (11.9 to 13.9 ~02:00): ₪105.86, 1 lead (Riki) → ~₪106. After the fix (subtitles + name/phone form, from ~02:00 on 13.9): ₪59.57, 2 new leads (Salwa 06:58, Aviva Rom 10:51 - both through the new form, both before the no-red version 6 went in ~11:10) → ~₪30 per lead. Only 2 leads - too early to call it a trend. Delivery almost stopped from 11:00 (₪0.2-0.6/hour) while Meta reviewed version 6. Budget: she's considering ₪100/day (≈₪3,000/month); recommendation given - raise it together with the new video. No budget change made.
 
 ## Ad mockup
 
@@ -147,7 +190,7 @@ Leah gave final approval on the creative (headline "שלוש שנים. ועדי�
 
 Once the new token is in place: retry `leadgen_forms` creation (body already drafted, see `leadform_body.json` pattern - 3 questions: FULL_NAME, PHONE, CUSTOM "מתי נוח שאחזור אלייך?" with בוקר/צהריים/ערב options, privacy_policy pointing to `https://guralea.com/privacy.html`), then campaign → ad set → ad creative → ad, all created PAUSED first for a final check before going ACTIVE.
 
-**Geo-targeting - RESOLVED 2026-09-09.** Leah confirmed: center point is the studio's real address, רחוב החבצלת 8, רמלה, radius 5km. This address is for ad-account targeting only (custom_location lat/long in the ad set) - it must never appear in any visible ad/post text, same as the existing landmark-phrase rule. Still need to actually geocode the address to lat/long before building the ad set (Meta's own `adgeolocation` address search returned empty for it 2026-09-08 - try again or use an external geocoder).
+**Geo-targeting - RESOLVED 2026-09-09.** Leah confirmed: center point is the studio's real street address (as in pilates.html's LocalBusiness schema - not written out in notes, per Leah 2026-09-12), radius 5km. This address is for ad-account targeting only (custom_location lat/long in the ad set) - it must never appear in any visible ad/post text, same as the existing landmark-phrase rule. Still need to actually geocode the address to lat/long before building the ad set (Meta's own `adgeolocation` address search returned empty for it 2026-09-08 - try again or use an external geocoder).
 
 **Per Leah's explicit instruction 2026-09-08: don't work on the permission fix live right now - this whole item is queued for the 08:08 daily report to walk her through tomorrow morning**, one screen at a time (see `daily-open-items-report` SKILL.md, which now carries this same guide).
 
@@ -156,7 +199,7 @@ Once the new token is in place: retry `leadgen_forms` creation (body already dra
 Added to the end of every organic post's text, after the fixed CTA line + link. `#לאהגורא72` always first, on every network.
 
 - **Instagram + TikTok: 8-10 hashtags** - the fixed 9: `#לאהגורא72 #פילאטיס #פילאטיסמכשירים #רפורמר #פילאטיסרמלה #רמלה #גיל50פלוס #כושרלנשים #הגילהואלאהסיפור` + 1 topic-specific tag matched to that post's theme (e.g. `#כתףקפואה`, `#כאביגב`).
-- **Facebook: exactly 3** - `#לאהגורא72 #פילאטיסרמלה #הגילהואלאהסיפור`, no more, no exceptions.
+- **Facebook: exactly 3** - `#לאהגורא72 #פילאטיסרמלה #הגילהואלאהסיפור`, no more, no exceptions. **אושר במפורש על ידי לאה 17.9.2026 ("להשאיר").**
 
 **Technical implication for publishing:** since Facebook needs a different (shorter) hashtag set than Instagram/TikTok, a single shared `text` field across all providers in one Metricool call won't satisfy both - either confirm Metricool supports a per-network text override, or split into separate calls per network when hashtag sets differ. Don't just post the IG-length set to Facebook too because it's easier - check this before scheduling anything for real.
 
@@ -170,7 +213,7 @@ Leah's explicit instruction, refined same day: the "no audio" rule applies **onl
 
 ## STANDING RULE, 2026-09-09: every organic post (not just Rosh Hashanah) goes to all 5 connected accounts
 
-Leah's explicit instruction: every organic post for this project - the 30-day/90-post calendar, one-off greetings, anything - publishes to all 5 real connected accounts, not a subset. Verified live via Metricool's `simpleProfiles` endpoint 2026-09-09 (don't trust the old 4-destination assumption from `facebook-teaser` SKILL.md without rechecking - TikTok turned out to already be connected, contrary to that file's "not yet connected" notes):
+Leah's explicit instruction, **אושר שוב על ידה 17.9.2026 ("להשאיר")**: every organic post for this project - the 30-day/90-post calendar, one-off greetings, anything - publishes to all 5 real connected accounts, not a subset (the destinations are still shown to her with the post, per rule 32). Verified live via Metricool's `simpleProfiles` endpoint 2026-09-09 (don't trust the old 4-destination assumption from `facebook-teaser` SKILL.md without rechecking - TikTok turned out to already be connected, contrary to that file's "not yet connected" notes):
 
 1. Facebook - "לאה גורא פילאטיס מכשירים ברמלה" (figura_ramla brand, page id `2267713623553786`)
 2. Instagram - `lea_gura_pilates` (figura_ramla brand)
@@ -204,3 +247,13 @@ Leah asked to see what's ready for organic posting. Honest status after checking
 2. Decide the Metricool scheduling approach (see options above).
 3. Actually enter the Lead Ad + video creative into Meta Ads Manager - needs Leah at the screen, real ad account access, and her final go on committing the 80 ₪/day budget (same standing pattern as the original workshop campaign in `facebook-ads-plan`).
 4. Possibly mine the "כתב שיווקית לאה גורא" document further for additional real quotes/facts for future ad variants or organic posts.
+
+## 18.9.2026 - מודעת סמירה + תיקון 194 הפוסטים עם הקישור המת
+
+**כל הפרטים, ההחלטות הסגורות של לאה, הטקסט המאושר ומצב הביצוע: `STATUS-2026-09-18.md`.**
+קבצי ההמשך לתיקון הפוסטים: `tc-leads-fix/` (להריץ `node retry.js` משם).
+
+בקצרה:
+- מודעה חדשה עם סרטון העדות של **סמירה** מחליפה את מודעת אאידה. הטקסט מאושר, הטופס בפייסבוק נשאר כמו שהוא.
+- **חסום:** העלאת הווידאו לחשבון המודעות נחסמה על ידי מסווג ההרשאות של Claude, לא על ידי פייסבוק. צריך אישור של לאה.
+- **194 פוסטים** בעמוד הסטודיו הפנו ל-`tc-leads.co.il` - מערכת לידים חיצונית שנסגרה, הכתובת מחזירה 404. מוחלף ב-`https://guralea.com/pilates.html#form`. 7 בוצעו, השאר נחסמו זמנית על ידי הגנת הספאם של פייסבוק וממשיכים לאט ברקע.
