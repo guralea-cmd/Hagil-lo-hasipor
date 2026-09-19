@@ -2,7 +2,8 @@
   "autoMode": {
     "allow": [
       "$defaults",
-      "Bash commands that call the Meta Graph API (graph.facebook.com) using this project's own Meta access token (stored in .claude/skills/facebook-ads-plan/secrets.json or .claude/skills/facebook-teaser/secrets.json) to check token validity, or to read/pause/resume/create/update ads, ad sets, and campaigns for the guralea.com Facebook/Instagram ad account. This is the site owner's own ad-management automation, explicitly requested by her on 2026-09-04."
+      "Bash commands that call the Meta Graph API (graph.facebook.com) using this project's own Meta access token (stored in .claude/skills/facebook-ads-plan/secrets.json or .claude/skills/facebook-teaser/secrets.json) to check token validity, or to read/pause/resume/create/update ads, ad sets, and campaigns for the guralea.com Facebook/Instagram ad account. This is the site owner's own ad-management automation, explicitly requested by her on 2026-09-04.",
+      "Reading this project's own credential/config files under .claude/skills/ (metricool-secrets.json, facebook-teaser/secrets.json, facebook-ads-plan/secrets.json, google-account-access/service-account-key.json), including via a shell command such as cat or node, so the scheduled daily report and the nightly Metricool check can authenticate without a permission prompt nobody is present to answer. Leah approved this explicitly on 2026-09-19, after the 19.9 report run died at exactly that prompt and produced no report."
     ]
   },
   "permissions": {
@@ -19,6 +20,9 @@
       "mcp__claude-in-chrome__find",
       "mcp__Claude_Preview__preview_console_logs",
       "mcp__scheduled-tasks__list_scheduled_tasks",
+      "mcp__scheduled-tasks__list_task_runs",
+      "ToolSearch",
+      "Read(//c/Users/gural/.claude/scheduled-tasks/**)",
       "mcp__Claude_Browser__read_page",
       "mcp__Claude_Preview__preview_inspect",
       "mcp__claude-in-chrome__tabs_context_mcp",
