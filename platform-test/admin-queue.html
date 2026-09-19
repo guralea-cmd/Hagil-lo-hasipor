@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תור האישור | פאנל ניהול (סביבת בדיקה)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../css/style.css?v=93">
+<link rel="stylesheet" href="platform.css?v=2">
+<style>
+  header {
+    position: static;
+  }
+
+  .queue-section {
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  .queue-section .section-intro {
+    margin-bottom: var(--space-5);
+  }
+
+  .queue-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-5);
+  }
+
+  .queue-filters button {
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--space-1) var(--space-4);
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .queue-filters button[aria-pressed="true"] {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .queue-filters .count {
+    display: inline-block;
+    min-width: 1.6em;
+    margin-inline-start: 4px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.08);
+    font-size: var(--text-2xs);
+  }
+
+  .queue-filters button[aria-pressed="true"] .count {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .queue-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .q-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .q-card.is-pending {
+    box-shadow: inset -5px 0 0 var(--color-accent);
+  }
+
+  .q-profile {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-4);
+    background: #fbf7f2;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .q-profile > div {
+    min-width: 0;
+  }
+
+  .q-profile h3 {
+    margin: 0;
+    font-size: var(--text-md);
+    color: var(--color-primary);
+    line-height: 1.3;
+  }
+
+  .q-profile .q-where {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
+  .q-profile .q-sentence {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+    font-style: italic;
+    line-height: 1.45;
+  }
+
+  .q-meta {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    font-size: var(--text-xs);
+    line-height: 1.6;
+  }
+
+  .q-meta li {
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+
+  .q-meta b {
+    color: var(--color-primary);
+  }
+
+  .q-story {
+    padding: var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .q-story p {
+    margin: 0 0 var(--space-2);
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  .q-story p strong {
+    color: var(--color-primary);
+  }
+
+  .q-media {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .q-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    padding: var(--space-3) var(--space-4) var(--space-4);
+  }
+
+  .q-actions .status-pill {
+    margin-inline-end: auto;
+  }
+
+  .queue-empty {
+    text-align: center;
+    color: var(--color-muted);
+    padding: var(--space-6) 0;
+  }
+
+  @media (max-width: 599px) {
+    .q-actions .btn {
+      flex: 1 1 auto;
+      padding: var(--space-3);
+      font-size: var(--text-sm);
+    }
+
+    .q-actions .status-pill {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .q-card {
+      grid-template-columns: 290px 1fr 170px;
+    }
+
+    .q-profile {
+      border-bottom: none;
+      border-left: 1px solid var(--color-border);
+    }
+
+    .q-actions {
+      flex-direction: column;
+      align-items: stretch;
+      padding: var(--space-4);
+      border-right: 1px solid var(--color-border);
+    }
+
+    .q-actions .status-pill {
+      margin: 0 0 var(--space-2);
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="test-banner">
+  <p>סביבת בדיקה - לא האתר החי - נתוני דוגמה בלבד, אישור כאן לא מפרסם כלום - platform-test/admin-queue.html</p>
+  <nav class="screen-nav" aria-label="מסכי הבדיקה">
+    <a href="join.html">1. הרשמה</a>
+    <a href="profile-setup.html?demo=1">2. פרופיל</a>
+    <a href="share-story.html">3. העלאת סיפור</a>
+    <a href="admin-queue.html" aria-current="page">4. תור האישור</a>
+  </nav>
+  <p class="ph-legend">מסומן <span class="ph">בצהוב</span> = נוסח זמני, ממתין לנוסח של לאה</p>
+</div>
+
+<header>
+  <nav class="nav" aria-label="ניווט ניהול">
+    <span class="logo">פאנל ניהול</span>
+    <button type="button" class="btn btn-outline btn-sm" disabled>התנתקות</button>
+  </nav>
+</header>
+
+<section class="queue-section" id="main-content">
+  <div class="container">
+    <h1><span class="ph">תור האישור</span></h1>
+    <p class="section-intro">אישור כאן מפרסם אותם מיד בעמוד "סיפורי קהילה".</p>
+
+    <div class="queue-filters" role="group" aria-label="סינון לפי סטטוס">
+      <button type="button" data-filter="pending" aria-pressed="true">ממתין<span class="count" data-count="pending"></span></button>
+      <button type="button" data-filter="approved" aria-pressed="false">מאושר<span class="count" data-count="approved"></span></button>
+      <button type="button" data-filter="rejected" aria-pressed="false">נדחה<span class="count" data-count="rejected"></span></button>
+      <button type="button" data-filter="all" aria-pressed="false"><span class="ph">הכל</span><span class="count" data-count="all"></span></button>
+    </div>
+
+    <div class="queue-list" id="queue-list"></div>
+  </div>
+</section>
+
+<script src="mock-store.js?v=1"></script>
+<script src="admin-queue.js?v=1"></script>
+</body>
+</html>
