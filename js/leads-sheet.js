@@ -14,7 +14,6 @@
       if (typeof fetch !== "function") return;
       fetch(LEADS_SHEET_WEBAPP_URL, {
         method: "POST",
-        mode: "no-cors",
         keepalive: true,
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
