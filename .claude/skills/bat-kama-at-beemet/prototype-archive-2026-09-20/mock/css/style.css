@@ -1,0 +1,1751 @@
+:root {
+  --color-bg: #eee8e0;
+  --color-card: #ffffff;
+  --color-primary: #b83227;
+  --color-accent: #ffb020;
+  --color-accent-dark: #b8441a;
+  --color-text: #181310;
+  --color-muted: #4a453f;
+  --color-border: #e6ddd3;
+  --radius: 14px;
+  --max-width: 1080px;
+
+  /* Type scale - every font-size in this file should reference one of these.
+     Component-local micro-variants (the compact blog strip, the compact
+     cta-band) are the deliberate exceptions and are called out where used. */
+  --text-2xs: 12px;
+  --text-xs: 13px;
+  --text-sm: 14px;
+  --text-base: 17px;
+  --text-md: 18px;
+  --text-lg: 22px;
+  --text-xl: 28px;
+  --text-2xl: 30px;
+  --text-3xl: 40px;
+
+  /* Spacing scale - an 8px-ish rhythm. Reference these instead of one-off
+     pixel values so gaps and padding stay consistent across the site. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 80px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Assistant", "Segoe UI", "Arial Hebrew", Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  direction: rtl;
+  line-height: 1.7;
+  font-size: var(--text-base);
+}
+
+p,
+li {
+  font-weight: 600;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  right: 12px;
+  z-index: 1000;
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-3) var(--space-5);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+
+/* Header */
+header {
+  background: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: var(--space-4) var(--space-5);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  position: relative;
+  padding-inline: 10px;
+}
+
+.nav-links li:first-child {
+  padding-inline-start: 0;
+}
+
+.nav-links li:last-child {
+  padding-inline-end: 0;
+}
+
+.nav-links li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 18px;
+  background: var(--color-border);
+}
+
+.nav-links a {
+  color: var(--color-text);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--color-accent-dark);
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: var(--text-xl);
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
+/* Hero */
+.hero {
+  padding: var(--space-10) var(--space-5) var(--space-8);
+  text-align: center;
+  background: linear-gradient(180deg, #fff5ea 0%, var(--color-bg) 100%);
+}
+
+.hero h1 {
+  font-size: var(--text-2xl);
+  margin: 0 0 var(--space-4);
+  color: var(--color-primary);
+}
+
+.hero p {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-text);
+  max-width: 640px;
+  margin: 0 auto var(--space-6);
+}
+
+.btn {
+  display: inline-block;
+  padding: var(--space-3) var(--space-6);
+  border-radius: 30px;
+  background: var(--color-accent-dark);
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  border: none;
+  cursor: pointer;
+  text-wrap: balance;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(184, 68, 26, 0.4);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-accent-dark);
+  border: 2px solid var(--color-accent-dark);
+}
+
+/* Sections */
+section {
+  padding: var(--space-9) 0;
+}
+
+section h1,
+section h2 {
+  font-size: var(--text-2xl);
+  text-align: center;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-3);
+}
+
+.faq-page h2 {
+  text-align: right;
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  margin: var(--space-6) 0 var(--space-2);
+}
+
+.article-subheading {
+  text-align: right;
+  font-size: var(--text-lg);
+  color: var(--color-primary);
+  margin: var(--space-6) 0 var(--space-2);
+}
+
+#workshop-faq h3 {
+  color: var(--color-primary);
+}
+
+.section-intro {
+  text-align: center;
+  color: var(--color-text);
+  font-size: var(--text-md);
+  font-weight: 400;
+  max-width: 640px;
+  margin: 0 auto var(--space-7);
+}
+
+/* Cards grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+/* Blog listing - vertical list of narrow strips */
+.grid--blog {
+  grid-template-columns: 1fr;
+  max-width: 760px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+/* Enlarged cards (2026-08-11, Leah: images too small to make out) - the פי 5
+   version ("insanely big", one per row) overshot; corrected back down so 3
+   fit comfortably in one row on desktop while staying much bigger than the
+   original 120-140px. Phone screens are too narrow for 3 big cards in a row,
+   so mobile gets a fixed 2 columns instead (see media query below). */
+.grid--heroes {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  justify-content: center;
+  gap: var(--space-5);
+}
+
+@media (max-width: 700px) {
+  .grid--heroes {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+.grid--heroes .story-card {
+  flex-direction: column;
+  padding: 0;
+}
+
+.grid--heroes .story-video {
+  width: 100%;
+  font-size: var(--text-xl);
+}
+
+.grid--heroes .story-card .story-body {
+  padding: 0 var(--space-3) var(--space-2);
+}
+
+.grid--heroes .story-card .story-name {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.grid--heroes .story-body p {
+  font-size: var(--text-xs);
+}
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.card .icon {
+  font-size: 36px;
+  margin-bottom: var(--space-3);
+}
+
+.card h3 {
+  margin: 0 0 var(--space-2);
+  color: var(--color-primary);
+}
+
+.card p {
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* About split */
+.about-split {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.about-split .text {
+  flex: 1 1 320px;
+}
+
+.about-split .photo {
+  flex: 1 1 260px;
+  text-align: center;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0e6d8;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+  padding: var(--space-5);
+}
+
+.photo-placeholder {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  background: #f0e6d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  border: 1px dashed var(--color-border);
+}
+
+/* Testimonials */
+.testimonial {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  padding: var(--space-5);
+}
+
+.testimonial p {
+  font-style: italic;
+  color: var(--color-text);
+}
+
+.testimonial .author {
+  margin-top: var(--space-3);
+  font-weight: 600;
+  color: var(--color-primary);
+  font-style: normal;
+}
+
+.testimonial-shot {
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  background: var(--color-card);
+}
+
+.testimonial-shot img {
+  width: 100%;
+}
+
+/* CTA */
+.cta-band {
+  text-align: center;
+  padding: var(--space-8) var(--space-5);
+}
+
+.cta-band h2 {
+  color: var(--color-primary);
+}
+
+.cta-band p {
+  color: var(--color-text);
+  max-width: 560px;
+  margin: 0 auto var(--space-5);
+}
+
+/* Compact variant used where the CTA sits below dense content (e.g. the blog
+   listing) - intentionally off the main type/space scale, hand-tuned so the
+   whole page fits one screen without scrolling. Don't "fix" these to the
+   scale without re-checking that layout. */
+.cta-band--compact {
+  padding: 8px 24px;
+}
+
+.cta-band--compact h2 {
+  font-size: 16px;
+  line-height: 1.25;
+  margin-bottom: 3px;
+}
+
+.cta-band--compact p {
+  font-size: 12px;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.cta-band--compact .story-criteria-trigger {
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.cta-band--compact .btn {
+  padding: 6px 20px;
+  font-size: 13px;
+}
+
+/* Forms */
+form {
+  max-width: 560px;
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-4);
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+  display: block;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  font-family: inherit;
+  background: #fff;
+  color: var(--color-text);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-accent-dark);
+}
+
+#workshop-lead-form {
+  max-width: 380px;
+  gap: var(--space-2);
+}
+
+#workshop-lead-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+#workshop-lead-form label {
+  font-size: var(--text-xs);
+  margin-bottom: 2px;
+}
+
+#workshop-lead-form input,
+#workshop-lead-form select {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+#workshop-lead-form .btn {
+  width: 100%;
+  padding: var(--space-2) var(--space-5);
+}
+
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  background: #2e2a27;
+  color: #cfc6bd;
+  text-align: center;
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+}
+
+footer a {
+  color: #f0d9bc;
+}
+
+.social-links {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  margin: var(--space-3) 0;
+}
+
+/* Services list page */
+.service-detail {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-7) 0;
+}
+
+.service-detail:last-child {
+  border-bottom: none;
+}
+
+.service-detail h3 {
+  color: var(--color-primary);
+  font-size: var(--text-lg);
+}
+
+/* Full-width hero image band — narrow strip, sits above everything */
+.hero-image-band {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+}
+
+.hero-image-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+
+.hero-overlay-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 var(--space-5);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.35) 100%);
+}
+
+.hero-overlay-title h1 {
+  margin: 0;
+  max-width: 100%;
+  text-align: right;
+  color: #fff;
+}
+
+/* This block intentionally uses fluid clamp() sizing rather than the fixed
+   type scale - it has to reflow smoothly across the full viewport-width
+   range of the image band, not just jump between breakpoints. */
+.hero-overlay-title .hero-line1,
+.hero-overlay-title .hero-line2,
+.hero-overlay-title .hero-line3 {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65), 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-overlay-title .hero-line1 {
+  display: block;
+  text-align: right;
+  font-size: clamp(22px, 7vw, 54px);
+  font-weight: 700;
+}
+
+.hero-overlay-title .hero-line2-wrap {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.hero-overlay-title .hero-line2 {
+  display: block;
+  text-align: right;
+  font-size: clamp(19px, 6vw, 46px);
+  font-weight: 500;
+  font-style: italic;
+}
+
+.hero-overlay-title .hero-line3 {
+  display: block;
+  text-align: left;
+  margin-top: var(--space-1);
+  font-size: clamp(16px, 3vw, 24px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+@media (max-width: 500px) {
+  .hero-overlay-title .hero-line1,
+  .hero-overlay-title .hero-line2,
+  .hero-overlay-title .hero-line3 {
+    white-space: normal;
+  }
+}
+
+/* Split block: text + CTA on one side, video placeholder on the other */
+.split-cta-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  flex-wrap: wrap;
+}
+
+.split-cta-inner--top {
+  align-items: flex-start;
+}
+
+.split-cta-text {
+  flex: 1 1 320px;
+}
+
+.split-cta-text h2 {
+  text-align: right;
+  margin-bottom: var(--space-3);
+}
+
+.split-cta-text p {
+  color: var(--color-text);
+  font-size: var(--text-md);
+  font-weight: 400;
+  margin-bottom: var(--space-5);
+}
+
+.split-cta-text .about-quote {
+  font-size: var(--text-md);
+  font-style: italic;
+  color: var(--color-primary);
+}
+
+.split-cta-text .text-placeholder {
+  color: var(--color-muted);
+  font-style: italic;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  text-align: right;
+}
+
+.value-points {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+}
+
+.value-points li {
+  padding: var(--space-2) var(--space-7) var(--space-2) 0;
+  margin-bottom: var(--space-3);
+  font-size: var(--text-md);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text);
+  text-align: right;
+  position: relative;
+}
+
+.value-points li::before {
+  content: "*";
+  position: absolute;
+  right: 0;
+  top: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.split-cta-video {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 700px) {
+  .split-cta-inner {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .split-cta-text,
+  .split-cta-video {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .split-cta-section {
+    padding: var(--space-3) 0;
+  }
+
+  .split-cta-video .video-wrap {
+    max-width: 190px;
+    margin: 0 auto;
+  }
+
+  /* מקטע "מתוך החיים שלי נולד החזון" בראש דף הבית (19.9):
+     הסרטון של לאה מעל הטקסט, כדי שמי שמגיעה מהמודעה תראה אותו
+     במסך הראשון בטלפון בלי לגלול. */
+  .vision-first .split-cta-inner {
+    flex-direction: column-reverse;
+  }
+
+  .vision-first .split-cta-video .video-wrap {
+    max-width: 230px;
+  }
+
+  .vision-first .split-cta-text h2 {
+    text-align: center;
+    margin-top: var(--space-3);
+  }
+
+  .heroes-section {
+    padding-top: var(--space-5);
+  }
+}
+
+/* Individual community story: video on one side, name + summary on the other */
+.story-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  flex-wrap: wrap;
+  padding: var(--space-7);
+  margin: 0 6px var(--space-9);
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 6px;
+  border-radius: var(--radius);
+  scroll-margin-top: 90px;
+}
+
+.story-row:last-child {
+  margin-bottom: 0;
+}
+
+.story-row-media {
+  flex: 1 1 450px;
+}
+
+.story-row-media .video-wrap {
+  background: #000;
+}
+
+.story-row-media .photo-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.story-row-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.story-row-thumbs img {
+  width: 260px;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+}
+
+.story-row-info {
+  flex: 1 1 320px;
+}
+
+.story-row-header {
+  flex: 1 1 100%;
+}
+
+.story-row-header h3 {
+  color: var(--color-primary);
+  margin: 0 0 var(--space-1);
+}
+
+.story-row-header .story-location,
+.story-row-info .story-location {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  margin: 0 0 var(--space-3);
+}
+
+.story-hook {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 var(--space-3);
+}
+
+.story-summary {
+  display: block;
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-bg);
+  border-right: 4px solid var(--color-accent-dark);
+  border-radius: var(--radius-sm, 6px);
+  padding: var(--space-3) var(--space-4);
+  margin: 0 0 var(--space-4);
+  line-height: 1.5;
+}
+
+.story-row-info p {
+  color: var(--color-text);
+}
+
+.story-row-info h4 {
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  color: var(--color-accent-dark);
+  margin: var(--space-4) 0 var(--space-1);
+}
+
+.story-row-info h4:first-of-type {
+  margin-top: 0;
+}
+
+.story-closing {
+  font-weight: 700;
+  font-style: italic;
+  color: var(--color-primary);
+}
+
+.story-row--highlight {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 6px;
+  border-radius: var(--radius);
+}
+
+.story-row-cta {
+  border: 1px solid var(--color-accent-dark);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.story-row-cta--outline {
+  border-color: var(--color-border);
+}
+
+.story-row-cta p {
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-3);
+}
+
+@media (max-width: 700px) {
+  .story-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+    padding: var(--space-5);
+  }
+
+  .story-row-thumbs img {
+    width: min(45vw, 220px);
+    height: min(45vw, 220px);
+  }
+}
+
+/* Video block aligned to the right, linking through to the About page */
+.video-side {
+  float: right;
+  max-width: 480px;
+  text-align: center;
+}
+
+.video-side .video-caption-link {
+  display: inline-block;
+  margin-top: var(--space-4);
+  font-weight: 600;
+  color: var(--color-accent-dark);
+}
+
+.container.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Video hero */
+.video-wrap {
+  position: relative;
+  max-width: 720px;
+  margin: var(--space-6) auto 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.video-wrap iframe,
+.video-wrap video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  object-fit: contain;
+}
+
+/* Portrait video variant - aspect-ratio is set per instance via an inline
+   style (each clip's own ratio), instead of forcing a 16:9 box, so there's
+   no dead black margin around it */
+.video-wrap--portrait {
+  max-width: 300px;
+}
+
+/* Smaller video variant */
+.video-wrap--small {
+  max-width: 480px;
+  margin: var(--space-5) auto 0;
+}
+
+/* Pricing / funnel */
+.price-card {
+  background: var(--color-card);
+  border: 2px solid var(--color-accent-dark);
+  border-radius: var(--radius);
+  padding: var(--space-7);
+  text-align: center;
+  max-width: 420px;
+  margin: 0 auto var(--space-7);
+}
+
+.price-card .badge {
+  display: inline-block;
+  background: #fff0e0;
+  color: var(--color-accent-dark);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 20px;
+  margin-bottom: var(--space-4);
+}
+
+.price-card .price {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: var(--space-2) 0;
+}
+
+.price-card .price small {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-muted);
+  display: block;
+}
+
+.intro-highlight {
+  border: 1px solid #000;
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.intro-highlight p {
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.intro-highlight p:last-child {
+  margin-bottom: 0;
+}
+
+.bullet-list {
+  margin: 0 0 var(--space-4);
+  padding-inline-start: var(--space-5);
+}
+
+.bullet-list li {
+  margin-bottom: var(--space-2);
+}
+
+.price-card ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0;
+  text-align: right;
+}
+
+.price-card li {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.price-card li:last-child {
+  border-bottom: none;
+}
+
+/* Stories / blog cards */
+.story-card,
+.blog-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-5);
+}
+
+.story-card .story-video,
+.blog-card .blog-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #f0e6d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+}
+
+/* Blog listing - list of cards with a real-sized thumbnail, roomy enough to
+   read comfortably. Grows taller than the old compact strip on purpose;
+   pagination (blog-pagination.js) handles however many rows that means per
+   page - no fixed row count to preserve here. */
+.blog-card {
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-2);
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: none;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.blog-card:last-child {
+  border-bottom: none;
+}
+
+.blog-card:hover {
+  background-color: rgba(184, 50, 39, 0.04);
+}
+
+.blog-card .blog-icon-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: var(--space-2);
+}
+
+.blog-card .blog-thumb {
+  flex: 0 0 140px;
+  width: 140px;
+  height: 140px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  font-size: 38px;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.blog-card .blog-thumb img {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.story-card .story-body,
+.blog-card .blog-body {
+  padding: var(--space-5);
+}
+
+.blog-card .blog-body {
+  padding: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.story-card h3,
+.blog-card h3 {
+  color: var(--color-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.blog-card .blog-body h3 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-lg);
+  line-height: 1.3;
+}
+
+.blog-card .blog-body p {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: var(--color-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.category-tag {
+  display: inline-block;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  padding: 3px var(--space-3);
+  border-radius: 20px;
+  margin-bottom: var(--space-2);
+}
+
+.blog-card .category-tag {
+  font-size: var(--text-2xs);
+  line-height: 1.3;
+  padding: 2px 9px;
+  margin-bottom: 0;
+}
+
+.category-tag--nutrition {
+  background: #e3f5e6;
+  color: #1f7a3d;
+}
+
+.category-tag--sleep {
+  background: #e3edfa;
+  color: #1c5fa8;
+}
+
+.category-tag--strength {
+  background: #fdecdc;
+  color: #c15c17;
+}
+
+.category-tag--balance {
+  background: #f1e6fb;
+  color: #6b3fa0;
+}
+
+.category-tag--health {
+  background: #fbe0e0;
+  color: #b8261f;
+}
+
+.category-tag--inspiration {
+  background: #e9e9ea;
+  color: #2b2b2b;
+}
+
+.category-tag--resilience {
+  background: #dcf3ef;
+  color: #14776b;
+}
+
+.story-card .story-name {
+  font-weight: 600;
+  margin-top: var(--space-3);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-muted);
+  padding: var(--space-7) 0;
+}
+
+/* File input */
+input[type="file"] {
+  padding: var(--space-3);
+  background: #fff;
+}
+
+.form-note {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin-top: -8px;
+}
+
+.byline {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin: -8px 0 var(--space-3);
+}
+
+.form-status {
+  text-align: center;
+  font-weight: 600;
+}
+
+.form-status.error {
+  color: #b5392f;
+}
+
+/* Admin */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  text-align: right;
+  font-size: var(--text-sm);
+  vertical-align: top;
+}
+
+.admin-table th {
+  background: #f0e6d8;
+  color: var(--color-primary);
+}
+
+.status-pill {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 16px;
+  font-size: var(--text-2xs);
+  font-weight: 600;
+}
+
+.status-pill.pending {
+  background: #fdeecb;
+  color: #8a5e0b;
+}
+
+.status-pill.approved {
+  background: #dff0e0;
+  color: #1f6d33;
+}
+
+.status-pill.rejected {
+  background: #fadddb;
+  color: #a32d2d;
+}
+
+.btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
+  border-radius: 16px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.pagination .btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.admin-login-box {
+  max-width: 380px;
+  margin: var(--space-9) auto;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .nav {
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--color-card);
+    flex-direction: column;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links li {
+    padding-inline: 0;
+  }
+
+  .nav-links li:not(:last-child)::after {
+    content: none;
+  }
+}
+
+/* Story criteria modal */
+.story-criteria-trigger {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 var(--space-3);
+  font: inherit;
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.story-criteria-trigger::after {
+  content: " ▾";
+  font-size: 0.8em;
+}
+
+.story-criteria-trigger:hover {
+  color: var(--color-accent-dark);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 19, 16, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  z-index: 1000;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-box {
+  position: relative;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: var(--space-6);
+}
+
+.modal-box h2 {
+  color: var(--color-primary);
+  margin: 0 0 var(--space-4);
+  padding-inline-end: 28px;
+  text-align: right;
+  font-size: var(--text-lg);
+}
+
+.modal-box p {
+  margin: 0 0 var(--space-3);
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  background: none;
+  border: none;
+  font-size: var(--text-xl);
+  line-height: 1;
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+}
+
+.modal-close:hover {
+  color: var(--color-primary);
+}
+
+.marquee-strip {
+  background: var(--color-accent);
+  padding: var(--space-3) var(--space-4);
+}
+
+.marquee-strip__track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.marquee-strip__track span:not(:last-child) {
+  position: relative;
+  padding-inline-end: var(--space-4);
+}
+
+.marquee-strip__track span:not(:last-child)::after {
+  content: "•";
+  position: absolute;
+  inset-inline-end: calc(-1 * var(--space-2));
+  opacity: 0.5;
+}
+
+.banner-slot {
+  max-width: var(--max-width);
+  margin: var(--space-6) auto;
+  padding: 0 var(--space-5);
+}
+
+.banner-slot__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  background: var(--color-card);
+}
+
+/* WhatsApp story button - global floating button + inline CTA blocks, added 2026-09-01 */
+.wa-float-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.wa-float-btn:hover {
+  transform: scale(1.08);
+}
+
+.wa-float-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: #fff;
+}
+
+.wa-story-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  background: #eafaf1;
+  border: 1px solid #25d366;
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+  margin: var(--space-5) auto;
+  max-width: 640px;
+  text-align: right;
+}
+
+.wa-story-cta p {
+  flex: 1 1 240px;
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  padding: 10px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.wa-btn:hover {
+  background: #1ebe57;
+}
+
+.wa-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  flex-shrink: 0;
+}
+
+/* Header top strip + footer social icons (2026-09-13) */
+/* The main nav row is already full at desktop widths (and collapses behind the
+   menu toggle on mobile), so the studio-site button and the social icons live
+   in their own slim strip at the top of the sticky header - visible at every
+   width without opening the menu. */
+.site-topbar {
+  background: #2e2a27;
+  color: #f0d9bc;
+}
+
+.site-topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--space-5);
+}
+
+/* הורד מכפתור צהוב בולט לקישור טקסט רגיל (19.9) - הוא היה הדבר
+   הכי בולט במסך הראשון בטלפון ושלח את מי שהגיעה מהמודעה לאתר אחר. */
+.site-topbar__studio {
+  display: inline-block;
+  padding: 3px 0;
+  color: #f0d9bc;
+  font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.site-topbar__studio:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.site-topbar__social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.site-topbar__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #f0d9bc;
+  transition: color 0.15s, background 0.15s;
+}
+
+.site-topbar__icon:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.site-topbar__icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.site-topbar a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+footer .social-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  margin-inline-end: 6px;
+}
+
+/* index.html footer row: let the links wrap instead of overflowing on phones */
+.social-links {
+  flex-wrap: wrap;
+}
+
+/* pilates.html - link to the full studio site, right after the lead form */
+.studio-site-cta {
+  text-align: center;
+}
+
+/* Round "ה" logo mark next to the site name in the header (2026-09-14).
+   Scoped to new classes only, so the admin panel's .logo span and other
+   .logo variants keep their current layout. */
+.logo__mark {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  vertical-align: middle;
+  margin-inline-end: 10px;
+}
+
+.logo__text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Between the mobile breakpoint and the 1080px max-width the nav row has no
+   spare room (at 1024px it fits exactly), so the mark gets a slightly smaller
+   footprint there to avoid adding horizontal overflow. */
+@media (max-width: 1100px) {
+  .logo__mark {
+    width: 34px;
+    height: 34px;
+    margin-inline-end: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo__mark {
+    width: 38px;
+    height: 38px;
+    margin-inline-end: 8px;
+  }
+}
+
+.studio-site-cta .btn {
+  font-size: var(--text-base);
+}
+
+/* pilates.html has a longer logo text, so its nav row needs ~1260px -
+   keep the ☰ menu there up to 1280px so the page never scrolls sideways. */
+@media (max-width: 1280px) {
+  .nav--wide {
+    justify-content: space-between;
+  }
+
+  .nav--wide .menu-toggle {
+    display: block;
+  }
+
+  .nav--wide .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--color-card);
+    flex-direction: column;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav--wide .nav-links.open {
+    display: flex;
+  }
+
+  .nav--wide .nav-links li {
+    padding-inline: 0;
+  }
+
+  .nav--wide .nav-links li:not(:last-child)::after {
+    content: none;
+  }
+}

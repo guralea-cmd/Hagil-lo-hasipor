@@ -12,3 +12,9 @@
 
 # Meta Ads Manager access token (ads_management/ads_read) - never commit, this repo is public
 .claude/skills/facebook-ads-plan/secrets.json
+
+# Local testimonial selection page (working files, never commit)
+_bchira-local/
+
+# 21.9.2026: published paper kept locally only (public repo)
+.claude/skills/bat-kama-at-beemet/prototype-archive-2026-09-20/tveter2014.*
