@@ -50,7 +50,7 @@
 **טיקטוק:** שלב נפרד, מוצג ללאה ומאושר לפני טעינה (כלל 6).
 
 ## הקישור
-כרגע `https://guralea.com/pilates.html#form`.
+כרגע `https://guraleapilates.com/contact/`.
 ⚠️ **אם ההעברה ל-guraleapilates.com מתבצעת ב-20.9 (`PLAN-move-to-guraleapilates.md`) - להחליף בכל 21 הפוסטים לפני הטעינה.**
 
 ## מדיה
