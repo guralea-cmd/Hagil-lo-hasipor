@@ -26,12 +26,18 @@ document.addEventListener("DOMContentLoaded", function () {
     statusEl.classList.remove("error");
 
     var utm = getUtmParams();
+    // 21.9.2026 (Leah): full name + phone (required), email + "when is it convenient to call" (optional).
+    // The whole name goes in firstName and lastName stays an empty string, because firestore.rules still
+    // requires both to be strings. The track (zoom / studio) is settled by phone.
+    var fullName = form.fullName.value.trim();
+    var email = form.email.value.trim();
+    var callTime = form.callTime.value;
     db.collection("workshop_leads").add({
-      firstName: form.firstName.value.trim(),
-      lastName: form.lastName.value.trim(),
-      email: form.email.value.trim(),
+      firstName: fullName,
+      lastName: "",
+      email: email,
+      callTime: callTime,
       phone: form.phone.value.trim(),
-      track: form.track.value,
       utmSource: utm.utmSource,
       utmMedium: utm.utmMedium,
       utmCampaign: utm.utmCampaign,
@@ -44,11 +50,13 @@ document.addEventListener("DOMContentLoaded", function () {
           window.sendLeadToSheet({
             form: "workshop",
             id: (docRef && docRef.id) || "",
-            name: (form.firstName.value.trim() + " " + form.lastName.value.trim()).trim(),
-            phone: form.phone.value.trim()
+            name: fullName,
+            phone: form.phone.value.trim(),
+            email: email,
+            callTime: callTime
           });
         }
-        statusEl.textContent = "הפרטים נשלחו, תודה.";
+        statusEl.textContent = "תודה! אחזור אלייך בטלפון בימים הקרובים. לאה";
         if (typeof fbq === "function") {
           fbq("track", "Lead");
         }

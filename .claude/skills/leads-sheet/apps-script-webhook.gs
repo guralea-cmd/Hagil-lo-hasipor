@@ -30,6 +30,10 @@ const STATUS = 'חדש';
 const SITE_SOURCES = /^((פוסט|מודעה) - (פייסבוק|אינסטגרם|טיקטוק)|גוגל|אתר - ישיר|אתר הקהילה|אתר הסטודיו|מבחן)$/;
 // Workshop leads get their own subject line (Leah 21.9.2026: "ליד חדש לסדנה: שם").
 const MAIL_SUBJECTS = { 'סדנה': 'ליד חדש לסדנה: ' };
+// 21.9.2026: the workshop form also sends email (optional) and when to call (בוקר / צהריים / ערב).
+// In tab סדנה they go to columns F-G (header: אימייל | מתי נוח להתקשר), right after סטטוס.
+const EXTRA_COLS = { 'סדנה': ['email', 'callTime'] };
+const CALL_TIMES = /^(בוקר|צהריים|ערב)$/;
 // 21.9.2026: one email per new row, to Leah. Subject "ליד חדש: שם" (workshop: "ליד חדש לסדנה: שם"). Every attempt is logged in the
 // hidden tab _מיילים (time | id | name | source | result) - the morning report compares it with the new rows.
 const MAIL_TO = 'guralea@gmail.com';
@@ -44,12 +48,14 @@ function doPost(e) {
     const name = String(data.name || '').trim().slice(0, 80);
     const phone = String(data.phone || '').replace(/[^\d+\-\s()]/g, '').trim().slice(0, 20);
     const id = String(data.id || '').replace(/[^\w-]/g, '').slice(0, 40);
+    const email = String(data.email || '').trim().slice(0, 100);
+    const callTime = CALL_TIMES.test(String(data.callTime || '')) ? String(data.callTime) : '';
     if (!tabName || !name || !/\d/.test(phone)) return reply({ ok: false });
     if (isTest(name)) return reply({ ok: true, skipped: true });
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
-      addRows(tabName, [{ key: form + ':' + (id || Utilities.getUuid()), when: new Date(), name: name, phone: phone, source: FORM_SOURCES[form] || (SITE_SOURCES.test(String(data.source || '')) ? String(data.source) : SOURCE_SITE) }]);
+      addRows(tabName, [{ key: form + ':' + (id || Utilities.getUuid()), when: new Date(), name: name, phone: phone, email: email, callTime: callTime, source: FORM_SOURCES[form] || (SITE_SOURCES.test(String(data.source || '')) ? String(data.source) : SOURCE_SITE) }]);
     } finally {
       lock.releaseLock();
     }
@@ -142,14 +148,15 @@ function addRows(tabName, leads) {
     if (p.length >= 9 && phones.has(p) && phones.get(p) !== "") return;
     phones.set(p, l.source);
     written.push(l);
-    rows.push([Utilities.formatDate(l.when, 'Asia/Jerusalem', 'd.M.yyyy, HH:mm'), asText(l.name), asText(localPhone(l.phone)), l.source, STATUS]);
+    rows.push([Utilities.formatDate(l.when, 'Asia/Jerusalem', 'd.M.yyyy, HH:mm'), asText(l.name), asText(localPhone(l.phone)), l.source, STATUS]
+      .concat((EXTRA_COLS[tabName] || []).map(function (k) { return asText(String(l[k] || '')); })));
   });
   if (newIds.length) idsSheet.getRange(idsLast + 1, 1, newIds.length, 1).setNumberFormat('@').setValues(newIds);
   if (!rows.length) return;
   const start = sheet.getLastRow() + 1;
   const missing = start + rows.length - 1 - sheet.getMaxRows();
   if (missing > 0) sheet.insertRowsAfter(sheet.getMaxRows(), missing);
-  sheet.getRange(start, 1, rows.length, 5).setNumberFormat('@').setValues(rows);
+  sheet.getRange(start, 1, rows.length, rows[0].length).setNumberFormat('@').setValues(rows);
   mailLeads_(book, tabName, written);
 }
 
@@ -165,7 +172,9 @@ function mailLeads_(book, tabName, leads) {
       MailApp.sendEmail({
         to: MAIL_TO,
         subject: (MAIL_SUBJECTS[tabName] || 'ליד חדש: ') + l.name,
-        body: 'שם: ' + l.name + '\nטלפון: ' + localPhone(l.phone) + '\nמקור: ' + l.source + '\nזמן: ' +
+        body: 'שם: ' + l.name + '\nטלפון: ' + localPhone(l.phone) +
+          (l.email ? '\nאימייל: ' + l.email : '') + (l.callTime ? '\nמתי נוח להתקשר: ' + l.callTime : '') +
+          '\nמקור: ' + l.source + '\nזמן: ' +
           Utilities.formatDate(l.when, 'Asia/Jerusalem', 'd.M.yyyy, HH:mm') + '\nבגיליון: לשונית ' + tabName
       });
     } catch (err) {
