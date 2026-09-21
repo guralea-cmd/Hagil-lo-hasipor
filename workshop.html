@@ -313,6 +313,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <section style="background:#fff;">
   <div class="container" style="max-width:380px;">
     <h2>הרשמה לסדנה</h2>
+    <p>עשית את אתגר הכיסא? רוצה לדעת מה את יכולה ללמוד על עצמך מהתוצאה שקיבלת? השאירי פרטים, ואחזור אלייך עם התשובה ועם כל הפרטים על הסדנה.</p>
     <form id="workshop-lead-form" style="scroll-margin-top:90px;">
       <div>
         <label for="workshop-name">שם מלא</label>
@@ -321,6 +322,14 @@ gtag('config', 'G-MEG8NMMGTD');
       <div>
         <label for="workshop-phone">טלפון</label>
         <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
+      </div>
+      <div>
+        <label for="workshop-age">הגיל שלך</label>
+        <input type="number" id="workshop-age" name="age" inputmode="numeric" min="18" max="110">
+      </div>
+      <div>
+        <label for="workshop-reps">כמה פעמים קמת וישבת ב-30 שניות?</label>
+        <input type="number" id="workshop-reps" name="reps" inputmode="numeric" min="0" max="99">
       </div>
       <div>
         <label for="workshop-email">אימייל (לא חובה)</label>
@@ -355,8 +364,8 @@ gtag('config', 'G-MEG8NMMGTD');
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/firebase-config.js?v=4"></script>
 <script src="js/main.js?v=12"></script>
-<script src="js/leads-sheet.js?v=4"></script>
-<script src="js/workshop-leads.js?v=10"></script>
+<script src="js/leads-sheet.js?v=5"></script>
+<script src="js/workshop-leads.js?v=11"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
