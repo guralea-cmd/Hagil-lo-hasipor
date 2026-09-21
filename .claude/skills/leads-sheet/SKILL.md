@@ -106,3 +106,11 @@ description: Leah's single Google Sheet for all studio leads ("לידים") - Fa
 - **מקור:** guraleapilates.com (`site.js`) שומר בדף הראשון של הביקור מאיפה הגיעה הגולשת (referrer/utm) → `lead-form.js` שולח `source`. ערכים מותרים: `SITE_SOURCES` - פוסט/מודעה - פייסבוק/אינסטגרם/טיקטוק · גוגל · אתר הקהילה · אתר - ישיר. guralea.com/pilates.html ממשיך לשלוח "אתר".
 - **אומת מקצה לקצה 21.9 13:06:** פוסט פייסבוק של הסטודיו → קישור → טופס → שורה "פוסט - פייסבוק" → מייל בדואר הנכנס 13:06. שורות הבדיקה נמחקו.
 - **עורך Apps Script:** תפריט בחירת הפונקציה לא מגיב ללחיצות התוסף; העורך מריץ את הפונקציה הראשונה בקובץ.
+
+## 21.9.2026 - גרסה 4: לשונית "סדנה"
+- לשונית **"סדנה"** נוצרה (שכפול של "פייסבוק" בלי לידים: אותן עמודות, RTL, רשימת הסטטוסים). form `workshop` (guralea.com/workshop.html) ו-`bat-kama-workshop` (מקור "מבחן") → סדנה.
+- מייל לסדנה: נושא **"ליד חדש לסדנה: שם"** (`MAIL_SUBJECTS`).
+- guralea.com: `js/leads-sheet.js` v3 שומר את מקור הביקור בדף הראשון ושולח אותו **רק עם לידי הסדנה** (שאר הטפסים נשארים "אתר"). `workshop.html` טוען את leads-sheet.js; `workshop-leads.js` v8 שולח לגיליון אחרי השמירה ב-Firestore.
+- סריקה לפני החיבור: workshop_leads - 8 מסמכים, **כולם בדיקות**; age_test_leads - 0; contact_submissions - 7 בדיקות. **אין הרשמות אמיתיות שאבדו.**
+- **אומת 21.9 14:47:** workshop.html?utm_source=facebook&utm_medium=organic → טופס → שורה בסדנה "פוסט - פייסבוק" → מייל "ליד חדש לסדנה: ..." בדואר הנכנס 14:47. הבדיקה נמחקה מהגיליון, מ-_מיילים ומ-Firestore.
+- Firestore נקרא רק דרך `db` בדף guralea.com/admin/dashboard.html ב-Edge של לאה (חשבון השירות מקבל 403).
