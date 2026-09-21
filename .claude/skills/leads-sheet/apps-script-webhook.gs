@@ -6,8 +6,9 @@
 // 1) Site forms: after a form's Firestore save succeeds, the page sends a copy here (doPost):
 //   form "story"    - guralea.com/register.html (story_contacts)              → סיפורים
 //   form "bat-kama" - guralea.com/bat-kama.html (age_test_leads)              → בת כמה את באמת
+//   form "workshop" - guralea.com/workshop.html, the workshop registration page (workshop_leads) → סדנה (21.9.2026)
 //   form "bat-kama-workshop" - guralea.com/bat-kama-next.html, the workshop form (age_test_leads)
-//                          → בת כמה את באמת, מקור "סדנה" (16.9.2026)
+//                          → סדנה, מקור "מבחן" (21.9.2026; until then בת כמה את באמת / "סדנה")
 //   form "pilates"  - guralea.com/pilates.html + guraleapilates.com (pilates_leads) → פייסבוק
 // 2) Meta ad leads (Facebook + Instagram) → פייסבוק, every 5 minutes (syncMetaLeads, run by Google).
 // Rows are written to columns A-E only: תאריך | שם | טלפון | מקור | סטטוס. Column F and everything to its
@@ -18,16 +19,18 @@
 // hides a real incoming lead (16.9.2026: a Meta lead was swallowed that way and never reached the sheet).
 // The only secret is the Script property META_TOKEN (never in this code).
 
-const TABS = { story: 'סיפורים', 'bat-kama': 'בת כמה את באמת', 'bat-kama-workshop': 'בת כמה את באמת', pilates: 'פייסבוק' };
+const TABS = { story: 'סיפורים', 'bat-kama': 'בת כמה את באמת', 'bat-kama-workshop': 'סדנה', workshop: 'סדנה', pilates: 'פייסבוק' };
 const IDS_TAB = '_מזהים';
 const SOURCE_SITE = 'אתר';
 // מקור לפי טופס, כשהוא לא "אתר" (16.9.2026: לידים של הסדנה מדף "מה עושים עם התוצאה")
-const FORM_SOURCES = { 'bat-kama-workshop': 'סדנה' };
+const FORM_SOURCES = { 'bat-kama-workshop': 'מבחן' };
 const STATUS = 'חדש';
 // 21.9.2026: guraleapilates.com sends where the visit came from (referrer / utm, see its site.js). Only these
 // values are accepted; anything else falls back to "אתר".
-const SITE_SOURCES = /^((פוסט|מודעה) - (פייסבוק|אינסטגרם|טיקטוק)|גוגל|אתר - ישיר|אתר הקהילה)$/;
-// 21.9.2026: one email per new row, to Leah. Subject "ליד חדש: שם". Every attempt is logged in the
+const SITE_SOURCES = /^((פוסט|מודעה) - (פייסבוק|אינסטגרם|טיקטוק)|גוגל|אתר - ישיר|אתר הקהילה|אתר הסטודיו|מבחן)$/;
+// Workshop leads get their own subject line (Leah 21.9.2026: "ליד חדש לסדנה: שם").
+const MAIL_SUBJECTS = { 'סדנה': 'ליד חדש לסדנה: ' };
+// 21.9.2026: one email per new row, to Leah. Subject "ליד חדש: שם" (workshop: "ליד חדש לסדנה: שם"). Every attempt is logged in the
 // hidden tab _מיילים (time | id | name | source | result) - the morning report compares it with the new rows.
 const MAIL_TO = 'guralea@gmail.com';
 const MAIL_LOG_TAB = '_מיילים';
@@ -161,7 +164,7 @@ function mailLeads_(book, tabName, leads) {
     try {
       MailApp.sendEmail({
         to: MAIL_TO,
-        subject: 'ליד חדש: ' + l.name,
+        subject: (MAIL_SUBJECTS[tabName] || 'ליד חדש: ') + l.name,
         body: 'שם: ' + l.name + '\nטלפון: ' + localPhone(l.phone) + '\nמקור: ' + l.source + '\nזמן: ' +
           Utilities.formatDate(l.when, 'Asia/Jerusalem', 'd.M.yyyy, HH:mm') + '\nבגיליון: לשונית ' + tabName
       });
