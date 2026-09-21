@@ -32,7 +32,7 @@
   var LEADS_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxgFHRnAYFq68nK-5l0nOi46WbUiCn0L2QUjaV_U4Z6oZ1w45odyjPzmt2u0dGmRytE/exec";
 
   // lead = { form: "story" | "bat-kama" | "bat-kama-workshop" | "workshop" | "pilates", id: Firestore doc id, name, phone,
-  //          email?, callTime? (workshop only, 21.9.2026) }
+  //          email?, callTime?, age?, reps? (workshop only, 21.9.2026) }
   function leadSource() {
     try { return sessionStorage.getItem("lead_source") || "אתר - ישיר"; } catch (e) { return "אתר - ישיר"; }
   }
@@ -52,7 +52,9 @@
           phone: lead.phone || "",
           source: lead.form === "workshop" ? leadSource() : "",
           email: lead.email || "",
-          callTime: lead.callTime || ""
+          callTime: lead.callTime || "",
+          age: lead.age || "",
+          reps: lead.reps || ""
         })
       }).catch(function () {});
     } catch (e) {}

@@ -32,11 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
     var fullName = form.fullName.value.trim();
     var email = form.email.value.trim();
     var callTime = form.callTime.value;
+    // 21.9.2026: optional chair-challenge result ("אתגר הכיסא") - age + full stands in 30 seconds.
+    var age = form.age.value.trim();
+    var reps = form.reps.value.trim();
     db.collection("workshop_leads").add({
       firstName: fullName,
       lastName: "",
       email: email,
       callTime: callTime,
+      age: age,
+      reps: reps,
       phone: form.phone.value.trim(),
       utmSource: utm.utmSource,
       utmMedium: utm.utmMedium,
@@ -53,7 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
             name: fullName,
             phone: form.phone.value.trim(),
             email: email,
-            callTime: callTime
+            callTime: callTime,
+            age: age,
+            reps: reps
           });
         }
         statusEl.textContent = "תודה! אחזור אלייך בטלפון בימים הקרובים. לאה";
