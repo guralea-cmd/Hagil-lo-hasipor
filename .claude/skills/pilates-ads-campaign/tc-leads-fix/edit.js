@@ -1,6 +1,6 @@
 const {pageToken}=require('./pagetok.js');
 const RE=/https?:\/\/tc-leads\.co\.il\/[^\s]*/g;
-const NEW='https://guralea.com/pilates.html#form';
+const NEW='https://guraleapilates.com/contact/';
 async function post(tok,id,body){
   const u='https://graph.facebook.com/v21.0/'+id;
   const p=new URLSearchParams({...body,access_token:tok});
