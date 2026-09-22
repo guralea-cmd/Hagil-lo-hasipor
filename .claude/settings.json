@@ -8,6 +8,8 @@
   },
   "permissions": {
     "allow": [
+      "PowerShell(Get-WinEvent *)",
+      "PowerShell($e = Get-WinEvent *)",
       "Bash(curl -s *)",
       "Bash(curl -sS *)",
       "Bash(curl -sL *)",
