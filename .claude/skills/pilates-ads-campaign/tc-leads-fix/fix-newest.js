@@ -12,7 +12,7 @@ const PAGE='2267713623553786';
  const handled=new Set([...state.done,...state.nomatch,...state.skipped.map(x=>x.id||x)]);
  const queue=ids.filter(p=>!handled.has(p.id)).sort((a,b)=>new Date(b.t)-new Date(a.t)).slice(0,N);
  console.log('queue:',queue.length,'| new link:',NEW);
- let gap=20000, fixed=0;
+ let gap=180000, fixed=0; // 3 דקות בין פוסטים - הקצב שפייסבוק לא חוסמת (נקבע 23.9 אחרי שהיא חסמה 18 עריכות)
  for(const p of queue){
   const cur=await get(tok,p.id,'message,permalink_url');
   if(cur.error){ state.skipped.push({id:p.id,url:p.url,reason:'GET: '+cur.error.message}); console.log('SKIP(get)',p.id,cur.error.message); fs.writeFileSync('state.json',JSON.stringify(state)); continue; }
@@ -25,7 +25,7 @@ const PAGE='2267713623553786';
    const res=await post(tok,p.id,{message:msg});
    if(res.success||res.id){ ok=true; }
    else { tries++; lastErr=(res.error&&res.error.message)||JSON.stringify(res);
-     if(/limit how often/i.test(lastErr)){ gap=Math.min(300000,gap*2); console.log('rate limited, waiting '+Math.round(gap/1000)+'s'); await new Promise(r=>setTimeout(r,gap)); }
+     if(/limit how often/i.test(lastErr)){ gap=Math.min(600000,gap*2); console.log('rate limited, waiting '+Math.round(gap/1000)+'s'); await new Promise(r=>setTimeout(r,gap)); }
      else break; }
   }
   if(ok){
