@@ -33,6 +33,7 @@
       "mcp__Claude_Preview__preview_snapshot",
       "mcp__Claude_Browser__tabs_context",
       "mcp__Claude_Browser__find"
-    ]
+    ],
+    "defaultMode": "auto"
   }
 }
