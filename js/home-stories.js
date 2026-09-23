@@ -10,12 +10,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return div.innerHTML;
   }
 
+  // הפוסטר של הסרטון של לאה מתחיל בתקרה ריקה, ובכרטיס הקטן הוא נראה ריק לגמרי.
+  // כאן הוא מוחלף בחיתוך של אותה תמונה בדיוק, ממוקד בפנים. רק הכרטיס בעמוד הבית מושפע.
+  var CARD_IMAGE_OVERRIDES = {
+    "https://guralea.com/images/about-video-poster-2.jpg": "https://guralea.com/images/story-card-leah.jpg"
+  };
+
   function mediaFor(story) {
     var photos = (story.photoUrls || []).filter(function (url) {
       return !/\.hei[cf](\?|$)/i.test(url);
     });
     if (photos.length) {
-      return '<img src="' + photos[0] + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;">';
+      return '<img src="' + (CARD_IMAGE_OVERRIDES[photos[0]] || photos[0]) + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;">';
     }
     if (story.videoUrl) {
       return '<video src="' + story.videoUrl + '" preload="metadata" muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;"></video>';
