@@ -32,7 +32,9 @@
       "mcp__claude-in-chrome__tabs_context_mcp",
       "mcp__Claude_Preview__preview_snapshot",
       "mcp__Claude_Browser__tabs_context",
-      "mcp__Claude_Browser__find"
+      "mcp__Claude_Browser__find",
+      "Bash(node \"C:\\Users\\gural\\OneDrive\\מסמכים\\GitHub\\Hagil-lo-hasipor\\.claude\\skills\\guraleapilates-site\\list-articles.mjs\")",
+      "PowerShell(node \"C:\\Users\\gural\\OneDrive\\מסמכים\\GitHub\\Hagil-lo-hasipor\\.claude\\skills\\guraleapilates-site\\list-articles.mjs\")"
     ],
     "defaultMode": "auto"
   }
