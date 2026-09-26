@@ -3,6 +3,10 @@ name: marquee-daily-content
 description: Updates the scrolling marquee-strip on the homepage (index.html) with one new short line + link each day, drawn from site content (community stories, blog, workshop, or community signup) in Leah's authentic voice, and holds it for her explicit approval before publishing to the live site. Use whenever asked to prepare, draft, pick, or update the daily marquee/פס נע content, or when running the daily marquee routine.
 ---
 
+## ⛔ קצב: פעם בשבוע, לא כל יום - לאה 26.9.2026
+הסטריפ מתחלף **ביום ראשון בלבד**, שורה אחת לשבוע. המשימה המתוזמנת רצה רק בימי ראשון. כל שאר הכללים בקובץ (סבב סוגי התוכן, יומן הפרסומים, טקסט קישור מדויק מהאתר, אישור לפני העלאה) נשארים כמו שהם.
+
+
 # Daily marquee-strip content
 
 ## The three content automations, at a glance (read this first)
@@ -66,7 +70,9 @@ For each type, the **message** (the rotating line) is short narrative copy in Le
 
 **הצטרפות לקהילה (share a story)** - source `register.html`'s real criteria text (the "מה אנחנו מחפשים בסיפור?" modal - "סיפור שמשנה את התפיסה של מה אפשרי אחרי גיל 50", "אם הוא יכול, אולי גם אני יכול"). Message: a short line in Leah's voice inviting someone to share their own turning point, built from that real language - vary the angle each cycle. Link text: `שתפו את הסיפור שלכם` (exact button wording from `stories.html`). Href: `register.html`.
 
-**סיפורי קהילה (browse stories)** - source `stories.html`'s real hero copy ("חברי קהילה משתפים בקצרצרי וידאו ובמילים שלהם את הדרך שעשו"). Message: a short line inviting someone to go see what other community members shared - vary the angle each cycle; if a real approved Firestore story exists (see `facebook-teaser`'s Firestore query section for the exact fetch pattern - same public read-only query applies here), a message can reference that a real story is featured, but never name/quote the person's story content directly in this one-line format - just point at the page. Link text: `סיפורי קהילה` (exact nav wording). Href: `stories.html`.
+**סיפורי קהילה (browse stories)** - source `stories.html`'s real hero copy ("חברי קהילה משתפים בקצרצרי וידאו ובמילים שלהם את הדרך שעשו"). Message: a short line inviting someone to go see what other community members shared - vary the angle each cycle; if a real approved Firestore story exists (see `facebook-teaser`'s Firestore query section for the exact fetch pattern - same public read-only query applies here), a message can reference that a real story is featured. Link text: `סיפורי קהילה` (exact nav wording). Href: `stories.html` (or `stories.html#story-{docId}` when the line is about one specific person).
+
+**Update 2026-09-14: generic lines don't work - build the line on real published story details.** Leah rejected three full rounds of generic lines (an age-range line, 10 general alternatives, 10 journalistic-question alternatives) as "כללי ולא מעניין". What landed: a line built on concrete, accurate facts that are already public on `stories.html` - pulled from each approved story's `edited.hookLine` / `edited.summaryFrom` / `edited.summaryTo` fields (Leah-approved wording) and the raw `story`/`turningPoint`/`today` fields, via the Firestore query. The approved line combined three stories: "אחד אחרי התקף לב, אחד אחרי ניתוח לב, אחד משותק מהחזה ומטה. תראו איפה הם היום." So from now on: fetch the approved stories first and draft options each grounded in one real specific detail (hardship → where they are today, per `leah-voice` move #1), never paraphrase beyond what's actually written, and don't put names in the line (no room, and the link leads to them). This replaces the old "never reference story content, just point at the page" rule for this slot.
 
 ## Writing the line
 
@@ -96,7 +102,7 @@ Only after Leah has explicitly approved:
 
 1. Edit `index.html`'s `.marquee-strip__track` block - replace the second and third `<span>` (message, link - only one of each, no duplicates) with the approved text, keeping the exact same HTML structure (the link span wraps an `<a href="...">`, matching the existing pattern for the workshop link).
 2. Do **not** touch the cache-busting `?v=` query param on `css/style.css` - this is an HTML content change, not a CSS change, so no version bump is needed (bump it only if `css/style.css` itself is edited).
-3. Commit and push to `main` (this is a live-site content change, already covered by Leah's approval of the specific text in step 1 of this gate - no separate push confirmation needed beyond that approval, since editing-and-publishing this line is exactly what she asked this skill to do daily).
+3. Commit and push to `main` **only after Leah has explicitly said to publish it** (17.9.2026, בהוראתה - "שום דבר לא יקרה באופן אוטומטי"). אישור של הטקסט אינו אישור לדחוף לאתר; שואלים אותה בשורה אחת ומחכים ל"כן".
 4. Confirm to Leah (Hebrew) that it's live.
 
 ## After approval and publishing
