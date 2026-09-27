@@ -7,7 +7,7 @@ description: Builds a personal, shareable social card for each community member 
 
 ## HARD RULE, locked 2026-09-01: ONE design system for every branded image on this project, no exceptions
 
-Leah's explicit instruction: **`.claude/skills/facebook-teaser/post-frame-template.html` is THE locked template - for branded Facebook post images AND for these personal share cards, no separate design.** The old square (1080×1080), `object-fit:contain`, cream-background design that used to live in this skill's own `templates/` folder is discarded - those files have been deleted. Do not recreate them, do not design a separate look for share cards "because they're a different use case." There is one branded look for this whole project now.
+Leah's explicit instruction: **`.claude/skills/facebook-teaser/post-frame-template.html` is THE locked template - for branded Facebook post images AND for these personal share cards, no separate design.** The old square (1080×1080), `object-fit:contain`, cream-background design that used to live in this skill's own `templates/` folder is discarded - those files have been deleted (the empty `templates/` folder itself removed 27.9.2026). Do not recreate them, do not design a separate look for share cards "because they're a different use case." There is one branded look for this whole project now.
 
 **This supersedes every design note below this point that describes the old square/contain template** - those sections are kept only as historical record of *why* the old design existed and *what mistake to avoid repeating* (the letterboxing/logo-order/spacing lessons still apply conceptually), not as instructions to follow. When building a card, go read `post-frame-template.html` directly for the real current markup/CSS - don't reconstruct it from memory or from the historical notes below.
 
@@ -17,18 +17,21 @@ Leah's explicit instruction: **`.claude/skills/facebook-teaser/post-frame-templa
 
 **Practical effect on the crop rule:** the current locked template uses `object-fit: cover; object-position: center 20%` (crops to fill the frame, biased toward the top of the photo) - this is Leah's approved choice for this design, not an error. The old "never crop, always contain, show the whole person" principle from the square design no longer applies to this project's actual output. If a future photo crops out something important (e.g. a raised arm, a visible prop that matters to the story), flag it to Leah rather than silently accepting a bad crop - but don't revert to `contain` unilaterally.
 
-## Current roster - the 4 approved community-story members (checked 2026-09-01)
+## Current roster - 7 approved community-story members (updated 27.9.2026; was 4 on 2026-09-01)
 
-All four are in the `story_submissions` Firestore collection, `status: "approved"`. Direct story links use the pattern `https://guralea.com/stories.html#story-{docId}`.
+All seven are in the `story_submissions` Firestore collection, `status: "approved"`. Direct story links use the pattern `https://guralea.com/stories.html#story-{docId}`.
 
-| Name | Doc ID | Age | Location |
-|---|---|---|---|
-| שי טובול | `3rwLZMW9hFppFhgALAgk` | 58 | דימונה |
-| אמנון גאון | `hjKPq4o7IpOlDYsomjDc` | 76 | קרית מוצקין |
-| אליעזר רוה | `pbISy7l7kfwfbJMhphPc` | 91 | רמת גן |
-| אבי תורג'מן | `Q0K9W9wyU88HlsemRhDc` | 62 | ישראל |
+| Name | Doc ID | Age | Location | Card |
+|---|---|---|---|---|
+| שי טובול | `3rwLZMW9hFppFhgALAgk` | 58 | דימונה | built 1.9 |
+| אמנון גאון | `hjKPq4o7IpOlDYsomjDc` | 76 | קרית מוצקין | built 1.9, file updated 13.9 |
+| אליעזר רוה | `pbISy7l7kfwfbJMhphPc` | 91 | רמת גן | built 1.9 |
+| אבי תורג'מן | `Q0K9W9wyU88HlsemRhDc` | 62 | ישראל | built 1.9 |
+| אבי ברקוביץ | (pull docId from Firestore) | 56 | | not built |
+| פייב משה | (pull docId from Firestore) | 66 | | not built |
+| לאה גורא | `96FgtqomdPjXCFZpB6WU` | | | not built; story not `edited` - Leah decides |
 
-Quotes used, all verbatim (or disclosed-trim) from each person's own `edited.closingLine` Firestore field:
+Quotes used for the first 4, all verbatim (or disclosed-trim) from each person's own `edited.closingLine` Firestore field:
 - שי: "השמיים הם לא הגבול, הם רק תחנה אל היעד הבא"
 - אמנון: "אני ממליץ להיות פעילים בכושר - בכל גיל" (trimmed from the full closingLine for length; meaning preserved - disclose the trim if asked)
 - אבי: "הכול בראש. הכול אפשרי" (verbatim)
@@ -36,9 +39,11 @@ Quotes used, all verbatim (or disclosed-trim) from each person's own `edited.clo
 
 ## Status as of 2026-09-01: all 4 rebuilt on the single locked template - shown to Leah - awaiting "מאושר"
 
-Shai, Avi, and Eliezer's images already existed as committed assets from the same-day post-frame-template lock: `images/facebook-posts-branded/story-3rwLZMW9hFppFhgALAgk-relaunch.png`, `story-Q0K9W9wyU88HlsemRhDc-relaunch.png`, `story-pbISy7l7kfwfbJMhphPc-relaunch.png` - reused as-is. Amnon's committed file at that path is stale (dated 2026-08-24, old design) - a fresh render matching the locked template was built and shown separately; **replace the committed Amnon file with the new render once Leah approves**, don't leave the stale 8/24 one in the repo.
+Shai, Avi, and Eliezer's images already existed as committed assets from the same-day post-frame-template lock: `images/facebook-posts-branded/story-3rwLZMW9hFppFhgALAgk-relaunch.png`, `story-Q0K9W9wyU88HlsemRhDc-relaunch.png`, `story-pbISy7l7kfwfbJMhphPc-relaunch.png` - reused as-is. Amnon's file: **⛔ הוחלף 27.9.2026: הקובץ עודכן 13.9 (commit 8b3fd38) - לא ישן יותר.**
 
 **Nothing published/sent anywhere except to Leah for review - waiting for her explicit "מאושר" before any further action**, per the standing approval-gate rule in `site-open-items` SKILL.md.
+
+❓ 27.9: לא נרשם שהכרטיסים אושרו/נשלחו; גיוס סיפורים מוקפא מ-21.9 - לסגור או להשאיר, לאה מחליטה.
 
 ## Historical design notes (old square/contain template - SUPERSEDED, kept for lesson context only)
 

@@ -23,7 +23,7 @@ Leah asked (2026-08-15) whether she needs to tell Claude every time she approves
 ## Reporting
 
 - **If there are no new approved stories:** stay silent. Don't message her just to say nothing changed.
-- **If there are new approved stories:** message her in Hebrew, plainly - the person's name(s), which collection (doesn't need to be technical - just "סיפור חדש אושר: <name>"), and that it's now live on `stories.html`. No approval gate needed here - she already approved it herself in the dashboard; this is just letting her know it registered, not asking permission for anything.
+- **If there are new approved stories:** **⛔ הוחלף 27.9.2026 (כלל 65, 20.9): לא הודעה נפרדת - שורה אחת בדוח הבוקר בלבד**, in Hebrew, plainly - the person's name(s) ("סיפור חדש אושר: <name>") and that it's now live on `stories.html`. No approval gate needed here - she already approved it herself in the dashboard; this is just letting her know it registered, not asking permission for anything. (Old wording "message her immediately" is void.)
 
 ## After reporting (or after a silent no-new-stories run)
 
@@ -32,3 +32,5 @@ Append every newly-seen id to `.claude/skills/new-story-alert/seen-stories.md` (
 ## Cadence
 
 Runs on a schedule (see the scheduled task for the exact interval - every 4 hours, same as `site-health-scan`, bundled as one combined check rather than two separate wake-ups). Not real-time - if she wants faster notice, the fix is a shorter interval on the scheduled task, not a change to this skill.
+
+עובדה 27.9: המשימה פעילה אך לא רצה מאז 20.9 14:24.

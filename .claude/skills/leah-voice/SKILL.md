@@ -5,6 +5,16 @@ description: Writes Hebrew website copy (blog posts, page text, form labels, CTA
 
 # Writing in Leah's voice
 
+## ⛔ כלל מפורש, לא ניתן לשינוי - פנייה לפי אתר (לאה, 17.9.2026)
+
+- **שני אתרים נפרדים:** guralea.com ("הגיל הוא לא הסיפור") ו-guraleapilates.com (פילאטיס מכשירים).
+- **guralea.com כתוב לשני המינים - גברים ונשים.** לא משנים שום עמוד שם ללשון נקבה.
+- **⛔ הסדנה היא לנשים בלבד - לכן כל טקסט שמזמין לסדנה נכתב בלשון נקבה,** גם כשהוא יושב בתוך מאמר שכתוב לשני המינים. זה כולל את שורות ההזמנה בסוף כל מאמר בבלוג (`<h2>` שמעליו הקישור ל-`workshop.html`), פוסטים ומודעות. **לפני כל שינוי ניסוח גורף - בודקים לאן כל טקסט מוביל, ולא משנים לפי חיפוש מילים בלבד.** (אירוע אמיתי 17.9: שורות ההזמנה לסדנה ב-58 מאמרים שונו ללשון שמתאימה לשני המינים; לאה: "כמה פעמים אני צריכה להגיד לך שהסדנה זה רק לנשים". תוקן באותו ערב.)
+- **לאה, 17.9.2026, במילים שלה:** "באתר של הגיל הוא לא הסיפור הכל כתוב לשני המינים, ורק במבחן בת כמה את ובדף ההמשך זה בלשון נקבה" · **"וגם בפרסום של הסדנה 'הגיל הוא לא הסיפור'"** - כלומר גם המודעות והפוסטים שמפרסמים את הסדנה נכתבים בלשון נקבה.
+- **לשון נקבה ביחיד רק במבחן "בת כמה את באמת?" (`bat-kama.html`) ובדף ההמשך שלו (`bat-kama-next.html`)**. המבחן מיועד לבנות קהילה של נשים בגילאי **55-65** (החלטת לאה 17.9, במקום 45-65). **⛔ הוחלף 21.9.2026 (כלל 63): תוכנית 30 יום, האפליקציה והתשלום באתר ירדו** - בדף ההמשך נשאר רק מסלול הסדנה; דף המבחן עצמו לא עולה, במקומו "אתגר הכיסא".
+- אסור להרחיב את זה לשום עמוד אחר, גם אם הוראה נשמעת כללית. אם יש ספק - שאלה אחת קצרה ללאה לפני שנוגעים.
+- רקע: ב-16.9 "לשון נקבה" על המבחן הובן בטעות ככל האתר; ב-17.9 כל האתר הומר, עלה לאוויר ובוטל באותו יום.
+
 ## Read first: kol-shel-leah.md
 
 Before drafting anything substantial, read `.claude/skills/leah-voice/kol-shel-leah.md` (same directory as this file) - a voice analysis built 2026-09-02 from 17 real source documents she wrote/dictated (workshop scripts, a finished video script, personal-mentor ChatGPT transcripts), not from this skill file or the site. It covers concrete openers, closers, sentence-rhythm patterns (and the real gap between her polished scripts vs. raw spoken dictation), vocabulary she actually uses (including "גיל פיזיולוגי" and the "לקלף שכבות עד הגרעין" metaphor, not previously captured here), and confirms the existing address-style rule from a fresh source. Treat it as the more detailed, source-grounded companion to the guidance below - use both together.
@@ -15,7 +25,7 @@ For short functional or chrome text - CTA lines, button labels, link text, form 
 (a) text she has explicitly given you verbatim in the conversation, or
 (b) exact existing wording copied from elsewhere on the site (e.g. reuse the nav's "פרטים והרשמה לסדנא" rather than paraphrasing it as "ההרשמה לסדנא פתוחה כרגע").
 
-If a CTA needs new wording and neither (a) nor (b) covers it, ask her for the exact sentence instead of drafting one. This was demanded explicitly on 2026-07-20 after repeated invented CTA lines ("ההרשמה לסדנא פתוחה כרגע" among them) had to be corrected multiple times - she called it out sharply and does not want it happening again.
+**עודכן 17.9.2026 בהחלטת לאה ("18 ב, בתנאי שזה כתוב כמו לאה ולא כמו AI"):** מותר לנסח טיוטה ולהציג לה אותה לפני כל פרסום, והיא מתקנת - בתנאי שהניסוח נשמע כמוה ולא כמו מכונה (משפטים קצרים, ישיר, בלי סיסמאות ובלי מקפים מתחכמים). אין פרסום בלי שראתה את הטקסט. אם אין ניסוח מתאים והיא לא ענתה - שואלים אותה את המשפט המדויק. This was demanded explicitly on 2026-07-20 after repeated invented CTA lines ("ההרשמה לסדנא פתוחה כרגע" among them) had to be corrected multiple times - she called it out sharply and does not want it happening again.
 
 This rule is about *functional* text specifically. Longer narrative copy (blog post bodies, page intros, about-page prose) still gets drafted in her voice per the guidance below - but always present it as a draft awaiting her explicit approval, never publish it as final without sign-off.
 
@@ -23,14 +33,16 @@ This rule is about *functional* text specifically. Longer narrative copy (blog p
 
 **guralea.com ("הגיל הוא לא הסיפור") פונה לשני המינים - גברים ונשים. כל הטקסט באתר כתוב לשני המינים** (פנייה כללית/רבים כמו שהיה: "שלחו", "היכנסו", "הסיפור שלכם").
 
-**היוצא מן הכלל היחיד:** המבחן "בת כמה את באמת" (`bat-kama.html`) והמסלול שאחריו (`bat-kama-next.html` - "מה עכשיו": להתאמן, לרכוש את האפליקציה, להירשם לסדנה אונליין או להגיע פרונטלית). המבחן נועד להביא קהילה של נשים בגילאי כ-45-65, ולכן **רק שם** - לשון נקבה יחיד (את, שלך, השאירי), בלי ערבוב יחיד/רבים.
+**היוצא מן הכלל היחיד:** המבחן "בת כמה את באמת" (`bat-kama.html`) והמסלול שאחריו (`bat-kama-next.html` - "מה עכשיו". **⛔ הוחלף 21.9.2026, כלל 63: האפליקציה/תוכנית 30 יום והתשלום ירדו - נשאר מסלול הסדנה בלבד**). המבחן נועד להביא קהילה של נשים בגילאי **55-65** (17.9), ולכן **רק שם** - לשון נקבה יחיד (את, שלך, השאירי), בלי ערבוב יחיד/רבים.
 
 - אתר הפילאטיס (guraleapilates.com) הוא אתר נפרד לגמרי - החוק הזה לא עוסק בו.
 - אסור להחיל לשון נקבה על שאר האתר, גם אם משפט כלשהו נשמע כמו הוראה כזו. בספק - לשאול את לאה, לא להחיל.
 - היסטוריה: ב-16.9 המשפט "בוא נדבר כל האתר בלשון נקבה" פורש בטעות ככל האתר; ב-17.9 הוחל על כל האתר ונלקח בחזרה באותו יום. לאה הבהירה: היא התכוונה למבחן בלבד.
 - workshop.html הוחזר לנוסח שהיה לפני 16.9 ולא שונה. הכלל של 17.8 למטה נשאר היסטוריה - בכל שאלה על פנייה, החוק הזה גובר.
 
-## (superseded) Hard rule: feminine-singular address is workshop-only; everywhere else, address everyone
+## Hard rule (still valid, merged into the 17.9 rule above): workshop copy is feminine-singular; everywhere else on guralea.com, address everyone
+
+**עודכן 27.9.2026:** הכותרת "(superseded)" הייתה מטעה - התוכן כאן תקף ותואם את כלל 17.9 (הסדנה לנשים בלבד → לשון נקבה; שאר האתר לשני המינים; לשון נקבה ביחיד גם במבחן בת-כמה ובדף ההמשך). רק ההיסטוריה של 5.8 ("כל האתר בלשון נקבה") בטלה.
 
 **Scoped 2026-08-17** (was previously site-wide - see below): "את"/"שלך" feminine-singular direct address applies **only to workshop copy** (`workshop.html` and any content promoting the workshop itself, e.g. marquee/Facebook lines of content-type סדנה) - the workshop itself is women-only, so addressing "את" there is factually correct.
 
@@ -133,7 +145,7 @@ What to notice: it opens with her own question, answered in her own terms, rathe
 
 ## Before writing
 
-1. Reread the relevant existing page section (`about.html`, `index.html`, `register.html`, `events.html`) so the new text sits naturally next to it - matching cadence with its immediate neighbors matters more than matching the "average" of the whole site.
+1. Reread the relevant existing page section (`about.html`, `index.html`, `register.html`; `events.html` redirects to the homepage since 29.8 - not a source) so the new text sits naturally next to it - matching cadence with its immediate neighbors matters more than matching the "average" of the whole site.
 2. Draft in the mode the text actually needs: narrative/emotional (blog intro, hero copy, about-page additions) vs. functional/neutral (form labels, modal rules, button text). Don't blend them.
 3. Write it, then reread it out loud - if a sentence sounds like it belongs in a brochure, cut the polish back until it sounds like something she'd actually say.
 

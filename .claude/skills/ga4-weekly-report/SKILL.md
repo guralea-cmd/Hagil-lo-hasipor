@@ -9,11 +9,11 @@ description: Every Sunday morning - pulls a real GA4 traffic report for the last
 
 Leah asked (2026-08-24) for a standing Sunday-morning traffic report so she doesn't have to ask for one manually each time. She specifically wants forms split by which form it was (community-story registration vs. workshop registration), because she can't tell from the site itself whether people are trying to register for the community or for the workshop.
 
-## Prerequisite: Claude in Chrome must be connected
+## Prerequisite: Claude in Chrome must be connected (in Leah's Edge)
 
-This report is pulled live from analytics.google.com using the `mcp__claude-in-chrome__*` tools (her logged-in Google session). Before starting:
+**⛔ הוחלף 27.9.2026: הדפדפן של לאה הוא Edge (כלל 70), לא Chrome - התוסף "Claude in Chrome" רץ בתוך Edge.** This report is pulled live from analytics.google.com using the `mcp__claude-in-chrome__*` tools (her logged-in Google session in Edge). Before starting:
 1. Call `mcp__claude-in-chrome__list_connected_browsers`.
-2. If it returns an empty array, the extension isn't connected. Message Leah in Hebrew explaining that this week's report couldn't run because the extension disconnected, and ask her to reopen/reconnect it (link: https://chromewebstore.google.com/detail/fcoeoabgfenejglbffodgkkbkcdhcgfn). Do not fabricate numbers. Stop here for this run.
+2. If it returns an empty array, the extension isn't connected. Message Leah in Hebrew explaining that this week's report couldn't run because the extension disconnected, and ask her to open Edge (and the extension in it) so it reconnects. Do not fabricate numbers. Stop here for this run.
 3. If connected, proceed.
 
 ## Account/property
@@ -51,6 +51,8 @@ Deep-linking directly to a specific report/explore configuration via URL params 
 ## Sending the report
 
 Message Leah in Hebrew, plainly, structured with the 5 sections above as headers or a short list per section. This is a routine informational report, not a publish action - no approval gate needed, just send it. If any section came back empty/zero, say so explicitly (e.g. "אף אחד לא ניסה למלא את טופס הסדנה השבוע") rather than omitting the section.
+
+❓ 27.9: הדוח היומי לא כולל GA4 (כלל 63); המשימה פעילה אך לא רצה 27.9 - האם הדוח השבועי ממשיך, לאה מחליטה.
 
 ## Cadence
 

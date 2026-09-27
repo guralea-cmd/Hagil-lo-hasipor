@@ -1,9 +1,14 @@
 ---
 name: pilates-page-project
-description: Building out pilates.html - the Ramla Pilates-equipment studio page on guralea.com - from Leah's real old material (client testimonial videos/photos, old registration PDF), since no old website files exist locally. Use whenever asked about pilates.html, the studio page, or "Figura"/"פיגורא" material.
+description: pilates.html - the Ramla Pilates-equipment studio page on guralea.com. LIVE with 20 gallery photos and a name+phone lead form at the top; the studio's real site is now guraleapilates.com and a redirect of pilates.html to it was approved 18.9.2026 but NOT done yet. Also documents where Leah's old material lives (client testimonial videos/photos). Use whenever asked about pilates.html, the studio page on guralea.com, or "Figura"/"פיגורא" material.
 ---
 
 # Pilates page project
+
+## מצב נכון ל-27.9.2026
+- `pilates.html` חי ב-guralea.com: 20 תמונות גלריה, **הטופס בראש העמוד מיד מתחת ל-H1 ב-`<div id="form">` (9.9)**, **שם + טלפון בלבד (13.9)**, שומר ל-`pilates_leads` (`js/pilates-leads.js`) ושולח עותק לגיליון הלידים דרך `js/leads-sheet.js` (14.9). פס עליון + "לאתר הסטודיו המלא" מקשרים ל-**guraleapilates.com** (13.9).
+- **פתוח: הפניית pilates.html ל-guraleapilates.com אושרה 18.9 - לא בוצעה.** עד שמבצעים - לא נוגעים בדף (ראו `guraleapilates-site`).
+- קישורי מודעות/פוסטים כבר לא מפנים לדף הזה אלא ל-`https://guraleapilates.com/contact/` (21.9).
 
 ## Status: live, gallery expanded 2026-09-12
 
@@ -13,8 +18,10 @@ description: Building out pilates.html - the Ramla Pilates-equipment studio page
 
 **Process note for next time a photo-selection task like this comes up:** numbering-based selection over chat went badly here - Leah's messages got garbled (missing separators like "1316" for "13" "16"), Claude asked a clarifying question mid-flow which she experienced as incompetence, and there were several rounds of add/remove before it stabilized. What worked: fresh, small numbered batches (10 at a time) with clear "new numbering, unrelated to before" framing, full-res copies published as self-contained Artifacts (data-URI images, no server needed), and just acting on her numbers immediately without asking her to confirm interpretation.
 
-**What's in the draft:**
-- Intro paragraph reusing her own established lines from `about.html` (open-heart surgery/stroke at 45, half-paralyzed, rebuilt through listening to her body - not paraphrased, pulled from the already-approved bio) plus a new sentence: studio opened 2014 at רחוב החבצלת 8, רמלה.
+**(History - the first 7-photo draft of 19.8; superseded by the 15- and then 20-photo gallery above.)**
+
+**What was in that draft:**
+- Intro paragraph reusing her own established lines from `about.html` (open-heart surgery/stroke at 45, half-paralyzed, rebuilt through listening to her body - not paraphrased, pulled from the already-approved bio) plus a new sentence: studio opened 2014 in Ramla.
 - Existing specialties paragraph from the old placeholder, kept as-is (bone density, disc herniation, kyphosis/scoliosis, sub-acute conditions, hip/knee replacement, fibromyalgia, arthritis).
 - Phone number (already existed in placeholder).
 - New "הסטודיו" (`<h2>`) section: a 7-photo grid using the site's existing `.grid` + `.testimonial-shot` CSS classes (same pattern as the about-page testimonial screenshots) - no new CSS needed.
@@ -33,11 +40,7 @@ description: Building out pilates.html - the Ramla Pilates-equipment studio page
 
 ## Original placeholder status (superseded by the above, kept for history)
 
-Originally: placeholder page live, full content not yet built.
-
-`pilates.html` was created 2026-08-18 as a placeholder (title, short intro paragraph, phone number, LocalBusiness schema) and added to the main nav on all 40 public pages ("לאה גורא פילאטיס" / "מכשירים ברמלה", between "קצת עליי" and "סיפורי קהילה"). The body still has a `[לאה: להשלים]` marker where the real content goes.
-
-**Next step: build out pilates.html in full** using the source material found below - real testimonial photos/videos, and whatever text/structure makes sense from the old registration form - instead of the placeholder paragraph.
+`pilates.html` was created 2026-08-18 as a placeholder (title, short intro paragraph, phone number, LocalBusiness schema) and added to the main nav on all 40 public pages ("לאה גורא פילאטיס" / "מכשירים ברמלה", between "קצת עליי" and "סיפורי קהילה"). **⛔ בוצע: the full build-out happened 19.8-12.9 (see above); nothing left of this step.**
 
 ## Naming note - not a contradiction
 
@@ -59,7 +62,7 @@ Searched Desktop, Documents, Downloads, and OneDrive (plus checked D:\, which on
 
 2. **Old registration form:**
    `C:\Users\gural\OneDrive\Desktop\פיגורא פילאטיס - טופס הרשמה.pdf`
-   Not yet opened/read - may contain old service descriptions, pricing structure, or specialty list worth checking before writing final copy.
+   **⛔ Read - no usable marketing content** (legal membership form of the old "Figura Club" entity; see the PDF note above). Only the street address was used, in the schema.
 
 3. **`Figura - Chrome.lnk`** (Desktop shortcut) - checked, it only launches Chrome with the default profile (`--profile-directory="Default"`), no target URL embedded. Not useful for finding the old site's live URL.
 
@@ -68,4 +71,4 @@ Searched Desktop, Documents, Downloads, and OneDrive (plus checked D:\, which on
 - Don't move, rename, or delete anything in the Desktop media folder or the PDF - treat them as read-only source material, copy what's needed into the repo's `images/`/`videos/` folders instead.
 - HEIC files will need conversion to a web-friendly format (JPEG) before use on the site, same as other image handling on this project.
 - Follow the [[feedback_testimonial_authenticity]] rule from memory: real client testimonials must be embedded as actual screenshot/photo/video, never retyped as text.
-- Check with Leah before publishing which specific photos/videos/testimonials she wants used - this is real client material, not stock content.
+- **Never ask about consent/permission for the people in the photos and videos** (Leah 12.9, rule 18.3 - "פעם ראשונה ואחרונה"): everyone in her libraries is her trainee and everything was already published on her networks. Leah picks photos **by number** from a numbered candidate page (see `leah-photo-library`); act on her number exactly. Never photos of Leah herself, never stock (26.9).

@@ -49,69 +49,10 @@ edited: {
 }
 ```
 
-## Batch 1 (the 4 stories below) - WRITTEN to Firestore, verified 2026-09-12
+## Status - 27.9.2026
 
-Checked directly in the Firebase console on 2026-09-12: `story_submissions/3rwLZMW9hFppFhgALAgk` has the full `edited` field (the script below writes all 4 docs in one `Promise.all`). Nothing left to run. The notes below are kept only as a record of how the auth blocker was handled.
+- **Batch 1 (שי טובול, אמנון גאון, אליעזר רוה, אבי תורג'מן) completed and verified 12.9; 6/7 approved stories in `story_submissions` have `edited=true`.** The 2026-08-31 auth blocker and the batch-1 write script were deleted 27.9 (done, nothing left to run). Writes to Firestore go through Leah's own logged-in browser (Edge, rule 70) via `javascript_tool` - never a password.
+- חסר: כלל 63 יא (21.9) - סיפור חדש -> כרטיס + דף, מראים לפני העלאה, פוסט אורגני אחד ב'הגיל' בלבד, בלי ממומן.
+- ❓ הסיפור של לאה גורא (96FgtqomdPjXCFZpB6WU) לא ערוך - לאה מחליטה.
 
-## Known blocker, hit 2026-08-31: writing to Firestore needs an authenticated session
-
-`firestore.rules` requires `request.auth != null` to `update` an existing `stories`/`story_submissions` doc (only `create` on a new pending submission is open to the public). This session could not complete the actual Firestore write for the first 4 approved edits (below) because:
-- Claude cannot enter Leah's password to log into `admin/login.html` - entering credentials to authenticate is a hard no, even for her own site, even with her asking for it.
-- `mcp__claude-in-chrome` (which drives Leah's real, already-logged-in Chrome) returned "Navigation to this domain is not allowed" for `guralea.com` in this session - likely needs a one-time permission approval from her that a session running while she's asleep can't get.
-
-**Two ways to unblock, either works:**
-1. Leah opens `admin/dashboard.html` (or any page on the site) in her own Chrome and stays logged in - a session with Chrome access can then run the update through that already-authenticated page context (`javascript_tool` calling `db.collection(...).update(...)` directly - no password ever touched).
-2. Leah (or a future session that gets a clean permission prompt) allows Claude in Chrome to navigate to `guralea.com` once - after that this should work going forward.
-
-Once either is true, run this in that page's JS console (or via `javascript_tool` against that tab) to complete batch 1:
-
-```js
-Promise.all([
-  db.collection("story_submissions").doc("3rwLZMW9hFppFhgALAgk").update({ edited: {
-    hookLine: "בגיל 48 מצאתי את עצמי בטיפול נמרץ בסורוקה, כמעט שבועיים.",
-    summaryFrom: "100 קילו, מעשן 2.5 חפיסות ביום, אחרי התקף לב",
-    summaryTo: "מרתוניסט וטריאתלט",
-    sections: [
-      { heading: "הרגע המכונן", body: "בגיל 48 מצאתי את עצמי בטיפול נמרץ בסורוקה, כמעט שבועיים. היה לי המון זמן לחשוב ולשאול שאלות. שם, על המיטה, כתבתי בעצם את השינוי בעתיד שלי." },
-      { heading: "החיים שלפני", body: "עד אז שקלתי 100 קילו. עישנתי 2.5 חפיסות ביום. אכלתי רק זבל. הייתי עצבני מאוד. ואז בא התקף הלב שעצר הכול." },
-      { heading: "איפה אני היום", body: "בעשור שחלף עשיתי מהפך שלם: רץ, שוחה, רוכב, מרתוניסט. אינספור מרוצים בכל הארץ, שלוש פעמים טריאתלט, חצי איש ברזל, שחייה למרחקים. היום אני בעיקר רץ - כ-200 ק\"מ בחודש - ומאמן ריצה ומדריך ספינינג." }
-    ],
-    closingLine: "השמיים הם לא הגבול. הם רק תחנה אל היעד הבא. תקדימו ספורט למכה."
-  }}),
-  db.collection("story_submissions").doc("hjKPq4o7IpOlDYsomjDc").update({ edited: {
-    hookLine: "בגיל 39 פרשתי לפנסיה מהמשטרה. באותו רגע החלטתי לצאת לדרך חדשה לגמרי - ענף פיתוח הגוף.",
-    summaryFrom: "שוטר",
-    summaryTo: "נשיא איגוד פיתוח גוף, עדיין מתאמן ומייעץ בגיל 76",
-    sections: [
-      { heading: "הרגע המכונן", body: "בגיל 39 פרשתי לפנסיה מהמשטרה. באותו רגע החלטתי לצאת לדרך חדשה לגמרי - ענף פיתוח הגוף." },
-      { heading: "החיים שלפני", body: "כל חיי הייתי איש ספורט. הייתי נשיא האיגוד לפיתוח ועיצוב הגוף בישראל, וניהלתי מועדון כושר עד לפני שלוש שנים. הכנתי ספורטאים וספורטאיות לתחרויות." },
-      { heading: "איפה אני היום", body: "היום, בגיל 76, אני עדיין מתאמן בצורה מקצועית - פיתוח גוף וכושר כללי גם יחד. שומר על תזונה נכונה, וממשיך לייעץ לספורטאים לקראת תחרויות." }
-    ],
-    closingLine: "אני ממליץ לכל אישה וגבר להיות פעילים בכושר, בתזונה נכונה ובאורח חיים בריא - בכל גיל."
-  }}),
-  db.collection("story_submissions").doc("pbISy7l7kfwfbJMhphPc").update({ edited: {
-    hookLine: "בגיל שבעים יצאתי לפנסיה - והלכתי ללמוד צילום.",
-    summaryFrom: "עבד כל החיים, פחד מהשעמום בפרישה",
-    summaryTo: "צלם שמטייל ומתעד גולשים",
-    sections: [
-      { heading: "הרגע המכונן", body: "בגיל שבעים יצאתי לפנסיה - והלכתי ללמוד צילום." },
-      { heading: "למה", body: "עבדתי כל ימי חיי, ודאגתי שמא אשתעמם כשאפסיק. לכן, כשהגיע הרגע, בחרתי ללמוד צילום." },
-      { heading: "איפה אני היום", body: "מאז אני מצלם - הייתי בהרבה ארצות: דרום אמריקה, נפאל, קובה, קרוזים למיניהם. לפני שנה, במלאת לי תשעים, לקחתי את הבנים והכלה לקרוז באיסלנד ובגרנלנד. באוגוסט היה קר, אבל עברנו את זה. היום אני מצלם בעיקר גולשים בים ומשתתף בסדנאות צילום." }
-    ],
-    closingLine: "אל תשקוד על שמריך."
-  }}),
-  db.collection("story_submissions").doc("Q0K9W9wyU88HlsemRhDc").update({ edited: {
-    hookLine: "בגיל 48 הפסקתי לשחק כדורסל. הבנתי שספורט קבוצתי לא מתאים לאופי שלי - ספורט סיבולת יחידני כן.",
-    summaryFrom: "כדורסלן קבוצתי",
-    summaryTo: "איש ברזל מלא וטפסן מדרגות עולמי",
-    sections: [
-      { heading: "הרגע המכונן", body: "בגיל 48 הפסקתי לשחק כדורסל. הבנתי שספורט קבוצתי לא מתאים לאופי שלי - ספורט סיבולת יחידני כן." },
-      { heading: "הישגים", body: "עברתי לספורט סיבולת והשתתפתי בתחרויות בארץ ובעולם: איש ברזל מלא, מרוץ 100 קילומטר, מרתון בעומק 500 מטר מתחת לפני האדמה, תחרות טיפוס המדרגות הארוכה בעולם ברצף, ותחרות עלייה וירידה במדרגות במשך 12 שעות ברצף." },
-      { heading: "איפה אני היום", body: "גמלאי משטרה כבר שש שנים. כרגע בשלב של מנוחה פעילה וטיפול בפציעות." }
-    ],
-    closingLine: "הכול בראש. הכול אפשרי."
-  }})
-]).then(() => console.log("all 4 stories updated")).catch(e => console.error(e));
-```
-
-All 4 doc IDs and text were approved by Leah in chat 2026-08-31 - this script is ready to run as-is, no further review needed before executing it, only the auth blocker stands in the way.
+**⛔ 17.9.2026, בהוראתה ("למחוק לגמרי... שום דבר לא יקרה באופן אוטומטי"): אין הרצה בלי אישור.** לפני כל הרצה של סקריפט שכותב למסד הנתונים - מציגים לה בדיוק מה ייכתב ולאיזה סיפור, ומחכים ל"כן" מפורש.

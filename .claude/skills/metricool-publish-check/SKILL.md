@@ -3,6 +3,8 @@ name: metricool-publish-check
 description: Verifies that day's Metricool-scheduled autoPublish posts (the daily Facebook teaser, and any Tier-1 community story pre-scheduled directly in Metricool) actually reached all 4 destinations, and alerts Leah immediately with the specific error if any failed - instead of waiting for her to notice an error email. Use when running the scheduled post-publish check, or when asked to verify whether today's Facebook/Instagram posts actually went live.
 ---
 
+**⛔ סגור 27.9.2026 - המשימה המתוזמנת נמחקה; הבדיקה מתבצעת ב-`metricool-nightly-check` (21:00) ומדווחת רק בדוח הבוקר (כללים 7/9/81). הקובץ נשאר כארכיון.** (התיקייה `metricool-publish-check` תחת scheduled-tasks היא יתומה - החלטה על מחיקתה אצל לאה.)
+
 # Metricool publish check
 
 ## Why this exists
@@ -19,12 +21,12 @@ Confirmed 2026-08-11: a Tier-1 community-story post (Eliezer Roeh, 91) was sched
 
 ## What to check each run
 
-1. Read `.claude/skills/facebook-teaser/posted-log.md` and find every row whose status is `מתוזמן (טרם פורסם בפועל)` - these are Metricool posts scheduled with autoPublish but not yet confirmed. Each such row records both POST ids (one per blogId/brand) in its text - extract them.
+1. Read `.claude/skills/facebook-teaser/posted-log.md` and find every row whose status is `מתוזמן (טרם פורסם בפועל)` - these are Metricool posts scheduled with autoPublish but not yet confirmed. Each such row records both POST ids (one per blogId/brand) in its text - extract them. **הערה 27.9.2026:** השורה היחידה עם הסטטוס הזה ב-posted-log היא מ-12.8.2026 (אבי תורג'מן) - ישנה, לא עודכנה מאז; אין שורות "מתוזמן" חיות.
 2. Only check rows scheduled for **today or earlier** (a row scheduled for a future date isn't due yet - skip it, it'll be checked on its own day).
 3. Read `userToken`/`userId` from `.claude/skills/facebook-teaser/metricool-secrets.json` (gitignored, never print the token value).
 4. For each row's two POST ids, call `GET https://app.metricool.com/api/v2/scheduler/posts/{id}?userId=<userId>&blogId=<that brand's blogId>` (blogIds: `hagil_lo_hasipor`=6694827, `figura_ramla`=6684336) with header `X-Mc-Auth: <userToken>`.
-5. Each response has a `providers[]` array (one entry per network in that call - facebook, instagram). Check every entry's `status`:
-   - All `PUBLISHED` across both calls (4 entries total) → fully successful. Update that row's status in `posted-log.md` to `אושר ופורסם (4/4 יעדים)` and append the 4 real `publicUrl` links (same format as existing successful rows in that file).
+5. Each response has a `providers[]` array (one entry per network in that call - facebook, instagram, and tiktok for `hagil_lo_hasipor`). Check every entry's `status`:
+   - **⛔ הוחלף 27.9.2026: 5 יעדים, לא 4** - Facebook+Instagram+TikTok ל-`hagil_lo_hasipor`, Facebook+Instagram ל-`figura_ramla` (ערוץ TikTok של הקהילה קיים, ראו `facebook-teaser/SKILL.md`). All `PUBLISHED` across both calls (5 entries total) → fully successful. Update that row's status in `posted-log.md` to `אושר ופורסם (5/5 יעדים)` and append the real `publicUrl` links (same format as existing successful rows in that file).
    - Any entry `ERROR` → real failure. Do not mark the log row as published. Report to Leah (see below).
    - Any entry still `PENDING` → Metricool hasn't finished processing yet; note it, don't treat as a failure, and mention it'll be re-checked on the next run of this skill.
 
@@ -38,7 +40,7 @@ Report to Leah in Hebrew, immediately, in the same message - don't just log it s
 
 ## If everything succeeded
 
-Say so briefly - which post(s) were confirmed live, across all 4 destinations, with the real links. No need to pad this with extra process explanation.
+Say so briefly - which post(s) were confirmed live, across all 5 destinations (הוחלף 27.9.2026 מ-4), with the real links. No need to pad this with extra process explanation.
 
 ## What this does not do
 

@@ -17,9 +17,11 @@ This site runs three separate scheduled content skills. Confirmed 2026-08-09 aft
 
 | # | Skill | Schedule | Output format | Where it publishes |
 |---|---|---|---|---|
-| 1 | **facebook-teaser** | daily, ~07:32 | כותרת + 2-4 lines body + image + קישור + hashtags | Facebook Page |
-| 2 | **marquee-daily-content** (this file) | daily, ~07:41 | **text + link only, no image, no heading** | `index.html` banner strip |
+| 1 | **facebook-teaser** | **⛔ 27.9.2026: אין משימה מתוזמנת `facebook-daily-teaser`** - on request only | כותרת + 2-4 lines body + image + קישור + hashtags | via Metricool |
+| 2 | **marquee-daily-content** (this file) | **weekly, Sunday 07:51** (was daily ~07:41) | **text + link only, no image, no heading** | `index.html` banner strip |
 | 3 | **weekly-blog-article-draft** | weekly, Sunday ~09:16 | full article per category (title, body, CTA) + its listing thumbnail image | new `blog-post-N.html` files + `blog.html` listing |
+
+⚠️ 27.9: המשימה weekly-blog-article-draft פעילה בפועל; תור הסדנה בסבב - לאה מחליטה.
 | 4 | **automation-check** | on-demand (not scheduled) | audit report of tasks 1-3, redrafts immediately if one is unconfirmed/stalled | chat only - never publishes |
 
 All three: draft only, present to Leah in Hebrew, publish only after her explicit approval in that conversation. Scheduled runs sometimes stall in their own separate session and never reach her (confirmed 2026-08-09) - if she says she never saw a draft, don't assume it was shown elsewhere; just run the skill fresh in the current conversation instead of guessing.
@@ -42,9 +44,9 @@ The strip now has:
 
 Each day, both spans get replaced with that day's content. The CSS separator (`:not(:last-child)::after`) already handles two spans fine, no style changes needed.
 
-## Temporary freeze, 2026-08-10: rotation paused for one week
+## Temporary freeze, 2026-08-10 - **⛔ הוחלף: הסבב חזר 18.8.2026, ההקפאה נגמרה**
 
-Leah explicitly asked to freeze the marquee on the current סדנה line ("רוצה לדעת מה הגיל האמיתי של הגוף שלך? בואי לבדוק בסדנה - 8.10 בזום, 9.10 ברמלה.") for about one week (until roughly 2026-08-17) while she personally drives story submissions through WhatsApp outreach - she doesn't want the strip pointing at "סיפורי קהילה" while that page still has no real content behind it. **Before drafting a new line for this slot, check `posted-log.md`'s freeze note and confirm with Leah the freeze is actually over** rather than assuming a week has passed and resuming rotation automatically.
+History only: Leah froze the marquee on the סדנה line for one week (10.8-17.8) while she drove story submissions via WhatsApp. Rotation resumed 2026-08-18.
 
 ## Content rotation and no-repeat rule
 

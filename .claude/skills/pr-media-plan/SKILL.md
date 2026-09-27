@@ -3,6 +3,8 @@ name: pr-media-plan
 description: The PR and media-exposure plan for "הגיל הוא לא הסיפור" - the published action plan artifact, the researched media target list (TV, radio, national press), and standing decisions about what NOT to pursue. Use whenever Leah asks about PR, media outreach, press coverage, journalists, TV/radio appearances, or "מה קורה עם התקשורת/יחסי ציבור". Built 2026-08-10 - treat the standing decisions here as settled, don't re-propose what was already rejected.
 ---
 
+**⛔ מוקפא מ-21.9.2026 (כלל 63) - יחסי ציבור לא פעילים; פריט תגובות העיתונאים נסגר 21.9.** העבודה היום היא סטודיו + סדנה בלבד. הקובץ נשאר כתיעוד - לא לפתוח מחדש בלי בקשה של לאה.
+
 # PR / media exposure plan
 
 ## The written plan
@@ -35,10 +37,14 @@ An early draft of the media list included local Ramla/Lod community papers (meko
 - **הארץ** - has a health section but skews intellectual/political readership - lower priority, less natural fit for a feel-good inspiration piece.
 - **Ynet בריאות / Ynet פלוס**, **וואלה בריאות (מדור הגיל השלישי/גרונטולוגיה)** - no general submission inbox found; the working method is finding a byline on a similar past piece ("כתבת השראה גיל 70+" style) and emailing that journalist directly (Israeli journalist email is usually name@outlet.co.il, or reachable via LinkedIn).
 
-### Warm leads - Leah's own past TV appearances (open item, not yet identified)
-Leah has been on Israeli TV **three times before**: most recently **~2 years ago (circa 2024)**, on a show hosted by **a married couple ("בעל ואישה")** she can no longer name; two earlier appearances were **~10 years ago (circa 2016)**. She could not identify the ~2024 couple-hosted show from description alone, and a web search for "Israeli married-couple morning show hosts" didn't surface a confident match either - don't guess a specific show name without her confirmation.
+### Warm leads - Leah's own past TV appearances (~2024 show identified 2026-09-07)
+Leah has been on Israeli TV **three times before**: most recently **~2 years ago (circa 2024)**, two earlier appearances were **~10 years ago (circa 2016, still unidentified)**.
 
-**Next step, whenever she's ready:** she agreed the fastest path is checking her own Facebook/Instagram "on this day" memories from ~2 years ago, where she likely posted about the appearance with a photo or show tag. Once she has a name (host, show, or channel), that becomes a **warm reconnection lead** - producers who already booked her once are a far easier pitch than a cold approach to a new show, and even if that specific host/show has since ended, TV people usually move to a new show/channel rather than leave the industry, so the lead can still be traced forward. This is still open - pick it up next time she brings it up, don't let it drop silently.
+**The ~2024 appearance is now identified: "פאולה וליאון" (Keshet 12), on their recurring "שוברות גילים" segment** - Leah named both the show and the segment herself 2026-09-07. Web-verified same day: "פאולה וליאון" was Keshet 12's weekday morning lifestyle show (health/nutrition/consumer/entertainment, aired ~09:35, Herzliya studios), hosted by married couple Paula Rosenberg and Leon Rosenberg - itself a 2017 rebrand of an earlier Channel 2 show the same couple hosted ("בוקר בריא"/"חשבון משותף").
+
+**Current status, so the lead is traced correctly (not just "book the old show"):** the show has been off-air since the war broke out (Oct 2023) and Keshet officially confirmed it will not return - so there's no active producer/slot to pitch back into directly. Per Ice/Maariv coverage (2026): Leon has moved into guiding Israeli investors into Cyprus real estate and spends much of his time there; Paula has moved into AI - she now consults companies/organizations using a content-work model she built. Some outlets frame this as a personal breakup after over a decade together, others frame it as strictly the professional/show partnership ending - coverage is inconsistent, so treat the personal-relationship detail as unconfirmed, not a fact to repeat.
+
+**Next step:** neither host currently has a replacement TV show identified in this research - if Leah has a personal contact for either of them (or the show's old producer) from having actually appeared on it, that direct reconnection is worth more than a cold pitch to whatever they're doing now (real estate / AI consulting aren't natural PR targets for this story). If she doesn't have a direct contact, this lead is currently dormant rather than actionable - re-open it if either resurfaces on a new show. The ~2016 pair of earlier appearances is still completely unidentified - same "check Facebook/Instagram 'on this day' memories" approach would apply if she wants to pursue those too.
 
 ## Media outreach tracking sheet (built 2026-09-03)
 
@@ -52,6 +58,10 @@ Real, individually web-verified contacts for 23 outlets (national press health s
 
 ## Pitch material
 
-**Angle bank** (see the published artifact for the full set): her personal story (open-heart surgery + stroke at 45, 30 years caring for a wheelchair-bound husband, Miss Fitness Israel 50+/60+ 2014 at נאב"א Netanya, Wingate Institute certification starting at 55), the real community stories now live on the site (אליעזר רוה - 91, world-traveling photographer; אבי תורג'מן - 62, ultra-endurance runner including a marathon 500m underground), the Ramla studio (פיגורא) angle, and the novel "כל הפנים של אמליה" as an alternate non-fitness entry point.
+**Angle bank** (see the published artifact for the full set): her personal story (open-heart surgery + stroke at 45, 30 years caring for a wheelchair-bound husband, Miss Fitness Israel 50+/60+ 2014 at נאב"א Netanya, Wingate Institute certification starting at 55), the real community stories now live on the site (אליעזר רוה - 91, world-traveling photographer; אבי תורג'מן - 62, ultra-endurance runner including a marathon 500m underground), the Ramla studio angle ("לאה גורא - פילאטיס מכשירים ברמלה" - the official name; "פיגורא" was never the business name, corrected 17.8), and the novel "כל הפנים של אמליה" as an alternate non-fitness entry point.
 
 **Pitch email structure that was drafted in conversation** (not yet sent anywhere): subject naming the concrete hook, then 2-3 short paragraphs - who she is in one line, why now (the community just opened, real stories already in), link to the site, offer of a short interview. Leah has her own professional PR/advertising background, so pitch copy for her can be drafted terse and trust her to sharpen it rather than over-explaining PR basics.
+
+## CLOSED, 2026-09-08: pitch emails sent - first round done (reply-watch closed 21.9)
+
+13 real pitch emails went out from guralea@gmail.com on 2026-09-07/08 (health/general press round: ido.efrati@haaretz.co.il, redemail@globes.co.il, mail@calcalist.co.il, seder.yom@kan.org.il, contact@1075.fm, operator@reshet.tv, sherut@maariv.co.il [bounced - dead address]; tech press round: oshry@geektime.co.il, idan@geektime.co.il, yaneeva@geektime.co.il, elihay.vidal@calcalist.co.il, omer.kabir@calcalist.co.il, yehudak@pc.co.il, roni@techtime.co.il). **Confirmed 2026-09-08 (Gmail check): one automated inbox acknowledgment from calcalist's subscriber-services system (not a journalist), no real reply yet from anyone.** ~~Check back in a few more days for real replies - if this outreach round is fully closed out, retire the daily-open-items-report's press-reply check too.~~ **⛔ הוחלף 27.9.2026: פריט "תגובות העיתונאים" נסגר 21.9 (כלל 63) - אין יותר בדיקת תגובות.** ⚠️ `daily-open-items-report/SKILL.md:121-129` עדיין מכיל את הסעיף - דורש עריכה + הרצת בדיקה (כלל 71), לאה מאשרת.
