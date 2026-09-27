@@ -9,6 +9,7 @@ description: Ongoing research project - an Excel database of real, named Israeli
 
 **⛔ הוחלף 27.9.2026:** הכותרת הישנה "first batch in progress" לא נכונה - הושלמו 5 סבבים (סבב 5 בלי שורות חדשות), 15 שורות מאומתות, מפוצלות ל-2 גיליונות לפי שנת פרסום. אין סבב בעבודה.
 
+**לאה 28.9.2026 ("10 להמשיך"): הפרויקט ממשיך.** 
 ❓ 27.9: פרויקט לא-סטודיו (כלל 63) - להמשיך או להקפיא רשמית, לאה מחליטה.
 
 Leah asked (2026-08-29) for an ongoing Excel database of real Israelis who made a significant life change after age 50. This is a standing, expandable project - not a one-off - so each future session should pick up where the last one left off, not start over.

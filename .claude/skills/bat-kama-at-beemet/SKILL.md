@@ -7,6 +7,7 @@ description: "בת כמה את באמת?" - Leah's physiological-age self-test. 
 
 **⛔ מצב 27.9.2026 (כלל 63, 21.9): דף המבחן לא עולה - במקומו "אתגר הכיסא" (ראו `workshop-organic/2026-10-01-chair-challenge.md`). תוכנית 30 יום / אפליקציה / תשלום באתר ירדו. קמפיין 55-65 ירד. ההפצה בכל הערוצים בוטלה. אב הטיפוס בארכיון: `prototype-archive-2026-09-20/`.**
 
+**לאה 28.9.2026 ("9 להשאיר כרגע מקומי"): קבצי המחקר נשארים מקומיים, לא נדחפים לריפו.** 
 ❓ קבצים מקומיים בתיקייה הזו שאינם ב-git (untracked, נכון ל-27.9): `norms-table.md`, `research-2026-09.md`, `research-parts/`, `research-nutrition-2026-09.md`, `research-nutrition-parts/`, `research-norms-45-59-2026-09-17.md`, `drafts-conditions-cases-2026-09-15.md`, `drafts-recs-leah-voice-2026-09-17.md`, `forecast-2026-09-17.md`, `audit-2026-09-16-*.md`, `program-30-structure-draft.md` - לאה מחליטה אם לדחוף לריפו.
 
 ## ההנחיה של לאה (13.9.2026)

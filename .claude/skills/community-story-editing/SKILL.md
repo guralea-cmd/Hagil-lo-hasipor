@@ -53,6 +53,7 @@ edited: {
 
 - **Batch 1 (שי טובול, אמנון גאון, אליעזר רוה, אבי תורג'מן) completed and verified 12.9; 6/7 approved stories in `story_submissions` have `edited=true`.** The 2026-08-31 auth blocker and the batch-1 write script were deleted 27.9 (done, nothing left to run). Writes to Firestore go through Leah's own logged-in browser (Edge, rule 70) via `javascript_tool` - never a password.
 - חסר: כלל 63 יא (21.9) - סיפור חדש -> כרטיס + דף, מראים לפני העלאה, פוסט אורגני אחד ב'הגיל' בלבד, בלי ממומן.
-- ❓ הסיפור של לאה גורא (96FgtqomdPjXCFZpB6WU) לא ערוך - לאה מחליטה.
+- **לאה 28.9.2026 ("11 לערוך"): הסיפור של לאה גורא (96FgtqomdPjXCFZpB6WU) עובר עריכה - טיוטה לפני/אחרי מוצגת לה לאישור, ורק אז נכתב ל-Firestore.** 
+❓ הסיפור של לאה גורא (96FgtqomdPjXCFZpB6WU) לא ערוך - לאה מחליטה.
 
 **⛔ 17.9.2026, בהוראתה ("למחוק לגמרי... שום דבר לא יקרה באופן אוטומטי"): אין הרצה בלי אישור.** לפני כל הרצה של סקריפט שכותב למסד הנתונים - מציגים לה בדיוק מה ייכתב ולאיזה סיפור, ומחכים ל"כן" מפורש.

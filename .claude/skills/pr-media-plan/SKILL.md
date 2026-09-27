@@ -65,3 +65,8 @@ Real, individually web-verified contacts for 23 outlets (national press health s
 ## CLOSED, 2026-09-08: pitch emails sent - first round done (reply-watch closed 21.9)
 
 13 real pitch emails went out from guralea@gmail.com on 2026-09-07/08 (health/general press round: ido.efrati@haaretz.co.il, redemail@globes.co.il, mail@calcalist.co.il, seder.yom@kan.org.il, contact@1075.fm, operator@reshet.tv, sherut@maariv.co.il [bounced - dead address]; tech press round: oshry@geektime.co.il, idan@geektime.co.il, yaneeva@geektime.co.il, elihay.vidal@calcalist.co.il, omer.kabir@calcalist.co.il, yehudak@pc.co.il, roni@techtime.co.il). **Confirmed 2026-09-08 (Gmail check): one automated inbox acknowledgment from calcalist's subscriber-services system (not a journalist), no real reply yet from anyone.** ~~Check back in a few more days for real replies - if this outreach round is fully closed out, retire the daily-open-items-report's press-reply check too.~~ **⛔ הוחלף 27.9.2026: פריט "תגובות העיתונאים" נסגר 21.9 (כלל 63) - אין יותר בדיקת תגובות.** ⚠️ `daily-open-items-report/SKILL.md:121-129` עדיין מכיל את הסעיף - דורש עריכה + הרצת בדיקה (כלל 71), לאה מאשרת.
+
+## החלטת לאה 28.9.2026 ("14")
+- **סבב הפניות לעיתונאים (7-8.9, 13 מיילים) - סגור.** בדיקת התגובות יורדת מהדוח היומי (הוסרה מקובץ הדוח 28.9).
+- **הרשימה נשמרת במלואה** - כל המדורים ושמות העיתונאים שנחקרו נשארים בקובץ הזה כבסיס לסבב הבא.
+- **משימה פתוחה (לאה 28.9): להרחיב את הרשימה למגזיני נשים** - "לאישה", "את", ומגזיני נשים נוספים: לכל אחד - שם המדור הרלוונטי (בריאות/כושר/50+/סגנון חיים), שם העורכ/ת של המדור, כתובת מייל אמיתית ומאומתת. חיפוש ראשון 28.9 01:40 (WebSearch) לא החזיר מדורים/עורכים - נדרש חיפוש ממוקד לכל מגזין בנפרד (אתר המגזין, עמוד "צור קשר"/"מערכת"). לא שולחים כלום בלי אישור לאה.
