@@ -1,6 +1,6 @@
 ---
 name: pilates-page-project
-description: pilates.html - the Ramla Pilates-equipment studio page on guralea.com. LIVE with 20 gallery photos and a name+phone lead form at the top; the studio's real site is now guraleapilates.com and a redirect of pilates.html to it was approved 18.9.2026 but NOT done yet. Also documents where Leah's old material lives (client testimonial videos/photos). Use whenever asked about pilates.html, the studio page on guralea.com, or "Figura"/"פיגורא" material.
+description: pilates.html - the Ramla Pilates-equipment studio page on guralea.com. the studio's real site is now guraleapilates.com and pilates.html now REDIRECTS to the guraleapilates.com homepage (done 28.9.2026, Leah approved). Also documents where Leah's old material lives (client testimonial videos/photos). Use whenever asked about pilates.html, the studio page on guralea.com, or "Figura"/"פיגורא" material.
 ---
 
 # Pilates page project
