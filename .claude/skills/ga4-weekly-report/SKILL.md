@@ -7,7 +7,13 @@ description: Every Sunday morning - pulls a real 7-day GA4 report for the studio
 
 ## ⛔ מ-28.9.2026: הדוח על אתר הסטודיו guraleapilates.com בלבד (לאה: "12ב") - גובר על כל מה שמתחת
 
-- **נכס:** "לאה גורא - פילאטיס מכשירים (guraleapilates.com)" בחשבון 400816093, מזהה מדידה `G-85WHDRC4S4`. **לא** הנכס 545159332 של guralea.com. מספר הנכס עוד לא רשום כאן: בריצה הראשונה - פותחים `https://analytics.google.com/analytics/web/`, בוחרים את הנכס של guraleapilates.com בבורר הנכסים, קוראים את המספר מה-URL (`a400816093p<מספר>`) ו**רושמים אותו כאן**.
+- **נכס:** "לאה גורא - פילאטיס מכשירים (guraleapilates.com)" בחשבון 400816093, מזהה מדידה `G-85WHDRC4S4`, **מספר נכס 553964088** (נרשם 28.9). **לא** הנכס 545159332 של guralea.com.
+- **קיצור דרך שעובד (28.9) - בלי Explore:** הדוחות הרגילים עם טווח 7 ימים ב-URL:
+  - עמודים: `https://analytics.google.com/analytics/web/#/a400816093p553964088/reports/explorer?params=_u..nav%3Dmaui%26_u.dateOption%3Dlast7Days&r=all-pages-and-screens`
+  - אותו דוח עם עמודת אירוע אחד לפי עמוד: להוסיף ל-params `%26_r.explorerCard..columnFilters%3D%7B%22event%22:%22generate_lead%22%7D` (או `form_start` / `whatsapp_click`).
+  - אירועים: `r=top-events`; מקורות: `r=lifecycle-traffic-acquisition-v2` (אותו params).
+  - באתר יש טופס אחד בלבד (`pilates_lead`), אז אין צורך בפיצול לפי form_name.
+  - להצליב את `generate_lead` מול גיליון הלידים (לשונית "פייסבוק", מקור "אתר") - ב-21.9 היו 3 שליחות של משתמש אחד ביום שבו נבדק הטופס, לא הגיעו לגיליון = בדיקות.
 - **5 הסעיפים לאתר הסטודיו:**
   1. **מספרים כלליים** - משתמשים פעילים וצפיות, 7 ימים.
   2. **מקורות תנועה** - לפי קבוצת ערוצים (פייסבוק/אינסטגרם - ממומן מול אורגני אם GA4 מפריד, גוגל, ישיר, אחר).
