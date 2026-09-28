@@ -5,9 +5,10 @@ description: pilates.html - the Ramla Pilates-equipment studio page on guralea.c
 
 # Pilates page project
 
-## מצב נכון ל-27.9.2026
-- `pilates.html` חי ב-guralea.com: 20 תמונות גלריה, **הטופס בראש העמוד מיד מתחת ל-H1 ב-`<div id="form">` (9.9)**, **שם + טלפון בלבד (13.9)**, שומר ל-`pilates_leads` (`js/pilates-leads.js`) ושולח עותק לגיליון הלידים דרך `js/leads-sheet.js` (14.9). פס עליון + "לאתר הסטודיו המלא" מקשרים ל-**guraleapilates.com** (13.9).
-- **פתוח: הפניית pilates.html ל-guraleapilates.com אושרה 18.9 - לא בוצעה.** עד שמבצעים - לא נוגעים בדף (ראו `guraleapilates-site`).
+## מצב נכון ל-28.9.2026
+- **28.9.2026: pilates.html מפנה לדף הבית של guraleapilates.com** (לאה: "1 כן" - דף הבית ולא contact, כי לא ידוע מה המבקר מחפש). הפניה ב-JS + meta refresh, canonical לאתר הסטודיו, הוסר מה-sitemap. `?_scan=1` לא מופנה (בשביל site-health-scan). התוכן הישן נשאר בקובץ מתחת להפניה - התיאור שבשורה הבאה הוא מה שהיה לפני ההפניה.
+- www.guralea.com/<דף> מחזיר 404 - ההעברה ב-GoDaddy מעבירה רק את דף הבית, ואין בה אפשרות להעביר דפים (נבדק 28.9). **לאה 28.9: להשאיר כמו שזה - סגור, לא להעלות שוב.**
+- (לפני 28.9) `pilates.html` חי ב-guralea.com: 20 תמונות גלריה, **הטופס בראש העמוד מיד מתחת ל-H1 ב-`<div id="form">` (9.9)**, **שם + טלפון בלבד (13.9)**, שומר ל-`pilates_leads` (`js/pilates-leads.js`) ושולח עותק לגיליון הלידים דרך `js/leads-sheet.js` (14.9). פס עליון + "לאתר הסטודיו המלא" מקשרים ל-**guraleapilates.com** (13.9).
 - קישורי מודעות/פוסטים כבר לא מפנים לדף הזה אלא ל-`https://guraleapilates.com/contact/` (21.9).
 
 ## Status: live, gallery expanded 2026-09-12
