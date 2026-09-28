@@ -1,9 +1,21 @@
 ---
 name: ga4-weekly-report
-description: Every Sunday morning - pulls a real GA4 traffic report for the last 7 days (users/views, traffic sources, top pages, per-story views, and register-vs-workshop form activity) and sends it to Leah in Hebrew.
+description: Every Sunday morning - pulls a real 7-day GA4 report for the studio site guraleapilates.com (since 28.9.2026 - users/views, traffic sources, top pages, lead-form starts vs submits, WhatsApp clicks) and sends it to Leah in Hebrew. The community site guralea.com is no longer in this report.
 ---
 
 # GA4 weekly report
+
+## ⛔ מ-28.9.2026: הדוח על אתר הסטודיו guraleapilates.com בלבד (לאה: "12ב") - גובר על כל מה שמתחת
+
+- **נכס:** "לאה גורא - פילאטיס מכשירים (guraleapilates.com)" בחשבון 400816093, מזהה מדידה `G-85WHDRC4S4`. **לא** הנכס 545159332 של guralea.com. מספר הנכס עוד לא רשום כאן: בריצה הראשונה - פותחים `https://analytics.google.com/analytics/web/`, בוחרים את הנכס של guraleapilates.com בבורר הנכסים, קוראים את המספר מה-URL (`a400816093p<מספר>`) ו**רושמים אותו כאן**.
+- **5 הסעיפים לאתר הסטודיו:**
+  1. **מספרים כלליים** - משתמשים פעילים וצפיות, 7 ימים.
+  2. **מקורות תנועה** - לפי קבוצת ערוצים (פייסבוק/אינסטגרם - ממומן מול אורגני אם GA4 מפריד, גוגל, ישיר, אחר).
+  3. **העמודים הנצפים ביותר** - 5-7, כולל מאמרים.
+  4. **טופס הלידים** (form_name = `pilates_lead`): `form_start` (ניסיונות) מול `generate_lead` (שליחות), ובאיזה עמוד (page_path).
+  5. **לחיצות וואטסאפ** - `whatsapp_click`, לפי עמוד.
+- אם סעיף ריק - כותבים את זה במפורש ("אף אחד לא התחיל למלא את הטופס השבוע").
+- אתר הקהילה guralea.com **לא נכנס לדוח.** סעיפי `story_name` / `story_submission` / `workshop_lead` למטה - היסטוריה, לא מבצעים.
 
 ## Why this exists
 
@@ -52,7 +64,6 @@ Deep-linking directly to a specific report/explore configuration via URL params 
 
 Message Leah in Hebrew, plainly, structured with the 5 sections above as headers or a short list per section. This is a routine informational report, not a publish action - no approval gate needed, just send it. If any section came back empty/zero, say so explicitly (e.g. "אף אחד לא ניסה למלא את טופס הסדנה השבוע") rather than omitting the section.
 
-❓ 27.9: הדוח היומי לא כולל GA4 (כלל 63); המשימה פעילה אך לא רצה 27.9 - האם הדוח השבועי ממשיך, לאה מחליטה.
 
 ## Cadence
 
