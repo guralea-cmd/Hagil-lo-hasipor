@@ -33,6 +33,14 @@ const MAIL_SUBJECTS = { 'סדנה': 'ליד חדש לסדנה: ' };
 // 29.9.2026 (Leah): the ad form answer "מה מפריע לך בגוף?" goes to column J of tab פייסבוק and into the mail.
 const BODY_ISSUE = { back: 'גב', knees_shoulders: 'ברכיים וכתפיים', balance: 'שיווי משקל', other: 'אחר' };
 const ISSUE_COL = 10; // J
+// 29.9: column K = a suggested opening line for the phone call, by the complaint (Leah asked for it in the sheet).
+const OPEN_COL = 11; // K
+const OPEN_LINE = {
+  'גב': 'היי, זו לאה מהסטודיו ברמלה. ראיתי שכתבת שהגב מפריע לך. תספרי לי - זה כאב שמגביל אותך בהליכה, בהתכופפות, או שזה יותר בבוקר כשקמים?',
+  'ברכיים וכתפיים': 'היי, זו לאה מהסטודיו ברמלה. כתבת שהברכיים או הכתפיים מפריעות לך. איפה זה תופס אותך הכי הרבה - במדרגות, כשאת מרימה משהו, או כשאת מנסה להסתובב?',
+  'שיווי משקל': 'היי, זו לאה מהסטודיו ברמלה. כתבת ששיווי המשקל מפריע לך. את מרגישה את זה על משטח לא ישר, כשאת קמה מהכיסא, או שסתם פחות סומכת על הרגליים?',
+  'אחר': 'היי, זו לאה מהסטודיו ברמלה. השארת פרטים אצלנו. תספרי לי במילים שלך מה מפריע לך בגוף היום, ואני אגיד לך אם ואיך אני יכולה לעזור.'
+};
 // 21.9.2026: the workshop form also sends email (optional) and when to call (בוקר / צהריים / ערב).
 // In tab סדנה they go to columns F-G (header: אימייל | מתי נוח להתקשר), right after סטטוס.
 // 21.9.2026 later: + the optional chair-challenge result, age and stands in 30 seconds (columns H-I).
@@ -167,6 +175,8 @@ function addRows(tabName, leads) {
   if (tabName === TABS.pilates && written.some(function (l) { return l.issue; })) {
     if (sheet.getMaxColumns() < ISSUE_COL) sheet.insertColumnsAfter(sheet.getMaxColumns(), ISSUE_COL - sheet.getMaxColumns());
     sheet.getRange(start, ISSUE_COL, written.length, 1).setNumberFormat('@').setValues(written.map(function (l) { return [asText(String(l.issue || ''))]; }));
+    if (sheet.getMaxColumns() < OPEN_COL) sheet.insertColumnsAfter(sheet.getMaxColumns(), OPEN_COL - sheet.getMaxColumns());
+    sheet.getRange(start, OPEN_COL, written.length, 1).setNumberFormat('@').setValues(written.map(function (l) { return [OPEN_LINE[l.issue] || '']; }));
   }
   mailLeads_(book, tabName, written);
 }
