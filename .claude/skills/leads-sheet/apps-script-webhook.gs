@@ -30,6 +30,9 @@ const STATUS = 'חדש';
 const SITE_SOURCES = /^((פוסט|מודעה) - (פייסבוק|אינסטגרם|טיקטוק)|גוגל|אתר - ישיר|אתר הקהילה|אתר הסטודיו|מבחן)$/;
 // Workshop leads get their own subject line (Leah 21.9.2026: "ליד חדש לסדנה: שם").
 const MAIL_SUBJECTS = { 'סדנה': 'ליד חדש לסדנה: ' };
+// 29.9.2026 (Leah): the ad form answer "מה מפריע לך בגוף?" goes to column J of tab פייסבוק and into the mail.
+const BODY_ISSUE = { back: 'גב', knees_shoulders: 'ברכיים וכתפיים', balance: 'שיווי משקל', other: 'אחר' };
+const ISSUE_COL = 10; // J
 // 21.9.2026: the workshop form also sends email (optional) and when to call (בוקר / צהריים / ערב).
 // In tab סדנה they go to columns F-G (header: אימייל | מתי נוח להתקשר), right after סטטוס.
 // 21.9.2026 later: + the optional chair-challenge result, age and stands in 30 seconds (columns H-I).
@@ -106,7 +109,8 @@ function syncMetaLeads() {
           if (!name || isTest(name)) return;
           leads.push({
             key: 'meta:' + lead.id, when: new Date(lead.created_time), name: name,
-            phone: String(f.phone_number || ''), source: lead.platform === 'ig' ? 'מודעה - אינסטגרם' : 'מודעה - פייסבוק'
+            phone: String(f.phone_number || ''), source: lead.platform === 'ig' ? 'מודעה - אינסטגרם' : 'מודעה - פייסבוק',
+            issue: BODY_ISSUE[f.body_issue] || String(f.body_issue || '')  // 29.9: "מה מפריע לך בגוף?" → column J
           });
         });
         url = page.paging && page.paging.next ? page.paging.next : null;
@@ -160,6 +164,10 @@ function addRows(tabName, leads) {
   const missing = start + rows.length - 1 - sheet.getMaxRows();
   if (missing > 0) sheet.insertRowsAfter(sheet.getMaxRows(), missing);
   sheet.getRange(start, 1, rows.length, rows[0].length).setNumberFormat('@').setValues(rows);
+  if (tabName === TABS.pilates && written.some(function (l) { return l.issue; })) {
+    if (sheet.getMaxColumns() < ISSUE_COL) sheet.insertColumnsAfter(sheet.getMaxColumns(), ISSUE_COL - sheet.getMaxColumns());
+    sheet.getRange(start, ISSUE_COL, written.length, 1).setNumberFormat('@').setValues(written.map(function (l) { return [asText(String(l.issue || ''))]; }));
+  }
   mailLeads_(book, tabName, written);
 }
 
@@ -176,6 +184,7 @@ function mailLeads_(book, tabName, leads) {
         to: MAIL_TO,
         subject: (MAIL_SUBJECTS[tabName] || 'ליד חדש: ') + l.name,
         body: 'שם: ' + l.name + '\nטלפון: ' + localPhone(l.phone) +
+          (l.issue ? '\nמה מפריע לה: ' + l.issue : '') +
           (l.email ? '\nאימייל: ' + l.email : '') + (l.callTime ? '\nמתי נוח להתקשר: ' + l.callTime : '') +
           (l.age ? '\nגיל: ' + l.age : '') + (l.reps ? '\nכמה פעמים קמה וישבה ב-30 שניות: ' + l.reps : '') +
           '\nמקור: ' + l.source + '\nזמן: ' +
