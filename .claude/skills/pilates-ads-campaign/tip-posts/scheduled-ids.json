@@ -1,194 +1,162 @@
 [
  {
-  "slug": "low-back-pain",
+  "id": 385984898,
+  "dt": "2026-10-02T19:30:00",
+  "network": "facebook"
+ },
+ {
+  "id": 385984909,
+  "dt": "2026-10-02T19:30:00",
+  "network": "instagram"
+ },
+ {
+  "id": 385984913,
+  "dt": "2026-10-03T19:30:00",
+  "network": "facebook"
+ },
+ {
+  "id": 385984917,
+  "dt": "2026-10-03T19:30:00",
+  "network": "instagram"
+ },
+ {
+  "id": 385984923,
   "dt": "2026-10-04T19:30:00",
-  "network": "facebook",
-  "id": 385972025
+  "network": "facebook"
  },
  {
-  "slug": "low-back-pain",
+  "id": 385984925,
   "dt": "2026-10-04T19:30:00",
-  "network": "instagram",
-  "id": 385972028
+  "network": "instagram"
  },
  {
-  "slug": "neck-pain",
+  "id": 385984929,
   "dt": "2026-10-05T19:30:00",
-  "network": "facebook",
-  "id": 385972031
+  "network": "facebook"
  },
  {
-  "slug": "neck-pain",
+  "id": 385984933,
   "dt": "2026-10-05T19:30:00",
-  "network": "instagram",
-  "id": 385972038
+  "network": "instagram"
  },
  {
-  "slug": "osteoporosis",
+  "id": 385984935,
   "dt": "2026-10-06T19:30:00",
-  "network": "facebook",
-  "id": 385972044
+  "network": "facebook"
  },
  {
-  "slug": "osteoporosis",
+  "id": 385984941,
   "dt": "2026-10-06T19:30:00",
-  "network": "instagram",
-  "id": 385972055
+  "network": "instagram"
  },
  {
-  "slug": "balance",
+  "id": 385984943,
   "dt": "2026-10-07T19:30:00",
-  "network": "facebook",
-  "id": 385972059
+  "network": "facebook"
  },
  {
-  "slug": "balance",
+  "id": 385984944,
   "dt": "2026-10-07T19:30:00",
-  "network": "instagram",
-  "id": 385972066
+  "network": "instagram"
  },
  {
-  "slug": "joint-replacement",
+  "id": 385984946,
   "dt": "2026-10-08T19:30:00",
-  "network": "facebook",
-  "id": 385972067
+  "network": "facebook"
  },
  {
-  "slug": "joint-replacement",
+  "id": 385984951,
   "dt": "2026-10-08T19:30:00",
-  "network": "instagram",
-  "id": 385972071
+  "network": "instagram"
  },
  {
-  "slug": "frozen-shoulder",
+  "id": 385984954,
+  "dt": "2026-10-09T19:30:00",
+  "network": "facebook"
+ },
+ {
+  "id": 385984955,
+  "dt": "2026-10-09T19:30:00",
+  "network": "instagram"
+ },
+ {
+  "id": 385984957,
+  "dt": "2026-10-10T19:30:00",
+  "network": "facebook"
+ },
+ {
+  "id": 385984963,
+  "dt": "2026-10-10T19:30:00",
+  "network": "instagram"
+ },
+ {
+  "id": 385984966,
   "dt": "2026-10-11T19:30:00",
-  "network": "facebook",
-  "id": 385972076
+  "network": "facebook"
  },
  {
-  "slug": "frozen-shoulder",
+  "id": 385984968,
   "dt": "2026-10-11T19:30:00",
-  "network": "instagram",
-  "id": 385972082
+  "network": "instagram"
  },
  {
-  "slug": "herniated-disc",
+  "id": 385984974,
   "dt": "2026-10-12T19:30:00",
-  "network": "facebook",
-  "id": 385972085
+  "network": "facebook"
  },
  {
-  "slug": "herniated-disc",
+  "id": 385984980,
   "dt": "2026-10-12T19:30:00",
-  "network": "instagram",
-  "id": 385972089
+  "network": "instagram"
  },
  {
-  "slug": "arthritis",
+  "id": 385984984,
   "dt": "2026-10-13T19:30:00",
-  "network": "facebook",
-  "id": 385972098
+  "network": "facebook"
  },
  {
-  "slug": "arthritis",
+  "id": 385984987,
   "dt": "2026-10-13T19:30:00",
-  "network": "instagram",
-  "id": 385972106
+  "network": "instagram"
  },
  {
-  "slug": "kyphosis",
+  "id": 385984988,
   "dt": "2026-10-14T19:30:00",
-  "network": "facebook",
-  "id": 385972114
+  "network": "facebook"
  },
  {
-  "slug": "kyphosis",
+  "id": 385984994,
   "dt": "2026-10-14T19:30:00",
-  "network": "instagram",
-  "id": 385972142
+  "network": "instagram"
  },
  {
-  "slug": "urinary-incontinence",
+  "id": 385984998,
   "dt": "2026-10-15T19:30:00",
-  "network": "facebook",
-  "id": 385972156
+  "network": "facebook"
  },
  {
-  "slug": "urinary-incontinence",
+  "id": 385985001,
   "dt": "2026-10-15T19:30:00",
-  "network": "instagram",
-  "id": 385972168
+  "network": "instagram"
  },
  {
-  "slug": "starting-over",
-  "dt": "2026-10-18T19:30:00",
-  "network": "facebook",
-  "id": 385972174
+  "id": 385985004,
+  "dt": "2026-10-16T19:30:00",
+  "network": "facebook"
  },
  {
-  "slug": "starting-over",
-  "dt": "2026-10-18T19:30:00",
-  "network": "instagram",
-  "id": 385972179
+  "id": 385985008,
+  "dt": "2026-10-16T19:30:00",
+  "network": "instagram"
  },
  {
-  "slug": "fibromyalgia",
-  "dt": "2026-10-19T19:30:00",
-  "network": "facebook",
-  "id": 385972185
+  "id": 385985014,
+  "dt": "2026-10-17T19:30:00",
+  "network": "facebook"
  },
  {
-  "slug": "fibromyalgia",
-  "dt": "2026-10-19T19:30:00",
-  "network": "instagram",
-  "id": 385972192
- },
- {
-  "slug": "scoliosis",
-  "dt": "2026-10-20T19:30:00",
-  "network": "facebook",
-  "id": 385972196
- },
- {
-  "slug": "scoliosis",
-  "dt": "2026-10-20T19:30:00",
-  "network": "instagram",
-  "id": 385972202
- },
- {
-  "slug": "fractures",
-  "dt": "2026-10-21T19:30:00",
-  "network": "facebook",
-  "id": 385972205
- },
- {
-  "slug": "fractures",
-  "dt": "2026-10-21T19:30:00",
-  "network": "instagram",
-  "id": 385972211
- },
- {
-  "slug": "sports-injuries",
-  "dt": "2026-10-22T19:30:00",
-  "network": "facebook",
-  "id": 385972215
- },
- {
-  "slug": "sports-injuries",
-  "dt": "2026-10-22T19:30:00",
-  "network": "instagram",
-  "id": 385972220
- },
- {
-  "slug": "stress-fractures",
-  "dt": "2026-10-25T19:30:00",
-  "network": "facebook",
-  "id": 385972226
- },
- {
-  "slug": "stress-fractures",
-  "dt": "2026-10-25T19:30:00",
-  "network": "instagram",
-  "id": 385972234
+  "id": 385985018,
+  "dt": "2026-10-17T19:30:00",
+  "network": "instagram"
  }
 ]
