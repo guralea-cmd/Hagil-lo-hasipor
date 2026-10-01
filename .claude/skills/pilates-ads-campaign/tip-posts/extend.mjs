@@ -23,7 +23,10 @@ while (true) {
   si++; if (si===3) { si=0; const x=new Date(d+"T00:00:00Z"); x.setUTCDate(x.getUTCDate()+1); d=x.toISOString().slice(0,10); }
   if (d > until) break;
   const dt = `${d}T${SLOTS[si]}:00`, p = posts[idx]; idx=(idx+1)%posts.length;
-  for (const j of [{network:"facebook",text:p.fb,media:[],extra:{facebookData:{type:"POST"}}},{network:"instagram",text:igText(p),media:[`https://guralea.com/images/pilates/tip-posts/${p.slug}.jpg`],extra:{instagramData:{type:"POST",autoPublish:true}}}]) {
+  for (const j of [{network:"facebook",text:p.lines.join("
+")+"
+רוצה לדעת מה את צריכה לעשות במצב הזה? לחצי על הלינק בתגובה הראשונה",media:[`https://guralea.com/images/pilates/tip-posts/${p.slug}.jpg`],extra:{facebookData:{type:"POST"},firstCommentText:`${p.title}
+${p.url}`}},{network:"instagram",text:igText(p),media:[`https://guralea.com/images/pilates/tip-posts/${p.slug}.jpg`],extra:{instagramData:{type:"POST",autoPublish:true}}}]) {
     if (taken.has(dt+j.network)) continue;
     const body={publicationDate:{dateTime:dt,timezone:"Asia/Jerusalem"},text:j.text,providers:[{network:j.network}],media:j.media,autoPublish:true,draft:false,firstCommentText:"",shortener:false,...j.extra};
     const r = await (await fetch(`${base}?${q}`,{method:"POST",headers:H,body:JSON.stringify(body)})).json();
