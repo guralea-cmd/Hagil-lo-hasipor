@@ -56,7 +56,7 @@ const base = (slot, extra) => ({
       if (b.tiktok) {
         // tiktokData.privacyOption is required - without it TikTok fails with
         // "does not specified privacy options" (23.9: all of week 3 was loaded without it).
-        jobs.push(['tiktok', b, base(s, { text: s.facebook, providers: [{ network: 'tiktok' }], media: [s.tiktokUrl], tiktokData: { privacyOption: 'PUBLIC_TO_EVERYONE', photoCoverIndex: 0 } })]);
+        jobs.push(['tiktok', b, base(s, { text: s.tiktok || s.facebook, providers: [{ network: 'tiktok' }], media: [s.tiktokUrl], tiktokData: { privacyOption: 'PUBLIC_TO_EVERYONE', photoCoverIndex: 0 } })]);
       }
     }
     for (const [kind, b, body] of jobs) {
