@@ -21,7 +21,7 @@ if (step === "create") {
   const igText = p => p.lines.join("\n") + "\nרוצה לדעת מה את צריכה לעשות במצב הזה?\nהקישור בפרופיל";
   const ids = [];
   for (let i=0;i<posts.length;i++) {
-    const p = posts[i]; const day = new Date(Date.UTC(2026,9,2+i)).toISOString().slice(0,10); /* every day incl. Shabbat/holidays (Leah 1.10) */ const dt = `${day}T19:30:00`;
+    const p = posts[i]; const SLOTS=["07:30","12:30","19:30"]; const day = new Date(Date.UTC(2026,9,2+Math.floor(i/3))).toISOString().slice(0,10); /* 3/day every day incl. Shabbat/holidays (Leah 1.10) */ const dt = `${day}T${SLOTS[i%3]}:00`;
     const jobs = [
       {network:"facebook", text:p.fb, media:[], extra:{facebookData:{type:"POST"}}},
       {network:"instagram", text:igText(p), media:[`https://guralea.com/images/pilates/tip-posts/${p.slug}.jpg`], extra:{instagramData:{type:"POST",autoPublish:true}}},
