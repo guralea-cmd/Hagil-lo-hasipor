@@ -4,7 +4,7 @@
 import fs from "fs";
 const s = JSON.parse(fs.readFileSync(".claude/skills/facebook-teaser/metricool-secrets.json","utf8"));
 const H = {"X-Mc-Auth": s.userToken, "Accept":"application/json", "Content-Type":"application/json; charset=utf-8"};
-const blog = s.brands.hagil_lo_hasipor.blogId, base = "https://app.metricool.com/api/v2/scheduler/posts", q = `userId=${s.userId}&blogId=${blog}`;
+const BRAND = process.env.BRAND || "hagil_lo_hasipor"; const blog = s.brands[BRAND].blogId, base = "https://app.metricool.com/api/v2/scheduler/posts", q = `userId=${s.userId}&blogId=${blog}`;
 const DIR = ".claude/skills/hagil-community-group/blog-tips/";
 const all = async () => (await (await fetch(`${base}?${q}&start=${new Date(Date.now()+3*3600e3).toISOString().slice(0,19)}&end=2027-12-31T00:00:00&timezone=Asia/Jerusalem`,{headers:H})).json()).data||[];
 if (process.argv[2]==="delete-old") {
@@ -28,7 +28,7 @@ if (process.argv[2]==="create") {
       {network:"tiktok", text:`${p.title}\n${p.open}\n${CTA_IG}`, extra:{tiktokData:{privacyOption:"PUBLIC_TO_EVERYONE",photoCoverIndex:0}}},
     ];
     for (const j of jobs) {
-      if (taken.has(dt+j.network)) continue;
+      if (taken.has(dt+j.network)) continue; if (!s.brands[BRAND].networks.includes(j.network)) continue;
       const body = {publicationDate:{dateTime:dt,timezone:"Asia/Jerusalem"}, text:j.text, providers:[{network:j.network}], media:[p.img], autoPublish:true, draft:false, firstCommentText:"", shortener:false, ...j.extra};
       const r = await (await fetch(`${base}?${q}`,{method:"POST",headers:H,body:JSON.stringify(body)})).json();
       if (!r?.data?.id) console.log("FAIL",dt,j.network,JSON.stringify(r).slice(0,150)); else n++;
