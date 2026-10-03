@@ -6,7 +6,7 @@ const s = JSON.parse(fs.readFileSync(".claude/skills/facebook-teaser/metricool-s
 const H = { "X-Mc-Auth": s.userToken, Accept: "application/json", "Content-Type": "application/json; charset=utf-8" };
 const base = "https://app.metricool.com/api/v2/scheduler/posts";
 const blog = s.brands[process.env.BRAND || "hagil_lo_hasipor"].blogId;
-const DAYS = ["2026-10-04", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-11"]; // 10.10 = שבת
+const DAYS = process.env.DAYS ? process.env.DAYS.split(",") : ["2026-10-04", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-10", "2026-10-11"]; // כולל שבת - לאה 3.10: "מה הקשר לשבת"
 const DRY = process.argv.includes("--dry");
 for (const d of DAYS) {
   const body = {
