@@ -38,7 +38,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="css/style.css?v=97">
+<link rel="stylesheet" href="css/style.css?v=98">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -161,12 +161,50 @@ gtag('config', 'G-MEG8NMMGTD');
   </nav>
 </header>
 
-<section class="hero" id="main-content" style="padding-top:24px;">
-  <div class="container">
-    <h1>הגיל הוא לא הסיפור – הסיפור הוא מה עושים איתו</h1>
-    <p style="font-size:var(--text-lg); margin-bottom:0;">איך לכווץ את הגיל הפיזיולוגי בכל גיל ומצב בריאותי</p>
-    <a href="#workshop-lead-form" class="btn" style="margin-top:12px;">פרטים והרשמה לסדנה</a>
-    <div class="workshop-hero-video video-wrap video-wrap--portrait" style="aspect-ratio:576/1164; max-width:220px; margin:16px auto 0;">
+<section class="hero" id="main-content" style="padding-top:18px; padding-bottom:18px;">
+  <div class="container" style="max-width:380px;">
+    <h1 style="margin-bottom:6px; font-size:clamp(20px,5.6vw,28px); line-height:1.25;">הגיל הוא לא הסיפור – הסיפור הוא מה עושים איתו</h1>
+    <p style="font-size:var(--text-lg); margin-bottom:10px;">איך לכווץ את הגיל הפיזיולוגי בכל גיל ומצב בריאותי</p>
+    <p style="margin-bottom:12px;">עשית את אתגר הכיסא? השאירי את התוצאה שלך, ואחזור אלייך עם התשובה ועם כל הפרטים על הסדנה.</p>
+    <form id="workshop-lead-form" style="scroll-margin-top:90px;">
+      <div>
+        <label for="workshop-name">שם מלא</label>
+        <input type="text" id="workshop-name" name="fullName" autocomplete="name" required>
+      </div>
+      <div>
+        <label for="workshop-phone">טלפון</label>
+        <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
+      </div>
+      <div>
+        <label for="workshop-age">הגיל שלך</label>
+        <input type="number" id="workshop-age" name="age" inputmode="numeric" min="18" max="110">
+      </div>
+      <div>
+        <label for="workshop-reps">כמה פעמים קמת וישבת ב-30 שניות?</label>
+        <input type="number" id="workshop-reps" name="reps" inputmode="numeric" min="0" max="99">
+      </div>
+      <button type="submit" class="btn">השארת פרטים</button>
+      <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
+      <div>
+        <label for="workshop-email">אימייל (לא חובה)</label>
+        <input type="email" id="workshop-email" name="email" autocomplete="email">
+      </div>
+      <div>
+        <label for="workshop-call-time">מתי נוח לך שאתקשר?</label>
+        <select id="workshop-call-time" name="callTime">
+          <option value="" selected>בחרי</option>
+          <option value="בוקר">בוקר</option>
+          <option value="צהריים">צהריים</option>
+          <option value="ערב">ערב</option>
+        </select>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="container" style="max-width:700px; text-align:center;">
+    <div class="workshop-hero-video video-wrap video-wrap--portrait" style="aspect-ratio:576/1164; max-width:220px; margin:0 auto;">
       <video controls preload="metadata" playsinline poster="images/about-video-poster-1.jpg">
         <source src="videos/about-mi-zot-leah-gura.mp4" type="video/mp4">
       </video>
@@ -308,42 +346,8 @@ gtag('config', 'G-MEG8NMMGTD');
 </section>
 
 <section style="background:#fff;">
-  <div class="container" style="max-width:380px;">
-    <h2>הרשמה לסדנה</h2>
-    <p>עשית את אתגר הכיסא? רוצה לדעת מה את יכולה ללמוד על עצמך מהתוצאה שקיבלת? השאירי פרטים, ואחזור אלייך עם התשובה ועם כל הפרטים על הסדנה.</p>
-    <form id="workshop-lead-form" style="scroll-margin-top:90px;">
-      <div>
-        <label for="workshop-name">שם מלא</label>
-        <input type="text" id="workshop-name" name="fullName" autocomplete="name" required>
-      </div>
-      <div>
-        <label for="workshop-phone">טלפון</label>
-        <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
-      </div>
-      <div>
-        <label for="workshop-age">הגיל שלך</label>
-        <input type="number" id="workshop-age" name="age" inputmode="numeric" min="18" max="110">
-      </div>
-      <div>
-        <label for="workshop-reps">כמה פעמים קמת וישבת ב-30 שניות?</label>
-        <input type="number" id="workshop-reps" name="reps" inputmode="numeric" min="0" max="99">
-      </div>
-      <div>
-        <label for="workshop-email">אימייל (לא חובה)</label>
-        <input type="email" id="workshop-email" name="email" autocomplete="email">
-      </div>
-      <div>
-        <label for="workshop-call-time">מתי נוח לך שאתקשר?</label>
-        <select id="workshop-call-time" name="callTime">
-          <option value="" selected>בחרי</option>
-          <option value="בוקר">בוקר</option>
-          <option value="צהריים">צהריים</option>
-          <option value="ערב">ערב</option>
-        </select>
-      </div>
-      <button type="submit" class="btn">השארת פרטים</button>
-      <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
-    </form>
+  <div class="container" style="max-width:380px; text-align:center;">
+    <a href="#workshop-lead-form" class="btn">פרטים והרשמה לסדנה</a>
   </div>
 </section>
 
@@ -362,7 +366,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <script src="js/firebase-config.js?v=4"></script>
 <script src="js/main.js?v=12"></script>
 <script src="js/leads-sheet.js?v=5"></script>
-<script src="js/workshop-leads.js?v=11"></script>
+<script src="js/workshop-leads.js?v=12"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

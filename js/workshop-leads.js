@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
             reps: reps
           });
         }
-        statusEl.textContent = "תודה! אחזור אלייך בטלפון בימים הקרובים. לאה";
+        statusEl.textContent = "תודה! אחזור אלייך בהקדם האפשרי. לאה";
         if (typeof fbq === "function") {
           fbq("track", "Lead");
         }
