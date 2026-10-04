@@ -3,7 +3,7 @@
 // Usage (repo root): node .claude/skills/hagil-community-group/blog-tips/build-story-v2.mjs  -> images/blog-tips/story/<n>.jpg
 import fs from "fs"; import { execFileSync } from "child_process";
 const ROOT = "C:/Users/gural/OneDrive/מסמכים/GitHub/Hagil-lo-hasipor";
-const posts = JSON.parse(fs.readFileSync(`${ROOT}/.claude/skills/hagil-community-group/blog-tips/posts.json`, "utf8")).filter(p => p.approved && p.scene && p.q);
+const posts = JSON.parse(fs.readFileSync(`${ROOT}/.claude/skills/hagil-community-group/blog-tips/posts.json`, "utf8")).filter(p => p.approved && p.scene && p.q).filter(p => !process.argv[2] || process.argv[2].split(",").map(Number).includes(p.n));
 const EDGE = "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe";
 const TMP = (process.env.TEMP || "C:/Windows/Temp").replace(/\\/g, "/") + "/hagil-story";
 const OUT = `${ROOT}/images/blog-tips/story`;
