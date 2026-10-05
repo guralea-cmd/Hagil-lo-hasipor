@@ -56,3 +56,7 @@ Publishing itself is governed by standing-work-rules **rule 19** (nothing happen
 ## What this skill does not do
 
 It never publishes anything, never marks a log row as `אושר ופורסם` on its own (only Leah's explicit approval of a specific draft, followed by an actual successful publish, earns that), never re-runs a scheduled task, and never drafts a replacement on its own initiative. It reads, compares, and writes one line per gap into the morning report.
+
+
+## תוספת 5.10.2026 - ריצה תקועה חוסמת את המתזמן
+ריצה שסטטוס שלה "running" יותר משעתיים אחרי last_activity_at = תקועה (בדרך כלל פקודה שחיכתה לאישור בלי אף אחד שיענה). כל עוד היא "running", המתזמן לא מפעיל את הריצה הבאה של אותה משימה - זו הסיבה שהדוח של 5.10 לא רץ. בבדיקה: לכל משימה, אם הריצה האחרונה "running" ו-last_activity_at ישן משעתיים - שורה בדוח: "<משימה>: ריצה תקועה מ-<שעה>, חוסמת את הריצה הבאה - לעצור".
