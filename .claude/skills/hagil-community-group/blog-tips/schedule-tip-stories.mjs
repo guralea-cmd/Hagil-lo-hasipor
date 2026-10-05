@@ -18,7 +18,7 @@ for (const d of Object.keys(days).sort().filter(d => d >= from && d <= to)) {
 }
 // verify every image is live
 const urls = [...new Set(plan.map(([, , it]) => storyImg(it)))]; let bad = 0;
-for (const u of urls) { const r = await fetch(u, { method: "HEAD" }); if (!r.ok) { console.log("MISSING", u, r.status); bad++; } }
+for (const u of urls) { let ok = false; for (let t = 0; t < 3 && !ok; t++) { try { ok = (await fetch(u, { method: "HEAD" })).ok; } catch { } } if (!ok) { console.log("MISSING", u); bad++; } }
 console.log("plan:", plan.length, "stories over", new Set(plan.map(p => p[1])).size, "days;", urls.length, "images,", bad, "missing");
 if (bad) process.exit(1);
 if (!APPLY) { for (const [b, d, it] of plan) console.log(d, b.padEnd(16), it.kind.padEnd(7), storyImg(it).split("/").pop()); console.log("DRY RUN"); process.exit(0); }
