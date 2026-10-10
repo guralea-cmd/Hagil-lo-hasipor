@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var callTime = form.callTime.value;
     // 21.9.2026: optional chair-challenge result ("אתגר הכיסא") - age + full stands in 30 seconds.
     var age = form.age.value.trim();
-    var reps = form.reps.value.trim();
+    // 10.10.2026: chair-challenge field removed from the form (Leah). reps stays an empty string for the sheet/rules.
+    var reps = form.reps ? form.reps.value.trim() : "";
     db.collection("workshop_leads").add({
       firstName: fullName,
       lastName: "",
