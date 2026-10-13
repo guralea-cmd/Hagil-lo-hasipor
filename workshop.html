@@ -406,7 +406,7 @@ gtag('config', 'G-MEG8NMMGTD');
 <script src="js/main.js?v=13"></script>
 <script>
 // 13.10.2026 (לאה "כן"): בדף הסדנה הכפתור הירוק שולח בקשה שלאה תתקשר, לא "הנה הסיפור שלי".
-(function(){var b=document.querySelector('a.wa-float-btn');if(b){b.href="https://wa.me/972506991723?text="+encodeURIComponent("היי לאה, אשמח שתתקשרי אליי לגבי הסדנה \"הגיל הוא לא הסיפור\". השם שלי:");b.setAttribute("aria-label","וואטסאפ ללאה - בקשה לשיחה על הסדנה");}})();
+(function(){var T="https://wa.me/972506991723?text="+encodeURIComponent("היי לאה, אשמח שתתקשרי אליי לגבי הסדנה \"הגיל הוא לא הסיפור\". השם שלי:");function fix(){var b=document.querySelector("a.wa-float-btn");if(b&&b.href!==T){b.href=T;b.setAttribute("aria-label","וואטסאפ ללאה - בקשה לשיחה על הסדנה");}return !!b;}if(!fix()){document.addEventListener("DOMContentLoaded",fix);window.addEventListener("load",fix);var n=0,t=setInterval(function(){if(fix()||++n>40)clearInterval(t);},250);}})();
 </script>
 <script src="js/leads-sheet.js?v=5"></script>
 <script src="js/workshop-leads.js?v=13"></script>
