@@ -1842,3 +1842,73 @@ footer .social-icon {
     content: none;
   }
 }
+
+/* ---------- סרגל נגישות (11.10.2026) ---------- */
+.a11y-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 950;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 0;
+  background: #1d4ed8;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.a11y-btn svg { width: 34px; height: 34px; fill: #fff; }
+.a11y-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  z-index: 950;
+  width: min(320px, calc(100vw - 48px));
+  background: #fff;
+  color: #181310;
+  border: 2px solid #1d4ed8;
+  border-radius: 14px;
+  padding: 14px 16px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-size: 17px;
+}
+.a11y-panel[hidden] { display: none; }
+.a11y-panel h2 { margin: 0 0 10px; font-size: 20px; color: #181310; text-align: right; }
+.a11y-panel .a11y-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.a11y-panel button {
+  width: 100%;
+  text-align: right;
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid #c9c2b8;
+  background: #fbf5ee;
+  color: #181310;
+  cursor: pointer;
+  min-height: 44px;
+}
+.a11y-panel button[aria-pressed="true"] { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+.a11y-panel .a11y-reset { margin-top: 10px; background: #fff; }
+.a11y-panel .a11y-link { display: block; margin-top: 10px; font-size: 15px; color: #1d4ed8; }
+
+/* התאמות */
+html[data-a11y-font="1"] { --text-2xs: 15px; --text-xs: 16px; --text-sm: 18px; --text-base: 22px; --text-md: 24px; --text-lg: 28px; --text-xl: 34px; --text-2xl: 40px; --text-3xl: 50px; }
+html[data-a11y-font="2"] { --text-2xs: 17px; --text-xs: 18px; --text-sm: 21px; --text-base: 25px; --text-md: 28px; --text-lg: 32px; --text-xl: 38px; --text-2xl: 44px; --text-3xl: 54px; }
+html[data-a11y-font="1"] body, html[data-a11y-font="2"] body { line-height: 1.85; }
+html[data-a11y-contrast="1"] body { background: #fff; color: #000; }
+html[data-a11y-contrast="1"] p, html[data-a11y-contrast="1"] li, html[data-a11y-contrast="1"] h1, html[data-a11y-contrast="1"] h2, html[data-a11y-contrast="1"] h3, html[data-a11y-contrast="1"] label { color: #000; }
+html[data-a11y-contrast="1"] a:not(.btn):not(.a11y-btn) { color: #0000cc; text-decoration: underline; }
+html[data-a11y-contrast="1"] .btn, html[data-a11y-contrast="1"] button.btn { background: #000; color: #fff; border-color: #000; }
+html[data-a11y-contrast="1"] section, html[data-a11y-contrast="1"] .intro-highlight, html[data-a11y-contrast="1"] .card { background: #fff; }
+html[data-a11y-links="1"] a { text-decoration: underline; }
+html[data-a11y-motion="1"], html[data-a11y-motion="1"] * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+html[data-a11y-motion="1"] .marquee-strip__track { animation: none !important; transform: none !important; }
+html[data-a11y-readable="1"] body, html[data-a11y-readable="1"] button, html[data-a11y-readable="1"] input, html[data-a11y-readable="1"] select, html[data-a11y-readable="1"] textarea { font-family: Arial, "Segoe UI", sans-serif; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-strip__track { animation: none !important; }
+}

@@ -158,3 +158,79 @@ document.addEventListener("DOMContentLoaded", function () {
     }, { passive: true });
   }
 });
+
+// ---------- סרגל נגישות (11.10.2026) ----------
+(function () {
+  var KEY = "hagil-a11y";
+  var OPTS = [
+    { k: "font", label: "כתב גדול", levels: 2 },
+    { k: "contrast", label: "ניגודיות גבוהה" },
+    { k: "links", label: "הדגשת קישורים" },
+    { k: "motion", label: "עצירת תנועה" },
+    { k: "readable", label: "גופן קריא" }
+  ];
+  var root = document.documentElement;
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  function apply() {
+    OPTS.forEach(function (o) {
+      var v = state[o.k] || 0;
+      if (v) root.setAttribute("data-a11y-" + o.k, String(v)); else root.removeAttribute("data-a11y-" + o.k);
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  apply();
+  function build() {
+    if (document.querySelector(".a11y-btn")) return;
+    var btn = document.createElement("button");
+    btn.className = "a11y-btn";
+    btn.type = "button";
+    btn.setAttribute("aria-label", "תפריט נגישות");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", "a11y-panel");
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="4.2" r="2.2"/><path d="M3.5 8.2c0-.7.6-1.2 1.3-1.1 2.4.4 4.8.6 7.2.6s4.8-.2 7.2-.6c.7-.1 1.3.4 1.3 1.1 0 .6-.4 1-1 1.1-1.8.3-3.6.5-5.4.6v3.1l2.6 7.1c.2.6-.1 1.3-.7 1.5-.6.2-1.3-.1-1.5-.7L12.4 15h-.8l-2.1 5.9c-.2.6-.9.9-1.5.7-.6-.2-.9-.9-.7-1.5l2.6-7.1V9.9c-1.8-.1-3.6-.3-5.4-.6-.6-.1-1-.5-1-1.1z"/></svg>';
+    var panel = document.createElement("div");
+    panel.className = "a11y-panel";
+    panel.id = "a11y-panel";
+    panel.setAttribute("role", "region");
+    panel.setAttribute("aria-label", "הגדרות נגישות");
+    panel.hidden = true;
+    var html = '<h2>נגישות</h2><ul class="a11y-list">';
+    OPTS.forEach(function (o) { html += '<li><button type="button" data-k="' + o.k + '" aria-pressed="false">' + o.label + '</button></li>'; });
+    html += '</ul><button type="button" class="a11y-reset">איפוס</button><a class="a11y-link" href="accessibility.html">הצהרת נגישות</a>';
+    panel.innerHTML = html;
+    document.body.appendChild(btn);
+    document.body.appendChild(panel);
+    function refresh() {
+      OPTS.forEach(function (o) {
+        var b = panel.querySelector('[data-k="' + o.k + '"]');
+        var v = state[o.k] || 0;
+        b.setAttribute("aria-pressed", v ? "true" : "false");
+        b.textContent = o.label + (o.levels && v ? " (" + v + ")" : "");
+      });
+    }
+    refresh();
+    btn.addEventListener("click", function () {
+      var open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) { var first = panel.querySelector("button"); if (first) first.focus(); }
+    });
+    panel.addEventListener("click", function (e) {
+      var t = e.target.closest("button");
+      if (!t) return;
+      if (t.classList.contains("a11y-reset")) { state = {}; }
+      else {
+        var k = t.getAttribute("data-k");
+        var o = OPTS.filter(function (x) { return x.k === k; })[0];
+        var v = state[k] || 0;
+        state[k] = o.levels ? (v + 1) % (o.levels + 1) : (v ? 0 : 1);
+      }
+      apply(); refresh();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !panel.hidden) { panel.hidden = true; btn.setAttribute("aria-expanded", "false"); btn.focus(); }
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build); else build();
+})();
