@@ -22,3 +22,10 @@ tmp-previews/
 
 # 14.10.2026: workshop prices + installments - Leah: "את לא מעלה את זה לשום מקום" (public repo)
 .claude/skills/standing-work-rules/private-prices.md
+
+# 14.10.2026: Leah - "אני לא רוצה שיראו שום דבר מה שכתוב בריפו". Skills/notes stay only on her computer (OneDrive).
+.claude/
+.agents/
+CLAUDE.md
+.mcp.json
+skills-lock.json
