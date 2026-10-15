@@ -163,10 +163,38 @@ gtag('config', 'G-MEG8NMMGTD');
 
 <section class="hero" id="main-content" style="padding-top:18px; padding-bottom:18px;">
   <div class="container" style="max-width:520px;">
-    <h1 style="margin-bottom:6px; font-size:clamp(20px,5.6vw,28px); line-height:1.25;">הגיל הוא לא הסיפור – הסיפור הוא מה עושים איתו</h1>
-    <p style="font-size:var(--text-lg); margin-bottom:10px;">איך לכווץ את הגיל הפיזיולוגי בכל גיל ומצב בריאותי</p>
-    <p style="margin-bottom:14px;">מתחילה ב-26.11. 7 מפגשים, בשתי אפשרויות: בזום מהבית, או פרונטלי ברחוב החבצלת 8 ברמלה. עד 15 משתתפות בקבוצה.</p>
-    <a href="#workshop-signup" class="btn">פרטים והרשמה לסדנה</a>
+    <h1 style="margin-bottom:4px; font-size:clamp(20px,5.6vw,28px); line-height:1.25;">הגיל הוא לא הסיפור – הסיפור הוא מה עושים איתו</h1>
+    <p style="font-size:var(--text-lg); margin-bottom:6px; line-height:1.35;">איך לכווץ את הגיל הפיזיולוגי בכל גיל ומצב בריאותי</p>
+    <p style="margin-bottom:8px; line-height:1.4;">2 סדנאות: אחת בזום ב-26.11, אחת ברחוב החבצלת 8 רמלה ב-27.11. 7 מפגשים.</p>
+    <ul class="bullet-list" style="text-align:right; margin:0 auto 10px; max-width:420px; font-size:15px; line-height:1.35;">
+      <li style="margin-bottom:2px;">בדיקות גיל פיזיולוגי בתחילת הסדנה ולאורכה, כדי לעקוב אחר ההתקדמות.</li>
+      <li style="margin-bottom:2px;">תוכנית אימונים המותאמת לרמת היכולת האישית שלך.</li>
+      <li style="margin-bottom:2px;">ליווי שבועי שלי בוואטסאפ בין המפגשים.</li>
+    </ul>
+    <div id="workshop-signup" style="scroll-margin-top:90px;">
+    <form id="workshop-lead-form" style="max-width:380px; margin:0 auto; text-align:right; gap:6px;">
+      <p style="font-weight:700; margin:0 0 6px; font-size:16px;">השאירי שם וטלפון ואחזור אלייך עם כל הפרטים בהקדם האפשרי</p>
+      <div>
+        <label for="workshop-name" style="margin-bottom:2px;">שם מלא</label>
+        <input type="text" id="workshop-name" name="fullName" autocomplete="name" required>
+      </div>
+      <div>
+        <label for="workshop-phone" style="margin-bottom:2px;">טלפון</label>
+        <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
+      </div>
+      <div>
+        <label for="workshop-call-time" style="margin-bottom:2px;">מתי נוח לך שאתקשר?</label>
+        <select id="workshop-call-time" name="callTime">
+          <option value="" selected>בחרי</option>
+          <option value="בוקר">בוקר</option>
+          <option value="צהריים">צהריים</option>
+          <option value="ערב">ערב</option>
+        </select>
+      </div>
+      <button type="submit" class="btn" style="margin-top:0;">השארת פרטים</button>
+      <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
+    </form>
+    </div>
   </div>
 </section>
 
@@ -248,41 +276,6 @@ gtag('config', 'G-MEG8NMMGTD');
         <img src="images/testimonials/nora-mushiashvili.jpeg" alt="המלצה של נורה מושיאשבילי בפייסבוק על לאה גורא">
       </div>
     </div>
-  </div>
-</section>
-
-<section id="workshop-signup" style="background:#fff; scroll-margin-top:90px;">
-  <div class="container" style="max-width:380px;">
-    <h2 class="article-subheading">פרטים והרשמה לסדנה</h2>
-    <form id="workshop-lead-form" style="scroll-margin-top:90px;">
-      <div>
-        <label for="workshop-name">שם מלא</label>
-        <input type="text" id="workshop-name" name="fullName" autocomplete="name" required>
-      </div>
-      <div>
-        <label for="workshop-phone">טלפון</label>
-        <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
-      </div>
-      <div>
-        <label for="workshop-age">הגיל שלך</label>
-        <input type="number" id="workshop-age" name="age" inputmode="numeric" min="18" max="110">
-      </div>
-      <div>
-        <label for="workshop-email">אימייל (לא חובה)</label>
-        <input type="email" id="workshop-email" name="email" autocomplete="email">
-      </div>
-      <div>
-        <label for="workshop-call-time">מתי נוח לך שאתקשר?</label>
-        <select id="workshop-call-time" name="callTime">
-          <option value="" selected>בחרי</option>
-          <option value="בוקר">בוקר</option>
-          <option value="צהריים">צהריים</option>
-          <option value="ערב">ערב</option>
-        </select>
-      </div>
-      <button type="submit" class="btn">השארת פרטים</button>
-      <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
-    </form>
   </div>
 </section>
 
@@ -409,7 +402,7 @@ gtag('config', 'G-MEG8NMMGTD');
 (function(){var T="https://wa.me/972506991723?text="+encodeURIComponent("היי לאה, אשמח שתתקשרי אליי לגבי הסדנה \"הגיל הוא לא הסיפור\". השם שלי:");function fix(){var b=document.querySelector("a.wa-float-btn");if(b&&b.href!==T){b.href=T;b.setAttribute("aria-label","וואטסאפ ללאה - בקשה לשיחה על הסדנה");}return !!b;}if(!fix()){document.addEventListener("DOMContentLoaded",fix);window.addEventListener("load",fix);var n=0,t=setInterval(function(){if(fix()||++n>40)clearInterval(t);},250);}})();
 </script>
 <script src="js/leads-sheet.js?v=5"></script>
-<script src="js/workshop-leads.js?v=13"></script>
+<script src="js/workshop-leads.js?v=14"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
