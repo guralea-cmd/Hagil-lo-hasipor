@@ -34,6 +34,11 @@ gtag('config', 'G-MEG8NMMGTD');
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>פרטים והרשמה לסדנה | הגיל הוא לא הסיפור</title>
+<!-- 18.10.2026 (Leah): the Facebook link preview shows a frame from her video (no text on it). -->
+<meta property="og:title" content="פרטים והרשמה לסדנה | הגיל הוא לא הסיפור">
+<meta property="og:image" content="https://guralea.com/images/workshop-gvulot-share.jpg">
+<meta property="og:image:width" content="1080">
+<meta property="og:image:height" content="1080">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -163,14 +168,40 @@ gtag('config', 'G-MEG8NMMGTD');
 
 <section class="hero" id="main-content" style="padding-top:18px; padding-bottom:18px;">
   <div class="container" style="max-width:520px;">
-    <h1 style="margin-bottom:4px; font-size:clamp(20px,5.6vw,28px); line-height:1.25;">הגיל הוא לא הסיפור – הסיפור הוא מה עושים איתו</h1>
-    <p style="font-size:var(--text-lg); margin-bottom:6px; line-height:1.35;">איך לכווץ את הגיל הפיזיולוגי בכל גיל ומצב בריאותי</p>
-    <p style="margin-bottom:8px; line-height:1.4;">2 סדנאות: אחת בזום ב-26.11, אחת ברחוב החבצלת 8 רמלה ב-27.11. 7 מפגשים.</p>
-    <ul class="bullet-list" style="text-align:right; margin:0 auto 10px; max-width:420px; font-size:15px; line-height:1.35;">
-      <li style="margin-bottom:2px;">בדיקות גיל פיזיולוגי בתחילת הסדנה ולאורכה, כדי לעקוב אחר ההתקדמות.</li>
-      <li style="margin-bottom:2px;">תוכנית אימונים המותאמת לרמת היכולת האישית שלך.</li>
-      <li style="margin-bottom:2px;">ליווי שבועי שלי בוואטסאפ בין המפגשים.</li>
-    </ul>
+    <h1 style="margin-bottom:8px; font-size:clamp(24px,7vw,32px); line-height:1.25;">הגיל הוא לא הסיפור</h1>
+    <!-- 15.10.2026 (Leah): one headline per video. The ad link carries ?t=<topic>; the line below is filled from
+         WORKSHOP_TOPICS. Without ?t (posts, bio, site links) it stays hidden. Add a topic = add one entry. -->
+    <p id="workshop-topic-line" style="display:none; font-size:var(--text-lg); font-weight:700; margin:0 0 12px; line-height:1.35;"></p>
+    <script>
+      (function () {
+        var WORKSHOP_TOPICS = {
+          // Video "למה אף אחד בבית לא סופר אותך" - boundaries / self-worth. Leah's own words, 15.10.2026.
+          // 17.10.2026 (Leah): second line above the form, singular - "גם את זה תלמדי בסדנת...".
+          gvulot: ["כדי שיעריכו אותך, את חייבת קודם כל להעריך את עצמך", "גם את זה תלמדי בסדנת \"הגיל הוא לא הסיפור\"."]
+        };
+        var t = new URLSearchParams(location.search).get("t");
+        var line = document.getElementById("workshop-topic-line");
+        if (t && WORKSHOP_TOPICS[t] && line) {
+          // 18.10.2026 (Leah): on a video page the big "הגיל הוא לא הסיפור" headline goes, and the workshop
+          // name inside her line is red instead.
+          var NAME = "\"הגיל הוא לא הסיפור\"";
+          [].concat(WORKSHOP_TOPICS[t]).forEach(function (txt, i) {
+            if (i) line.appendChild(document.createElement("br"));
+            var at = txt.indexOf(NAME);
+            if (at < 0) { line.appendChild(document.createTextNode(txt)); return; }
+            line.appendChild(document.createTextNode(txt.slice(0, at)));
+            var red = document.createElement("span");
+            red.style.color = "var(--color-primary)";
+            red.textContent = NAME;
+            line.appendChild(red);
+            line.appendChild(document.createTextNode(txt.slice(at + NAME.length)));
+          });
+          line.style.display = "block";
+          var h1 = line.previousElementSibling;
+          if (h1 && h1.tagName === "H1") h1.style.display = "none";
+        }
+      })();
+    </script>
     <div id="workshop-signup" style="scroll-margin-top:90px;">
     <form id="workshop-lead-form" style="max-width:380px; margin:0 auto; text-align:right; gap:6px;">
       <p style="font-weight:700; margin:0 0 6px; font-size:16px;">השאירי שם וטלפון ואחזור אלייך עם כל הפרטים בהקדם האפשרי</p>
@@ -181,15 +212,6 @@ gtag('config', 'G-MEG8NMMGTD');
       <div>
         <label for="workshop-phone" style="margin-bottom:2px;">טלפון</label>
         <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
-      </div>
-      <div>
-        <label for="workshop-call-time" style="margin-bottom:2px;">מתי נוח לך שאתקשר?</label>
-        <select id="workshop-call-time" name="callTime">
-          <option value="" selected>בחרי</option>
-          <option value="בוקר">בוקר</option>
-          <option value="צהריים">צהריים</option>
-          <option value="ערב">ערב</option>
-        </select>
       </div>
       <button type="submit" class="btn" style="margin-top:0;">השארת פרטים</button>
       <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
@@ -209,7 +231,7 @@ gtag('config', 'G-MEG8NMMGTD');
 
     <h2 class="article-subheading">מה תקבלי בסדנה</h2>
     <ul class="bullet-list">
-      <li>בדיקות גיל פיזיולוגי בתחילת הסדנה ולאורכה, כדי לעקוב אחר ההתקדמות.</li>
+      <li>בודקים מה הגוף שלך מסוגל לעשות היום, ומה הוא יוכל לעשות בסוף הסדנה.</li>
       <li>דמיון מודרך שיעזור לך לראות את עצמך בעתיד המיטבי שלך.</li>
       <li>תוכנית אימונים המותאמת לרמת היכולת האישית שלך.</li>
       <li>גלגל הבריאות ואיכות החיים.</li>
@@ -282,14 +304,14 @@ gtag('config', 'G-MEG8NMMGTD');
 <section style="background:#fff;">
   <div class="container" style="max-width:700px;">
     <div class="intro-highlight">
-      <p>מה שהסדנה מבטיחה זו לא סיסמה. הסדנה נשענת בדיוק על מה שהמחקר המדעי מראה: יש קשר בין פעילות גופנית ותזונה לא דלקתית לבין גיל פיזיולוגי צעיר יותר מהגיל הכרונולוגי. בסדנה מוסיפים לזה אימון מנטלי, ומודדים את השינוי.</p>
-      <p>בתחילת הסדנה נבצע בדיקות גיל פיזיולוגי.<br>
+      <p>מה שהסדנה מבטיחה זו לא סיסמה. הסדנה נשענת בדיוק על מה שהמחקר המדעי מראה: יש קשר בין פעילות גופנית ותזונה לא דלקתית לבין מה שהגוף מסוגל לעשות, בכל גיל. בסדנה מוסיפים לזה אימון מנטלי, ומודדים את השינוי.</p>
+      <p>בתחילת הסדנה נבדוק מה הגוף שלך מסוגל לעשות היום.<br>
       הבדיקות ישמשו נקודת פתיחה, ויאפשרו לנו למדוד את ההתקדמות לאורך כל הסדנה.</p>
     </div>
 
     <h2 class="article-subheading">מטרת הסדנה</h2>
     <ul class="bullet-list">
-      <li>להקטין את הגיל הפיזיולוגי – לשפר את הכוח, שיווי המשקל, התנועה והחיוניות, בלי קשר לגיל הכרונולוגי.</li>
+      <li>לשפר את מה שהגוף שלך מסוגל לעשות – כוח, שיווי משקל, תנועה וחיוניות, בלי קשר לגיל.</li>
       <li>לזהות אמונות מגבילות, לשבור אותן וליצור מיינדסט של צמיחה.</li>
       <li>לחזק את הגוף, הביטחון והחוסן המנטלי.</li>
       <li>לבנות הרגלים שנוכל להתמיד בהם – בתנועה, בתזונה, ולחיות כאן ועכשיו.</li>
@@ -318,7 +340,7 @@ gtag('config', 'G-MEG8NMMGTD');
     <p>במקביל, גם סעדתי את בעלי, שהיה חולה ורתוק לכיסא גלגלים.</p>
     <p>אלה היו החיים שלי במשך 30 שנה - חיים מלאי אתגרים ומשברים, ועל מנת להתגבר עליהם הייתי חייבת כל פעם מחדש להציב לעצמי מטרות מאתגרות, הרבה יותר מהמשברים שניקרו לי בדרך. בסופו של יום, כל משבר הפכתי לקרש קפיצה לאתגר הבא.</p>
     <p>הם הביאו אותי לזכות בתואר מיס פיטנס ישראל לנשים 60+, לזכות בתחרויות חתירה ארציות, ולגלוש על גלים גם בסרילנקה ומרוקו.</p>
-    <p>עד היום אני מתאמנת בחדר כושר, בקליסטניקס, מאמנת ומתאמנת בפילאטיס מכשירים. גולשת גלים וחותרת על הסאפ. הגיל הפיזיולוגי שלי היום: 42.</p>
+    <p>עד היום אני מתאמנת בחדר כושר, בקליסטניקס, מאמנת ומתאמנת בפילאטיס מכשירים. גולשת גלים וחותרת על הסאפ. בתעודת הזהות אני בת 72, אבל הגוף שלי בן 42. אני עושה דברים שאנשים בגיל 42 אפילו לא עושים, וזה שומר גם על המוח צעיר, כי הוא מתמודד עם האתגרים של גוף צעיר.</p>
     <p><strong>ההישגים שלי הם לא הסיפור. הסיפור, הוא הבחירות שאני עשיתי לאורך כל הדרך - למרות הכול, ואף על פי כן, תמיד לקום, להסתכל קדימה, ולהתחיל בכל יום ומצב בריאותי את האתגר הבא.</strong></p>
   </div>
 </section>
@@ -336,7 +358,7 @@ gtag('config', 'G-MEG8NMMGTD');
     </ul>
 
     <h3>האם צריך ניסיון קודם באימונים או בספורט?</h3>
-    <p>לא. את מתחילה מהתחלה בקצב שלך, צעד אחרי צעד מהמקום הפיזיולוגי שבו את מתחילה.</p>
+    <p>לא. את מתחילה מהתחלה בקצב שלך, צעד אחרי צעד מהמקום שבו הגוף שלך נמצא היום.</p>
 
     <h3>יש הגבלת גיל להשתתפות?</h3>
     <p>אין הגבלת גיל. בכל גיל הסדנה שלנו יכולה לעזור לך להתקדם.</p>
@@ -356,8 +378,8 @@ gtag('config', 'G-MEG8NMMGTD');
     מהנקודה שבה את נמצאת היום.<br>
     התרגילים מותאמים ליכולת של כל אחת. במצב רפואי מיוחד, בתיאום עם הרופא שלך.</p>
 
-    <h3>איך עושים את בדיקת הגיל הפיזיולוגי, גם במסלול הזום?</h3>
-    <p>באמצעות כמה תרגילי תנועה ייעודיים, שמנתחים ומודדים את הגיל הפיזיולוגי שלך.</p>
+    <h3>איך בודקים מה הגוף שלי מסוגל לעשות, גם במסלול הזום?</h3>
+    <p>באמצעות כמה תרגילי תנועה ייעודיים, שבודקים מה הגוף שלך מסוגל לעשות היום.</p>
 
     <h3>כמה משתתפות יש בקבוצה?</h3>
     <p>עד 15 משתתפות בקבוצה.</p>
