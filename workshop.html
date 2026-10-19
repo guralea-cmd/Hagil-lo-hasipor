@@ -183,7 +183,16 @@ if (location.search.indexOf('_scan=1') === -1) {
         var WORKSHOP_TOPICS = {
           // Video "למה אף אחד בבית לא סופר אותך" - boundaries / self-worth. Leah's own words, 15.10.2026.
           // 17.10.2026 (Leah): second line above the form, singular - "גם את זה תלמדי בסדנת...".
-          gvulot: ["כדי שיעריכו אותך, את חייבת קודם כל להעריך את עצמך", "גם את זה תלמדי בסדנת \"הגיל הוא לא הסיפור\"."]
+          // 19.10.2026 (Leah): continue the video's promise before the form. Middle lines ({plain:...}) are her
+          // words from the workshop doc, session 6 "גבולות וכבוד עצמי", and the chair-challenge DM she approved.
+          gvulot: [
+            "כדי שיעריכו אותך, את חייבת קודם כל להעריך את עצמך",
+            {plain: "למה הם מופיעים רק כשהם צריכים עזרה או כסף? זה קורה כי הרגלת אותם שאת תמיד שם."},
+            {plain: "כל פעם שאת מתכופפת, את מלמדת את הסביבה שאפשר להתכופף אותך עוד יותר. ברגע שאת שמה גבול, את מלמדת אותם שאת שווה."},
+            {plain: "הכוח שלך, הכסף שלך, הבריאות שלך, הזמן שלך - הם שלך."},
+            {plain: "לשים גבולות. לשנות את המצב הנפשי, כדי שחרדות, לחץ, אמונות מגבילות, פחד מכישלון וחוסר ביטחון לא ינהלו אותך. להפוך את הסיפור שלך לכוח."},
+            "גם את זה תלמדי בסדנת \"הגיל הוא לא הסיפור\"."
+          ]
         };
         var t = new URLSearchParams(location.search).get("t");
         var line = document.getElementById("workshop-topic-line");
@@ -192,7 +201,14 @@ if (location.search.indexOf('_scan=1') === -1) {
           // name inside her line is red instead.
           var NAME = "\"הגיל הוא לא הסיפור\"";
           [].concat(WORKSHOP_TOPICS[t]).forEach(function (txt, i) {
-            if (i) line.appendChild(document.createElement("br"));
+            if (typeof txt === "object") {
+              var plain = document.createElement("span");
+              plain.style.cssText = "display:block; font-weight:400; font-size:var(--text-base); margin:8px 0;";
+              plain.textContent = txt.plain;
+              line.appendChild(plain);
+              return;
+            }
+            if (i && line.lastChild && line.lastChild.tagName !== "SPAN") line.appendChild(document.createElement("br"));
             var at = txt.indexOf(NAME);
             if (at < 0) { line.appendChild(document.createTextNode(txt)); return; }
             line.appendChild(document.createTextNode(txt.slice(0, at)));
