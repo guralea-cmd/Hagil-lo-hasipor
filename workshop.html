@@ -203,7 +203,8 @@ if (location.search.indexOf('_scan=1') === -1) {
           [].concat(WORKSHOP_TOPICS[t]).forEach(function (txt, i) {
             if (typeof txt === "object") {
               var plain = document.createElement("span");
-              plain.style.cssText = "display:block; font-weight:400; font-size:var(--text-base); margin:8px 0;";
+              // 19.10.2026 (Leah, "שזה יתאים לטלפון"): small and tight so the form stays near the first screen.
+              plain.style.cssText = "display:block; font-weight:400; font-size:15px; line-height:1.4; margin:4px 0;";
               plain.textContent = txt.plain;
               line.appendChild(plain);
               return;
