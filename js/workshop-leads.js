@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
       var age = val(form, "age");
       // 10.10.2026: chair-challenge field removed from the form (Leah). reps stays an empty string for the sheet/rules.
       var reps = val(form, "reps");
+      // 20.10.2026 (Leah): the free-call offer - "מה את רוצה לשנות", short free text (column I of tab סדנה).
+      var change = val(form, "change").slice(0, 200);
       db.collection("workshop_leads").add({
         firstName: fullName,
         lastName: "",
@@ -54,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         callTime: callTime,
         age: age,
         reps: reps,
+        change: change,
         phone: phone,
         utmSource: utm.utmSource,
         utmMedium: utm.utmMedium,
@@ -72,7 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
               email: email,
               callTime: callTime,
               age: age,
-              reps: reps
+              reps: reps,
+              change: change
             });
           }
           statusEl.textContent = "תודה! אחזור אלייך בהקדם האפשרי. לאה";

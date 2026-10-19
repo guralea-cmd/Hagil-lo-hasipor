@@ -185,13 +185,10 @@ if (location.search.indexOf('_scan=1') === -1) {
           // 17.10.2026 (Leah): second line above the form, singular - "גם את זה תלמדי בסדנת...".
           // 19.10.2026 (Leah): continue the video's promise before the form. Middle lines ({plain:...}) are her
           // words from the workshop doc, session 6 "גבולות וכבוד עצמי", and the chair-challenge DM she approved.
+          // 20.10.2026 (Leah): only the first line stays; the session-6 lines and "גם את זה תלמדי" were removed,
+          // because the free-call offer (below, in the form) now follows the video's last two sentences directly.
           gvulot: [
-            "כדי שיעריכו אותך, את חייבת קודם כל להעריך את עצמך",
-            {plain: "למה הם מופיעים רק כשהם צריכים עזרה או כסף? זה קורה כי הרגלת אותם שאת תמיד שם."},
-            {plain: "כל פעם שאת מתכופפת, את מלמדת את הסביבה שאפשר להתכופף אותך עוד יותר. ברגע שאת שמה גבול, את מלמדת אותם שאת שווה."},
-            {plain: "הכוח שלך, הכסף שלך, הבריאות שלך, הזמן שלך - הם שלך."},
-            {plain: "לשים גבולות. לשנות את המצב הנפשי, כדי שחרדות, לחץ, אמונות מגבילות, פחד מכישלון וחוסר ביטחון לא ינהלו אותך. להפוך את הסיפור שלך לכוח."},
-            "גם את זה תלמדי בסדנת \"הגיל הוא לא הסיפור\"."
+            "כדי שיעריכו אותך, את חייבת קודם כל להעריך את עצמך"
           ]
         };
         var t = new URLSearchParams(location.search).get("t");
@@ -225,15 +222,13 @@ if (location.search.indexOf('_scan=1') === -1) {
         }
       })();
     </script>
-    <!-- 19.10.2026 (Leah): days and hours above the form, so she knows them before she signs up.
-         Same facts as "מועד פתיחת הסדנה" below - change both together. -->
-    <p style="font-size:15px; font-weight:400; line-height:1.5; margin:0 0 10px;">
-      <strong>בזום:</strong> יום חמישי 26.11, משעה 18:00 עד 19:30<br>
-      <strong>ברמלה:</strong> יום שישי 27.11, משעה 10:30 עד 12:00<br>רחוב החבצלת 8
-    </p>
     <div id="workshop-signup" style="scroll-margin-top:90px;">
     <form id="workshop-lead-form" style="max-width:380px; margin:0 auto; text-align:right; gap:6px;">
-      <p style="font-weight:700; margin:0 0 6px; font-size:16px;">השאירי שם וטלפון ואחזור אלייך עם כל הפרטים בהקדם האפשרי</p>
+      <!-- 20.10.2026 (Leah "מאשרת"): the form now offers the free 30-minute personal call (10 places, until Sunday 25.10).
+           Lines = her words from the free-calls post. Fields: name, phone, age, what she wants to change. -->
+      <p style="font-weight:700; margin:0 0 4px; font-size:16px;">רוצה להתחיל את השינוי הזה כבר עכשיו?</p>
+      <p style="font-weight:700; margin:0 0 4px; font-size:16px;">השבוע אני פותחת בפעם הראשונה: 10 שיחות אישיות של חצי שעה כל אחת, בחינם.</p>
+      <p style="font-weight:400; margin:0 0 6px; font-size:15px; line-height:1.4;">השאירי שם, טלפון, גיל, ובכמה מילים מה את רוצה לשנות. אני מתקשרת אלייך ונקבע.<br>יש 10 מקומות, עד יום ראשון 25.10.</p>
       <div>
         <label for="workshop-name" style="margin-bottom:2px;">שם מלא</label>
         <input type="text" id="workshop-name" name="fullName" autocomplete="name" required>
@@ -242,10 +237,24 @@ if (location.search.indexOf('_scan=1') === -1) {
         <label for="workshop-phone" style="margin-bottom:2px;">טלפון</label>
         <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
       </div>
+      <div>
+        <label for="workshop-age" style="margin-bottom:2px;">גיל</label>
+        <input type="number" id="workshop-age" name="age" inputmode="numeric" min="18" max="120" required>
+      </div>
+      <div>
+        <label for="workshop-change" style="margin-bottom:2px;">מה את רוצה לשנות</label>
+        <input type="text" id="workshop-change" name="change" maxlength="200" required>
+      </div>
       <button type="submit" class="btn" style="margin-top:0;">השארת פרטים</button>
       <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
     </form>
     </div>
+    <!-- 19.10.2026 (Leah): days and hours near the form. 20.10.2026 (Leah): moved below the form, so the free-call
+         offer comes right after the video's lines. Same facts as "מועד פתיחת הסדנה" below - change both together. -->
+    <p style="font-size:15px; font-weight:400; line-height:1.5; margin:14px 0 0;">
+      <strong>בזום:</strong> יום חמישי 26.11, משעה 18:00 עד 19:30<br>
+      <strong>ברמלה:</strong> יום שישי 27.11, משעה 10:30 עד 12:00<br>רחוב החבצלת 8
+    </p>
   </div>
 </section>
 
@@ -452,8 +461,8 @@ if (location.search.indexOf('_scan=1') === -1) {
 // 13.10.2026 (לאה "כן"): בדף הסדנה הכפתור הירוק שולח בקשה שלאה תתקשר, לא "הנה הסיפור שלי".
 (function(){var T="https://wa.me/972506991723?text="+encodeURIComponent("היי לאה, אשמח שתתקשרי אליי לגבי הסדנה \"הגיל הוא לא הסיפור\". השם שלי:");function fix(){var b=document.querySelector("a.wa-float-btn");if(b&&b.href!==T){b.href=T;b.setAttribute("aria-label","וואטסאפ ללאה - בקשה לשיחה על הסדנה");}return !!b;}if(!fix()){document.addEventListener("DOMContentLoaded",fix);window.addEventListener("load",fix);var n=0,t=setInterval(function(){if(fix()||++n>40)clearInterval(t);},250);}})();
 </script>
-<script src="js/leads-sheet.js?v=5"></script>
-<script src="js/workshop-leads.js?v=14"></script>
+<script src="js/leads-sheet.js?v=6"></script>
+<script src="js/workshop-leads.js?v=15"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
