@@ -142,7 +142,35 @@ if (location.search.indexOf('_scan=1') === -1) {
   }
 ]
 </script>
-</head>
+<style>
+.fl{background:#eee8e0;padding:10px 10px 20px}
+.fl .page{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.fl .top{background:#b83227;color:#fff;border-radius:18px;padding:12px 14px;text-align:center;position:relative;overflow:hidden}
+.fl .top:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;background:rgba(255,176,32,.18);top:-85px;left:-60px}
+.fl .kicker{font-size:14px;font-weight:600;color:#ffd27a;position:relative}
+.fl .top h1{font-size:30px;font-weight:800;line-height:1.1;position:relative;color:#fff;margin:0}
+.fl .tag{font-size:15px;font-weight:600;margin-top:4px;position:relative}
+.fl .card{background:#fff;border-radius:18px;padding:10px 14px;text-align:right}
+.fl h2{font-size:18px;font-weight:800;color:#b83227;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+.fl h2:before{content:"";width:18px;height:5px;background:#ffb020;border-radius:4px;display:inline-block}
+.fl ul{list-style:none;display:flex;flex-direction:column;gap:3px;margin:0;padding:0}
+.fl li{font-size:14.5px;line-height:1.38;padding-right:16px;position:relative;margin:0}
+.fl li:before{content:"";position:absolute;right:0;top:6px;width:8px;height:8px;border-radius:50%;background:#b83227}
+.fl ul.sub{display:flex;flex-direction:row;flex-wrap:wrap;gap:2px 12px;margin-top:2px;padding-right:2px}
+.fl ul.sub li{font-size:13.5px;padding-right:0;line-height:1.3}
+.fl ul.sub li:before{content:"•";position:static;display:inline;width:auto;height:auto;border-radius:0;background:none;margin-left:4px;font-weight:800}
+.fl .row{display:flex;gap:8px}
+.fl .row .card{flex:1}
+.fl .date{background:#181310;color:#fff;border-radius:18px;padding:10px 10px;text-align:center;flex:1.2}
+.fl .date .t{font-size:15px;font-weight:600;color:#ffd27a}
+.fl .date .gs{display:flex;gap:8px;justify-content:center}
+.fl .date .g{flex:1;margin-top:6px}
+.fl .date .g+.g{border-right:1px solid #999;padding-right:8px}
+.fl .date .d2{font-size:15px;font-weight:800}
+.fl .date .p2{font-size:13px;font-weight:700;line-height:1.35}
+.fl .research{border:3px solid #b83227;background:#fbf5ee}
+.fl .research p{margin:0;font-size:14.5px;line-height:1.45;font-weight:700}
+</style></head>
 <body>
 
 <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
@@ -244,166 +272,63 @@ if (location.search.indexOf('_scan=1') === -1) {
     </div>
     <!-- 19.10.2026 (Leah): days and hours near the form. 20.10.2026 (Leah): moved below the form, so the free-call
          offer comes right after the video's lines. Same facts as "מועד פתיחת הסדנה" below - change both together. -->
-    <p style="font-size:15px; font-weight:400; line-height:1.5; margin:14px 0 0;">
-      <strong>בזום:</strong> יום חמישי 26.11, משעה 18:00 עד 19:30<br>
-      <strong>ברמלה:</strong> יום שישי 27.11, משעה 10:30 עד 12:00<br>רחוב החבצלת 8
-    </p>
+    
   </div>
 </section>
+<!-- 23.10.2026 (Leah): the page body is the A4 flyer layout, shortened by her (no red title, no about/FAQ/testimonials). Dates only in the black box. -->
+<section class="fl"><div class="page">
+  <div class="card research"><h2>הסדנה מגובה במחקרים</h2><p>הסדנה נשענת על מה שהמחקר המדעי מראה: יש קשר בין פעילות גופנית ותזונה לא דלקתית לבין מה שהגוף מסוגל לעשות, בכל גיל. בסדנה מוסיפים לזה אימון מנטלי, ומודדים את השינוי.</p></div>
 
-<section style="background:#fff;">
-  <div class="container" style="max-width:700px;">
-    <h2 class="article-subheading">למי מיועדת הסדנה?</h2>
-    <ul class="bullet-list">
+  <div class="card">
+    <h2>למי מיועדת הסדנה?</h2>
+    <ul>
       <li>לנשים שעברו משברים בחיים.</li>
       <li>לנשים שמסתכלות במראה ושואלות את עצמן: "לאן נעלמה האישה שהייתי?"</li>
       <li>לנשים שמביטות קדימה, לא מסתפקות בהישגים שלהן, ויודעות שהן יכולות להגיע להישגים גבוהים יותר ברמת הכוח, התנועה, הביטחון והחיוניות.</li>
     </ul>
+  </div>
 
-    <h2 class="article-subheading">מה תקבלי בסדנה</h2>
-    <ul class="bullet-list">
-      <li>בודקים מה הגוף שלך מסוגל לעשות היום, ומה הוא יוכל לעשות בסוף הסדנה.</li>
-      <li>דמיון מודרך שיעזור לך לראות את עצמך בעתיד המיטבי שלך.</li>
-      <li>תוכנית אימונים המותאמת לרמת היכולת האישית שלך.</li>
-      <li>גלגל הבריאות ואיכות החיים.</li>
-      <li>כלים שיעזרו לשדרג את המיינדסט (מערכת ההפעלה שלך), כך שתקדם אותך לעבר המטרה ולא תעצור אותך.</li>
-      <li>כלים שיעזרו לך לחזק את הבסיס הפיזי של החוסן המנטלי.</li>
+  <div class="card">
+    <h2>מטרת הסדנה</h2>
+    <ul>
+      <li>לשפר את הכוח, שיווי המשקל, התנועה והחיוניות, בלי קשר לגיל הכרונולוגי.</li>
+      <li>לזהות אמונות מגבילות, לשבור אותן וליצור מיינדסט של צמיחה.</li>
+      <li>לחזק את הגוף, הביטחון והחוסן המנטלי:<ul class="sub"><li>טיפול במשברים</li><li>חרדות</li><li>לחץ</li><li>אמונות מגבילות</li><li>פחד מכישלון</li><li>חוסר ביטחון</li><li>גבולות וכבוד עצמי</li><li>להפוך את הסיפור שלך לכוח</li></ul></li>
+      <li>לבנות מטרות והרגלים שנוכל להתמיד בהם.</li>
+      
+      
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>מה תקבלי בסדנה</h2>
+    <ul>
+      <li>כלים שיעזרו לשדרג את המיינדסט ואת החוסן המנטלי, כך שתקדם אותך לעבר המטרה ולא תעצור אותך.</li>
       <li>ליווי שבועי שלי בוואטסאפ בין המפגשים.</li>
       <li>הקלטות של כל המפגשים לצפייה חוזרת.</li>
     </ul>
-
-    <h2 class="article-subheading">איך בנויה הסדנה?</h2>
-    <ul class="bullet-list">
-      <li>הסדנה כוללת 7 מפגשים, במשך 7 שבועות.</li>
-      <li>כל מפגש נמשך 90 דקות.</li>
-      <li>הסילבוס המלא, הכולל את תוכנית הלימודים של הסדנה, יימסר לנרשמות.</li>
-    </ul>
-
-    <h2 class="article-subheading">מועד פתיחת הסדנה</h2>
-    <p>הסדנה נפתחת בשתי קבוצות:</p>
-    <p><strong>קבוצה 1 - מסלול זום</strong></p>
-    <ul class="bullet-list">
-      <li>התאריך: 26.11.2026.</li>
-      <li>יום: חמישי.</li>
-      <li>שעות: 18:00–19:30.</li>
-    </ul>
-    <p><strong>קבוצה 2 - מסלול פרונטלי, רחוב החבצלת 8 ברמלה</strong></p>
-    <ul class="bullet-list">
-      <li>התאריך: 27.11.2026.</li>
-      <li>יום: שישי.</li>
-      <li>שעות: 10:30–12:00.</li>
-    </ul>
   </div>
-</section>
 
-<!-- 23.10.2026 (Leah): the "מה אומרים עליי" studio testimonials were removed - they are about the studio, not the workshop. -->
-
-<section style="background:#fff;">
-  <div class="container" style="max-width:700px;">
-    <div class="intro-highlight">
-      <p>מה שהסדנה מבטיחה זו לא סיסמה. הסדנה נשענת בדיוק על מה שהמחקר המדעי מראה: יש קשר בין פעילות גופנית ותזונה לא דלקתית לבין מה שהגוף מסוגל לעשות, בכל גיל. בסדנה מוסיפים לזה אימון מנטלי, ומודדים את השינוי.</p>
-      <p>בתחילת הסדנה נבדוק מה הגוף שלך מסוגל לעשות היום.<br>
-      הבדיקות ישמשו נקודת פתיחה, ויאפשרו לנו למדוד את ההתקדמות לאורך כל הסדנה.</p>
+  <div class="row">
+    <div class="card">
+      <h2>איך בנויה הסדנה?</h2>
+      <ul>
+        <li>הסדנה כוללת 7 מפגשים, במשך 7 שבועות.</li>
+        <li>כל מפגש נמשך 90 דקות.</li>
+        <li>עד 15 משתתפות בקבוצה.</li>
+      </ul>
     </div>
-
-    <h2 class="article-subheading">מטרת הסדנה</h2>
-    <ul class="bullet-list">
-      <li>לשפר את מה שהגוף שלך מסוגל לעשות – כוח, שיווי משקל, תנועה וחיוניות, בלי קשר לגיל.</li>
-      <li>לזהות אמונות מגבילות, לשבור אותן וליצור מיינדסט של צמיחה.</li>
-      <li>לחזק את הגוף, הביטחון והחוסן המנטלי.</li>
-      <li>לבנות הרגלים שנוכל להתמיד בהם – בתנועה, בתזונה, ולחיות כאן ועכשיו.</li>
-      <li>לבנות מטרות לפי מודל SMART.</li>
-      <li>להפוך את הידע לפעולה.</li>
-    </ul>
-
-    <h2 class="article-subheading">קבוצת הבוגרות</h2>
-    <p>בסיום הסדנה תוכלי להצטרף לקבוצת הבוגרות ולהמשיך לקבל ממני טיפים ועדכונים בוואטסאפ ובמייל, והזמנות להרצאות זום שעליהן אודיע. להרצאות תוכלי להזמין גם חברות ובני משפחה.</p>
-  </div>
-</section>
-
-<section class="workshop-about" style="background:#fff;">
-  <div class="container" style="max-width:700px;">
-    <h2>קצת עליי</h2>
-    <div style="text-align:center; margin:8px 0 16px;">
-      <div class="workshop-hero-video video-wrap video-wrap--portrait" style="aspect-ratio:576/1164; max-width:220px; margin:0 auto;">
-      <video controls preload="metadata" playsinline poster="images/about-video-poster-1.jpg">
-        <source src="videos/about-mi-zot-leah-gura.mp4" type="video/mp4">
-      </video>
-      </div>
+    <div class="date">
+      <div class="t">מועד פתיחת הסדנאות</div>
+      <div class="gs"><div class="g"><div class="d2">מסלול זום</div><div class="p2">יום חמישי, 26.11.2026</div><div class="p2"><span dir="ltr">18:00–19:30</span></div></div>
+      <div class="g"><div class="d2">מסלול פרונטלי</div><div class="p2">יום שישי, 27.11.2026</div><div class="p2"><span dir="ltr">10:30–12:00</span></div><div class="p2">רחוב החבצלת 8 ברמלה</div></div></div>
     </div>
-    <p>שמי לאה גורא. אני בת 72.</p>
-    <p>בגיל 45 עברתי ניתוח לב פתוח ואירוע מוחי, והייתי משותקת בחצי גוף. במבט לאחור, זאת הייתה המתנה הכי מאתגרת שקיבלתי. בזכותה צמחתי להיות מאמנת כושר, מאמנת פילאטיס שיקומי, ומנטורית לחוסן מנטלי. וזה לא קרה ביום אחד.</p>
-    <p>חזרתי הביתה אחרי ניתוח הלב והתחלתי לשקם את עצמי בלי שום תוכנית שיקום - רק מתוך הקשבה לגוף.</p>
-    <p>במקביל, גם סעדתי את בעלי, שהיה חולה ורתוק לכיסא גלגלים.</p>
-    <p>אלה היו החיים שלי במשך 30 שנה - חיים מלאי אתגרים ומשברים, ועל מנת להתגבר עליהם הייתי חייבת כל פעם מחדש להציב לעצמי מטרות מאתגרות, הרבה יותר מהמשברים שניקרו לי בדרך. בסופו של יום, כל משבר הפכתי לקרש קפיצה לאתגר הבא.</p>
-    <p>הם הביאו אותי לזכות בתואר מיס פיטנס ישראל לנשים 60+, לזכות בתחרויות חתירה ארציות, ולגלוש על גלים גם בסרילנקה ומרוקו.</p>
-    <p>עד היום אני מתאמנת בחדר כושר, בקליסטניקס, מאמנת ומתאמנת בפילאטיס מכשירים. גולשת גלים וחותרת על הסאפ. בתעודת הזהות אני בת 72, אבל הגוף שלי בן 42. אני עושה דברים שאנשים בגיל 42 אפילו לא עושים, וזה שומר גם על המוח צעיר, כי הוא מתמודד עם האתגרים של גוף צעיר.</p>
-    <p><strong>ההישגים שלי הם לא הסיפור. הסיפור, הוא הבחירות שאני עשיתי לאורך כל הדרך - למרות הכול, ואף על פי כן, תמיד לקום, להסתכל קדימה, ולהתחיל בכל יום ומצב בריאותי את האתגר הבא.</strong></p>
   </div>
+
+  
+</div>
+  <div style="text-align:center;margin-top:12px;"><a href="#workshop-signup" class="btn">פרטים והרשמה לסדנה</a></div>
 </section>
-
-<section id="workshop-faq" style="background:#fff;">
-  <div class="container" style="max-width:700px;">
-    <h2 class="article-subheading">שאלות נפוצות</h2>
-
-    <h3>למי מיועדת הסדנה?</h3>
-    <p>הסדנה הזאת נולדה בשבילך:</p>
-    <ul class="bullet-list">
-      <li>אם עברת משבר רגשי, בריאותי, זוגי, או פשוט משבר של החיים.</li>
-      <li>אם את רוצה לחזור ולהרגיש חיונית, חזקה וקלילה.</li>
-      <li>אם את רוצה להתחיל מחדש - בראש שקט, בלב פתוח, ובגוף חזק.</li>
-    </ul>
-
-    <h3>האם צריך ניסיון קודם באימונים או בספורט?</h3>
-    <p>לא. את מתחילה מהתחלה בקצב שלך, צעד אחרי צעד מהמקום שבו הגוף שלך נמצא היום.</p>
-
-    <h3>יש הגבלת גיל להשתתפות?</h3>
-    <p>אין הגבלת גיל. בכל גיל הסדנה שלנו יכולה לעזור לך להתקדם.</p>
-
-    <h3>מה קורה אם מפספסים מפגש?</h3>
-    <p>כל המפגשים מוקלטים, ואת יכולה לצפות בהם שוב בכל זמן שנוח לך. יש גם ליווי שבועי שלי בוואטסאפ בין המפגשים.</p>
-
-    <h3>מה ההבדל בין שני המסלולים?</h3>
-    <p>שני המסלולים כוללים בדיוק את אותו תוכן, רק בפורמט שונה: מסלול זום מתקיים ביום חמישי, 26.11.2026, בשעה 18:00. מסלול פרונטלי מתקיים ברחוב החבצלת 8 ברמלה, ביום שישי, 27.11.2026, בשעה 10:30. תבחרי את מה שמתאים לך.</p>
-
-    <h3>מה צריך כדי להשתתף במסלול הזום?</h3>
-    <p>מצלמה, מיקרופון, מחברת וכלי כתיבה, ומקום שקט. מקום שבו את מרגישה בנוח לדבר, להקשיב, ולהיות רגועה ולא בלחץ.</p>
-
-    <h3>יש מגבלות בריאותיות שמונעות השתתפות?</h3>
-    <p>אין מגבלות בריאותיות שמונעות השתתפות.<br>
-    בכל גיל, בכל מצב בריאותי אפשר להתחיל.<br>
-    מהנקודה שבה את נמצאת היום.<br>
-    התרגילים מותאמים ליכולת של כל אחת. במצב רפואי מיוחד, בתיאום עם הרופא שלך.</p>
-
-    <h3>איך בודקים מה הגוף שלי מסוגל לעשות, גם במסלול הזום?</h3>
-    <p>באמצעות כמה תרגילי תנועה ייעודיים, שבודקים מה הגוף שלך מסוגל לעשות היום.</p>
-
-    <h3>כמה משתתפות יש בקבוצה?</h3>
-    <p>עד 15 משתתפות בקבוצה.</p>
-
-
-    <h3>אפשר להצטרף באמצע, אחרי שהסדנה כבר התחילה?</h3>
-    <p>כן. תקבלי את כל ההקלטות והחומרים מההתחלה.</p>
-
-    <h3>מה מדיניות הביטולים?</h3>
-    <ul class="bullet-list">
-      <li>ביטול יותר משבועיים לפני תחילת הסדנה - החזר מלא.</li>
-      <li>ביטול בתוך השבועיים שלפני - דמי ביטול של 25%.</li>
-      <li>פרישה אחרי שהסדנה כבר התחילה - ללא החזר, עם אפשרות (לא הבטחה) להצטרף לקבוצה הבאה שתיפתח.</li>
-    </ul>
-    <p>כל התנאים, כולל ביטולים, הקלטות ובריאות, כתובים ב<a href="workshop-terms.html">תקנון הסדנה</a>.</p>
-
-    <h3>מה קורה אחרי שהסדנה נגמרת?</h3>
-    <p>בסיום הסדנה תוכלי להצטרף לקבוצת הבוגרות ולהמשיך לקבל ממני טיפים ועדכונים בוואטסאפ ובמייל, והזמנות להרצאות זום שעליהן אודיע. להרצאות תוכלי להזמין גם חברות ובני משפחה.</p>
-  </div>
-</section>
-
-<section style="background:#fff;">
-  <div class="container" style="max-width:380px; text-align:center;">
-    <a href="#workshop-signup" class="btn">פרטים והרשמה לסדנה</a>
-  </div>
-</section>
-
 <footer>
   <p>הגיל הוא לא הסיפור © <span id="year"></span> לאה גורא | כל הזכויות שמורות</p>
   <p><a href="accessibility.html">הצהרת נגישות</a></p>
