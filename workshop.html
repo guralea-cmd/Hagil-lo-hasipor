@@ -237,14 +237,7 @@ if (location.search.indexOf('_scan=1') === -1) {
         <label for="workshop-phone" style="margin-bottom:2px;">טלפון</label>
         <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
       </div>
-      <div>
-        <label for="workshop-age" style="margin-bottom:2px;">גיל</label>
-        <input type="number" id="workshop-age" name="age" inputmode="numeric" min="18" max="120" required>
-      </div>
-      <div>
-        <label for="workshop-change" style="margin-bottom:2px;">מה את רוצה לשנות</label>
-        <input type="text" id="workshop-change" name="change" maxlength="200" required>
-      </div>
+      <!-- 23.10.2026 (Leah "תורידי מיד את נושא הגיל ומה את רוצה לשנות"): only name + phone. workshop-leads.js sends "" for the removed fields. -->
       <button type="submit" class="btn" style="margin-top:0;">השארת פרטים</button>
       <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
     </form>
