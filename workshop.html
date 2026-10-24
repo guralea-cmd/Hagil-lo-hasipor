@@ -50,6 +50,8 @@ if (location.search.indexOf('_scan=1') === -1) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="css/style.css?v=99">
+<!-- 24.10.2026: landing page has one goal - the form. The site-wide WhatsApp float is hidden here (Leah 29.9: no WhatsApp for leads). -->
+<style>.wa-float-btn{display:none!important}</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -207,9 +209,16 @@ if (location.search.indexOf('_scan=1') === -1) {
          New order: what + when (the ad title, her text) / 7 meetings + places (her text) / who it is for (her line from
          the card below) / form. The video-title line ("השינוי שאת חולמת עליו...") and "אז למה את מחכה?..." are gone.
          The old per-video WORKSHOP_TOPICS line was removed with them; ?t=gvulot in the ad link still works (ignored). -->
-    <h1 style="margin-bottom:8px; font-size:clamp(22px,6.5vw,30px); line-height:1.25;">הסדנה <span style="color:var(--color-primary);">"הגיל הוא לא הסיפור"</span> מתחילה ב-26.11</h1>
-    <p style="font-size:17px; font-weight:700; margin:0 0 10px; line-height:1.35;">7 מפגשים, בזום מהבית או פרונטלי ברחוב החבצלת 8 ברמלה.</p>
-    <p style="font-size:16px; margin:0 0 14px; line-height:1.4;">לנשים שמסתכלות במראה ושואלות את עצמן: "לאן נעלמה האישה שהייתי?"</p>
+    <!-- 24.10.2026 evening (Leah: "תעשי מחקר... תבדקי אם עשית לי הכללים האלה ואם לא אז תתקני"): cold paid-social traffic needs
+         who-is-this + trust before the phone field. Photo = a frame from the ad video itself (message match with the ad);
+         bio = her own sentences from about.html, shortened; "עד 15 משתתפות" = her text from the card below. -->
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; text-align:right;">
+      <img src="images/workshop-leah-2026-10-24.jpg" alt="לאה גורא" width="84" height="84" style="width:84px; height:84px; border-radius:50%; object-fit:cover; flex:0 0 84px; border:3px solid var(--color-primary);">
+      <h1 style="margin:0; font-size:clamp(21px,6vw,28px); line-height:1.25;">הסדנה <span style="color:var(--color-primary);">"הגיל הוא לא הסיפור"</span> מתחילה ב-26.11</h1>
+    </div>
+    <p style="font-size:17px; font-weight:700; margin:0 0 8px; line-height:1.35;">7 מפגשים, בזום מהבית או פרונטלי ברחוב החבצלת 8 ברמלה. עד 15 משתתפות בקבוצה.</p>
+    <p style="font-size:15px; margin:0 0 8px; line-height:1.4;">אני לאה גורא, בת 72. בגיל 45 עברתי ניתוח לב פתוח ואירוע מוחי והייתי משותקת בחצי גוף. היום אני מאמנת כושר, מאמנת פילאטיס שיקומי ומנטורית לחוסן מנטלי.</p>
+    <p style="font-size:16px; font-weight:700; margin:0 0 12px; line-height:1.4;">הסדנה לנשים שמסתכלות במראה ושואלות את עצמן: "לאן נעלמה האישה שהייתי?"</p>
     <div id="workshop-signup" style="scroll-margin-top:90px;">
     <form id="workshop-lead-form" style="max-width:380px; margin:0 auto; text-align:right; gap:6px;">
       <!-- 20.10.2026 (Leah "מאשרת"): free personal-call offer. 21.10.2026 (Leah "תורידי את ה10 שיחות"): the "10 שיחות... עד 25.10" lines removed, form unchanged.
@@ -301,10 +310,7 @@ if (location.search.indexOf('_scan=1') === -1) {
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="js/firebase-config.js?v=4"></script>
 <script src="js/main.js?v=13"></script>
-<script>
-// 13.10.2026 (לאה "כן"): בדף הסדנה הכפתור הירוק שולח בקשה שלאה תתקשר, לא "הנה הסיפור שלי".
-(function(){var T="https://wa.me/972506991723?text="+encodeURIComponent("היי לאה, אשמח שתתקשרי אליי לגבי הסדנה \"הגיל הוא לא הסיפור\". השם שלי:");function fix(){var b=document.querySelector("a.wa-float-btn");if(b&&b.href!==T){b.href=T;b.setAttribute("aria-label","וואטסאפ ללאה - בקשה לשיחה על הסדנה");}return !!b;}if(!fix()){document.addEventListener("DOMContentLoaded",fix);window.addEventListener("load",fix);var n=0,t=setInterval(function(){if(fix()||++n>40)clearInterval(t);},250);}})();
-</script>
+<!-- 24.10.2026: WhatsApp float script removed - the float is hidden on this page. -->
 <script src="js/leads-sheet.js?v=6"></script>
 <script src="js/workshop-leads.js?v=15"></script>
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
