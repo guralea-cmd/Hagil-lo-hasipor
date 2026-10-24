@@ -202,62 +202,18 @@ if (location.search.indexOf('_scan=1') === -1) {
 
 <section class="hero" id="main-content" style="padding-top:18px; padding-bottom:18px;">
   <div class="container" style="max-width:520px;">
-    <h1 style="margin-bottom:8px; font-size:clamp(24px,7vw,32px); line-height:1.25;">הגיל הוא לא הסיפור</h1>
-    <!-- 15.10.2026 (Leah): one headline per video. The ad link carries ?t=<topic>; the line below is filled from
-         WORKSHOP_TOPICS. Without ?t (posts, bio, site links) it stays hidden. Add a topic = add one entry. -->
-    <p id="workshop-topic-line" style="display:none; font-size:var(--text-lg); font-weight:700; margin:0 0 12px; line-height:1.35;"></p>
-    <script>
-      (function () {
-        var WORKSHOP_TOPICS = {
-          // Video "למה אף אחד בבית לא סופר אותך" - boundaries / self-worth. Leah's own words, 15.10.2026.
-          // 17.10.2026 (Leah): second line above the form, singular - "גם את זה תלמדי בסדנת...".
-          // 19.10.2026 (Leah): continue the video's promise before the form. Middle lines ({plain:...}) are her
-          // words from the workshop doc, session 6 "גבולות וכבוד עצמי", and the chair-challenge DM she approved.
-          // 20.10.2026 (Leah): only the first line stays; the session-6 lines and "גם את זה תלמדי" were removed,
-          // because the free-call offer (below, in the form) now follows the video's last two sentences directly.
-          // 23.10.2026 (Leah): new video "השינוי שאת חולמת עליו" - its title replaces the line above. The bio
-          // page (today.html) and the ad both link here with ?t=gvulot, so the key stays.
-          gvulot: [
-            "השינוי שאת חולמת עליו קרוב הרבה יותר ממה שאת חושבת..."
-          ]
-        };
-        var t = new URLSearchParams(location.search).get("t");
-        var line = document.getElementById("workshop-topic-line");
-        if (t && WORKSHOP_TOPICS[t] && line) {
-          // 18.10.2026 (Leah): on a video page the big "הגיל הוא לא הסיפור" headline goes, and the workshop
-          // name inside her line is red instead.
-          var NAME = "\"הגיל הוא לא הסיפור\"";
-          [].concat(WORKSHOP_TOPICS[t]).forEach(function (txt, i) {
-            if (typeof txt === "object") {
-              var plain = document.createElement("span");
-              // 19.10.2026 (Leah, "שזה יתאים לטלפון"): small and tight so the form stays near the first screen.
-              plain.style.cssText = "display:block; font-weight:400; font-size:15px; line-height:1.4; margin:4px 0;";
-              plain.textContent = txt.plain;
-              line.appendChild(plain);
-              return;
-            }
-            if (i && line.lastChild && line.lastChild.tagName !== "SPAN") line.appendChild(document.createElement("br"));
-            var at = txt.indexOf(NAME);
-            if (at < 0) { line.appendChild(document.createTextNode(txt)); return; }
-            line.appendChild(document.createTextNode(txt.slice(0, at)));
-            var red = document.createElement("span");
-            red.style.color = "var(--color-primary)";
-            red.textContent = NAME;
-            line.appendChild(red);
-            line.appendChild(document.createTextNode(txt.slice(at + NAME.length)));
-          });
-          line.style.display = "block";
-          var h1 = line.previousElementSibling;
-          if (h1 && h1.tagName === "H1") h1.style.display = "none";
-        }
-      })();
-    </script>
+    <!-- 24.10.2026 (Leah: "תשני את הסדר הכי טוב שיענה על כל השאלות ויאפשר לה להשאיר פרטים"): Clarity showed 67 ad visits,
+         1 tap (the logo), nobody touched the form - the first screen asked for a phone before saying what/when/where.
+         New order: what + when (the ad title, her text) / 7 meetings + places (her text) / who it is for (her line from
+         the card below) / form. The video-title line ("השינוי שאת חולמת עליו...") and "אז למה את מחכה?..." are gone.
+         The old per-video WORKSHOP_TOPICS line was removed with them; ?t=gvulot in the ad link still works (ignored). -->
+    <h1 style="margin-bottom:8px; font-size:clamp(22px,6.5vw,30px); line-height:1.25;">הסדנה <span style="color:var(--color-primary);">"הגיל הוא לא הסיפור"</span> מתחילה ב-26.11</h1>
+    <p style="font-size:17px; font-weight:700; margin:0 0 10px; line-height:1.35;">7 מפגשים, בזום מהבית או פרונטלי ברחוב החבצלת 8 ברמלה.</p>
+    <p style="font-size:16px; margin:0 0 14px; line-height:1.4;">לנשים שמסתכלות במראה ושואלות את עצמן: "לאן נעלמה האישה שהייתי?"</p>
     <div id="workshop-signup" style="scroll-margin-top:90px;">
     <form id="workshop-lead-form" style="max-width:380px; margin:0 auto; text-align:right; gap:6px;">
       <!-- 20.10.2026 (Leah "מאשרת"): free personal-call offer. 21.10.2026 (Leah "תורידי את ה10 שיחות"): the "10 שיחות... עד 25.10" lines removed, form unchanged.
            Lines = her words from the free-calls post. Fields: name, phone, age, what she wants to change. -->
-      <!-- 23.10.2026 (Leah): "רוצה להתחיל את השינוי הזה כבר עכשיו?" replaced by her line "אז למה את מחכה תרשמי את הפרטים שלך עכשיו". -->
-      <p style="font-weight:700; margin:0 0 4px; font-size:16px;">אז למה את מחכה? תרשמי את הפרטים שלך עכשיו!</p>
       <div>
         <label for="workshop-name" style="margin-bottom:2px;">שם מלא</label>
         <input type="text" id="workshop-name" name="fullName" autocomplete="name" required>
@@ -267,7 +223,10 @@ if (location.search.indexOf('_scan=1') === -1) {
         <input type="tel" id="workshop-phone" name="phone" autocomplete="tel" required>
       </div>
       <!-- 23.10.2026 (Leah "תורידי מיד את נושא הגיל ומה את רוצה לשנות"): only name + phone. workshop-leads.js sends "" for the removed fields. -->
-      <button type="submit" class="btn" style="margin-top:0;">השארת פרטים</button>
+      <!-- 24.10.2026: button text proposed by Claude in the reorder plan Leah approved ("או קי... תשני את הסדר"); she may replace it. -->
+      <button type="submit" class="btn" style="margin-top:0;">אני רוצה פרטים על הסדנה</button>
+      <!-- 24.10.2026 (Leah: "נחזור אליה בהקדם עם כל הפרטים") - what happens after she leaves her phone. -->
+      <p style="font-size:15px; margin:6px 0 0; text-align:center;">נחזור אלייך בהקדם עם כל הפרטים.</p>
       <p id="workshop-lead-status" class="form-status" aria-live="polite"></p>
     </form>
     </div>
