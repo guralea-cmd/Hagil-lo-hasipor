@@ -212,6 +212,7 @@ if (location.search.indexOf('_scan=1') === -1) {
     <!-- 24.10.2026 evening (Leah: "תעשי מחקר... תבדקי אם עשית לי הכללים האלה ואם לא אז תתקני"): cold paid-social traffic needs
          who-is-this + trust before the phone field. Photo = a frame from the ad video itself (message match with the ad);
          bio = her own sentences from about.html, shortened; "עד 15 משתתפות" = her text from the card below. -->
+    <div id="lp-default">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; text-align:right;">
       <img src="images/workshop-leah-2026-10-24.jpg" alt="לאה גורא" width="84" height="84" style="width:84px; height:84px; border-radius:50%; object-fit:cover; flex:0 0 84px; border:3px solid var(--color-primary);">
       <h1 style="margin:0; font-size:clamp(21px,6vw,28px); line-height:1.25;">הסדנה <span style="color:var(--color-primary);">"הגיל הוא לא הסיפור"</span> מתחילה ב-26.11</h1>
@@ -219,6 +220,12 @@ if (location.search.indexOf('_scan=1') === -1) {
     <p style="font-size:17px; font-weight:700; margin:0 0 8px; line-height:1.35;">7 מפגשים, בזום מהבית או פרונטלי ברחוב החבצלת 8 ברמלה. עד 15 משתתפות בקבוצה.</p>
     <p style="font-size:15px; margin:0 0 8px; line-height:1.4;">אני לאה גורא, בת 72. בגיל 45 עברתי ניתוח לב פתוח ואירוע מוחי והייתי משותקת בחצי גוף. היום אני מאמנת כושר, מאמנת פילאטיס שיקומי ומנטורית לחוסן מנטלי.</p>
     <p style="font-size:16px; font-weight:700; margin:0 0 12px; line-height:1.4;">הסדנה לנשים שמסתכלות במראה ושואלות את עצמן: "לאן נעלמה האישה שהייתי?"</p>
+    </div>
+    <!-- 30.10.2026 (Leah "2 תעלי"): the first screen for the ad "למה אף אחד בבית לא סופר אותך?" only (?t=gvulot), her words from the approved mockup. Everyone else sees lp-default. -->
+    <div id="lp-gvulot" hidden>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; text-align:right;"><img src="images/workshop-leah-2026-10-24.jpg" alt="לאה גורא" width="84" height="84" style="width:84px; height:84px; border-radius:50%; object-fit:cover; flex:0 0 84px; border:3px solid var(--color-primary);"><h1 style="margin:0; font-size:clamp(21px,6vw,27px); line-height:1.25;">כדי שיעריכו אותך, את חייבת קודם כל להעריך את עצמך</h1></div><p style="font-size:18px; font-weight:700; margin:0 0 8px; line-height:1.35;">גם את זה תלמדי בסדנת <span style="color:var(--color-primary);">"הגיל הוא לא הסיפור"</span>.</p><p style="font-size:16px; font-weight:700; margin:0 0 8px; line-height:1.35; color:var(--color-primary);">בנוסף, תלמדי להתמודד עם: חרדות, לחץ, פחד מכישלון, חוסר ביטחון עצמי, משברים, ולבנות הרגלים חדשים ועוד…</p><p style="font-size:15px; margin:0 0 10px; line-height:1.4;">אני לאה גורא, בת 72. בגיל 45 עברתי ניתוח לב פתוח ואירוע מוחי והייתי משותקת בחצי גוף. היום אני מאמנת כושר, מאמנת פילאטיס שיקומי ומנטורית לחוסן מנטלי.</p><p style="font-size:17px; font-weight:700; margin:0 0 8px; line-height:1.35;">מתחילה ב-26.11. 7 מפגשים, בזום מהבית או פרונטלי ברחוב החבצלת 8 ברמלה. עד 15 משתתפות בקבוצה.</p>
+    </div>
+    <script>if(/[?&]t=gvulot(&|$)/.test(location.search)){document.getElementById("lp-default").hidden=true;document.getElementById("lp-gvulot").hidden=false;}</script>
     <div id="workshop-signup" style="scroll-margin-top:90px;">
     <form id="workshop-lead-form" style="max-width:380px; margin:0 auto; text-align:right; gap:6px;">
       <!-- 20.10.2026 (Leah "מאשרת"): free personal-call offer. 21.10.2026 (Leah "תורידי את ה10 שיחות"): the "10 שיחות... עד 25.10" lines removed, form unchanged.
