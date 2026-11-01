@@ -31,6 +31,13 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
+      // 1.11.2026 (Leah): a lead left 8 digits and could not be reached. Same wording as js/bat-kama.js.
+      if (val(form, "phone").replace(/\D/g, "").length < 9) {
+        statusEl.textContent = "צריך שם ומספר טלפון מלא, כדי שאוכל לחזור אלייך.";
+        statusEl.classList.add("error");
+        return;
+      }
+
       var submitBtn = form.querySelector("button[type=submit]");
       submitBtn.disabled = true;
       statusEl.textContent = "שולח...";
