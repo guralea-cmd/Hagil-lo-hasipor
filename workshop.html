@@ -214,6 +214,11 @@ if (location.search.indexOf('_scan=1') === -1) {
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; text-align:right;"><img src="images/workshop-leah-smile5-2026-11-11.jpg" alt="לאה גורא" width="84" height="84" style="width:84px; height:84px; border-radius:50%; object-fit:cover; flex:0 0 84px; border:3px solid var(--color-primary);"><h1 style="margin:0; font-size:clamp(23px,6.5vw,30px); line-height:1.25;">מה באמת עוצר אותך?</h1></div><p style="font-size:18px; font-weight:700; margin:0 0 8px; line-height:1.35;">כל יום את מבטיחה לעצמך שהיום את מתחילה, והיום הזה לא מגיע.</p><p style="font-size:17px; font-weight:700; margin:0 0 8px; line-height:1.35; color:var(--color-primary);">בסדנת "הגיל הוא לא הסיפור" תלמדי גם את עשרת הצעדים המעשיים שיעזרו לך להפוך את החלום שלך למציאות.</p><p style="font-size:16px; font-weight:700; margin:0 0 8px; line-height:1.35;">מתחילה ב-25.12. 7 מפגשים פרונטליים ברחוב החבצלת 8 ברמלה. עד 15 משתתפות בקבוצה.</p>
     </div>
     <script>if(/[?&]t=otzer(&|$)/.test(location.search)){document.getElementById("lp-default").hidden=true;document.getElementById("lp-otzer").hidden=false;}</script>
+    <!-- 17.11.2026 (Leah: "תחברי אותו לדף נחיתה... ותתאימי את הדף לסרטון"): first screen for the video "הטעות הכי גדולה שעשיתי" only (?t=taut). h1 = the title in her video; the two lines = her own words from the video script; photo = frame from the video. -->
+    <div id="lp-taut" hidden>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; text-align:right;"><img src="images/workshop-leah-2026-11-17.jpg" alt="לאה גורא" width="84" height="84" style="width:84px; height:84px; border-radius:50%; object-fit:cover; flex:0 0 84px; border:3px solid var(--color-primary);"><h1 style="margin:0; font-size:clamp(23px,6.5vw,30px); line-height:1.25;">הטעות הכי גדולה שעשיתי</h1></div><p style="font-size:18px; font-weight:700; margin:0 0 8px; line-height:1.35;">אם אני לא אקח כל יום שעה אחת לעצמי, אף אחד לא ייתן לי אותה.</p><p style="font-size:17px; font-weight:700; margin:0 0 8px; line-height:1.35; color:var(--color-primary);">בסדנת "הגיל הוא לא הסיפור" תלמדי מה נכון לך לעשות בשעה הזאת, כדי שהיא תמלא אותך בכוחות מחודשים לגוף ולנפש.</p><p style="font-size:16px; font-weight:700; margin:0 0 8px; line-height:1.35;">מתחילה ב-25.12. 7 מפגשים פרונטליים ברחוב החבצלת 8 ברמלה. עד 15 משתתפות בקבוצה.</p>
+    </div>
+    <script>if(/[?&]t=taut(&|$)/.test(location.search)){document.getElementById("lp-default").hidden=true;document.getElementById("lp-taut").hidden=false;}</script>
     <div id="workshop-signup" style="scroll-margin-top:170px;">
     <form id="workshop-lead-form" style="max-width:380px; margin:0 auto; text-align:right; gap:6px;">
       <!-- 20.10.2026 (Leah "מאשרת"): free personal-call offer. 21.10.2026 (Leah "תורידי את ה10 שיחות"): the "10 שיחות... עד 25.10" lines removed, form unchanged.
@@ -238,7 +243,7 @@ if (location.search.indexOf('_scan=1') === -1) {
          submit button of ?t=otzer sat below the first screen. Her bio paragraph (same words) moved from above the form to here,
          so the button is inside the first screen. Shown for ?t=otzer only; the other variants keep their own bio line. -->
     <p id="lp-otzer-bio" hidden style="font-size:15px; margin:14px 0 0; line-height:1.4;">אני לאה גורא, בת 72. בגיל 45 עברתי ניתוח לב פתוח ואירוע מוחי והייתי משותקת בחצי גוף. היום אני מאמנת כושר, מאמנת פילאטיס שיקומי ומנטורית לחוסן מנטלי.</p>
-    <script>if(/[?&]t=otzer(&|$)/.test(location.search)){document.getElementById("lp-otzer-bio").hidden=false;}</script>
+    <script>if(/[?&]t=(otzer|taut)(&|$)/.test(location.search)){document.getElementById("lp-otzer-bio").hidden=false;}</script>
     <!-- 19.10.2026 (Leah): days and hours near the form. 20.10.2026 (Leah): moved below the form, so the free-call
          offer comes right after the video's lines. Same facts as "מועד פתיחת הסדנה" below - change both together. -->
     
