@@ -72,6 +72,7 @@
 
   // Existing CTA block, copied verbatim from workshopCtaHtml() in js/stories.js.
   function workshopCtaHtml() {
+    return ''; // 25.11.2026 Leah: workshop cancelled, CTA removed
     return '<div class="story-row-cta">' +
       '<p>רוצה לדעת איך להתחיל כבר היום לעשות שינוי? לחצו על הרשמה לסדנה ונחזור אליכם עם כל הפרטים.</p>' +
       '<a class="btn btn-sm" href="workshop.html">הרשמה לסדנה</a>' +
